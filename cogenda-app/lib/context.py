@@ -12,11 +12,12 @@ from fs import locate, is_file
 
 class Context(object):
     def __init__(self, root_dir):
-        self.bus = Bus()
+        #self.bus = Bus()
         self.settings = Settings(root_dir=root_dir)
 
     def load_settings(self, config_path):
         self.settings.load(config_path)
+        self.app_path = self.settings.cogenda_web.app
 
     def list_all_media(self):
         """docstring for list_all_media"""
