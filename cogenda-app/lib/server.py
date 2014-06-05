@@ -14,10 +14,12 @@ from cache import Cache
 from fs import locate, is_file
 from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
 
-import logging
 
 from saplugin import SAEnginePlugin
 from satool import SATool
+
+import logging
+from logconfig import init_logging
 
 
 class ServerStatus(object):
@@ -112,14 +114,20 @@ class Server(object):
 
     def start(self, config_path, dispatcher, non_block=False):
         self.status = ServerStatus.Starting
-
         self.context.load_settings(abspath(join(self.root_dir, config_path)))
-        self.cache = Cache(size=1000, age="5s", log='cogenda-web.log')
 
-        if self.context.settings.congend_web.as_bool('debug'):
-            logging.basicConfig()
+        #self.cache = Cache(size=1000, age="5s", log='cogenda-web.log')
+        """ Init cogenda app logging """
+        log_dir = self.context.settings.cogenda_app.log_dir
+        log_file = self.context.settings.cogenda_app.log_file
+        is_debug = self.context.settings.cogenda_app.as_bool('debug')
+
+        if is_debug:
+            init_logging(log_dir, log_file, logging.DEBUG);
             logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
             logging.getLogger('sqlalchemy.orm.unitofwork').setLevel(logging.DEBUG)
+        else:
+            init_logging(log_dir, log_file, logging.ERROR);
 
 
         self.run_server(dispatcher, non_block)
