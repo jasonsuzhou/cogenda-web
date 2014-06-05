@@ -14,3 +14,8 @@ Cogenda Web
 	$ ./setenv.sh
 	```
 
+- Start server
+
+	```
+	$ make run
+	```
