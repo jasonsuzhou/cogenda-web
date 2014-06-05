@@ -18,7 +18,7 @@ Cogenda Web
 
     ```
     $ make script 'eg. add new table/column'
-    $ make upgrade
+    $ make sync
     $ make version
     ```
 
