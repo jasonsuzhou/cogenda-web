@@ -12,7 +12,8 @@ from controller import BaseController
 from context import Context
 from cache import Cache
 from fs import locate, is_file
-from sqlalchemy.exc import DBAPIError
+from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
+
 import logging
 
 from saplugin import SAEnginePlugin
@@ -97,15 +98,17 @@ class Server(object):
         cherrypy.config.update(self.get_server_settings())
         dispatcher = self.get_dispatcher()
         mounts = self.get_mounts(dispatcher)
-
         self.app = cherrypy.tree.mount(None, config=mounts)
 
+        """ Integrate with SQLAlchemy """
         protocol = self.context.settings.Db.protocol
         database = self.context.settings.Db.database
         conn_str = "%s:///%s" % (protocol, database)
-
         SAEnginePlugin(cherrypy.engine, conn_str).subscribe()
         cherrypy.tools.db = SATool()
+        
+        """ Integrate with Jinja2 """
+        cherrypy.tools.jinja2env = Environment(loader = PackageLoader('cogenda-app', 'templates'))
 
         cherrypy.engine.start()
         if not non_block:

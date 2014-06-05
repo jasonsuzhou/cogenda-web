@@ -4,7 +4,6 @@
 import os
 from os.path import split, abspath, join, dirname
 
-from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
 import cherrypy
 from cherrypy import thread_data
 
@@ -49,9 +48,9 @@ def authenticated(func):
 
 class MetaController(type):
     def __init__(cls, name, bases, attrs):
+        print cls
         if 'BaseController' in globals() and \
                         issubclass(cls, globals()['BaseController']):
-
             __CONTROLLERS__.append(cls)
             __CONTROLLERSDICT__[name] = cls
             cls.__routes__ = []
@@ -126,21 +125,7 @@ class BaseController(object):
 
 
     def render_template(self, template_file, **kw):
-        apps = self.server.apps
-
-        app_loaders = []
-
-        for app in reversed(apps):
-            app_loaders.append(PackageLoader(app))
-
-        loader = ChoiceLoader(app_loaders)
-
-        env = Environment(loader=loader)
-
-        for filter_name in self.server.template_filters.keys():
-            env.filters[filter_name] = self.server.template_filters[filter_name]
-
-        template = env.get_template(template_file)
+        template = cherrypy.tools.jinja2env.get_template(template_file)
         return template.render(user=self.user, settings=self.settings, **kw)
 
 
