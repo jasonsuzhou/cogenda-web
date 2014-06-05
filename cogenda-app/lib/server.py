@@ -9,12 +9,14 @@ from cherrypy.lib.static import serve_file
 from cherrypy.process.plugins import PIDFile
 
 from controller import BaseController
-#from sqlalchemy_tool import metadata, session, mapper, configure_session_for_app
 from context import Context
 from cache import Cache
 from fs import locate, is_file
 from sqlalchemy.exc import DBAPIError
 import logging
+
+from saplugin import SAEnginePlugin
+from satool import SATool
 
 class ServerStatus(object):
     Unknown = 0
@@ -39,40 +41,27 @@ class Server(object):
         sets = self.context.settings
 
         return {
-                'server.socket_host': sets.cogenda_web.host,
-                'server.socket_port': sets.cogenda_web.as_int('port'),
-                'server.thread_pool': sets.cogenda_web.as_int('threads'),
-                'request.base': sets.cogenda_web.baseurl,
+                'server.socket_host': sets.cogenda_app.host,
+                'server.socket_port': sets.cogenda_app.as_int('port'),
+                'server.thread_pool': sets.cogenda_app.as_int('threads'),
+                'request.base': sets.cogenda_app.baseurl,
                 'tools.encode.on': True, 
                 'tools.encode.encoding': 'utf-8',
                 'tools.decode.on': True,
                 'tools.trailing_slash.on': True,
-                'log.screen': sets.cogenda_web.as_bool('verbose'),
+                'log.screen': sets.cogenda_app.as_bool('verbose'),
                 'tools.sessions.on': True
                 }
 
 
     def get_mounts(self, dispatcher):
-        sets = self.context.settings
-
-        protocol = self.context.settings.Db.protocol
-        username = self.context.settings.Db.user
-        password = self.context.settings.Db.password
-        host = self.context.settings.Db.host
-        port = int(self.context.settings.Db.port)
-        database = self.context.settings.Db.database
-
-        conn_str = self.connstr(protocol, username, password, host, port, database)
         static_dir = os.path.join(self.root_dir,  'static')
 
         conf = {
                 '/': {
                     'tools.staticdir.root': static_dir,
                     'request.dispatch': dispatcher,
-                    'tools.SATransaction.on': True,
-                    'tools.SATransaction.dburi':conn_str, 
-                    'tools.SATransaction.echo': sets.Ion.as_bool('verbose'),
-                    'tools.SATransaction.convert_unicode': True
+                    'tools.db.on': True
                     },
                 '/static': {
                     'tools.gzip.on': True,
@@ -87,17 +76,6 @@ class Server(object):
                 '/static/img': {'tools.staticdir.dir': 'images'}
                 }
         return conf
-
-
-    def connstr(self, protocol, username, password, host, port, database):
-        return "%s://%s:%s@%s:%d/%s" % (
-                protocol,
-                username,
-                password,
-                host,
-                port,
-                database
-                )
 
 
     def get_dispatcher(self):
@@ -122,39 +100,23 @@ class Server(object):
 
         self.app = cherrypy.tree.mount(None, config=mounts)
 
-        #self.context.use_db = self.test_connection()
-        self.context.use_db = None
+        protocol = self.context.settings.Db.protocol
+        database = self.context.settings.Db.database
+        conn_str = "%s:///%s" % (protocol, database)
 
-        if not self.context.use_db:
-            cherrypy.config.update({'tools.SATransaction.on': False})
+        SAEnginePlugin(cherrypy.engine, conn_str).subscribe()
+        cherrypy.tools.db = SATool()
 
         cherrypy.engine.start()
         if not non_block:
             cherrypy.engine.block()
 
 
-    """
-    def test_connection(self):
-        configure_session_for_app(self.app)
-        try:
-            session.execute("select 1 from dual")
-        except DBAPIError, err:
-            msg = '''\n\n============================ IMPORTANT ERROR ============================\nNo connection to the database could be made with the supplied parameters.\nPLEASE VERIFY YOUR CONFIG FILE AND CHANGE IT ACCORDINGLY.\n=========================================================================\n\n'''
-            cherrypy.log.error(msg, 'DB')
-            self.test_connection_error = err
-            return False
-        return True
-    """
-
-
     def start(self, config_path, non_block=False):
         self.status = ServerStatus.Starting
 
         self.context.load_settings(abspath(join(self.root_dir, config_path)))
-        self.cache = Cache(size=1000, age="5s", log=cherrypy.log)
-
-        #self.app_paths = self.context.app_paths
-        #self.app_modules = self.context.app_modules
+        self.cache = Cache(size=1000, age="5s", log='cogenda-web.log')
 
         if self.context.settings.congend_web.as_bool('debug'):
             logging.basicConfig()

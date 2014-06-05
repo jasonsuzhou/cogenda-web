@@ -17,7 +17,7 @@ class Context(object):
 
     def load_settings(self, config_path):
         self.settings.load(config_path)
-        self.app_path = self.settings.cogenda_web.app
+        self.app_path = self.settings.cogenda_app.app
 
     def list_all_media(self):
         """docstring for list_all_media"""

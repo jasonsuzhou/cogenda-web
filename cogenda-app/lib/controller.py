@@ -1,20 +1,6 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
-# Copyright Bernardo Heynemann <heynemann@gmail.com>
-
-# Licensed under the Open Software License ("OSL") v. 3.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-
-#     http://www.opensource.org/licenses/osl-3.0.php
-
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import os
 from os.path import split, abspath, join, dirname
 
@@ -23,8 +9,6 @@ import cherrypy
 from cherrypy import thread_data
 
 from cache import Cache
-
-#from sqlalchemy_tool import session
 
 __CONTROLLERS__ = []
 __CONTROLLERSDICT__ = {}
@@ -46,12 +30,11 @@ def route(route, name=None, priority=50):
 
     return dec
 
+
 def authenticated(func):
     def actual(*arguments, **kw):
         instance = arguments[0]
-
         instance.server.publish('on_before_user_authentication', {'server':instance, 'context':instance.context})
-
         user = instance.user
         if user:
             instance.server.publish('on_user_authentication_successful', {'server':instance, 'context':instance.context})
@@ -62,6 +45,7 @@ def authenticated(func):
     actual.__name__ = func.__name__
     actual.__doc__ = func.__doc__
     return actual
+
 
 class MetaController(type):
     def __init__(cls, name, bases, attrs):
@@ -95,7 +79,7 @@ class BaseController(object):
         self.server = server
 
     def log(self, message):
-        if self.settings.cogenda_web.as_bool('verbose'):
+        if self.settings.cogenda_app.as_bool('verbose'):
             cherrypy.log(message, "[%s]" % self.__class__.__name__)
 
     @classmethod
@@ -117,10 +101,6 @@ class BaseController(object):
         if not self.server:
             return None
         return self.server.context
-
-    @property
-    def store(self):
-        return session
 
     @property
     def name(self):
@@ -168,11 +148,6 @@ class BaseController(object):
         raise cherrypy.HTTPRedirect(url)
 
     def healthcheck(self):
-        healthcheck_text = self.settings.Ion.healthcheck_text
-
-        result = self.server.test_connection()
-        if not result:
-            raise RuntimeError("The connection to the database failed with error: %s" % str(self.server.test_connection_error))
-
+        healthcheck_text = self.settings.cogenda_app.healthcheck_text
         return healthcheck_text or "WORKING"
 
