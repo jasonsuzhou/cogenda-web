@@ -8,7 +8,7 @@ from os.path import join, dirname, splitext, split, exists
 import cherrypy
 
 from settings import Settings
-from fs import locate, is_file
+from fs import locate, is_file 
 
 class Context(object):
     def __init__(self, root_dir):
@@ -17,7 +17,6 @@ class Context(object):
 
     def load_settings(self, config_path):
         self.settings.load(config_path)
-        self.app_path = self.settings.cogenda_app.app
 
     def list_all_media(self):
         """docstring for list_all_media"""

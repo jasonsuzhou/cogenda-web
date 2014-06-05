@@ -48,7 +48,6 @@ def authenticated(func):
 
 class MetaController(type):
     def __init__(cls, name, bases, attrs):
-        print cls
         if 'BaseController' in globals() and \
                         issubclass(cls, globals()['BaseController']):
             __CONTROLLERS__.append(cls)
@@ -121,6 +120,7 @@ class BaseController(object):
     def register_routes(self, dispatcher):
         for route in self.__routes__:
             route_name = "%s_%s" % (self.name, route[0])
+            #TODO: logging routes register.
             dispatcher.connect(route_name, route[1]["route"], controller=self, action=route[1]["method"])
 
 

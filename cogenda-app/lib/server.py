@@ -19,6 +19,7 @@ import logging
 from saplugin import SAEnginePlugin
 from satool import SATool
 
+
 class ServerStatus(object):
     Unknown = 0
     Starting = 1
@@ -36,7 +37,6 @@ class Server(object):
         self.test_connection_error = None
         self.cache = None
 
-    
 
     def get_server_settings(self):
         sets = self.context.settings
@@ -79,24 +79,19 @@ class Server(object):
         return conf
 
 
-    def get_dispatcher(self):
-        routes_dispatcher = cherrypy.dispatch.RoutesDispatcher()
-        for controller_type in BaseController.all():
-            controller = controller_type(server=self)
-            controller.register_routes(routes_dispatcher)
-
+    def get_dispatcher(self, dispatcher):
         route_name = "healthcheck"
         controller = BaseController()
         controller.server = self
-        routes_dispatcher.connect("healthcheck", "/healthcheck", controller=controller, action="healthcheck")
+        dispatcher.connect("healthcheck", "/healthcheck", controller=controller, action="healthcheck")
 
-        dispatcher = routes_dispatcher
+        #dispatcher = routes_dispatcher
         return dispatcher
 
 
-    def run_server(self, non_block=False):
+    def run_server(self, dispatcher, non_block=False):
         cherrypy.config.update(self.get_server_settings())
-        dispatcher = self.get_dispatcher()
+        dispatcher = self.get_dispatcher(dispatcher)
         mounts = self.get_mounts(dispatcher)
         self.app = cherrypy.tree.mount(None, config=mounts)
 
@@ -115,7 +110,7 @@ class Server(object):
             cherrypy.engine.block()
 
 
-    def start(self, config_path, non_block=False):
+    def start(self, config_path, dispatcher, non_block=False):
         self.status = ServerStatus.Starting
 
         self.context.load_settings(abspath(join(self.root_dir, config_path)))
@@ -127,7 +122,7 @@ class Server(object):
             logging.getLogger('sqlalchemy.orm.unitofwork').setLevel(logging.DEBUG)
 
 
-        self.run_server(non_block)
+        self.run_server(dispatcher, non_block)
         self.status = ServerStatus.Started
 
 

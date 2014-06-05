@@ -8,7 +8,7 @@ from model import Base
 class User(Base):
 
     __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, nullable=False, primary_key=True)
     username = Column(String(200))
     password = Column(String(200), default='')
     email = Column(String(200))
@@ -21,9 +21,14 @@ class User(Base):
         self.email = email
         self.active = active
 
+    @staticmethod
     def is_active(self):
         return self.active
 
+    @staticmethod
+    def get_by_uid(session, uid):
+        return session.query(User).filter(User.user_id==uid).first()
+    
     @staticmethod
     def list(session):
         return session.query(User).all()

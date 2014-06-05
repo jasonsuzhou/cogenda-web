@@ -7,5 +7,5 @@ from datetime import datetime
 class UserController(BaseController):
 
     @route('/')
-    def index(self)
+    def index(self):
         return self.render_template('index.html', date=datetime.now());
