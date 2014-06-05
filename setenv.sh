@@ -1,5 +1,5 @@
 #!/bin/bash
-# - Aim to build up pinet virtual evironmnet.
+# - Aim to build up cogenda web app virtual evironmnet.
 # - Author: tim.tang
 
 if [ ! -e venv ]; then
