@@ -5,7 +5,6 @@ from lib.controller import BaseController, route
 from datetime import datetime
 from models import User
 import cherrypy
-#import lib.i18n_tool
 from lib.i18n_tool import ugettext as _
 
 class UserController(BaseController):
