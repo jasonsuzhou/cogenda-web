@@ -52,5 +52,5 @@ clean-pyc:
 ####################################################################
 #  				     Production Server Deployment                  #
 ####################################################################
-#TODO:
-
+deploy:
+	@fab setup:$(PROD_SERVER_SECRET),$(PROD_SERVER)

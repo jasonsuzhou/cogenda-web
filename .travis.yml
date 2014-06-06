@@ -25,7 +25,7 @@ script:
 
 after_success:
   - echo 'Ready to deploy to production'
-  - fab setup:$PROD_SERVER_SECRET,$PROD_SERVER
+  - make deploy PROD_SERVER_SECRET=$PROD_SERVER_SECRET PROD_SERVER=$PROD_SERVER
 
 branches:
   only:
