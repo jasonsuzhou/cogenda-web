@@ -1,0 +1,36 @@
+# Continuous Integration config
+# travis-ci.org
+#
+# see http://about.travis-ci.org/docs/user/build-configuration/
+#
+
+language: python
+python:
+  - "2.7"
+  - "pypy"
+
+notifications:
+  email:
+    - tang.jilong@gmail.com
+    - kkiiiu@gmail.comk
+
+# command to install dependencies
+install:
+    - "pip install virtualenv"
+    - "./setenv.sh"
+    - "source venv/bin/activate"
+
+# prepare SQLite db
+before_script:
+  - make sync
+
+script:
+  - echo 'Ready to run'
+
+after_script:
+  - echo 'Ready to deploy to production'
+
+# travis ci sync branch
+branches:
+  only:
+    - master
