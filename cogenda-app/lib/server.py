@@ -20,7 +20,8 @@ from satool import SATool
 
 import logging
 from logconfig import init_logging
-
+import i18n_tool
+from babel.support import Translations
 
 class ServerStatus(object):
     Unknown = 0
@@ -53,7 +54,11 @@ class Server(object):
                 'tools.decode.on': True,
                 'tools.trailing_slash.on': True,
                 'log.screen': sets.cogenda_app.as_bool('verbose'),
-                'tools.sessions.on': True
+                'tools.sessions.on': True,
+                'tools.I18nTool.on': True,
+                'tools.I18nTool.default': sets.cogenda_app.default_locale, 
+                'tools.I18nTool.mo_dir': os.path.join(os.path.abspath(os.curdir),'cogenda-app' ,'i18n'), 
+                'tools.I18nTool.domain': 'cogenda-app',
                 }
 
 
@@ -104,8 +109,12 @@ class Server(object):
         SAEnginePlugin(cherrypy.engine, conn_str).subscribe()
         cherrypy.tools.db = SATool()
         
-        """ Integrate with Jinja2 """
-        cherrypy.tools.jinja2env = Environment(loader = PackageLoader('cogenda-app', 'templates'))
+        """ Integrate with Jinja2 & Babel"""
+        mo_dir = os.path.join(os.path.abspath(os.curdir),'cogenda-app' ,'i18n')
+        translations = Translations.load(mo_dir, ['en', 'zh'], 'cogenda-app')
+        env = Environment(loader = PackageLoader('cogenda-app', 'templates'), extensions=['jinja2.ext.i18n'])
+        env.install_gettext_translations(translations)
+        cherrypy.tools.jinja2env = env 
 
         cherrypy.engine.start()
         if not non_block:
@@ -129,6 +138,7 @@ class Server(object):
         else:
             init_logging(log_dir, log_file, logging.ERROR);
 
+        #cherrypy.tools.I18nTool = I18nTool()
 
         self.run_server(dispatcher, non_block)
         self.status = ServerStatus.Started
