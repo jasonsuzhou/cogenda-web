@@ -1,26 +1,37 @@
-Cogenda Web
+	   ______                                __          _       __       __  
+	  / ____/____   ____ _ ___   ____   ____/ /____ _   | |     / /___   / /_ 
+	 / /    / __ \ / __ `// _ \ / __ \ / __  // __ `/   | | /| / // _ \ / __ \
+	/ /___ / /_/ // /_/ //  __// / / // /_/ // /_/ /    | |/ |/ //  __// /_/ /
+	\____/ \____/ \__, / \___//_/ /_/ \__,_/ \__,_/     |__/|__/ \___//_.___/ 
+	             /____/                                                       
+
 ===========
 
-- Install pip.
+- Preparation: Install pip, virtualenv and dependency libs.
 
 	```
 	$ sudo easy_install pip
-	```
-
-- Install virtualenv and build dependencies.
-
-	```
 	$ pip install virtualenv
 	$ ./setenv.sh
+	$ source venv/bin/activate
 	```
 
-- SQLite db migration
+- SQLite migration
 
     ```
     $ make script 'eg. add new table/column'
+    ```
+    >  When create or update model, we need to run this command to generate schema version file. Under migration/version folder, then we need to edit generated file for db changes.
+
+    ```
     $ make sync
+    ```
+    > Once we finished edit the db version file, use this command to sync with SQLite.
+
+    ```
     $ make version
     ```
+    > Run this command to verify current database schema version.
 
 - Babel I18n
 	
