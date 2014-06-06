@@ -1,36 +1,32 @@
-# Continuous Integration config
-# travis-ci.org
-#
-# see http://about.travis-ci.org/docs/user/build-configuration/
-#
-
 language: python
 python:
-  - "2.7"
-  - "pypy"
+  - '2.7'
+
+env:
+  global:
+    - PROD_SERVER=173.255.253.43
+    - secure: hB2mo/I/QEjvCMqso2CZ6k5IvAA369rQD95QB2ZXvVPmKBm+YlqQKbTjrk6pVyrTa1oMI7tXOk0Jng2ZnSpNq5KvPEWlgxjGNoAOrzphi5ct0WZn0PyKNIoaKdpMAwnR15cQOUWTf+m8Lft7hlJ6sqnqJExNx/tsCTmr/eZnR3U=
 
 notifications:
   email:
     - tang.jilong@gmail.com
     - kkiiiu@gmail.comk
 
-# command to install dependencies
 install:
-    - "pip install virtualenv"
-    - "./setenv.sh"
-    - "source venv/bin/activate"
+  - pip install virtualenv
+  - ./setenv.sh
+  - source venv/bin/activate
 
-# prepare SQLite db
 before_script:
   - make sync
 
 script:
   - echo 'Ready to run'
 
-after_script:
+after_success:
   - echo 'Ready to deploy to production'
+  - fab setup:$PROD_SERVER_SECRET,$PROD_SERVER
 
-# travis ci sync branch
 branches:
   only:
     - master

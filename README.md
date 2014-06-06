@@ -7,7 +7,7 @@
 
 [![Build Status](https://travis-ci.org/cogenda/cogenda-web.svg?branch=master)](https://travis-ci.org/cogenda/cogenda-web)
 
-===========
+---
 
 - Preparation: Install pip, virtualenv and dependency libs.
 
