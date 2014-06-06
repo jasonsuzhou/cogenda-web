@@ -5,6 +5,8 @@
 	\____/ \____/ \__, / \___//_/ /_/ \__,_/ \__,_/     |__/|__/ \___//_.___/ 
 	             /____/                                                       
 
+[![Build Status](https://travis-ci.org/cogenda/cogenda-web.svg?branch=master)](https://travis-ci.org/cogenda/cogenda-web)
+
 ===========
 
 - Preparation: Install pip, virtualenv and dependency libs.
