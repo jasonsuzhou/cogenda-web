@@ -1,8 +1,6 @@
 *.pyc
 *.pyo
 *.egg-info
-*.mo
-*.pot
 *.log
 *.tmp.*
 *.iml
