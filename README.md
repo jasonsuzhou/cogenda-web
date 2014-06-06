@@ -18,20 +18,25 @@
 	$ source venv/bin/activate
 	```
 
-- SQLite migration
+- SQLite Migration
 
     ```
-    $ make script 'eg. add new table/column'
+    $ make db-init
+    ```
+    > Initial SQLite database file under migration/ folder.
+
+    ```
+    $ make db-script 'eg. add new table/column'
     ```
     >  When create or update model, we need to run this command to generate schema version file. Under migration/version folder, then we need to edit generated file for db changes.
 
     ```
-    $ make sync
+    $ make db-migrate
     ```
     > Once we finished edit the db version file, use this command to sync with SQLite.
 
     ```
-    $ make version
+    $ make db-version
     ```
     > Run this command to verify current database schema version.
 
@@ -55,6 +60,7 @@
 - Start server
 
 	```
+    $ make db-init (optional: If migration/cogenda-app.db not create yet)
 	$ make run
 	```
-> Open url http://localhost:8088
+    > Open url http://localhost:8088
