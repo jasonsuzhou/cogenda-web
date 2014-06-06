@@ -34,7 +34,7 @@ run:
 ####################################################################
 #  				     SQLite Management                             #
 ####################################################################
-init-db:
+db-init:
 	@python migration/manage.py version_control sqlite:///migration/cogenda-app.db migration
 	@python manage.py upgrade
 

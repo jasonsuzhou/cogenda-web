@@ -18,7 +18,7 @@ install:
   - source venv/bin/activate
 
 before_script:
-  - make sync
+  - make db-init
 
 script:
   - echo 'Ready to run'
