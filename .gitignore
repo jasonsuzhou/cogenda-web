@@ -18,6 +18,7 @@ parts
 .tox
 .project
 .pydevproject
+etc/travis-private-key
 
 
 data/

@@ -73,4 +73,4 @@ deploy:
 	@fab setup:$(PROD_SERVER_USER),$(PROD_SERVER_SECRET),$(PROD_SERVER)
 
 encrypt-key:
-	@./bin/travis_key_encrypt.sh etc/travis-secure-key
+	@./bin/travis_key_encrypt.sh etc/travis-private-key
