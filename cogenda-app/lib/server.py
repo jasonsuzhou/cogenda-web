@@ -57,8 +57,8 @@ class Server(object):
                 'tools.sessions.on': True,
                 'tools.I18nTool.on': True,
                 'tools.I18nTool.default': sets.cogenda_app.default_locale, 
-                'tools.I18nTool.mo_dir': os.path.join(os.path.abspath(os.curdir),'cogenda-app' ,'i18n'), 
-                'tools.I18nTool.domain': 'cogenda-app',
+                'tools.I18nTool.mo_dir': os.path.join(os.path.abspath(os.curdir), sets.cogenda_app.app_name ,'i18n'), 
+                'tools.I18nTool.domain': sets.cogenda_app.app_name,
                 }
 
 
@@ -110,9 +110,11 @@ class Server(object):
         cherrypy.tools.db = SATool()
         
         """ Integrate with Jinja2 & Babel"""
-        mo_dir = os.path.join(os.path.abspath(os.curdir),'cogenda-app' ,'i18n')
-        translations = Translations.load(mo_dir, ['en', 'zh'], 'cogenda-app')
-        env = Environment(loader = PackageLoader('cogenda-app', 'templates'), extensions=['jinja2.ext.i18n'])
+        app_name = self.context.settings.cogenda_app.app_name
+        locales = self.context.settings.cogenda_app.locales
+        mo_dir = os.path.join(os.path.abspath(os.curdir),app_name ,'i18n')
+        translations = Translations.load(mo_dir, locales, app_name)
+        env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=['jinja2.ext.i18n'])
         env.install_gettext_translations(translations)
         cherrypy.tools.jinja2env = env 
 
@@ -137,8 +139,6 @@ class Server(object):
             logging.getLogger('sqlalchemy.orm.unitofwork').setLevel(logging.DEBUG)
         else:
             init_logging(log_dir, log_file, logging.ERROR);
-
-        #cherrypy.tools.I18nTool = I18nTool()
 
         self.run_server(dispatcher, non_block)
         self.status = ServerStatus.Started
