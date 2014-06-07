@@ -33,7 +33,6 @@ def usage():
     print("usage: python cogenda-app/cogendap-app.py <settings_file>")
 
 if __name__ == '__main__':
-    print sys.argv
     if len(sys.argv) == 2:
         sys.exit(main(sys.argv[1]))
     else:

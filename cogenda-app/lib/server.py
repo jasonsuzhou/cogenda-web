@@ -99,7 +99,6 @@ class Server(object):
         mounts = self.get_mounts(dispatcher)
         self.app = cherrypy.tree.mount(None, config=mounts)
 
-
         """ Integrate with SQLAlchemy """
         protocol = self.context.settings.Db.protocol
         database = self.context.settings.Db.database
@@ -107,8 +106,6 @@ class Server(object):
         SAEnginePlugin(cherrypy.engine, conn_str).subscribe()
         cherrypy.tools.db = SATool()
 
-
-        
         cherrypy.engine.start()
         if not non_block:
             cherrypy.engine.block()
@@ -136,7 +133,6 @@ class Server(object):
 
         if self.context.settings.cogenda_app.pid_file:
             PIDFile(cherrypy.engine, self.context.settings.cogenda_app.pid_file).subscribe()
-
 
         self.run_server(dispatcher, non_block)
         self.status = ServerStatus.Started
