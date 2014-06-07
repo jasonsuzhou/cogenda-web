@@ -8,6 +8,8 @@
 *.swp
 *.log
 *.db
+*.pid
+
 __pycache__
 build
 develop-eggs

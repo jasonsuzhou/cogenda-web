@@ -6,12 +6,13 @@ from os.path import join, abspath, dirname, splitext, split, exists
 
 import cherrypy
 from cherrypy.lib.static import serve_file
-from cherrypy.process.plugins import PIDFile
+from cherrypy.process.plugins import Daemonizer, PIDFile
 
 from controller import BaseController
 from context import Context
 from cache import Cache
 from fs import locate, is_file
+from cherrypy.process.plugins import PIDFile
 
 from saplugin import SAEnginePlugin
 from satool import SATool
@@ -105,6 +106,8 @@ class Server(object):
         conn_str = "%s:///%s" % (protocol, database)
         SAEnginePlugin(cherrypy.engine, conn_str).subscribe()
         cherrypy.tools.db = SATool()
+
+
         
         cherrypy.engine.start()
         if not non_block:
@@ -127,6 +130,13 @@ class Server(object):
             logging.getLogger('sqlalchemy.orm.unitofwork').setLevel(logging.DEBUG)
         else:
             init_logging(log_dir, log_file, logging.ERROR);
+
+        if self.context.settings.cogenda_app.as_bool('daemon'):
+            Daemonizer(cherrypy.engine).subscribe()
+
+        if self.context.settings.cogenda_app.pid_file:
+            PIDFile(cherrypy.engine, self.context.settings.cogenda_app.pid_file).subscribe()
+
 
         self.run_server(dispatcher, non_block)
         self.status = ServerStatus.Started

@@ -17,3 +17,5 @@ def setup(user, secret, host):
     env.password= secret
     env.host_string = host
     run("uname -a")
+
+

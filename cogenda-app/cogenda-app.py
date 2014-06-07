@@ -9,11 +9,11 @@ from lib.controller import BaseController
 
 from controllers import *
 
-def main():
+def main(settings_file):
 
-    init_files = locate("cogenda-app.ini")
+    init_files = locate(settings_file)
     if not init_files:
-        raise RuntimeError("No files called congenda-app.ini were found in the current directory structure")
+        raise RuntimeError("No files called setting file were found in the current directory structure")
 
     root_dir = abspath(dirname(init_files[0]))
     server = Server(root_dir=root_dir)
@@ -25,11 +25,17 @@ def main():
         controller.register_routes(dispatcher)
 
     try:
-        server.start("cogenda-app.ini", dispatcher)
-        
+        server.start(settings_file, dispatcher)
     except KeyboardInterrupt:
         server.stop()
     
+def usage():
+    print("usage: python cogenda-app/cogendap-app.py <settings_file>")
 
 if __name__ == '__main__':
-    sys.exit(main())
+    print sys.argv
+    if len(sys.argv) == 2:
+        sys.exit(main(sys.argv[1]))
+    else:
+        usage()
+        sys.exit(2)

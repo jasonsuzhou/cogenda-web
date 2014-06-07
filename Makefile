@@ -4,6 +4,8 @@
 
 # Internal variables.
 root_dir=cogenda-app
+settings_prod=cogenda-prod.ini
+settings_dev=cogenda-dev.ini
 # Babel variables
 babel_dict_loc=./cogenda-app/i18n/message.pot
 babel_domain=cogenda-app
@@ -30,7 +32,10 @@ help:
 #  				     CherryPy Server Management                    #
 ####################################################################
 run:
-	@python ${root_dir}/cogenda-app.py
+	@python ${root_dir}/cogenda-app.py ${settings_dev}
+
+run-prod:
+	@python ${root_dir}/cogenda-app.py ${settings_prod}
 
 ####################################################################
 #  				     SQLite Management                             #
