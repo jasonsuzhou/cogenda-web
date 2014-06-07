@@ -17,6 +17,13 @@
 	$ ./setenv.sh
 	$ source venv/bin/activate
 	```
+- Start Web Server
+
+	```
+    $ make db-init (optional: If migration/cogenda-app.db not create yet)
+	$ make run
+	```
+    > Open url http://localhost:8088
 
 - SQLite Migration
 
@@ -56,11 +63,3 @@
     $ make babel-compile
     ```
     > After *.po file modified by dev, this command will compile the *.po to *.mo for application use.
-
-- Start server
-
-	```
-    $ make db-init (optional: If migration/cogenda-app.db not create yet)
-	$ make run
-	```
-    > Open url http://localhost:8088
