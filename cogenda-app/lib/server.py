@@ -18,7 +18,6 @@ from satool import SATool
 
 import logging
 from logconfig import init_logging
-#import i18n_tool
 
 class ServerStatus(object):
     Unknown = 0

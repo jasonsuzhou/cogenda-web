@@ -69,4 +69,4 @@ clean-pyc:
 #  				     Production Server Deployment                  #
 ####################################################################
 deploy:
-	@fab setup:$(PROD_SERVER_SECRET),$(PROD_SERVER)
+	@fab setup:$(PROD_SERVER_USER),$(PROD_SERVER_SECRET),$(PROD_SERVER)

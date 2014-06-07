@@ -5,14 +5,15 @@
 - Deploy files
 - Configure Nginx 
 - Restart web server
+- Restart Nginx
 """
 
 from fabric.api import *
 from fabric.colors import green, red
 
-def setup(secret, host, user='root'):
+def setup(user='root', secret, host):
     """Prepare to login to production server."""
-    env.host_string = host
     env.user = user
     env.password= secret
+    env.host_string = host
     run("uname -a")

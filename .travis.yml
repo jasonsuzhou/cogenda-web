@@ -1,32 +1,26 @@
 language: python
 python:
-  - '2.7'
-
+- '2.7'
 env:
   global:
-    - PROD_SERVER=173.255.253.43
-    - secure: hB2mo/I/QEjvCMqso2CZ6k5IvAA369rQD95QB2ZXvVPmKBm+YlqQKbTjrk6pVyrTa1oMI7tXOk0Jng2ZnSpNq5KvPEWlgxjGNoAOrzphi5ct0WZn0PyKNIoaKdpMAwnR15cQOUWTf+m8Lft7hlJ6sqnqJExNx/tsCTmr/eZnR3U=
-
+  - secure: R1M59WOVr5y+gX1CXtqnYlzVXKCYN+P5K0a/mAv0ItuMwv5Hlr4PgkJSN2T/tBbj7Ntv5bXydusuej0hENoA1ghZ2kS+5tMK0EKtrocsXEuitNMc+BN+ygUnaBo/+70ohJYY9d4ov5Q2zkK8AoFfuTpM/26VL8wSh+M8STC+3tE=
+  - secure: a3AKmY4J4e6bi/Udda5CAfTuAHOTWd8vMu5Y4A+2kFyeqqGpGNrzoS6bMbw1NtTlU5EJLtnxxnzDLdKrz7NtLRWy/wl9A4TBCSBQQ3uiILnMpwjOVAvdv0yDK1akLbcdYJNQ2NgkoofddFW8BJejyGMKcBXQof/MsPw0x0UGnGY=
+  - secure: YQq7KuIa3z7GqePfzIy08UUaadNadC0SUvYhBQIQLvyrT2Y6hZCTn74rVUqQIbS86X7B9//XwjGzfE4V8AP3BfAIVUwm142bYMEwxzU+gzI+37OEEDSqghP0OK1wnJq6lNELKW8Sbz5ekNqturTSQTW0zGsfyV1SpIDw5L+pvKQ=
 notifications:
   email:
-    - tang.jilong@gmail.com
-    - kkiiiu@gmail.comk
-
+  - tang.jilong@gmail.com
+  - kkiiiu@gmail.comk
 install:
-  - pip install virtualenv
-  - ./setenv.sh
-  - source venv/bin/activate
-
+- pip install virtualenv
+- ./setenv.sh
+- source venv/bin/activate
 before_script:
-  - make db-init
-
+- make db-init
 script:
-  - echo 'Ready to run'
-
+- echo 'Ready to run'
 after_success:
-  - echo 'Ready to deploy to production'
-  - make deploy PROD_SERVER_SECRET=$PROD_SERVER_SECRET PROD_SERVER=$PROD_SERVER
-
+- echo 'Ready to deploy to production'
+- make deploy PROD_SERVER_USER=$PROD_SERVER_USER PROD_SERVER_SECRET=$PROD_SERVER_SECRET PROD_SERVER=$PROD_SERVER
 branches:
   only:
-    - master
+  - master
