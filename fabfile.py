@@ -11,7 +11,7 @@
 from fabric.api import *
 from fabric.colors import green, red
 
-def setup(user='root', secret, host):
+def setup(user, secret, host):
     """Prepare to login to production server."""
     env.user = user
     env.password= secret
