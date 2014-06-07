@@ -22,6 +22,7 @@ help:
 	@echo "  babel-update  to update i18n messages from message.pot *.po files."
 	@echo "  babel-compile to update i18n messages from *.po file to *.mo files."
 	@echo "  deploy        to deploy application to production evironment."
+	@echo "  encrypt-key   to encrypt sensitive data & private keys in travis ci."
 	@echo "  clean-pyc     to clean project *.pyc files."
 	@echo ""
 
@@ -70,3 +71,6 @@ clean-pyc:
 ####################################################################
 deploy:
 	@fab setup:$(PROD_SERVER_USER),$(PROD_SERVER_SECRET),$(PROD_SERVER)
+
+encrypt-key:
+	@./bin/travis_key_encrypt.sh etc/travis-secure-key
