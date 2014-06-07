@@ -8,9 +8,15 @@ import cherrypy
 from cherrypy import thread_data
 
 from cache import Cache
+from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
+from babel.support import Translations
+from i18ntool import I18nTool
 
 import logging 
 log = logging.getLogger(__name__)
+
+#Initialization of I18nTool
+cherrypy.tools.I18nTool = I18nTool(os.path.abspath( __file__ ))
 
 __CONTROLLERS__ = []
 __CONTROLLERSDICT__ = {}
@@ -128,6 +134,14 @@ class BaseController(object):
 
 
     def render_template(self, template_file, **kw):
+        """ Integrate with Jinja2 & Babel"""
+        app_name = self.settings.cogenda_app.app_name
+        mo_dir = os.path.join(os.path.abspath(os.curdir),app_name ,'i18n')
+        locale = str(cherrypy.response.i18n.locale)
+        translations = Translations.load(mo_dir, locale, app_name)
+        env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=['jinja2.ext.i18n'])
+        env.install_gettext_translations(translations)
+        cherrypy.tools.jinja2env = env 
         template = cherrypy.tools.jinja2env.get_template(template_file)
         return template.render(user=self.user, settings=self.settings, **kw)
 

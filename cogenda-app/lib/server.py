@@ -12,16 +12,13 @@ from controller import BaseController
 from context import Context
 from cache import Cache
 from fs import locate, is_file
-from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
-
 
 from saplugin import SAEnginePlugin
 from satool import SATool
 
 import logging
 from logconfig import init_logging
-import i18n_tool
-from babel.support import Translations
+#import i18n_tool
 
 class ServerStatus(object):
     Unknown = 0
@@ -102,6 +99,7 @@ class Server(object):
         mounts = self.get_mounts(dispatcher)
         self.app = cherrypy.tree.mount(None, config=mounts)
 
+
         """ Integrate with SQLAlchemy """
         protocol = self.context.settings.Db.protocol
         database = self.context.settings.Db.database
@@ -109,15 +107,6 @@ class Server(object):
         SAEnginePlugin(cherrypy.engine, conn_str).subscribe()
         cherrypy.tools.db = SATool()
         
-        """ Integrate with Jinja2 & Babel"""
-        app_name = self.context.settings.cogenda_app.app_name
-        locales = self.context.settings.cogenda_app.locales
-        mo_dir = os.path.join(os.path.abspath(os.curdir),app_name ,'i18n')
-        translations = Translations.load(mo_dir, locales, app_name)
-        env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=['jinja2.ext.i18n'])
-        env.install_gettext_translations(translations)
-        cherrypy.tools.jinja2env = env 
-
         cherrypy.engine.start()
         if not non_block:
             cherrypy.engine.block()

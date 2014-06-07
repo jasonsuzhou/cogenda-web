@@ -5,12 +5,15 @@ from lib.controller import BaseController, route
 from datetime import datetime
 from models import User
 import cherrypy
-from lib.i18n_tool import ugettext as _
+from lib.i18ntool import ugettext as _
 
 class UserController(BaseController):
 
     @route('/')
     def index(self):
+
+        #cherrypy.tools.I18nTool.set_custom_language('en_US')
+
         """ testing SQLite and Jinja2 """
         user = User('Tim', '123', 'tang.jilong@gmail.com')
         cherrypy.request.db.add(user) 
