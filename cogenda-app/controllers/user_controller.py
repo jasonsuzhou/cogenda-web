@@ -12,7 +12,7 @@ class UserController(BaseController):
     @route('/')
     def index(self):
 
-        #cherrypy.tools.I18nTool.set_custom_language('en_US')
+        #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
 
         """ testing SQLite and Jinja2 """
         user = User('Tim', '123', 'tang.jilong@gmail.com')
