@@ -42,13 +42,11 @@ def route(route, name=None, priority=50):
 def authenticated(func):
     def actual(*arguments, **kw):
         instance = arguments[0]
-        instance.server.publish('on_before_user_authentication', {'server':instance, 'context':instance.context})
         user = instance.user
         if user:
-            instance.server.publish('on_user_authentication_successful', {'server':instance, 'context':instance.context})
             return func(*arguments, **kw)
         else:
-            instance.server.publish('on_user_authentication_failed', {'server':instance, 'context':instance.context})
+            #TODO: redirect to 401 page.
 
     actual.__name__ = func.__name__
     actual.__doc__ = func.__doc__
