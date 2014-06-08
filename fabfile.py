@@ -13,7 +13,7 @@ from fabric.colors import green, red
 
 
 ####################################################################
-# 			     Cogenda Server Auto Deployment                    #
+# 			     Cogenda App Auto Deployment                    #
 ####################################################################
 # Internal variables
 app_path = "/home/ubuntu/apps/cogenda-web"
@@ -55,6 +55,7 @@ def restart():
 
 
 ####################################################################
-# 			     Sync with AWS S3 & AliYun                         #
+# 			     Cloud Sync Tool                                   #
 ####################################################################
 #TODO:
+
