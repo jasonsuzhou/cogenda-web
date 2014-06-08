@@ -57,7 +57,7 @@
     ```
     $ make babel-update
     ```
-    > After message.pot updated, this command will sync the new i18n message into en/zh *.po files.
+    > This command combined babel-extract, then will sync the new i18n message into en/zh *.po files.
 
     ```
     $ make babel-compile
