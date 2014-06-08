@@ -8,6 +8,7 @@ import cherrypy
 from lib.controller import BaseController
 
 from controllers import *
+from controllers.admin import *
 
 def main(settings_file):
 
