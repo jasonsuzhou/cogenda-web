@@ -6,6 +6,10 @@ from datetime import datetime
 from models import User
 import cherrypy
 from lib.i18ntool import ugettext as _
+from cherrypy.lib.static import serve_file
+
+import logging 
+log = logging.getLogger(__name__)
 
 class UserController(BaseController):
 
@@ -22,3 +26,11 @@ class UserController(BaseController):
             print temp_user.username
         
         return self.render_template('index.html', date=datetime.now(), hello=_('hello'))
+
+    @route('/download/:filepath')
+    def download(self, filepath):
+        """Testing download & url with parameter"""
+        log.debug("Download resource path: %s" % filepath);
+        return serve_file(filepath, "application/x-download", "attachment")
+
+
