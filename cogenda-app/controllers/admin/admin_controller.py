@@ -21,4 +21,4 @@ class AdminController(BaseController):
         #for temp_user in all_users:
         #    print temp_user.username
         
-        return self.render_template('admin/login.html', date=datetime.now(), hello=_('hello'))
+        return self.render_template('admin/security/login-user.html', date=datetime.now(), hello=_('hello'))

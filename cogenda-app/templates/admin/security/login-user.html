@@ -4,8 +4,12 @@
 <div id="cl-wrapper" class="login-container">
     <div class="middle-login">
         <div class="block-flat">
-            <div class="header">							
-                <h3 class="text-center"><img class="logo-img" src="{{ static_url('arctic/common/images/logo.png') }}" alt="logo"/></h3>
+            <div class="header">
+                <h3 class="text-center">
+                    Logo
+                    <!--
+                    <img class="logo-img" src="{{ ('arctic/common/images/logo.png') }}" alt="logo"/>
+                    --></h3>
             </div>
             <div>
                 <form style="margin-bottom: 0px !important;" class="form-horizontal" action="{{ url_for('demo_handler.dashboard') }}" parsley-validate novalidate>
@@ -39,6 +43,6 @@
             </div>
         </div>
         {% include "layout/layout-footer.html"%}
-    </div> 
-</div> 
+    </div>
+</div>
 {%endblock%}
