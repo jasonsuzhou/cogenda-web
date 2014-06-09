@@ -45,7 +45,7 @@ def authenticated(func):
         user = instance.user
         if user:
             return func(*arguments, **kw)
-        else:
+        #else:
             #TODO: redirect to 401 page.
 
     actual.__name__ = func.__name__
