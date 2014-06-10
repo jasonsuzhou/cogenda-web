@@ -24,8 +24,8 @@ deploy_host="85.159.208.213"
 
 def prepare():
     """Prepare to login to production server."""
-    env.host_string = host
-    env.user = user
+    env.host_string = deploy_host 
+    env.user = deploy_user
     env.key_filename = travis_ssh_key
     env.port = 22
 
