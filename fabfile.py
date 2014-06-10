@@ -36,10 +36,10 @@ def install_app():
     - install upstart service
     """
     if exists(cogenda_web_path):
-        with cd(cogenda_web_path)
+        with cd(cogenda_web_path):
             run("git pull -f origin master")
     else:
-        with cd(app_path)
+        with cd(app_path):
             run("git clone https://github.com/cogenda/cogenda-web.git")
 
 def install_upstart():
