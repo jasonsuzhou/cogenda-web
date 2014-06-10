@@ -19,8 +19,10 @@ from fabric.colors import green, red
 app_path = "/home/tim/apps"
 cogenda_web_path = "/home/tim/apps/cogenda-web"
 travis_ssh_key = "~/.ssh/id_rsa"
+deploy_user="tim"
+deploy_host="85.159.208.213"
 
-def login(user, host):
+def prepare():
     """Prepare to login to production server."""
     env.host_string = host
     env.user = user

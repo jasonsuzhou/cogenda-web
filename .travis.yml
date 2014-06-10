@@ -15,7 +15,7 @@ before_script:
   - chmod 600 ~/.ssh/id_rsa
   - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
-  - echo 'Ready to run'
+  - echo 'Ready to run testing scripts'
 after_success:
   - echo 'Ready to deploy to production'
   - make deploy 
