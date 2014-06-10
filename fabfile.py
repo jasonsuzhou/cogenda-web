@@ -52,11 +52,11 @@ def install_upstart():
 
 def nginx():
     """Configure Nginx service"""
-    nginx_conf = "etc/nginx.conf"
+    nginx_conf_path = "%s/etc/nginx.conf" %(cogenda_web_path)
     path_nginx = "/etc/nginx/sites-available/"
     print(green("Configure Nginx web server"))
     with cd(path_nginx):
-        run("sudo cp -f %s/etc/%s ./default" %(app_path, nginx_conf))
+        run("sudo cp -f %s/etc/%s ./default" %(nginx_conf_path))
     print(red("Auto configure Nginx server succeed!"))
 
 
