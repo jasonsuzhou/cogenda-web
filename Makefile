@@ -88,7 +88,7 @@ clean-pyc:
 #  				     Production Server Deployment                  #
 ####################################################################
 deploy:
-	@fab login:$(PROD_SERVER_USER),$(PROD_SERVER_SECRET),$(PROD_SERVER)
+	@fab login:tim,85.159.208.213
 
 encrypt-key:
 	@./bin/travis_key_encrypt.sh etc/travis-private-key

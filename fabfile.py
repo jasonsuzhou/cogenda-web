@@ -18,11 +18,14 @@ from fabric.colors import green, red
 # Internal variables
 app_path = "/home/ubuntu/apps/cogenda-web"
 
-def login(user, secret, host):
+def login(user, host):
     """Prepare to login to production server."""
-    env.user = user
-    env.password= secret
     env.host_string = host
+    env.user = user
+    env.key_filename = "~/.ssh/id_rsa_deploy"
+    env.port = 22
+    #env.use_ssh_config = True
+    #env.password= secret
     run("uname -a")
 
 
