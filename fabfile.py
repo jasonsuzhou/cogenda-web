@@ -46,7 +46,7 @@ def install_upstart():
     """ Install upstart service """
     upstart_path = "/etc/init"
     with cd(cogenda_web_path):
-        run("cp -f etc/cogenda-app.conf %s" %(upstart_path))
+        run("sudo cp -f etc/cogenda-app.conf %s" %(upstart_path))
     print(red("Auto configure upstart succeed!"))
 
 
