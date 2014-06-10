@@ -18,7 +18,7 @@ from fabric.colors import green, red
 # Internal variables
 app_path = "/home/tim/apps"
 cogenda_web_path = "/home/tim/apps/cogenda-web"
-travis_ssh_key = "~/.ssh/id_rsa"
+travis_ssh_key = "~/.ssh/id_rsa_deploy"
 deploy_user="tim"
 deploy_host="85.159.208.213"
 
@@ -56,14 +56,16 @@ def nginx():
     path_nginx = "/etc/nginx/sites-available/"
     print(green("Configure Nginx web server"))
     with cd(path_nginx):
-        run("sudo cp -f %s/etc/%s ./default" %(nginx_conf_path))
+        run("sudo cp -f %s ./default" %(nginx_conf_path))
     print(red("Auto configure Nginx server succeed!"))
 
 
 def restart():
     """Restart cogenda-app service & Nginx service"""
     print(green("Restarting the cogenda-app service & Nginx service..."))
-    process = "cogenda-app"
-    run("sudo restart %s" % process)
+    #process = "cogenda-app"
+    #run("sudo restart %s" % process)
+    with cd("%s/bin/" %(cogenda_web_path)):
+        run("./bootstrap.sh")
     run("sudo service nginx restart")
     print(red("Auto deploy cogenda web to production succeed!"))
