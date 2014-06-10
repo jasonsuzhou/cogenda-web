@@ -18,7 +18,7 @@ from fabric.colors import green, red
 # Internal variables
 app_path = "/home/tim/apps"
 cogenda_web_path = "/home/tim/apps/cogenda-web"
-travis_ssh_key = "~/.ssh/id_rsa_deploy"
+travis_ssh_key = "~/.ssh/id_rsa"
 deploy_user="tim"
 deploy_host="85.159.208.213"
 
