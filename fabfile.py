@@ -22,7 +22,7 @@ def login(user, host):
     """Prepare to login to production server."""
     env.host_string = host
     env.user = user
-    env.key_filename = "~/.ssh/id_rsa_deploy"
+    env.key_filename = "~/.ssh/id_rsa"
     env.port = 22
     #env.use_ssh_config = True
     #env.password= secret
