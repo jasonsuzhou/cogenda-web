@@ -13,7 +13,7 @@ from fabric.colors import green, red
 
 
 ####################################################################
-# 			     Cogenda App Auto Deployment                    #
+# 			     Cogenda App Auto Deployment                       #
 ####################################################################
 # Internal variables
 app_path = "/home/ubuntu/apps/cogenda-web"
@@ -24,8 +24,6 @@ def login(user, host):
     env.user = user
     env.key_filename = "~/.ssh/id_rsa"
     env.port = 22
-    #env.use_ssh_config = True
-    #env.password= secret
     run("uname -a")
 
 
@@ -40,7 +38,7 @@ def install():
 
 def nginx():
     """Configure Nginx service"""
-    nginx_conf = "nginx.conf"
+    nginx_conf = "etc/nginx.conf"
     path_nginx = "/etc/nginx/sites-available/"
     print(red("Configure Nginx web server"))
     with cd(path_nginx):

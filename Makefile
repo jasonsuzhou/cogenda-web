@@ -91,5 +91,7 @@ deploy:
 	@fab login:tim,85.159.208.213
 
 encrypt-key:
-	@./bin/travis_key_encrypt.sh etc/travis-private-key
+	@./bin/travis_encrypt_key.sh 
 
+encrypt-key-mac:
+	@./bin/travis_encrypt_key_mac.sh 

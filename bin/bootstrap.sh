@@ -4,7 +4,7 @@
 
 set -e
 
-cd /home/root/apps/cogenda-web
+cd /home/tim/apps/cogenda-web
 ./setenv.sh
 source venv/bin/activate
 
