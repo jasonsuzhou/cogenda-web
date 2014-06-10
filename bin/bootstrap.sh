@@ -9,7 +9,8 @@ COGENDA_DB="/home/tim/apps/cogenda-web/migration/cogenda-app.db"
 # stop cogenda application.
 PID_FILE="/tmp/cogenda-app.pid"
 if [ -f $PID_FILE ]; then
-    cat $PID_FILE | xargs kill -9 
+    ps -ef | grep 'cogenda-app' | grep -v "grep" | awk '{print $2}' | xargs kill
+    #cat $PID_FILE | xargs kill -9
 fi
 
 cd $COGENDA_WEB_PATH
