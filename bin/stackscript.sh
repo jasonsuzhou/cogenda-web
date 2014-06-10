@@ -74,6 +74,8 @@ EOF
 
 log "Make Basic Settings..."
 config_sshd 
+system_security_fail2ban
+log "Installed fail2ban"
 system_security_ufw_configure_basic
 /etc/init.d/ssh restart
 
