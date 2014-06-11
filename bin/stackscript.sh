@@ -31,20 +31,26 @@ function create_deployment_user {
   log "Added deploy user account"
 }
 
+function system_tunning{
+  log "Tunning system settings..."
+  update-alternatives --set editor /usr/bin/vim
+  sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config
+  sed -i 's/UsePAM  yes/UsePAM no/g' /etc/ssh/sshd_config
+  # Configure sshd
+  system_sshd_permitrootlogin "$SSHD_PERMITROOTLOGIN"
+  system_sshd_passwordauthentication "$SSHD_PASSWORDAUTH"
+  # Disable root user account if not used for login
+  if [ "SSHD_PERMITROOTLOGIN" == "No" ]; then
+      system_lock_user "root"
+      log "Locked root user account" 
+  fi
+  log "Finished configure sshd" 
+}
+
 
 
 function config_sshd {
-    # Configure sshd
-    system_sshd_permitrootlogin "$SSHD_PERMITROOTLOGIN"
-    system_sshd_passwordauthentication "$SSHD_PASSWORDAUTH"
-    touch /tmp/restart-ssh
-    log "Finished configure sshd" 
 
-    # Lock user account if not used for login
-    if [ "SSHD_PERMITROOTLOGIN" == "No" ]; then
-        system_lock_user "root"
-        log "Locked root user account" 
-    fi
 }
 
 function install_env {
@@ -73,11 +79,11 @@ $DEPLOY_USER ALL=(ALL) NOPASSWD: ALL
 EOF
 
 log "Make Basic Settings..."
-config_sshd 
+system_tunning 
 system_security_fail2ban
 log "Installed fail2ban"
 system_security_ufw_configure_basic
-/etc/init.d/ssh restart
+service ssh reload
 
 log "Install Dependencie Env..."
 install_env 
