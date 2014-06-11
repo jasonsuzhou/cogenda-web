@@ -69,7 +69,7 @@ def restart_app():
     if exists(PID_FILE):
         run("ps -ef | grep 'cogenda-app' | grep -v 'grep' | awk '{print $2}' | xargs kill")
     with cd(COGENDA_WEB_PATH):
-        run("make run_prod")
+        run("make run-prod")
     print(red("Restart Cogenda App succeed!"))
     
 
