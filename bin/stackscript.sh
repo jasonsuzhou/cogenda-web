@@ -89,4 +89,5 @@ log "Install Dependencie Env..."
 install_env 
 
 log "Restarting Services..."
-restartServices
+restart_services
+restart_initd_services
