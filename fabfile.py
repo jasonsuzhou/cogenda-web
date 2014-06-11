@@ -19,7 +19,7 @@ from contextlib import contextmanager as _contextmanager
 # Internal variables
 APP_PATH = "/home/tim/apps"
 COGENDA_WEB_PATH = "%s/cogenda-web" %(APP_PATH)
-TRAVIS_SSH_KEY = "~/.ssh/id_rsa_deploy"
+TRAVIS_SSH_KEY = "~/.ssh/id_rsa"
 DEPLOY_USER="tim"
 DEPLOY_HOST="85.159.208.213"
 COGENDA_REPO="https://github.com/cogenda/cogenda-web.git"
