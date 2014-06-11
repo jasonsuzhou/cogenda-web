@@ -76,7 +76,7 @@ def migrate_db():
 
 def restart_app():
     with virtualenv():
-        run("ps -ef | grep 'cogenda-app' | grep -v 'grep' | awk '{print $2}' | xargs kill")
+        run("ps -ef | grep 'cogenda-app' | grep -v 'grep' | awk '{print $2}' | xargs kill -9")
         with cd(COGENDA_WEB_PATH):
             run("make run-prod")
     print(red("Restart Cogenda App succeed!"))
