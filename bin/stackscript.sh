@@ -31,6 +31,7 @@ function create_deployment_user {
   log "Added deploy user account"
 }
 
+
 function system_tunning{
   log "Tunning system settings..."
   update-alternatives --set editor /usr/bin/vim
@@ -47,11 +48,6 @@ function system_tunning{
   log "Finished configure sshd" 
 }
 
-
-
-function config_sshd {
-
-}
 
 function install_env {
     apt-get -y install logrotate
