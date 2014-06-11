@@ -21,6 +21,7 @@ cogenda_web_path = "/home/tim/apps/cogenda-web"
 travis_ssh_key = "~/.ssh/id_rsa"
 deploy_user="tim"
 deploy_host="85.159.208.213"
+cogenda_repo="https://github.com/cogenda/cogenda-web.git"
 
 def prepare():
     """Prepare to login to production server."""
@@ -35,12 +36,15 @@ def install_app():
     Prepare server for installation:
     - install upstart service
     """
+    if not exists(app_path):
+        run("mkdir -p %s" %(app_path))
+
     if exists(cogenda_web_path):
         with cd(cogenda_web_path):
             run("git pull -f origin master")
     else:
         with cd(app_path):
-            run("git clone https://github.com/cogenda/cogenda-web.git")
+            run("git clone %s" %(cogenda_repo))
 
 def install_upstart():
     """ Install upstart service """
