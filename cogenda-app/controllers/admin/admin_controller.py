@@ -22,3 +22,31 @@ class AdminController(BaseController):
         #    print temp_user.username
         
         return self.render_template('admin/security/login-user.html', date=datetime.now(), hello=_('hello'))
+
+    @route('/admin/user-mgmt')
+    def userMgmt(self):
+
+        #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
+
+        """ testing SQLite and Jinja2 """
+        #user = User('Tim', '123', 'tang.jilong@gmail.com')
+        #cherrypy.request.db.add(user)
+        #all_users = User.list(cherrypy.request.db)
+        #for temp_user in all_users:
+        #    print temp_user.username
+
+        return self.render_template('admin/user-mgmt/user-container.html', date=datetime.now(), hello=_('hello'))
+
+    @route('/admin/resource-mgmt')
+    def resourceMgmt(self):
+
+        #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
+
+        """ testing SQLite and Jinja2 """
+        #user = User('Tim', '123', 'tang.jilong@gmail.com')
+        #cherrypy.request.db.add(user)
+        #all_users = User.list(cherrypy.request.db)
+        #for temp_user in all_users:
+        #    print temp_user.username
+
+        return self.render_template('admin/resource-mgmt/resource-container.html', date=datetime.now(), hello=_('hello'))

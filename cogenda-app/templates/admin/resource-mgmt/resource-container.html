@@ -1,0 +1,19 @@
+{% extends "admin/layout/layout.html" %}
+
+{% block main %}
+<div class="cl-mcont">
+    <div class="row">
+        <div class="tab-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab"><i class="fa fa-user"></i>Resource Management</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active cont" id="home">
+                    {% include "admin/resource-mgmt/resource-mgmt.html"%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
