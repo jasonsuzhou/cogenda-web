@@ -21,8 +21,6 @@ def main(settings_file):
     root_dir = abspath(dirname(init_files[0]))
     server = Server(root_dir=root_dir)
     dispatcher = register_routes(server)
-    register_jinja(server)
-
     try:
         server.start(settings_file, dispatcher)
     except KeyboardInterrupt:
