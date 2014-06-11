@@ -134,7 +134,9 @@ class BaseController(object):
         """ Integrate with Jinja2 & Babel"""
         app_name = self.settings.cogenda_app.app_name
         mo_dir = os.path.join(os.path.abspath(os.curdir),app_name ,'i18n')
+        print mo_dir
         locale = str(cherrypy.response.i18n.locale)
+        print locale
         translations = Translations.load(mo_dir, locale, app_name)
         env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=['jinja2.ext.i18n'])
         env.install_gettext_translations(translations)
