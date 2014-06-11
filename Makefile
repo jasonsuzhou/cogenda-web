@@ -88,7 +88,7 @@ clean-pyc:
 #  				     Production Server Deployment                  #
 ####################################################################
 deploy:
-	@fab prepare install_app nginx restart
+	@fab prepare install_app restart_app restart_nginx
 
 encrypt-key:
 	@./bin/travis_encrypt_key.sh 

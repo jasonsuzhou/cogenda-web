@@ -1,11 +1,11 @@
 #-*- coding:utf-8 -*-
 
 """
-- Install dependency 
-- Deploy files
-- Configure Nginx 
-- Restart web server
-- Restart Nginx
+Cogenda web application auto deployment tool.
+- Pull latest code from github.
+- Install dependency.
+- Configure cogenda app & Nginx settings.
+- Restart cogenda app server & Nginx server.
 """
 
 from fabric.api import *
@@ -16,60 +16,86 @@ from fabric.colors import green, red
 ####################################################################
 
 # Internal variables
-app_path = "/home/tim/apps"
-cogenda_web_path = "/home/tim/apps/cogenda-web"
-travis_ssh_key = "~/.ssh/id_rsa"
-deploy_user="tim"
-deploy_host="85.159.208.213"
-cogenda_repo="https://github.com/cogenda/cogenda-web.git"
+APP_PATH = "/home/tim/apps"
+COGENDA_WEB_PATH = "%s/cogenda-web" %(APP_PATH)
+TRAVIS_SSH_KEY = "~/.ssh/id_rsa"
+DEPLOY_USER="tim"
+DEPLOY_HOST="85.159.208.213"
+COGENDA_REPO="https://github.com/cogenda/cogenda-web.git"
+COGENDA_DB="%s/migration/cogenda-app.db" %(COGENDA_WEB_PATH)
+PID_FILE="/tmp/cogenda-app.pid"
 
 def prepare():
     """Prepare to login to production server."""
-    env.host_string = deploy_host 
-    env.user = deploy_user
-    env.key_filename = travis_ssh_key
+    env.host_string = DEPLOY_HOST 
+    env.user = DEPLOY_USER
+    env.key_filename = TRAVIS_SSH_KEY
     env.port = 22
+    print(red("Login Cogenda production server succeed!"))
 
 
 def install_app():
     """
     Prepare server for installation:
-    - install upstart service
+    - make app location
+    - install db-migrate
+    - install dependency libs
     """
-    if not exists(app_path):
-        run("mkdir -p %s" %(app_path))
+    if not exists(APP_PATH):
+        run("mkdir -p %s" %(APP_PATH))
 
-    if exists(cogenda_web_path):
-        with cd(cogenda_web_path):
+    if exists(COGENDA_WEB_PATH):
+        with cd(COGENDA_WEB_PATH):
             run("git pull -f origin master")
     else:
-        with cd(app_path):
-            run("git clone %s" %(cogenda_repo))
-
-def install_upstart():
-    """ Install upstart service """
-    upstart_path = "/etc/init"
-    with cd(cogenda_web_path):
-        run("sudo cp -f etc/cogenda-app.conf %s" %(upstart_path))
-    print(red("Auto configure upstart succeed!"))
+        with cd(APP_PATH):
+            run("git clone %s" %(COGENDA_REPO))
+    with cd(COGENDA_WEB_PATH):
+        run("./setenv.sh")
+        run("source venv/bin/activate")
+    print(red("Auto install cogenda app succeed!"))
 
 
-def nginx():
+def migrate_db():
+    with cd(COGENDA_WEB_PATH):
+        if exists(COGENDA_DB):
+            run("make db-migrate")
+        else:
+            run("make db-init")
+    print(red("Auto db migration succeed!"))
+
+
+def restart_app():
+    if exists(PID_FILE):
+        run("ps -ef | grep 'cogenda-app' | grep -v 'grep' | awk '{print $2}' | xargs kill")
+    with cd(COGENDA_WEB_PATH):
+        run("make run_prod")
+    print(red("Restart Cogenda App succeed!"))
+    
+
+def restart_nginx():
     """Configure Nginx service"""
-    nginx_conf_path = "%s/etc/nginx.conf" %(cogenda_web_path)
+    nginx_conf_path = "%s/etc/nginx.conf" %(COGENDA_WEB_PATH)
     path_nginx = "/etc/nginx/sites-available/"
     print(green("Configure Nginx web server"))
     with cd(path_nginx):
         run("sudo cp -f %s ./default" %(nginx_conf_path))
-    print(red("Auto configure Nginx server succeed!"))
-
-
-def restart():
-    """Restart cogenda-app service & Nginx service"""
-    print(green("Restarting the cogenda-app service & Nginx service..."))
-    #process = "cogenda-app"
-    #run("sudo restart %s" % process)
-    with cd("%s/bin/" %(cogenda_web_path)):
-        run("./bootstrap.sh")
     run("sudo service nginx restart")
-    print(red("Auto deploy cogenda web to production succeed!"))
+    print(red("Auto configure & restart Nginx server succeed!"))
+        
+
+#def restart_nginx():
+#    """Restart cogenda-app service & Nginx service"""
+#    print(green("Restarting the cogenda-app service & Nginx service..."))
+#    with cd("%s/bin/" %(COGENDA_WEB_PATH)):
+#        run("./bootstrap.sh")
+#    run("sudo service nginx restart")
+#    print(red("Auto deploy cogenda web to production succeed!"))
+#
+#
+#def install_upstart():
+#    """ Install upstart service """
+#    upstart_path = "/etc/init"
+#    with cd(COGENDA_WEB_PATH):
+#        run("sudo cp -f etc/cogenda-app.conf %s" %(upstart_path))
+#    print(red("Auto configure upstart succeed!"))
