@@ -37,34 +37,6 @@ def register_routes(server):
         controller.register_routes(dispatcher)
     return dispatcher
 
-def register_jinja(server):
-
-    '''
-    if not hasattr(server, '_static_hash'):
-        server._static_hash = {}
-
-    def static_url(filename):
-        if server.testing:
-            return filename
-
-        if filename in server._static_hash:
-            return server._static_hash[filename]
-
-        with open(os.path.join(server.static_folder, filename), 'r') as f:
-            content = f.read()
-            hsh = hashlib.md5(content).hexdigest()
-
-        server.logger.info('Generate %s md5sum: %s' % (filename, hsh))
-        prefix = server.config.get('SITE_STATIC_PREFIX', '/static/')
-        value = '%s%s?v=%s' % (prefix, filename, hsh[:5])
-        server._static_hash[filename] = value
-        return value
-
-    @server.context_processor
-    def register_context():
-        return dict(static_url=static_url,)
-    '''
-    
 def usage():
     print("usage: python cogenda-app/cogendap-app.py <settings_file>")
 
