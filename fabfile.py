@@ -61,7 +61,6 @@ def install_app():
             run("git clone %s" %(COGENDA_REPO))
     with cd(COGENDA_WEB_PATH):
         run("./setenv.sh")
-        #run("source venv/bin/activate")
     print(red("Auto install cogenda app succeed!"))
 
 
@@ -93,6 +92,7 @@ def restart_nginx():
         run("sudo cp -f %s ./default" %(nginx_conf_path))
     run("sudo service nginx restart")
     print(red("Auto configure & restart Nginx server succeed!"))
+    print(green("Auto deploy to production server successfully!"))
         
 
 #def restart_nginx():
