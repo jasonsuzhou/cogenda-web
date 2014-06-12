@@ -50,7 +50,7 @@ function system_tunning{
 
 
 function install_env {
-    apt-get -y install logrotate
+#    apt-get -y install logrotate
     apt-get -y install git-core 
     apt-get -y install sqlite3 libsqlite3-dev
     apt-get -y install python-dev

@@ -1,23 +1,24 @@
-# Makefile for cogenda web 
+# Makefile for cogenda web application
 
 .PHONY: help
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo ""
-	@echo "  run           to run web server on local env"
-	@echo "  db-init       to initial SQLite databse file by schema"
-	@echo "  db-migrate    to sync and migrate database schema."
-	@echo "  db-version    to verify database schema version."
-	@echo "  db-schema     to generate database schema change set."
-	@echo "  db-script     to generate SQL schema changes."
-	@echo "  db-fixture    to load application initial data into SQLite3."
-	@echo "  babel-extract to extract i18n messages from *.py and template files."
-	@echo "  babel-update  to update i18n messages from message.pot *.po files."
-	@echo "  babel-compile to update i18n messages from *.po file to *.mo files."
-	@echo "  deploy        to deploy application to production evironment."
-	@echo "  encrypt-key   to encrypt sensitive data & private keys in travis ci."
-	@echo "  clean-pyc     to clean project *.pyc files."
+	@echo "  run               to run web server on local env"
+	@echo "  db-init           to initial SQLite databse file by schema"
+	@echo "  db-migrate        to sync and migrate database schema."
+	@echo "  db-version        to verify database schema version."
+	@echo "  db-schema         to generate database schema change set."
+	@echo "  db-script         to generate SQL schema changes."
+	@echo "  db-fixture        to load application initial data into SQLite3."
+	@echo "  babel-extract     to extract i18n messages from *.py and template files."
+	@echo "  babel-update      to update i18n messages from message.pot *.po files."
+	@echo "  babel-compile     to update i18n messages from *.po file to *.mo files."
+	@echo "  deploy            to deploy application to production evironment."
+	@echo "  encrypt-key       to encrypt sensitive data & private keys in travis ci."
+	@echo "  encrypt-key-mac   to encrypt sensitive data & private keys in travis ci on Mac OSX."
+	@echo "  clean-pyc         to clean project *.pyc files."
 	@echo ""
 
 ####################################################################

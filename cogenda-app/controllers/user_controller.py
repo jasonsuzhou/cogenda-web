@@ -32,5 +32,3 @@ class UserController(BaseController):
         """Testing download & url with parameter"""
         log.debug("Download resource path: %s" % filepath);
         return serve_file(filepath, "application/x-download", "attachment")
-
-
