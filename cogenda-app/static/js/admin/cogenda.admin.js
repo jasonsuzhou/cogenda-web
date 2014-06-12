@@ -84,8 +84,27 @@ function ready_navigation_menu() {
  * Document ready js for user management page.
  */
 function ready_user_mgmt() {
+    var columns = [
+        {
+          "sTitle": "ID",
+          "mData": "id"
+        },
+        {
+          "sTitle": "Name",
+          "mData": "username"
+        },
+        {
+          "sTitle": "Email",
+          "mData": "email"
+        },
+        {
+          "sTitle": "Active",
+          "mData": "active"
+        }
+    ];
+
     // Ready common datatable.
-    ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", function(datatable) {
+    ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", columns, function(datatable) {
         // Add new user in datatable.
         $("#user-mgmt-proceed").click(function(e) {
             datatable.fnAddData(["Trident-new", "Internet Explorer 4.0", "Win 95+", "4", "X"]);
@@ -202,20 +221,39 @@ function ready_common_searchable_multi_select() {
  *
  * @param datatable identifier
  */
-function ready_common_datatable(datatable_id, url, fnDatatableCallback) {
+function ready_common_datatable(datatable_id, url, columns, fnDatatableCallback) {
+    var _columns = columns;
     $.ajax({
         "dataType": 'json',
         "type": "GET",
         "url": url,
-        "success": function(result) {
+        "success": function(result, _columns) {
             console.log(result);
+
+            var data = [
+                    {
+                        "username": "Tim",
+                        "email": "tang.jilong@gmail.com",
+                        "active": true,
+                        "password": "123",
+                        "id": 1
+                    },
+                    {
+                        "username": "Tim",
+                        "email": "tang.jilong@gmail.com",
+                        "active": true,
+                        "password": "123",
+                        "id": 2
+                    }
+            ]
+
             $('.table-responsive').html('<table class="table table-bordered" id="' + datatable_id + '"></table>');
             var datatable_id = "#" + datatable_id;
 
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
-                "aaData": result.aaData,
-                "aoColumns": result.aoColumns
+                "aaData": data,
+                "aoColumns": _columns
             });
 
             // Add/remove class to a row when clicked on
