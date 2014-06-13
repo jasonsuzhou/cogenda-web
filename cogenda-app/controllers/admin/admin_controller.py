@@ -6,7 +6,6 @@ from datetime import datetime
 from models import User
 import cherrypy
 from lib.i18ntool import ugettext as _
-from json import dumps
 
 class AdminController(BaseController):
 
@@ -26,11 +25,11 @@ class AdminController(BaseController):
 
     @route('/admin/user-mgmt')
     def user_mgmt(self):
-        return self.render_template('admin/user-mgmt/user-container.html', date=datetime.now(), hello=_('hello'))
+        return self.render_template('admin/user-mgmt/user-container.html')
 
     @route('/admin/resource-mgmt')
     def resource_mgmt(self):
-        return self.render_template('admin/resource-mgmt/resource-container.html', date=datetime.now(), hello=_('hello'))
+        return self.render_template('admin/resource-mgmt/resource-container.html')
 
     @route('/admin/user-mgmt-data')
     @cherrypy.tools.json_out()
@@ -46,10 +45,9 @@ class AdminController(BaseController):
         """ Returns a JSON representation of an SQLAlchemy-backed object.
         """
         json = {}
-        #json['aaData'] = {}
 
         columns = model._sa_class_manager.mapper.mapped_table.columns
         for col in columns:
             json[col.name] = getattr(model, col.name)
 
-        return dumps([json])
+        return json

@@ -12,10 +12,6 @@ $(document).ready(function() {
             loading.appendTo(parent);
             loading.fadeIn(0);
             var $clink = li.children[0];
-            History.pushState({
-                state: 1,
-                rand: Math.random()
-            }, null, $clink.href);
             $('ul.cl-vnavigation li.active').removeClass('active');
             $(li).addClass('active');
         });
@@ -209,29 +205,12 @@ function ready_common_datatable(datatable_id, url, columns, fnDatatableCallback)
         "success": function(result) {
             console.log(result);
 
-            var data = [
-                    {
-                        "username": "Tim",
-                        "email": "tang.jilong@gmail.com",
-                        "active": true,
-                        "password": "123",
-                        "id": 1
-                    },
-                    {
-                        "username": "Tim",
-                        "email": "tang.jilong@gmail.com",
-                        "active": true,
-                        "password": "123",
-                        "id": 2
-                    }
-            ]
-
             $('.table-responsive').html('<table class="table table-bordered" id="' + datatable_id + '"></table>');
             var datatable_id = "#" + datatable_id;
 
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
-                "aaData": data,
+                "aaData": result,
                 "aoColumns": columns
             });
 
