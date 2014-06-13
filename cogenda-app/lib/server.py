@@ -78,7 +78,8 @@ class Server(object):
                 '/static/js': {
                     'tools.gzip.mime_types': ['application/javascript'],
                     'tools.staticdir.dir': 'js'},
-                '/static/img': {'tools.staticdir.dir': 'images'}
+                '/static/img': {'tools.staticdir.dir': 'images'},
+                '/static/fonts': {'tools.staticdir.dir': 'fonts'}
                 }
         return conf
 

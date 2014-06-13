@@ -1,25 +1,4 @@
 $(document).ready(function() {
-
-    // Establish history variable
-    var History = window.History;
-    var State = History.getState();
-
-    // Bind state change.
-    History.Adapter.bind(window, 'statechange', function() {
-        var State = History.getState();
-        $.ajax({
-            url: State.url,
-            success: function(msg) {
-                $('#main-content').html($(msg).find('#main-content').html());
-                $('#main-content').fadeIn();
-                var newTitle = $(msg).filter('title').text();
-                $('title').text(newTitle);
-                ready_optimized_page(window.location.pathname);
-                //$('#loading').remove();
-            }
-        });
-    });
-
     // Handle menu click event.
     $('ul.cl-vnavigation li').each(function(index, li) {
         $(li).click(function(e) {
@@ -222,12 +201,12 @@ function ready_common_searchable_multi_select() {
  * @param datatable identifier
  */
 function ready_common_datatable(datatable_id, url, columns, fnDatatableCallback) {
-    var _columns = columns;
+    //var _columns = columns;
     $.ajax({
         "dataType": 'json',
         "type": "GET",
         "url": url,
-        "success": function(result, _columns) {
+        "success": function(result) {
             console.log(result);
 
             var data = [
@@ -253,7 +232,7 @@ function ready_common_datatable(datatable_id, url, columns, fnDatatableCallback)
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
                 "aaData": data,
-                "aoColumns": _columns
+                "aoColumns": columns
             });
 
             // Add/remove class to a row when clicked on
