@@ -91,6 +91,14 @@ function ready_user_mgmt() {
             fnRemoveSelected(datatable);
         });
     });
+
+    // Read select2
+    ready_common_select2();
+
+    // Ready multi-select
+    ready_common_searchable_multi_select();
+
+    ready_common_switch();
 }
 
 /**
