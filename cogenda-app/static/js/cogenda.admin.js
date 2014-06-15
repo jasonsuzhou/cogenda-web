@@ -6,12 +6,12 @@ $(document).ready(function() {
             if (sub_menus.length > 0) {
                 return;
             }
-            e.preventDefault();
             var parent = $('#main-content');
             var loading = $('<div id="loading" class="loading"><i class="fa fa-spinner"></i></div>');
             loading.appendTo(parent);
             loading.fadeIn(0);
             var $clink = li.children[0];
+            self.location$clink.href;
             $('ul.cl-vnavigation li.active').removeClass('active');
             $(li).addClass('active');
         });
