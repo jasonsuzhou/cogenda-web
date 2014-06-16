@@ -83,12 +83,30 @@ function ready_user_mgmt() {
     // Ready common datatable.
     ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", columns, function(datatable) {
         // Add new user in datatable.
-        $("#user-mgmt-proceed").click(function(e) {
-            datatable.fnAddData(["Trident-new", "Internet Explorer 4.0", "Win 95+", "4", "X"]);
+        $("#add").click(function(e) {
+            console.log("add here.......");
+        });
+
+        $("#edit").click(function(e) {
+
+            $('#user-new-modal #name').val("Test");
+            $('#user-new-modal #password').val("Test");
+            $('#user-new-modal #company').val("Test");
+            $('#user-new-modal #email').val("Test");
+            $('#user-new-modal #mobile').val("Test");
+            //$('#user-new-modal #role').val(‘1’);
+            $('#user-new-modal #active').attr('checked', false);
+            $('#user-new-modal #notes').val("Test");
+
+
+            $('#user-new-modal').modal('show');
+            console.log($('#user-new-modal'));
+
+            // datatable.$('tr.row_selected')
         });
 
         // Delete user in datatable.
-        $("#user-mgmt-delete").click(function(e) {
+        $("#delete").click(function(e) {
             e.preventDefault();
             fnRemoveSelected(datatable);
         });
@@ -102,6 +120,15 @@ function ready_user_mgmt() {
 
     // Ready switch
     ready_common_switch();
+
+    // Role > Resource Owner > Resource select
+    $('#role').change(function() {
+        var selectedRole = $(this).children('option:selected').val();
+        if(selectedRole === '2') // 'Resource Owner'
+            $('#resource-container').show();
+        else
+            $('#resource-container').hide();
+    });
 }
 
 /**

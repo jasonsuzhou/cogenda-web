@@ -8,49 +8,34 @@
             </div>
             <form id="new-modal" class="" style="border-radius: 0px;" action="#">
                 <div class="modal-body form">
-                    <div class="form-group">
+                    <div class="form-group row">
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">User Name</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                <input type="text" name="nick" parsley-trigger="change" parsley-error-container="#nick-error" required placeholder="Username" class="form-control">
-                            </div>
+                            <input type="text" id="name" required placeholder="Username" class="form-control">
                             <div id="nick-error"></div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                <input id="pass1" parsley-error-container="#password-error" placeholder="Password" required class="form-control">
-                            </div>
+                            <input id="password" placeholder="Password" required class="form-control">
                             <div id="password-error"></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-6 col-md-6">
-                            <label class="control-label">E-mail</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="email" name="email" parsley-trigger="change" parsley-error-container="#email-error" required placeholder="E-mail" class="form-control">
-                            </div>
-                            <div id="email-error"></div>
-                        </div>
+                    <div class="form-group row">
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">Company</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="company" name="company" parsley-trigger="change" parsley-error-container="#company-error" required placeholder="Company" class="form-control">
-                            </div>
+                            <input id="company" required placeholder="Company" class="form-control">
                             <div id="company-error"></div>
                         </div>
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">E-mail</label>
+                            <input id="email" required placeholder="E-mail" class="form-control">
+                            <div id="email-error"></div>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">Mobile</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="mobile" name="mobile" parsley-trigger="change" parsley-error-container="#mobile-error" required placeholder="Mobile" class="form-control">
-                            </div>
+                            <input id="mobile" placeholder="Mobile" class="form-control">
                             <div id="mobile-error"></div>
                         </div>
                         <div class="col-sm-6 col-md-6">
@@ -62,40 +47,42 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="form-group no-margin">
-                                <label class="control-label">Resource</label>
-                                <select id="resource" class="searchable">
-                                    <option value="1">Resource01</option>
-                                    <option value="2">Resource02</option>
-                                    <option value="3">Resource03</option>
-                                </select>
-                            </div>
+                    <div id="resource-container" style="display: none;" class="form-group row">
+                        <div class="form-group col-md-12 no-margin">
+                            <label class="control-label">Resource</label>
+                            <select id="resource" class="searchable">
+                                <option value="1">Resource01</option>
+                                <option value="2">Resource02</option>
+                                <option value="3">Resource03</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="form-group col-md-12 no-margin">
-                                <label>Active</label>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="form-group col-md-12 no-margin">
+                                    <label>Active</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row no-margin-y">
-                            <div class="form-group col-md-12 no-margin">
-                                <div class="switch">
-                                    <input id="enabled" type="checkbox" checked>
+                            <div class="row no-margin-y">
+                                <div class="form-group col-md-12 no-margin">
+                                    <div class="switch">
+                                        <input id="enabled" type="checkbox" checked>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Notes</label>
-                        <textarea id="notes" class="form-control" placeholder="Notes"></textarea>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label class="control-label">Notes</label>
+                            <textarea id="notes" class="form-control" placeholder="Notes"></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button id="add" type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">Create</button>
                     <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">Create</button>
                 </div>
             </form>
         </div>
