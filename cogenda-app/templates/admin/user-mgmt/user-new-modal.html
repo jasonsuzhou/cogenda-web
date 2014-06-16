@@ -1,6 +1,6 @@
 <!-- Nifty Modal -->
 <div id="user-new-modal" class="modal fade colored-header in" role="dialog" tabindex="-1" style="display: none;" aria-hidden="false">
-    <div class="modal-dialog colored-header modal-custom-width-3">
+    <div class="modal-dialog colored-header custom-width">
         <div class="md-content">
             <div class="modal-header">
                 <h3>Create User</h3>
@@ -9,60 +9,70 @@
             <form id="new-modal" class="" style="border-radius: 0px;" action="#">
                 <div class="modal-body form">
                     <div class="form-group">
-                        <label class="control-label">User Name</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" name="nick" parsley-trigger="change" parsley-error-container="#nick-error" required placeholder="Username" class="form-control">
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">User Name</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" name="nick" parsley-trigger="change" parsley-error-container="#nick-error" required placeholder="Username" class="form-control">
+                            </div>
+                            <div id="nick-error"></div>
                         </div>
-                        <div id="nick-error"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Password</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                            <input id="pass1" parsley-error-container="#password-error" placeholder="Password" required class="form-control">
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <input id="pass1" parsley-error-container="#password-error" placeholder="Password" required class="form-control">
+                            </div>
+                            <div id="password-error"></div>
                         </div>
-                        <div id="password-error"></div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">E-mail</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input type="email" name="email" parsley-trigger="change" parsley-error-container="#email-error" required placeholder="E-mail" class="form-control">
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">E-mail</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="email" name="email" parsley-trigger="change" parsley-error-container="#email-error" required placeholder="E-mail" class="form-control">
+                            </div>
+                            <div id="email-error"></div>
                         </div>
-                        <div id="email-error"></div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Company</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input type="company" name="company" parsley-trigger="change" parsley-error-container="#company-error" required placeholder="Company" class="form-control">
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">Company</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="company" name="company" parsley-trigger="change" parsley-error-container="#company-error" required placeholder="Company" class="form-control">
+                            </div>
+                            <div id="company-error"></div>
                         </div>
-                        <div id="company-error"></div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Mobile</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input type="mobile" name="mobile" parsley-trigger="change" parsley-error-container="#mobile-error" required placeholder="Mobile" class="form-control">
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">Mobile</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                <input type="mobile" name="mobile" parsley-trigger="change" parsley-error-container="#mobile-error" required placeholder="Mobile" class="form-control">
+                            </div>
+                            <div id="mobile-error"></div>
                         </div>
-                        <div id="mobile-error"></div>
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">Role</label>
+                            <select id="role" class="select2">
+                                <option value="1">Administrator</option>
+                                <option value="2">Resource Owner</option>
+                                <option value="3">Resource</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Role</label>
-                        <select id="role" class="select2">
-                            <option value="1">Administrator</option>
-                            <option value="2">Resource Owner</option>
-                            <option value="3">Resource</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Resource</label>
-                        <select id="resource" class="searchable">
-                            <option value="1">Resource01</option>
-                            <option value="2">Resource02</option>
-                            <option value="3">Resource03</option>
-                        </select>
+                        <div class="row">
+                            <div class="form-group no-margin">
+                                <label class="control-label">Resource</label>
+                                <select id="resource" class="searchable">
+                                    <option value="1">Resource01</option>
+                                    <option value="2">Resource02</option>
+                                    <option value="3">Resource03</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="row">

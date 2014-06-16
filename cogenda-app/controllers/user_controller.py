@@ -3,10 +3,11 @@
 
 from lib.controller import BaseController, route
 from datetime import datetime
-from models import User
+from models import User, Resource
 import cherrypy
 from lib.i18ntool import ugettext as _
 from cherrypy.lib.static import serve_file
+from datetime import datetime
 
 import logging 
 log = logging.getLogger(__name__)
@@ -24,6 +25,18 @@ class UserController(BaseController):
         all_users = User.list(cherrypy.request.db)
         for temp_user in all_users:
             print temp_user.username
+
+        resource = Resource('jd.setup.v001.doc', '1', 'AliYun', 'http://asdfsafsadfsdafsdafsdafsdafsadfsdaf', 1, datetime(2014,6,16,12,12,12), 1)
+        cherrypy.request.db.add(resource)
+        all_resources = Resource.list(cherrypy.request.db)
+        for temp_user in all_resources:
+            print temp_user.name
+
+        resource = Resource('jd.setup.v001.doc', '1', 'AWS S', 'http://12433456346346343456346534565434563', 1, datetime(2014,6,16,12,12,12), 1)
+        cherrypy.request.db.add(resource)
+        all_resources = Resource.list(cherrypy.request.db)
+        for temp_user in all_resources:
+            print temp_user.name
         
         return self.render_template('index.html', date=datetime.now(), hello=_('hello'))
 

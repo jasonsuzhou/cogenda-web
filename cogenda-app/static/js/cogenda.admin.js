@@ -1,3 +1,5 @@
+var editor; // use a global for the submit and return data rendering in the examples
+
 $(document).ready(function() {
     // Handle menu click event.
     $('ul.cl-vnavigation li').each(function(index, li) {
@@ -65,7 +67,7 @@ function ready_user_mgmt() {
           "mData": "id"
         },
         {
-          "sTitle": "Name",
+          "sTitle": "User Name",
           "mData": "username"
         },
         {
@@ -91,6 +93,15 @@ function ready_user_mgmt() {
             fnRemoveSelected(datatable);
         });
     });
+
+    // Read select2
+    ready_common_select2();
+
+    // Ready multi-select
+    ready_common_searchable_multi_select();
+
+    // Ready switch
+    ready_common_switch();
 }
 
 /**
@@ -98,20 +109,130 @@ function ready_user_mgmt() {
  * TODO: Integrate with new datatable fw.
  */
 function ready_resource_mgmt() {
+    var columns = [
+        {
+          "sTitle": "ID",
+          "mData": "id"
+        },
+        {
+          "sTitle": "Resource Name",
+          "mData": "name"
+        },
+        {
+          "sTitle": "Vendor",
+          "mData": "vendor"
+        },
+        {
+          "sTitle": "Upload Date",
+          "mData": "upload_date"
+        },
+        {
+          "sTitle": "Status",
+          "mData": "status"
+        },
+        {
+          "sTitle": "Type",
+          "mData": "type"
+        },
+        {
+          "sTitle": "Active",
+          "mData": "active"
+        }
+    ];
+
     // Ready common datatable.
-    ready_common_datatable('resource-mgmt-datatable', "/admin/resource-mgmt-data", function(datatable) {
+    ready_common_datatable('resource-mgmt-datatable', "/admin/resource-mgmt-data", columns, function(datatable) {});
 
-        // Add new resource in datatable.
-        $("#resource-mgmt-proceed").click(function(e) {
-            datatable.fnAddData(["Trident-new", "Internet Explorer 4.0", "Win 95+", "4", "X"]);
-        });
+    /*
+    editor = new $.fn.dataTable.Editor( {
+        ajax: "/admin/resource-mgmt-data",
+        table: "#resource-mgmt-datatable",
+        fields: [ {
+                label: "ID",
+                name: "id"
+            }, {
+                label: "Resource Name",
+                name: "name"
+            }, {
+                label: "Vendor",
+                name: "vendor"
+            }, {
+                label: "Upload Date",
+                name: "upload_date"
+            }, {
+                label: "Status",
+                name: "status"
+            }, {
+                label: "Type",
+                name: "type"
+            }, {
+                label: "Active",
+                name: "active"
+            }
+        ]
+    } );
 
-        // Delete resource in datatable.
-        $("#resource-mgmt-delete").click(function(e) {
-            e.preventDefault();
-            fnRemoveSelected(datatable);
-        });
-    });
+    editor.on( 'onOpen', function () {
+            // Listen for a tab key event
+            $(document).on( 'keydown.editor', function ( e ) {
+                if ( e.keyCode === 9 ) {
+                    e.preventDefault();
+
+                    // Find the cell that is currently being edited
+                    var cell = $('div.DTE').parent();
+
+                    if ( e.shiftKey && cell.prev().length && cell.prev().index() !== 0 ) {
+                        // One cell to the left (skipping the first column)
+                        cell.prev().click();
+                    }
+                    else if ( e.shiftKey ) {
+                        // Up to the previous row
+                        cell.parent().prev().children().last(0).click();
+                    }
+                    else if ( cell.next().length ) {
+                        // One cell to the right
+                        cell.next().click();
+                    }
+                    else {
+                        // Down to the next row
+                        cell.parent().next().children().eq(1).click();
+                    }
+                }
+            } );
+        } ).on( 'onClose', function () {
+            $(document).off( 'keydown.editor' );
+        } );
+
+    $('#resource-mgmt-datatable').on( 'click', 'tbody td:not(:first-child)', function (e) {
+        editor.inline( this, {
+            submitOnBlur: true
+        } );
+    } );
+
+    $('#resource-mgmt-datatable').DataTable( {
+        dom: "Tfrtip",
+        ajax: "/admin/resource-mgmt-data",
+        columns: [
+            { data: "id" },
+            { data: "name" },
+            { data: "vendor" },
+            { data: "upload_date" },
+            { data: "status" },
+            { data: "type" },
+            { data: "active" }
+        ],
+        order: [ 1, 'asc' ],
+        tableTools: {
+            sRowSelect: "os",
+            sRowSelector: 'td:first-child',
+            aButtons: [
+                { sExtends: "editor_create", editor: editor },
+                { sExtends: "editor_edit",   editor: editor },
+                { sExtends: "editor_remove", editor: editor }
+            ]
+        }
+    } );
+    */
 }
 
 //***************************************************************

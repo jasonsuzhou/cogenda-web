@@ -3,7 +3,7 @@
 
 from lib.controller import BaseController, route
 from datetime import datetime
-from models import User
+from models import User, Resource
 import cherrypy
 from lib.i18ntool import ugettext as _
 
@@ -41,6 +41,17 @@ class AdminController(BaseController):
             users_in_json.append(self.to_json(user))
         return users_in_json
 
+    @route('/admin/resource-mgmt-data')
+    @cherrypy.tools.json_out()
+    def resource_mgmt_data(self):
+        all_resources = Resource.list(cherrypy.request.db)
+        resources_in_json = []
+        #print Resource
+        for resource in all_resources:
+            print resources_in_json
+            resources_in_json.append(self.to_json(resource))
+        return resources_in_json
+
     def to_json(self, model):
         """ Returns a JSON representation of an SQLAlchemy-backed object.
         """
@@ -48,6 +59,9 @@ class AdminController(BaseController):
 
         columns = model._sa_class_manager.mapper.mapped_table.columns
         for col in columns:
-            json[col.name] = getattr(model, col.name)
+            if col.name == 'upload_date':
+                json[col.name] = datetime.strftime(getattr(model, col.name), '%Y-%m-%d %H:%M:%S')
+            else:
+                json[col.name] = getattr(model, col.name)
 
         return json
