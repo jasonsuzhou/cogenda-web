@@ -56,7 +56,7 @@ db-version:
 	@python manage.py version
 
 db-script:
-	@python manage.py script
+	@python manage.py script $(ACTION)
 
 db-fixture:
 	@sqlite3 ${cogenda_db} < ${cogenda_fixture}
