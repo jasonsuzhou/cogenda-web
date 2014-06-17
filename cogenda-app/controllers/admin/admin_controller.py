@@ -31,7 +31,7 @@ class AdminController(BaseController):
     def resource_mgmt(self):
         return self.render_template('admin/resource-mgmt/resource-container.html')
 
-    @route('/admin/user-mgmt-data')
+    @route('/admin/users')
     @cherrypy.tools.json_out()
     def user_mgmt_data(self):
         all_users = User.list(cherrypy.request.db)
@@ -40,19 +40,27 @@ class AdminController(BaseController):
             users_in_json.append(self.jsonify_model(user))
         return users_in_json
 
-    @route('/admin/user-mgmt-data/:uid')
+    @route('/admin/users/:uid')
     @cherrypy.tools.json_out()
     def get_single_user(self, uid):
         user = User.get_by_uid(cherrypy.request.db, uid)
-        users_in_json = self.jsonify_model(user)
-        return users_in_json
+        user_in_json = self.jsonify_model(user)
+        return user_in_json
 
-    @route('/admin/user-mgmt-data')
+    @route('/admin/users')
     @cherrypy.tools.json_in()
-    def create_user(self, users_in_json):
-        print users_in_json
+    def create_user(self, user_in_json):
+        print "MMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+        print user_in_json
         #user = User()
         #cherrypy.request.db.add(user)
+
+    @route('/admin/users/:uid')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def DELETE(self, uid):
+        count = User.delete_by_uid(uid)
+        print '>>>>>>>>>>>>>>>>>>>>'+count
+        return count
 
     @route('/admin/resource-mgmt-data')
     @cherrypy.tools.json_out()

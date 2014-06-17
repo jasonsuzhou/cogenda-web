@@ -122,7 +122,7 @@ function ready_user_mgmt() {
     });
 
     // Ready common datatable.
-    ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", columns, hiddenColumns, function(datatable) {
+    ready_common_datatable("userstable", "/admin/users", columns, hiddenColumns, function(datatable) {
         // Add new user in datatable.
         $("#add").click(function(e) {
             reset_user_create_modal();
@@ -141,7 +141,7 @@ function ready_user_mgmt() {
                 $.ajax({
                     "dataType": 'json',
                     "type": "GET",
-                    "url": '/admin/user-mgmt-data/' + selectedRowID,
+                    "url": '/admin/users/' + selectedRowID,
                     "success": function(result) {
                         $('#user-new-modal #name').val(result.username);
                         $('#user-new-modal #password').val(result.password);
@@ -151,11 +151,9 @@ function ready_user_mgmt() {
                         //$('#user-new-modal #role').val(‘1’);
                         $('#user-new-modal #active').attr('checked', false);
                         $('#user-new-modal #notes').val(result.notes);
-                }
-            });
-
-            $('#user-new-modal').modal('show');
-            console.log($('#user-new-modal'));
+                    }
+                });
+                $('#user-new-modal').modal('show');
             } else {
                 alert("Selected more than one object!");
             }
@@ -164,7 +162,21 @@ function ready_user_mgmt() {
         // Delete user in datatable.
         $("#delete").click(function(e) {
             e.preventDefault();
-            fnRemoveSelected(datatable);
+
+            var selectedRows = datatable.$('tr.row_selected').length;
+            if (selectedRows > 0) {
+                var selectedRowID = datatable.$('tr.row_selected')[0].cells[0].childNodes[0].textContent;
+                $.ajax({
+                    "dataType": 'json',
+                    "type": "DELETE",
+                    "url": '/admin/users/' + selectedRowID,
+                    "success": function(result) {
+                        console.log(">>>>>>>>>>>>delete successfully");
+                    }
+                });
+
+                fnRemoveSelected(datatable);
+            }
         });
     });
 
@@ -190,13 +202,16 @@ function save_user() {
     };
 
     console.log(user);
-    /*
+
     $.ajax({
         "dataType": 'json',
-        "type": "GET",
-        "url": '/admin/user-mgmt-data/' + selectedRowID,
-        "success": function(result) {};
-        */
+        "data": user,
+        "type": "POST",
+        "url": '/admin/users',
+        "success": function(result) {
+            console.log('>>>>>>>>>success!');
+        }
+    });
 }
 
 function reset_user_create_modal() {

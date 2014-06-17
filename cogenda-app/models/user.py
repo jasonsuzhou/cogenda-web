@@ -43,8 +43,14 @@ class User(Base):
 
     @staticmethod
     def get_by_uid(session, uid):
-        return session.query(User).filter(User.id==uid).first()
+        #return session.query(User).filter(User.id==uid).first()
+        return session.query(User).get(uid)
     
     @staticmethod
     def list(session):
         return session.query(User).all()
+
+    @staticmethod
+    def delete_by_uid(session, uid):
+        session.delete().query(User).get(uid)
+        session.commit()

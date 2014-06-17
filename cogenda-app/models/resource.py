@@ -28,14 +28,6 @@ class Resource(Base):
         self.status = status
         self.uploaded_date = uploaded_date
         self.active = active
-
-    @staticmethod
-    def is_active(self):
-        return self.active
-
-    @staticmethod
-    def get_by_uid(session, uid):
-        return session.query(Resource).filter(Resource.id==uid).first()
     
     @staticmethod
     def list(session):
