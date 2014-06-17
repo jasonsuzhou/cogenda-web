@@ -3,7 +3,7 @@
     <div class="modal-dialog colored-header custom-width">
         <div class="md-content">
             <div class="modal-header">
-                <h3>Create User</h3>
+                <h3><label id="title">Create User</label></h3>
                 <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form id="new-modal" class="" style="border-radius: 0px;" action="#">
@@ -41,9 +41,9 @@
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">Role</label>
                             <select id="role" class="select2">
-                                <option value="1">Administrator</option>
+                                <option value="1">Resource</option>
                                 <option value="2">Resource Owner</option>
-                                <option value="3">Resource</option>
+                                <option value="3">Administrator</option>
                             </select>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="add" type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">Create</button>
+                    <button id="save" type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">Create</button>
                     <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Cancel</button>
                 </div>
             </form>

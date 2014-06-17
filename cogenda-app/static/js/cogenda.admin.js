@@ -13,7 +13,7 @@ $(document).ready(function() {
             loading.appendTo(parent);
             loading.fadeIn(0);
             var $clink = li.children[0];
-            self.location$clink.href;
+            self.location.href = $clink;
             $('ul.cl-vnavigation li.active').removeClass('active');
             $(li).addClass('active');
         });
@@ -71,8 +71,20 @@ function ready_user_mgmt() {
           "mData": "username"
         },
         {
+          "sTitle": "Company",
+          "mData": "company"
+        },
+        {
           "sTitle": "Email",
           "mData": "email"
+        },
+        {
+          "sTitle": "Mobile",
+          "mData": "mobile"
+        },
+        {
+          "sTitle": "Role",
+          "mData": "role"
         },
         {
           "sTitle": "Active",
@@ -80,29 +92,55 @@ function ready_user_mgmt() {
         }
     ];
 
+
+    var hiddenColumns = [
+        {
+            "targets": [2],
+            "visible": false,
+            "searchable": false
+        }
+    ]
+
     // Ready common datatable.
-    ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", columns, function(datatable) {
+    ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", columns, hiddenColumns, function(datatable) {
         // Add new user in datatable.
         $("#add").click(function(e) {
+            reset_user_create_modal();
             console.log("add here.......");
         });
 
         $("#edit").click(function(e) {
+            // Reset title/button
+            $('#title').text("Edit User");
+            $('#save').text("Save");
 
-            $('#user-new-modal #name').val("Test");
-            $('#user-new-modal #password').val("Test");
-            $('#user-new-modal #company').val("Test");
-            $('#user-new-modal #email').val("Test");
-            $('#user-new-modal #mobile').val("Test");
-            //$('#user-new-modal #role').val(‘1’);
-            $('#user-new-modal #active').attr('checked', false);
-            $('#user-new-modal #notes').val("Test");
-
+            var selectedRows = datatable.$('tr.row_selected').length;
+            if (selectedRows === 0) {
+                alert("Select one object to view!");
+            } else if (selectedRows === 1) {
+                var selectedRowID = datatable.$('tr.row_selected')[0].cells[0].childNodes[0].textContent;
+                $.ajax({
+                "dataType": 'json',
+                "type": "GET",
+                "url": '/admin/user-mgmt-data/' + selectedRowID,
+                "success": function(result) {
+                    console.log(result);
+                    $('#user-new-modal #name').val(result.username);
+                    $('#user-new-modal #password').val(result.password);
+                    $('#user-new-modal #company').val(result.company);
+                    $('#user-new-modal #email').val(result.email);
+                    $('#user-new-modal #mobile').val(result.mobile);
+                    //$('#user-new-modal #role').val(‘1’);
+                    $('#user-new-modal #active').attr('checked', false);
+                    $('#user-new-modal #notes').val(result.notes);
+                }
+            });
 
             $('#user-new-modal').modal('show');
             console.log($('#user-new-modal'));
-
-            // datatable.$('tr.row_selected')
+            } else {
+                alert("Selected more than one object!");
+            }
         });
 
         // Delete user in datatable.
@@ -131,6 +169,22 @@ function ready_user_mgmt() {
     });
 }
 
+function reset_user_create_modal() {
+    // Reset title/button
+    $('#title').text("Create User");
+    $('#save').text("Create");
+
+    // Reset values here
+    $('#user-new-modal #name').val("");
+    $('#user-new-modal #password').val("");
+    $('#user-new-modal #company').val("");
+    $('#user-new-modal #email').val("");
+    $('#user-new-modal #mobile').val("");
+    //$('#user-new-modal #role').val(‘1’);
+    $('#user-new-modal #active').attr('checked', false);
+    $('#user-new-modal #notes').val("");
+}
+
 /**
  * Document ready js for resource management page.
  * TODO: Integrate with new datatable fw.
@@ -150,8 +204,8 @@ function ready_resource_mgmt() {
           "mData": "vendor"
         },
         {
-          "sTitle": "Upload Date",
-          "mData": "upload_date"
+          "sTitle": "Uploaded Date",
+          "mData": "uploaded_date"
         },
         {
           "sTitle": "Status",
@@ -168,7 +222,7 @@ function ready_resource_mgmt() {
     ];
 
     // Ready common datatable.
-    ready_common_datatable('resource-mgmt-datatable', "/admin/resource-mgmt-data", columns, function(datatable) {});
+    ready_common_datatable('resource-mgmt-datatable', "/admin/resource-mgmt-data", columns, [], function(datatable) {});
 
     /*
     editor = new $.fn.dataTable.Editor( {
@@ -344,8 +398,7 @@ function ready_common_searchable_multi_select() {
  *
  * @param datatable identifier
  */
-function ready_common_datatable(datatable_id, url, columns, fnDatatableCallback) {
-    //var _columns = columns;
+function ready_common_datatable(datatable_id, url, columns, hiddenColumns, fnDatatableCallback) {
     $.ajax({
         "dataType": 'json',
         "type": "GET",
@@ -358,6 +411,7 @@ function ready_common_datatable(datatable_id, url, columns, fnDatatableCallback)
 
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
+                "columnDefs": hiddenColumns,
                 "aaData": result,
                 "aoColumns": columns
             });

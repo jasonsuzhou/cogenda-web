@@ -4,6 +4,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from datetime import datetime
+
 Base = declarative_base()
 
 class Resource(Base):
@@ -15,17 +16,17 @@ class Resource(Base):
     vendor = Column(String(20))
     url = Column(String(1000))
     status = Column(String(10))
-    upload_date = Column(DateTime, default=datetime.now)
+    uploaded_date = Column(DateTime, default=datetime.now)
     active = Column(Boolean, default=True)
 
-    def __init__(self, name, type, vendor, url, status, upload_date=datetime.now, active=True):
+    def __init__(self, name, type, vendor, url, status, uploaded_date=datetime.now, active=True):
         Base.__init__(self)
         self.name = name
         self.type = type
         self.vendor = vendor
         self.url = url
         self.status = status
-        self.upload_date = upload_date
+        self.uploaded_date = uploaded_date
         self.active = active
 
     @staticmethod

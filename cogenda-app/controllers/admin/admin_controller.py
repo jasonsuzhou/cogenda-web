@@ -41,6 +41,13 @@ class AdminController(BaseController):
             users_in_json.append(self.to_json(user))
         return users_in_json
 
+    @route('/admin/user-mgmt-data/:uid')
+    @cherrypy.tools.json_out()
+    def get_single_user(self, uid):
+        user = User.get_by_uid(cherrypy.request.db, uid)
+        users_in_json = self.to_json(user)
+        return users_in_json
+
     @route('/admin/resource-mgmt-data')
     @cherrypy.tools.json_out()
     def resource_mgmt_data(self):
@@ -59,9 +66,25 @@ class AdminController(BaseController):
 
         columns = model._sa_class_manager.mapper.mapped_table.columns
         for col in columns:
-            if col.name == 'upload_date':
-                json[col.name] = datetime.strftime(getattr(model, col.name), '%Y-%m-%d %H:%M:%S')
+            colName = col.name
+            colVal = getattr(model, colName)
+            if colName == 'created_date' or colName == 'updated_date' or colName == 'resource':
+                continue
+            elif colName == 'uploaded_date':
+                json[colName] = datetime.strftime(colVal, '%Y-%m-%d %H:%M:%S')
+            elif col.name == 'role':
+                json[colName] = self.to_role_name(colVal)
             else:
-                json[col.name] = getattr(model, col.name)
+                json[colName] = colVal
 
         return json
+
+    def to_role_name(self, roleID):
+        roleName = ''
+        if roleID == '1':
+            roleName = 'Resource'
+        elif roleID == '2':
+            roleName = 'Resource Owner'
+        elif roleID == '3':
+            roleName = 'Administrator'
+        return roleName
