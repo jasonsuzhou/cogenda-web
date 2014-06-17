@@ -61,6 +61,8 @@ function ready_navigation_menu() {
  * Document ready js for user management page.
  */
 function ready_user_mgmt() {
+
+    // Prepare displaying columns
     var columns = [
         {
           "sTitle": "ID",
@@ -92,7 +94,7 @@ function ready_user_mgmt() {
         }
     ];
 
-
+    // Prepare hidden columns
     var hiddenColumns = [
         {
             "targets": [2],
@@ -100,55 +102,6 @@ function ready_user_mgmt() {
             "searchable": false
         }
     ]
-
-    // Ready common datatable.
-    ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", columns, hiddenColumns, function(datatable) {
-        // Add new user in datatable.
-        $("#add").click(function(e) {
-            reset_user_create_modal();
-            console.log("add here.......");
-        });
-
-        $("#edit").click(function(e) {
-            // Reset title/button
-            $('#title').text("Edit User");
-            $('#save').text("Save");
-
-            var selectedRows = datatable.$('tr.row_selected').length;
-            if (selectedRows === 0) {
-                alert("Select one object to view!");
-            } else if (selectedRows === 1) {
-                var selectedRowID = datatable.$('tr.row_selected')[0].cells[0].childNodes[0].textContent;
-                $.ajax({
-                "dataType": 'json',
-                "type": "GET",
-                "url": '/admin/user-mgmt-data/' + selectedRowID,
-                "success": function(result) {
-                    console.log(result);
-                    $('#user-new-modal #name').val(result.username);
-                    $('#user-new-modal #password').val(result.password);
-                    $('#user-new-modal #company').val(result.company);
-                    $('#user-new-modal #email').val(result.email);
-                    $('#user-new-modal #mobile').val(result.mobile);
-                    //$('#user-new-modal #role').val(‘1’);
-                    $('#user-new-modal #active').attr('checked', false);
-                    $('#user-new-modal #notes').val(result.notes);
-                }
-            });
-
-            $('#user-new-modal').modal('show');
-            console.log($('#user-new-modal'));
-            } else {
-                alert("Selected more than one object!");
-            }
-        });
-
-        // Delete user in datatable.
-        $("#delete").click(function(e) {
-            e.preventDefault();
-            fnRemoveSelected(datatable);
-        });
-    });
 
     // Read select2
     ready_common_select2();
@@ -167,6 +120,83 @@ function ready_user_mgmt() {
         else
             $('#resource-container').hide();
     });
+
+    // Ready common datatable.
+    ready_common_datatable("user-mgmt-datatable", "/admin/user-mgmt-data", columns, hiddenColumns, function(datatable) {
+        // Add new user in datatable.
+        $("#add").click(function(e) {
+            reset_user_create_modal();
+        });
+
+        $("#edit").click(function(e) {
+            // Reset title/button
+            $('#title').text("Modify User");
+            $('#save').text("Save");
+
+            var selectedRows = datatable.$('tr.row_selected').length;
+            if (selectedRows === 0) {
+                alert("Select one object to view!");
+            } else if (selectedRows === 1) {
+                var selectedRowID = datatable.$('tr.row_selected')[0].cells[0].childNodes[0].textContent;
+                $.ajax({
+                    "dataType": 'json',
+                    "type": "GET",
+                    "url": '/admin/user-mgmt-data/' + selectedRowID,
+                    "success": function(result) {
+                        $('#user-new-modal #name').val(result.username);
+                        $('#user-new-modal #password').val(result.password);
+                        $('#user-new-modal #company').val(result.company);
+                        $('#user-new-modal #email').val(result.email);
+                        $('#user-new-modal #mobile').val(result.mobile);
+                        //$('#user-new-modal #role').val(‘1’);
+                        $('#user-new-modal #active').attr('checked', false);
+                        $('#user-new-modal #notes').val(result.notes);
+                }
+            });
+
+            $('#user-new-modal').modal('show');
+            console.log($('#user-new-modal'));
+            } else {
+                alert("Selected more than one object!");
+            }
+        });
+
+        // Delete user in datatable.
+        $("#delete").click(function(e) {
+            e.preventDefault();
+            fnRemoveSelected(datatable);
+        });
+    });
+
+    // Create new user
+    $("#save").click(function(e) {
+        e.preventDefault();
+        save_user();
+    });
+}
+
+function save_user() {
+    // Prepare user data from UI
+    var user = {
+        "username": $('#user-new-modal #name').val().trim(),
+        "password": $('#user-new-modal #password').val().trim(),
+        "company": $('#user-new-modal #company').val().trim(),
+        "mobile": $('#user-new-modal #mobile').val().trim(),
+        "email": $('#user-new-modal #email').val().trim(),
+        "role": $('#user-new-modal #role').val().trim(),
+        "resource": $('#user-new-modal #resource').val().trim(),
+        "active": ($('#user-new-modal .switch-on') && $('#user-new-modal .switch-on').length > 0) ? 1 : 0,
+        "notes": $('#user-new-modal #notes').val().trim()
+    };
+
+    console.log(user);
+    /*
+    $.ajax({
+        "dataType": 'json',
+        "type": "GET",
+        "url": '/admin/user-mgmt-data/' + selectedRowID,
+        "success": function(result) {};
+        */
 }
 
 function reset_user_create_modal() {
@@ -180,7 +210,7 @@ function reset_user_create_modal() {
     $('#user-new-modal #company').val("");
     $('#user-new-modal #email').val("");
     $('#user-new-modal #mobile').val("");
-    //$('#user-new-modal #role').val(‘1’);
+    //$('#user-new-modal #role').val('1');
     $('#user-new-modal #active').attr('checked', false);
     $('#user-new-modal #notes').val("");
 }
