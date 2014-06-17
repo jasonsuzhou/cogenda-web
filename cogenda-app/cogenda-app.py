@@ -9,6 +9,7 @@ import hashlib
 import os
 from lib.controller import BaseController
 
+from cherrypy import wsgiserver
 from controllers import *
 from controllers.admin import *
 
@@ -22,7 +23,7 @@ def main(settings_file):
     server = Server(root_dir=root_dir)
     dispatcher = register_routes(server)
     try:
-        server.start(settings_file, dispatcher)
+        server.start(settings_file, dispatcher, non_block=False)
     except KeyboardInterrupt:
         server.stop()
 

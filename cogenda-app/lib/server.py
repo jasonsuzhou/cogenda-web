@@ -19,6 +19,7 @@ from satool import SATool
 
 import logging
 from logconfig import init_logging
+from cherrypy import wsgiserver
 
 class ServerStatus(object):
     Unknown = 0
@@ -42,9 +43,9 @@ class Server(object):
         sets = self.context.settings
 
         return {
-                'server.socket_host': sets.cogenda_app.host,
-                'server.socket_port': sets.cogenda_app.as_int('port'),
-                'server.thread_pool': sets.cogenda_app.as_int('threads'),
+                #'server.socket_host': sets.cogenda_app.host,
+                #'server.socket_port': sets.cogenda_app.as_int('port'),
+                #'server.thread_pool': sets.cogenda_app.as_int('threads'),
                 'request.base': sets.cogenda_app.baseurl,
                 'tools.encode.on': True, 
                 'tools.encode.encoding': 'utf-8',
@@ -107,6 +108,16 @@ class Server(object):
         SAEnginePlugin(cherrypy.engine, conn_str).subscribe()
         cherrypy.tools.db = SATool()
 
+        """ Integrate with embed WSGI server """
+        # Unsubscribe the default server
+        cherrypy.server.unsubscribe()
+        self.server = cherrypy._cpserver.Server()
+        self.server.socket_host = self.context.settings.cogenda_app.host
+        self.server.socket_port = self.context.settings.cogenda_app.as_int('port')
+        self.server.thread_pool = self.context.settings.cogenda_app.as_int('threads')
+        # Subscribe this server
+        self.server.subscribe()
+
         cherrypy.engine.start()
         if not non_block:
             cherrypy.engine.block()
@@ -143,5 +154,6 @@ class Server(object):
         self.status = ServerStatus.Stopping
         cherrypy.engine.exit()
         cherrypy.server.httpserver = None
+        self.server.stop()
         self.app_path = None
         self.status = ServerStatus.Stopped
