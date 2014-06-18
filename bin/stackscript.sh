@@ -57,7 +57,14 @@ function install_env {
     apt-get -y install python-pip
     apt-get -y install python-setuptools
     pip install virtualenv
+}
+
+function install_nginx_with_geoip {
     aptitude -y install nginx
+    mkdir -p /etc/nginx/geoip
+    cd /etc/nginx/geopip
+    wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+    gunzip GeoIP.dat.gz
 }
 
 log "Updating System..."
@@ -83,6 +90,9 @@ service ssh reload
 
 log "Install Dependencie Env..."
 install_env 
+
+log "Install nginx..."
+install_nginx_with_geoip
 
 log "Restarting Services..."
 restart_services
