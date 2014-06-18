@@ -26,6 +26,8 @@ DEPLOY_HOST="85.159.208.213"
 TRAVIS_SSH_KEY = "~/.ssh/id_rsa"
 PID_FILE="/tmp/cogenda-app.pid"
 ENV_ACTIVATE="source venv/bin/activate"
+NGINX_CLOUD_CONF="nginx.cloud.conf"
+NGINX_LOCAL_CONF="nginx.local.conf"
 
 @_contextmanager
 def virtualenv():
@@ -84,7 +86,7 @@ def restart_app():
 
 def restart_nginx():
     """Configure Nginx service"""
-    nginx_conf_path = "%s/etc/nginx.conf" %(COGENDA_HOME)
+    nginx_conf_path = "%s/etc/%s" %(COGENDA_HOME, NGINX_CLOUD_CONF)
     path_nginx = "/etc/nginx/sites-available/"
     print(green("Configure Nginx web server"))
     with cd(path_nginx):
