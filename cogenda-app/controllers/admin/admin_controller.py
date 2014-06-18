@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 class AdminController(BaseController):
 
-    @route('/admin')
+    @route('/admin/auth-login')
     def index(self):
 
         #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
@@ -46,8 +46,10 @@ class AdminController(BaseController):
 
     @route('/admin/users/:uid')
     @cherrypy.tools.json_out()
-    def get_single_user(self, uid):
+    def get_user_by_id(self, uid):
+        print "################################"
         user = User.get_by_uid(cherrypy.request.db, uid)
+        print user
         user_in_json = self.jsonify_model(user)
         return user_in_json
 
@@ -55,6 +57,7 @@ class AdminController(BaseController):
     #@cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def create_user(self):
+        print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
@@ -71,7 +74,8 @@ class AdminController(BaseController):
                 #TODO: remove this part with defaut datetime in SQLite3
                 datetime(2014,6,16,12,12,12), 
                 datetime(2014,6,16,12,12,12))
-        cherrypy.request.db.add(user)
+        temp_user = cherrypy.request.db.add(user)
+        print temp_user
         return self.jsonify_model(user)
 
     @route('/admin/users/:uid')
@@ -80,7 +84,7 @@ class AdminController(BaseController):
         count = User.delete_by_uid(cherrypy.request.db, uid)
         return count
 
-    @route('/admin/resource-mgmt-data')
+    @route('/admin/resources')
     @cherrypy.tools.json_out()
     def resource_mgmt_data(self):
         all_resources = Resource.list(cherrypy.request.db)
