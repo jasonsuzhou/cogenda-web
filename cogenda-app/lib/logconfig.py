@@ -23,7 +23,11 @@ def init_logging(log_dir, log_file, log_level):
             root_log.removeHandler(handler)
     
     root_handler = logging.handlers.RotatingFileHandler(os.path.join(log_dir, log_file), maxBytes=20971520, backupCount=50)
-    root_formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")    
+    console_handler = logging.StreamHandler()
+    root_formatter = logging.Formatter("%(asctime)s - %(name)-25s - %(levelname)-8s - %(message)s")
+    #root_formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")    
     root_handler.setFormatter(root_formatter)    
+    console_handler.setFormatter(root_formatter)
     root_log.addHandler(root_handler)    
+    root_log.addHandler(console_handler)
     root_log.setLevel(log_level)
