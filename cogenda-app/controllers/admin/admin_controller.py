@@ -6,6 +6,10 @@ from datetime import datetime
 from models import User, Resource
 import cherrypy
 from lib.i18ntool import ugettext as _
+import json
+
+import logging 
+log = logging.getLogger(__name__)
 
 class AdminController(BaseController):
 
@@ -47,19 +51,33 @@ class AdminController(BaseController):
         user_in_json = self.jsonify_model(user)
         return user_in_json
 
-    @route('/admin/users')
-    @cherrypy.tools.json_in()
-    def create_user(self, user_in_json):
-        print "MMMMMMMMMMMMMMMMMMMMMMMMMMMM"
-        print user_in_json
-        #user = User()
-        #cherrypy.request.db.add(user)
+    @route('/admin/user/create')
+    #@cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def create_user(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_user = json.loads(rawbody)
+        user = User(
+                json_user['username'], 
+                json_user['password'],
+                json_user['company'],
+                json_user['email'],
+                json_user['mobile'],
+                json_user['role'],
+                json_user['resource'],
+                json_user['notes'],
+                json_user['active'],
+                #TODO: remove this part with defaut datetime in SQLite3
+                datetime(2014,6,16,12,12,12), 
+                datetime(2014,6,16,12,12,12))
+        cherrypy.request.db.add(user)
+        return self.jsonify_model(user)
 
     @route('/admin/users/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
-    def DELETE(self, uid):
-        count = User.delete_by_uid(uid)
-        print '>>>>>>>>>>>>>>>>>>>>'+count
+    def destroy_user(self, uid):
+        count = User.delete_by_uid(cherrypy.request.db, uid)
         return count
 
     @route('/admin/resource-mgmt-data')

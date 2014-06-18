@@ -190,26 +190,28 @@ function ready_user_mgmt() {
 function save_user() {
     // Prepare user data from UI
     var user = {
-        "username": $('#user-new-modal #name').val().trim(),
-        "password": $('#user-new-modal #password').val().trim(),
-        "company": $('#user-new-modal #company').val().trim(),
-        "mobile": $('#user-new-modal #mobile').val().trim(),
-        "email": $('#user-new-modal #email').val().trim(),
-        "role": $('#user-new-modal #role').val().trim(),
-        "resource": $('#user-new-modal #resource').val().trim(),
-        "active": ($('#user-new-modal .switch-on') && $('#user-new-modal .switch-on').length > 0) ? 1 : 0,
-        "notes": $('#user-new-modal #notes').val().trim()
+        username: $('#user-new-modal #name').val().trim(),
+        password: $('#user-new-modal #password').val().trim(),
+        company: $('#user-new-modal #company').val().trim(),
+        mobile: $('#user-new-modal #mobile').val().trim(),
+        email: $('#user-new-modal #email').val().trim(),
+        role: $('#user-new-modal #role').val().trim(),
+        resource: $('#user-new-modal #resource').val().trim(),
+        active: ($('#user-new-modal .switch-on') && $('#user-new-modal .switch-on').length > 0) ? 1 : 0,
+        notes: $('#user-new-modal #notes').val().trim()
     };
 
     console.log(user);
 
     $.ajax({
-        "dataType": 'json',
-        "data": user,
-        "type": "POST",
-        "url": '/admin/users',
-        "success": function(result) {
-            console.log('>>>>>>>>>success!');
+        dataType: 'json',
+        data: JSON.stringify(user),
+        contentType: "application/json",
+        type: "POST",
+        url: '/admin/user/create',
+        success: function(result) {
+            console.log(result);
+            //console.log('>>>>>>>>>success!');
         }
     });
 }

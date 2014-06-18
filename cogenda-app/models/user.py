@@ -52,5 +52,5 @@ class User(Base):
 
     @staticmethod
     def delete_by_uid(session, uid):
-        session.delete().query(User).get(uid)
+        session.query(User).filter(User.id==uid).delete()
         session.commit()
