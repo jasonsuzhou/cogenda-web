@@ -61,7 +61,29 @@ function ready_navigation_menu() {
  * Document ready js for user management page.
  */
 function ready_user_mgmt() {
+    // Read select2
+    ready_common_select2();
 
+    // Ready multi-select
+    ready_common_searchable_multi_select();
+
+    // Ready switch
+    ready_common_switch();
+
+    // Role > Resource Owner > Resource select
+    $('#role').change(function() {
+        var selectedRole = $(this).children('option:selected').val();
+        if(selectedRole === '2') // 'Resource Owner'
+            $('#resource-container').show();
+        else
+            $('#resource-container').hide();
+    });
+
+    // Render User datatable
+    render_user_datatable();
+}
+
+function render_user_datatable() {
     // Prepare displaying columns
     var columns = [
         {
@@ -95,97 +117,84 @@ function ready_user_mgmt() {
         }
     ];
 
-    // Prepare hidden columns
-    var hiddenColumns = [
-        {
-            "targets": [2],
-            "visible": false,
-            "searchable": false
-        }
-    ]
-
-    // Read select2
-    ready_common_select2();
-
-    // Ready multi-select
-    ready_common_searchable_multi_select();
-
-    // Ready switch
-    ready_common_switch();
-
-    // Role > Resource Owner > Resource select
-    $('#role').change(function() {
-        var selectedRole = $(this).children('option:selected').val();
-        if(selectedRole === '2') // 'Resource Owner'
-            $('#resource-container').show();
-        else
-            $('#resource-container').hide();
-    });
-
     // Ready common datatable.
-    ready_common_datatable("/admin/users", columns, hiddenColumns, function(datatable) {
+    ready_common_datatable("/admin/users", columns, function(datatable) {
 
+        // Call Add modal
         $("#add").click(function(e) {
             reset_user_create_modal();
         });
 
-        // Edit
+        // Edit by click edit link & row double click
         $("#edit").click(function(e) {
             e.preventDefault();
-            edit_user(datatable);
+            edit_user();
         });
         datatable.on("dblclick", "tr", function(e) {
             e.preventDefault();
-            edit_user(datatable);
+            edit_user(this);
         });
 
-        // Delete user in datatable.
+        // Delete users
         $("#delete").click(function(e) {
             e.preventDefault();
-            delete_user(datatable);
+            delete_user();
         });
 
         // Create new user
         $("#save").click(function(e) {
             e.preventDefault();
-            save_user(datatable);
+            save_user();
         });
     });
 }
 
-function delete_user(datatable) {
-    var selectedRows = datatable.$('tr.row_selected').length;
+function delete_user() {
+    var datatable = $('#mgmt-datatable').dataTable();
+    var selectedTrs = datatable.$('tr.row_selected');
+    var selectedRows = selectedTrs.length;
     if (selectedRows > 0) {
-        var position = datatable.fnGetPosition(datatable.$('tr.row_selected')[0]);
-        var selectedRowID = datatable.fnGetData(position)['id'];
-        $.ajax({
-            "dataType": 'json',
-            "type": "DELETE",
-            "url": '/admin/users/' + selectedRowID,
-            "success": function(result) {
-                console.log(">>>>>>>>>>>>delete successfully");
-            }
-        });
+        for(i = 0; i < selectedRows; i++) {
+            var position = datatable.fnGetPosition(selectedTrs[i]);
+            var selectedRowID = datatable.fnGetData(position)['id'];
+            $.ajax({
+                "dataType": 'json',
+                "type": "DELETE",
+                "url": '/admin/delete-user/' + selectedRowID,
+                "success": function(result) {
+                    console.log(">>>>>>>>>>>>delete" + selectedRowID + "successfully");
+                }
+            });
+        }
         remove_selected_rows(datatable);
     }
 }
 
-function edit_user(datatable) {
+function edit_user(row) {
     // Reset title/button
     $('#title').text("Modify User");
     $('#save').text("Save");
 
+    var datatable = $('#mgmt-datatable').dataTable();
     var selectedRows = datatable.$('tr.row_selected').length;
+
+    var selected_row = datatable.$('tr.row_selected')[0];
+    if(typeof(row) !== 'undefined') {
+        selected_row = row;
+        selectedRows = 1;
+    }
+
     if (selectedRows === 0) {
         alert("Select one object to view!");
     } else if (selectedRows === 1) {
-        var position = datatable.fnGetPosition(datatable.$('tr.row_selected')[0]);
+        var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
         $.ajax({
             "dataType": 'json',
             "type": "GET",
-            "url": '/admin/users/' + selectedRowID,
+            "url": '/admin/fetch-user/' + selectedRowID,
             "success": function(result) {
+                $('#user-new-modal #uid').val(result.id);
                 $('#user-new-modal #name').val(result.username);
                 $('#user-new-modal #password').val(result.password);
                 $('#user-new-modal #company').val(result.company);
@@ -202,9 +211,10 @@ function edit_user(datatable) {
     }
 }
 
-function save_user(datatable) {
+function save_user() {
     // Prepare user data from UI
     var user = {
+        id: $('#user-new-modal #uid').val().trim(),
         username: $('#user-new-modal #name').val().trim(),
         password: $('#user-new-modal #password').val().trim(),
         company: $('#user-new-modal #company').val().trim(),
@@ -216,26 +226,32 @@ function save_user(datatable) {
         notes: $('#user-new-modal #notes').val().trim()
     };
 
-    $.ajax({
-        dataType: 'json',
-        data: JSON.stringify(user),
-        contentType: "application/json",
-        type: "POST",
-        url: '/admin/user/create',
-        success: function(result) {
-            console.log(result);
-
-            datatable.fnAddData([
-                result.id,
-                result.username,
-                result.company,
-                result.email,
-                result.mobile,
-                result.role,
-                result.active
-            ]);
-        }
-    });
+    // Add
+    if($('#uid').val().trim()) {
+        $.ajax({
+            dataType: 'json',
+            data: JSON.stringify(user),
+            contentType: "application/json",
+            type: "POST",
+            url: '/admin/update-user',
+            success: function(result) {
+                console.log(result);
+                render_user_datatable();
+            }
+        });
+    } else {
+        $.ajax({
+            dataType: 'json',
+            data: JSON.stringify(user),
+            contentType: "application/json",
+            type: "POST",
+            url: '/admin/create-user',
+            success: function(result) {
+                console.log(result);
+                render_user_datatable();
+            }
+        });
+    }
 }
 
 function reset_user_create_modal() {
@@ -244,6 +260,7 @@ function reset_user_create_modal() {
     $('#save').text("Create");
 
     // Reset values here
+    $('#user-new-modal #uid').val("");
     $('#user-new-modal #name').val("");
     $('#user-new-modal #password').val("");
     $('#user-new-modal #company').val("");
@@ -291,7 +308,7 @@ function ready_resource_mgmt() {
     ];
 
     // Ready common datatable.
-    ready_common_datatable("/admin/resources", columns, [], function(datatable) {});
+    ready_common_datatable("/admin/resources", columns, function(datatable) {});
 
     /*
     editor = new $.fn.dataTable.Editor( {
@@ -467,7 +484,7 @@ function ready_common_searchable_multi_select() {
  *
  * @param datatable identifier
  */
-function ready_common_datatable(url, columns, hiddenColumns, fnDatatableCallback) {
+function ready_common_datatable(url, columns, fnDatatableCallback) {
     $.ajax({
         "dataType": 'json',
         "type": "GET",
@@ -481,7 +498,6 @@ function ready_common_datatable(url, columns, hiddenColumns, fnDatatableCallback
 
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
-                // "columnDefs": hiddenColumns,
                 "aaData": result,
                 "aoColumns": columns
             });

@@ -44,20 +44,17 @@ class AdminController(BaseController):
             users_in_json.append(self.jsonify_model(user))
         return users_in_json
 
-    @route('/admin/users/:uid')
-    @cherrypy.tools.json_out()
+    @route('/admin/fetch-user/:uid')
+    @cherrypy.tools.json_out(content_type='application/json')
     def get_user_by_id(self, uid):
-        print "################################"
         user = User.get_by_uid(cherrypy.request.db, uid)
         print user
         user_in_json = self.jsonify_model(user)
         return user_in_json
 
-    @route('/admin/user/create')
-    #@cherrypy.tools.json_in()
+    @route('/admin/create-user')
     @cherrypy.tools.json_out()
     def create_user(self):
-        print "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
@@ -78,7 +75,16 @@ class AdminController(BaseController):
         print temp_user
         return self.jsonify_model(user)
 
-    @route('/admin/users/:uid')
+    @route('/admin/update-user')
+    @cherrypy.tools.json_out()
+    def update_user(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_user = json.loads(rawbody)
+        user = User.update_by_uid(cherrypy.request.db, json_user['id'], json_user['company'])
+        return self.jsonify_model(user)
+
+    @route('/admin/delete-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
     def destroy_user(self, uid):
         count = User.delete_by_uid(cherrypy.request.db, uid)
