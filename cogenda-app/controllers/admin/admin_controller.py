@@ -108,7 +108,7 @@ class AdminController(BaseController):
         for col in columns:
             col_name = col.name
             col_val = getattr(model, col_name)
-            if col_name == 'created_date' or col_name == 'updated_date' or col_name == 'resource':
+            if col_name == 'created_date' or col_name == 'updated_date':
                 continue
             elif col_name == 'uploaded_date':
                 json[col_name] = datetime.strftime(col_val, '%Y-%m-%d %H:%M:%S')

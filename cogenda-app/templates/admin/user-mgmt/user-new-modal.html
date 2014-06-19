@@ -1,5 +1,5 @@
 <!-- Nifty Modal -->
-<div id="user-new-modal" class="modal fade colored-header in" role="dialog" tabindex="-1" style="display: none;" aria-hidden="false">
+<div id="user-new-modal" class="modal fade colored-header in" role="dialog" style="display: none;">
     <div class="modal-dialog colored-header custom-width">
         <div class="md-content">
             <div class="modal-header">
@@ -51,9 +51,6 @@
                         <div class="form-group col-md-12 no-margin">
                             <label class="control-label">Resource</label>
                             <select id="resource" class="searchable">
-                                <option value="1">Resource01</option>
-                                <option value="2">Resource02</option>
-                                <option value="3">Resource03</option>
                             </select>
                         </div>
                     </div>
@@ -66,8 +63,8 @@
                             </div>
                             <div class="row no-margin-y">
                                 <div class="form-group col-md-12 no-margin">
-                                    <div class="switch">
-                                        <input id="enabled" type="checkbox" checked>
+                                    <div id="active-container" class="switch">
+                                        <input id="active" type="checkbox" checked>
                                     </div>
                                 </div>
                             </div>

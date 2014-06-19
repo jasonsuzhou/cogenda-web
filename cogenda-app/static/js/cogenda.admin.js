@@ -63,6 +63,7 @@ function ready_navigation_menu() {
 function ready_user_mgmt() {
     // Read select2
     ready_common_select2();
+    render_role_select();
 
     // Ready multi-select
     ready_common_searchable_multi_select();
@@ -72,11 +73,7 @@ function ready_user_mgmt() {
 
     // Role > Resource Owner > Resource select
     $('#role').change(function() {
-        var selectedRole = $(this).children('option:selected').val();
-        if(selectedRole === '2') // 'Resource Owner'
-            $('#resource-container').show();
-        else
-            $('#resource-container').hide();
+        render_resource_select($(this).children('option:selected').val());
     });
 
     // Render User datatable
@@ -194,15 +191,19 @@ function edit_user(row) {
             "type": "GET",
             "url": '/admin/fetch-user/' + selectedRowID,
             "success": function(result) {
-                $('#user-new-modal #uid').val(result.id);
-                $('#user-new-modal #name').val(result.username);
-                $('#user-new-modal #password').val(result.password);
-                $('#user-new-modal #company').val(result.company);
-                $('#user-new-modal #email').val(result.email);
-                $('#user-new-modal #mobile').val(result.mobile);
-                //$('#user-new-modal #role').val(‘1’);
-                $('#user-new-modal #active').attr('checked', false);
-                $('#user-new-modal #notes').val(result.notes);
+                $('#uid').val(result.id);
+                $('#name').val(result.username);
+                $('#password').val(result.password);
+                $('#company').val(result.company);
+                $('#email').val(result.email);
+                $('#mobile').val(result.mobile);
+                $('#notes').val(result.notes);
+                // Role select
+                render_role_select(result.role);
+                // Resource select
+                render_resource_select(result.role, convert_resource("1,2,3")); //result.resource
+                // Active switch
+                render_active_switch(result.active);
             }
         });
         $('#user-new-modal').modal('show');
@@ -213,17 +214,33 @@ function edit_user(row) {
 
 function save_user() {
     // Prepare user data from UI
+    var role_id = $('#role').val().trim();
+    var resource_ids = "";
+    if(role_id === "2") {
+        var spans = $('.ms-selection .ms-list li span');
+        for(var i = 0; i < spans.length; i++) {
+            var span = $(spans[i]);
+            if(span.parent().css('display') === 'none') {
+                console.log(">>>>>>>>>>>>>> No select: " + span.text());
+            } else {
+                console.log(">>>>>>>>>>>>>> Selected: " + span.text());
+                resource_ids = resource_ids + span.text() + ",";
+            }
+        }
+    }
+    resource_ids = resource_ids.substring(0, resource_ids.length - 1);
+
     var user = {
-        id: $('#user-new-modal #uid').val().trim(),
-        username: $('#user-new-modal #name').val().trim(),
-        password: $('#user-new-modal #password').val().trim(),
-        company: $('#user-new-modal #company').val().trim(),
-        mobile: $('#user-new-modal #mobile').val().trim(),
-        email: $('#user-new-modal #email').val().trim(),
-        role: $('#user-new-modal #role').val().trim(),
-        resource: $('#user-new-modal #resource').val().trim(),
-        active: ($('#user-new-modal .switch-on') && $('#user-new-modal .switch-on').length > 0) ? 1 : 0,
-        notes: $('#user-new-modal #notes').val().trim()
+        id: $('#uid').val().trim(),
+        username: $('#name').val().trim(),
+        password: $('#password').val().trim(),
+        company: $('#company').val().trim(),
+        mobile: $('#mobile').val().trim(),
+        email: $('#email').val().trim(),
+        active: ($('.switch-on') && $('.switch-on').length > 0) ? 1 : 0,
+        notes: $('#notes').val().trim(),
+        resource: resource_ids,
+        role: role_id
     };
 
     // Add
@@ -260,15 +277,84 @@ function reset_user_create_modal() {
     $('#save').text("Create");
 
     // Reset values here
-    $('#user-new-modal #uid').val("");
-    $('#user-new-modal #name').val("");
-    $('#user-new-modal #password').val("");
-    $('#user-new-modal #company').val("");
-    $('#user-new-modal #email').val("");
-    $('#user-new-modal #mobile').val("");
-    //$('#user-new-modal #role').val('1');
-    $('#user-new-modal #active').attr('checked', false);
-    $('#user-new-modal #notes').val("");
+    $('#uid').val("");
+    $('#name').val("");
+    $('#password').val("");
+    $('#company').val("");
+    $('#email').val("");
+    $('#mobile').val("");
+    $('#notes').val("");
+
+    // Active switch
+    render_active_switch();
+
+    // Role select
+    render_role_select();
+
+    // Resource select
+    render_resource_select();
+}
+
+function render_active_switch(is_active) {
+    var _switch = $('.switch-animate');
+    if(typeof(is_active) !== 'undefined') {
+        if(is_active === 'true') {
+            _switch.removeClass('switch-off');
+            _switch.addClass('switch-on');
+        } else {
+            _switch.removeClass('switch-on');
+            _switch.addClass('switch-off');
+        }
+    } else {
+        _switch.removeClass('switch-off');
+        _switch.addClass('switch-on');
+    }
+}
+
+function render_role_select(selectedRole="1") {
+    $('#role').select2("val", convert_role_to_id(selectedRole));
+}
+
+function convert_role_to_id(role) {
+    var role_id = 1;
+    if(role === 'Resource')
+        role_id = 1;
+    else if(role === 'Resource Owner')
+        role_id = 2;
+    else if(role === 'Administrator')
+        role_id = 3;
+    return role_id;
+}
+
+function convert_resource(resource_str) {
+    if(resource_str === "")
+        return [];
+    else {
+        return resource_str.split(",");
+    }
+}
+
+function render_resource_select(selectedRole="1", selectedResources) {
+    if(selectedRole === '2' || selectedRole === 'Resource Owner') { // 'Resource Owner'
+        // Populate resource select
+        $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": "/admin/resources",
+            "success": function(result) {
+                // console.log(result);
+                for(var i = 0; i < result.length; i++) {
+                    $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: i });
+                }
+            }
+        });
+        if(typeof(selectedResources) !== 'undefined') {
+            $('#resource').multiSelect('select', selectedResources);
+        }
+        $('#resource-container').show();
+    } else {
+        $('#resource-container').hide();
+    }
 }
 
 /**
@@ -279,7 +365,8 @@ function ready_resource_mgmt() {
     var columns = [
         {
           "sTitle": "ID",
-          "mData": "id"
+          "mData": "id",
+          "bVisible": false
         },
         {
           "sTitle": "Resource Name",
