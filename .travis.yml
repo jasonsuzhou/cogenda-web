@@ -17,10 +17,11 @@ before_script:
 script:
 - echo 'Ready to sync with AWS S3 and AliYun OSS.'
 - pwd && echo $COGENDA_STATIC_HOME
-- git clone --depth=50 --branch=master https://github.com/cogenda/cloud-sync.git ~/cogenda/cloud-sync
-- cd ~/cogenda/cloud-sync
-- ./setenv
+- git clone --depth=50 --branch=master https://github.com/cogenda/cloud-sync.git /home/travis/build/cogenda/cloud-sync
+- cd /home/travis/build/cogenda/cloud-sync
+- ./setenv.sh
 - source venv/bin/activate
+- make travis
 after_success:
 - echo 'Ready to deploy to Linode production server.'
 - make deploy
@@ -57,3 +58,8 @@ env:
   - secure: Gz52VmsXirdCfOXC50Id4AC8QcgAUlf0WQ2HrQbqlSEu4QzHffxvhQa/2UAUWSKElLCgRXy8QV12L0Klqcy3lXI1YHB7Y4DCa5qoedOzmSTxEzdCKEm/P3Owq8p4j7QZqdtP1Jam3THPmDhSRsCrP88I+YQ0wIUBdhkvH9PwAlo=
   - secure: L1ZeUi9S9FgYpEHy0mLIgCfxH6Vd59YdB0lAc3HTSooUaG1GaSAdlZibytoVDe4g0A3+fK6QI9IvsbR/k/faIAOqiKC9vFs3oBOtt/Ejca5mnZ6++J8ikLHPAMqeMwPXJi1j4GzJ9QuojRaCvognwbFzdYv89pT8rcFfnXOngzA=
   - secure: NX7B93+lv+xYX51hiFWPvuc8DS+pDzbe2T4l4sU3f21+kjCRu7oUsdovKIK6Xinw/uRlS8ltc3njmjAIQA6JuL5pAM2Fx4RPkC5tf8CKnxZWh+VB9QdTnqhXXQ5uND53w+Hse6TB/8Wk2jBg085vQsV9/0/lOEZSybNlnW15gcM=
+  - secure: X2GAc4AIbCLZQlOt5zvG1/uu8eRUSSgnNF75x9EXbS6YvXtUODEMFAYMP5CkxzSp+tF1vQxpbT82odVRJek7sVGJvf9ifl1NEfFdxewV1Kus9s5G/JTyIZlySTyvtNW2HrJLdfn3eBXdpVlosYLmzcz3MMq1jnJYb0UeraoZiNo=
+  - secure: fL/nQcrs51PeJ50e0MunYdD7hcqMnd+cmib5RZDMfjUdK2nTmYoW/WfMh/uAA80twR4KSk2Gtk6/pIUnRtDhwClzIwaptyCs7zmPguchdJjYPkU6HL9ssflWjqsN9DxXBzmoWFTth1URSHcIWXboyl9TdXGkXSDsUHi48pwIH6Q=
+  - secure: WQTipQntCPh83KKg1EQ1wSHKhriPp0DPzHhhZaFhm5WHhmRXYohM/tSx+Gl663mtAZ7uvEwJ5NXvGn/yODDxmiceqQnvhIPApBkBSGRQ75CFaH6em4+oNrKUnYT3wBOzwNWCgESRh0GQ7w7yzJe70X32QjjGsn3jeu293aDu+Ec=
+  - secure: ca83BB84Ac5Fr/yGU7+kqTzLFK7porE7ZogWkOMHPJhF5dn66F5oHL9zT98tT7TGoJFBkWHhT8tAut6eUO+8MEfJzXSJpxAnbwj9sMRbnlKBBgnHIu5xqXhoJ7cIwwoT5dMK+tgvc6TENSLAm43qPcKUklF2tqJWHzQiWfXYBUY=
+  - secure: btZbkdW+qOG2HL9j1cpA42Ny2HefW3LW/y83L/cRoNrY6fWXXz3Yf/SBscUJNJd5r5GrtHXpFeLNg2QPDQcCKktgGB+sx01XDinohcJQ64Mi8JbVn4HkgvV3Wl9AQvIjMkSxLYvn275sWz30IT+XwfgaOX45knXqHGiU4Fv3ZCc=
