@@ -214,6 +214,14 @@ function edit_user(row) {
 
 function save_user() {
     // Prepare user data from UI
+    var uid = $('#uid').val().trim();
+    var username = $('#name').val().trim();
+    var password = $('#password').val().trim();
+    var email = $('#email').val().trim();
+
+    if(!username || !password || !email)
+        return;
+
     var resource_ids = "";
     var role_id = $('#role').val().trim();
     if(role_id === '2') {
@@ -225,12 +233,12 @@ function save_user() {
     }
 
     var user = {
-        id: $('#uid').val().trim(),
-        username: $('#name').val().trim(),
-        password: $('#password').val().trim(),
+        id: uid,
+        username: username,
+        password: password,
+        email: email,
         company: $('#company').val().trim(),
         mobile: $('#mobile').val().trim(),
-        email: $('#email').val().trim(),
         active: ($('.switch-on') && $('.switch-on').length > 0) ? 1 : 0,
         notes: $('#notes').val().trim(),
         resource: resource_ids,
@@ -246,7 +254,6 @@ function save_user() {
             type: "POST",
             url: '/admin/update-user',
             success: function(result) {
-                console.log(result);
                 render_user_datatable();
             }
         });
@@ -258,7 +265,6 @@ function save_user() {
             type: "POST",
             url: '/admin/create-user',
             success: function(result) {
-                console.log(result);
                 render_user_datatable();
             }
         });

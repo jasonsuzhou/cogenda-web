@@ -11,14 +11,14 @@
                     <div class="form-group row">
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">User Name</label>
-                            <input type="text" data-i18n="[placeholder]security.username" id="name" class="form-control"
-                                    value="" data-parsley-trigger="change" data-parsley-errors-container="#name-error"
-                                    required>
+                            <input type="text" id="name" class="form-control" required placeholder="User Name"
+                                    data-parsley-trigger="change" data-parsley-errors-container="#name-error">
                             <div id="name-error"></div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">Password</label>
-                            <input id="password" placeholder="Password" required class="form-control">
+                            <input id="password" placeholder="Password" required class="form-control" data-parsley-length="[5, 25]"
+                                    data-parsley-trigger="change" data-parsley-errors-container="#password-error">
                             <div id="password-error"></div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="save" type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">Create</button>
+                    <button id="save" type="submit" class="btn btn-primary btn-flat md-close">Create</button>
                     <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
