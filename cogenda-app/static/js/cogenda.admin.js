@@ -305,7 +305,7 @@ function render_active_switch(is_active) {
     }
 }
 
-function render_role_select(selectedRole="1") {
+function render_role_select(selectedRole) {
     $('#role').select2("val", convert_role_to_id(selectedRole));
 }
 
@@ -328,7 +328,7 @@ function convert_resource(resource_str) {
     }
 }
 
-function render_resource_select(selectedRole="1", selectedResources) {
+function render_resource_select(selectedRole, selectedResources) {
     if(selectedRole === '2' || selectedRole === 'Resource Owner') { // 'Resource Owner'
         // Populate resource select
         $.ajax({
