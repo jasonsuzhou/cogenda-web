@@ -201,7 +201,7 @@ function edit_user(row) {
                 // Role select
                 render_role_select(result.role);
                 // Resource select
-                render_resource_select(result.role, convert_resource("1,2,3")); //result.resource
+                render_resource_select(result.role, convert_resource(result.resource));
                 // Active switch
                 render_active_switch(result.active);
             }
@@ -214,21 +214,15 @@ function edit_user(row) {
 
 function save_user() {
     // Prepare user data from UI
-    var role_id = $('#role').val().trim();
     var resource_ids = "";
-    if(role_id === "2") {
-        var spans = $('.ms-selection .ms-list li span');
-        for(var i = 0; i < spans.length; i++) {
-            var span = $(spans[i]);
-            if(span.parent().css('display') === 'none') {
-                console.log(">>>>>>>>>>>>>> No select: " + span.text());
-            } else {
-                console.log(">>>>>>>>>>>>>> Selected: " + span.text());
-                resource_ids = resource_ids + span.text() + ",";
-            }
+    var role_id = $('#role').val().trim();
+    if(role_id === '2') {
+        var selected_resources = $('#resource').val();
+        for(var i = 0; i < selected_resources.length; i++) {
+            resource_ids = resource_ids + selected_resources[i] + ",";
         }
+        resource_ids = resource_ids.substring(0, resource_ids.length - 1);
     }
-    resource_ids = resource_ids.substring(0, resource_ids.length - 1);
 
     var user = {
         id: $('#uid').val().trim(),
@@ -348,6 +342,7 @@ function render_resource_select(selectedRole="1", selectedResources) {
                 }
             }
         });
+        $('#resource').multiSelect('refresh');
         if(typeof(selectedResources) !== 'undefined') {
             $('#resource').multiSelect('select', selectedResources);
         }

@@ -6,13 +6,15 @@
                 <h3><label id="title">Create User</label></h3>
                 <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
-            <form id="new-modal" class="" style="border-radius: 0px;" action="#">
+            <form id="new-modal" style="border-radius: 0px;" action="" data-parsley-validate>
                 <div class="modal-body form">
                     <div class="form-group row">
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">User Name</label>
-                            <input type="text" id="name" required placeholder="Username" class="form-control">
-                            <div id="nick-error"></div>
+                            <input type="text" data-i18n="[placeholder]security.username" id="name" class="form-control"
+                                    value="" data-parsley-trigger="change" data-parsley-errors-container="#name-error"
+                                    required>
+                            <div id="name-error"></div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">Password</label>
@@ -50,7 +52,7 @@
                     <div id="resource-container" style="display: none;" class="form-group row">
                         <div class="form-group col-md-12 no-margin">
                             <label class="control-label">Resource</label>
-                            <select id="resource" class="searchable">
+                            <select id="resource" class="searchable" multiple="multiple">
                             </select>
                         </div>
                     </div>
