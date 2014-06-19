@@ -20,7 +20,7 @@ parts
 .tox
 .project
 .pydevproject
-etc/travis-private-key
+bin/travis_env.txt
 
 
 data/
