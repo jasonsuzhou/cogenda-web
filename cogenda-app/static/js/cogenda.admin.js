@@ -63,7 +63,7 @@ function ready_navigation_menu() {
 function ready_user_mgmt() {
     // Read select2
     ready_common_select2();
-    render_role_select();
+    render_role_select("1");
 
     // Ready multi-select
     ready_common_searchable_multi_select();
@@ -120,28 +120,32 @@ function render_user_datatable() {
         // Call Add modal
         $("#add").click(function(e) {
             reset_user_create_modal();
+            $('#user-new-modal').modal('show');
         });
 
         // Edit by click edit link & row double click
         $("#edit").click(function(e) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             edit_user();
         });
         datatable.on("dblclick", "tr", function(e) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             edit_user(this);
         });
 
         // Delete users
         $("#delete").click(function(e) {
-            e.preventDefault();
+            if (e) e.preventDefault();
             delete_user();
         });
 
         // Create new user
-        $("#save").click(function(e) {
-            e.preventDefault();
-            save_user();
+        $("#save").on('click', function(e) {
+            if (e) e.preventDefault();
+            if ($('#new-modal').parsley().validate()) {
+                save_user();
+                $('#user-new-modal').modal('hide');
+            }
         });
     });
 }
@@ -168,6 +172,9 @@ function delete_user() {
 }
 
 function edit_user(row) {
+    // Reset parsley
+    $('#new-modal').parsley().reset();
+
     // Reset title/button
     $('#title').text("Modify User");
     $('#save').text("Save");
@@ -219,9 +226,6 @@ function save_user() {
     var password = $('#password').val().trim();
     var email = $('#email').val().trim();
 
-    if(!username || !password || !email)
-        return;
-
     var resource_ids = "";
     var role_id = $('#role').val().trim();
     if(role_id === '2') {
@@ -272,6 +276,9 @@ function save_user() {
 }
 
 function reset_user_create_modal() {
+    // Reset parsley
+    $('#new-modal').parsley().reset();
+
     // Reset title/button
     $('#title').text("Create User");
     $('#save').text("Create");
@@ -289,7 +296,7 @@ function reset_user_create_modal() {
     render_active_switch();
 
     // Role select
-    render_role_select();
+    render_role_select("1");
 
     // Resource select
     render_resource_select();
@@ -312,18 +319,7 @@ function render_active_switch(is_active) {
 }
 
 function render_role_select(selectedRole) {
-    $('#role').select2("val", convert_role_to_id(selectedRole));
-}
-
-function convert_role_to_id(role) {
-    var role_id = 1;
-    if(role === 'Resource')
-        role_id = 1;
-    else if(role === 'Resource Owner')
-        role_id = 2;
-    else if(role === 'Administrator')
-        role_id = 3;
-    return role_id;
+    $('#role').select2("val", selectedRole);
 }
 
 function convert_resource(resource_str) {
@@ -586,7 +582,7 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
 
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
-                "aaData": result,
+                "aaData": processUserResult(result),
                 "aoColumns": columns
             });
 
@@ -605,14 +601,92 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
     });
 }
 
+function processUserResult(result) {
+    for(var i = 0; i < result.length; i++) {
+        if(result[i].role) result[i].role = get_role_name(result[i].role);
+        if(result[i].active) result[i].active = get_user_status(result[i].active);
+        if(result[i].status) result[i].status = get_resource_status(result[i].status);
+        if(result[i].type) result[i].type = get_resource_type(result[i].type);
+    }
+    return result;
+}
+
+function get_resource_status(status) {
+    var resource_status = 'Fail';
+    if(status === '1')
+        resource_status = 'Successful';
+    else
+        resource_status = 'Fail';
+    return resource_status;
+}
+
+function get_resource_type(_type) {
+    var resource_type = 'Restricted';
+    if(_type == '0')
+        resource_type = 'Public';
+    else
+        resource_type = 'Restricted';
+    return resource_type;
+}
+
+function get_role_name(role_id) {
+    var role_name = 'Resource';
+    if(role_id == '1')
+        role_name = 'Resource';
+    else if(role_id == '2')
+        role_name = 'Resource Owner';
+    else if(role_id == '3')
+        role_name = 'Administrator';
+    return role_name;
+}
+
+function get_user_status(active) {
+    var status = 'No';
+    if(active === 'true')
+        status = 'Yes';
+    return status;
+}
+
 function authenticate() {
     if ($('#security-login-form').parsley().validate()) {
-        var username = $('#username').val();
-        var password = $('#password').val();
-        eventBus.trigger('security:show-loading');
-        authenticationProvider.authenticate({
+        var username = $('#username').val().trim();
+        var password = $('#password').val().trim();
+
+        credentials = {
             username: username,
             password: password
+        };
+
+        var authenticate = $.ajax({
+            dataType: 'json',
+            contentType: "application/json",
+            url: '/admin/authenticate',
+            data: JSON.stringify(credentials),
+            type: 'POST'
+        });
+
+        authenticate.done(function(resp) {
+            self.location.href = '/admin/user-mgmt';
+            /*self.put('authenticated', true);
+            self.put('security-user', JSON.stringify(resp.security_user));
+            if (!self.get('redirect-url')) {
+                self.location.href = '/admin/user-mgmt';
+                return callback();
+            }
+
+            var redirectUrl = self.get('redirect-url');
+            self.remove('redirect-url');
+            Backbone.history.navigate(redirectUrl, {
+                trigger: true
+            });
+            callback();*/
+        });
+
+        authenticate.fail(function(resp, status) {
+            /*Backbone.history.navigate('#security/login', {
+                trigger: true
+            });*/
+            callback();
         });
     } else {
         console.log('Client side validate error.');

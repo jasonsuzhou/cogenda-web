@@ -15,17 +15,19 @@ class AdminController(BaseController):
 
     @route('/admin/auth-login')
     def index(self):
-
         #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
-
-        """ testing SQLite and Jinja2 """
-        #user = User('Tim', '123', 'tang.jilong@gmail.com')
-        #cherrypy.request.db.add(user)
-        #all_users = User.list(cherrypy.request.db)
-        #for temp_user in all_users:
-        #    print temp_user.username
-        
         return self.render_template('admin/security/login-user.html', date=datetime.now(), hello=_('hello'))
+
+    @route('/admin/authenticate')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def authenticate(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_user = json.loads(rawbody)
+        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Auth User name :>>' + json_user['username']
+        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Auth Password :>>' + json_user['password']
+        security_user = {'auth_token': 'mocked-hmac-authorization-token'}
+        return security_user
 
     @route('/admin/user-mgmt')
     def user_mgmt(self):
@@ -112,12 +114,6 @@ class AdminController(BaseController):
                 continue
             elif col_name == 'uploaded_date':
                 json[col_name] = datetime.strftime(col_val, '%Y-%m-%d %H:%M:%S')
-            elif col_name == 'role':
-                json[col_name] = self.get_role_name(col_val)
-            elif col_name == 'status':
-                json[col_name] = self.get_resource_status(col_val)
-            elif col_name == 'type':
-                json[col_name] = self.get_resource_type(col_val)
             else:
                 json[col_name] = col_val
 
