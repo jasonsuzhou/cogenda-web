@@ -91,6 +91,8 @@ def restart_nginx():
     print(green("Configure Nginx web server"))
     with cd(path_nginx):
         run("sudo cp -f %s ./default" %(nginx_conf_path))
+    run("sudo service nginx force-reload")
     run("sudo service nginx restart")
+    run("sudo service nginx status")
     print(red("Auto configure & restart Nginx server succeed!"))
     print(green("Auto deploy to production server successfully!"))
