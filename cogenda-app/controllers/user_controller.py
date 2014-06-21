@@ -43,11 +43,8 @@ class UserController(BaseController):
     def download(self, resource_id):
         """Testing download & url with parameter"""
         log.debug("Download resource: %s" % resource_id);
-        #cherrypy.response.headers["Content-Type"] = "application/x-download"
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
-        #cd = 'attachment; filename="%s"' % resource_id
-        #cherrypy.response.headers["Content-Disposition"] = cd
-        #cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403348476&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=Y6uRVDJurzEvJ2i7LTnjZND95es%3D'
-        cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda.oss-cn-hangzhou.aliyuncs.com/static/js/cogenda.admin.js'
-        #return serve_file(filepath, "application/x-download", "attachment")
-        return cherrypy.response
+        cd = 'attachment; filename="%s"' % resource_id
+        cherrypy.response.headers["Content-Disposition"] = cd
+        cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403359250&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=vdtP0ldMD0yCskxmGcPxuF0oPuM%3D'
+        #cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda.oss-cn-hangzhou.aliyuncs.com/static/js/cogenda.admin.js'
