@@ -39,8 +39,15 @@ class UserController(BaseController):
         
         return self.render_template('index.html', date=datetime.now(), hello=_('hello'))
 
-    @route('/download/:filepath')
-    def download(self, filepath):
+    @route('/download/:resource_id')
+    def download(self, resource_id):
         """Testing download & url with parameter"""
-        log.debug("Download resource path: %s" % filepath);
-        return serve_file(filepath, "application/x-download", "attachment")
+        log.debug("Download resource: %s" % resource_id);
+        #cherrypy.response.headers["Content-Type"] = "application/x-download"
+        cherrypy.response.headers["Content-Type"] = "application/octet-stream"
+        #cd = 'attachment; filename="%s"' % resource_id
+        #cherrypy.response.headers["Content-Disposition"] = cd
+        #cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403348476&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=Y6uRVDJurzEvJ2i7LTnjZND95es%3D'
+        cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda.oss-cn-hangzhou.aliyuncs.com/static/js/cogenda.admin.js'
+        #return serve_file(filepath, "application/x-download", "attachment")
+        return cherrypy.response
