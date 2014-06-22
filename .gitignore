@@ -21,8 +21,6 @@ parts
 .project
 .pydevproject
 bin/travis_env.txt
-cogenda-app/node_modules/
-
 
 data/
 venv/

@@ -16,7 +16,10 @@
 	$ pip install virtualenv
 	$ ./setenv.sh
 	$ source venv/bin/activate
+    $ brew install node
+    $ make web-setup
 	```
+
 - Start Web Server
 
 	```
@@ -63,3 +66,10 @@
     $ make babel-compile
     ```
     > After *.po file modified by dev, this command will compile the *.po to *.mo for application use.
+
+- Web assets optimizing
+
+    ```
+    make web
+    ```
+    > Optimize web static files.

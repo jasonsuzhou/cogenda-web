@@ -9,14 +9,14 @@ module.exports = function(grunt) {
                     compress: true
                 },
                 files: {
-                    'static/css/cogenda.min.css': ['static/css/*.css']
+                    'cogenda-app/static/css/cogenda.min.css': ['cogenda-app/static/css/*.css']
                 }
             }
         },
         uglify: {
             dist: {
                 files: {
-                    'static/js/cogenda.min.js': ['static/js/cogenda.*.js']
+                    'cogenda-app/static/js/cogenda.min.js': ['cogenda-app/static/js/cogenda.*.js']
                 }
             }
         },
@@ -28,9 +28,9 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'static/images/',
+                    cwd: 'cogenda-app/static/images/',
                     src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: 'static/images/'
+                    dest: 'cogenda-app/static/images/'
                 }]
             }
         },
@@ -38,14 +38,14 @@ module.exports = function(grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: 'static/images/',
+                    cwd: 'cogenda-app/static/images/',
                     src: '{,*/}*.svg',
-                    dest: 'static/images/'
+                    dest: 'cogenda-app/static/images/'
                 }]
             }
         },
         clean: {
-            dist: ['static/css/cogenda.min.css', 'static/js/cogenda.min.js']
+            dist: ['cogenda-app/static/css/cogenda.min.css', 'cogenda-app/static/js/cogenda.min.js']
         }
     });
 

@@ -1,6 +1,8 @@
 language: python
 python:
 - '2.7'
+node_js:
+- '0.10'
 notifications:
   email:
   - tang.jilong@gmail.com
@@ -13,6 +15,10 @@ before_script:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
+- echo 'Ready to optimize assets files.'
+- cd /home/travis/build/cogenda/cogenda-web
+- make web-setup
+- make web
 - echo 'Ready to sync with AWS S3 and AliYun OSS.'
 - pwd && echo $COGENDA_STATIC_HOME
 - git clone --depth=50 --branch=master https://github.com/cogenda/cloud-sync.git /home/travis/build/cogenda/cloud-sync
