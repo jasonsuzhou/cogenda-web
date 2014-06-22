@@ -230,10 +230,14 @@ function save_user() {
     var role_id = $('#role').val().trim();
     if(role_id === '2') {
         var selected_resources = $('#resource').val();
-        for(var i = 0; i < selected_resources.length; i++) {
-            resource_ids = resource_ids + selected_resources[i] + ",";
+        if(selected_resources) {
+            for (var i = 0; i < selected_resources.length; i++) {
+                resource_ids = resource_ids + selected_resources[i] + ",";
+            }
+            resource_ids = resource_ids.substring(0, resource_ids.length - 1);
+        } else {
+            resource_ids = "";
         }
-        resource_ids = resource_ids.substring(0, resource_ids.length - 1);
     }
 
     var user = {
