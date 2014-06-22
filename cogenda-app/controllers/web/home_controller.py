@@ -8,11 +8,12 @@ import cherrypy
 from lib.i18ntool import ugettext as _
 from cherrypy.lib.static import serve_file
 from datetime import datetime
-
+from mailer import Mailer
+from mailer import Message
 import logging 
 log = logging.getLogger(__name__)
 
-class UserController(BaseController):
+class HomeController(BaseController):
 
     @route('/')
     def index(self):
@@ -48,3 +49,16 @@ class UserController(BaseController):
         cherrypy.response.headers["Content-Disposition"] = cd
         cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403359250&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=vdtP0ldMD0yCskxmGcPxuF0oPuM%3D'
         #cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda.oss-cn-hangzhou.aliyuncs.com/static/js/cogenda.admin.js'
+
+    @route('/mail')
+    def send_mail(self):
+        #message = Message(From="tang.jilong@gmail.com", To="tang.jilong@139.com", charset="utf-8")
+        message = Message(From="support@cogenda.com", To="tang.jilong@139.com", charset="utf-8")
+        message.Subject = "Requery Account"
+        #message.Html = "This email uses <strong>HTML</strong>!"
+        message.Body = "Hi, Admin, This is tim to request cogenda account."
+        #sender = Mailer('cn.cogenda.com')
+        #sender = Mailer('smtp.gmail.com', 587, True, 'tang.jilong@gmail.com', '***')
+        sender = Mailer('cn.cogenda.com', 25, True, 'support@cogenda.com', '****')
+        sender.send(message)
+
