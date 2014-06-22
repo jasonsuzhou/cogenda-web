@@ -38,7 +38,7 @@ class HomeController(BaseController):
         #for temp_user in all_resources:
         #    print temp_user.name
         
-        return self.render_template('index.html', date=datetime.now(), hello=_('hello'))
+        return self.render_template('web/index.html', date=datetime.now(), hello=_('hello'))
 
     @route('/download/:resource_id')
     def download(self, resource_id):
