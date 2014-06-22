@@ -118,32 +118,3 @@ class AdminController(BaseController):
                 json[col_name] = col_val
 
         return json
-
-    @staticmethod
-    def get_resource_status(status):
-        resource_status = 'Fail'
-        if status == '1':
-            resource_status = 'Successful'
-        else:
-            resource_status = 'Fail'
-        return resource_status
-
-    @staticmethod
-    def get_resource_type(_type):
-        resource_type = 'Restricted'
-        if _type == '0':
-            resource_type = 'Public'
-        else:
-            resource_type = 'Restricted'
-        return resource_type
-
-    @staticmethod
-    def get_role_name(role_id):
-        role_name = 'Resource'
-        if role_id == '1':
-            role_name = 'Resource'
-        elif role_id == '2':
-            role_name = 'Resource Owner'
-        elif role_id == '3':
-            role_name = 'Administrator'
-        return role_name
