@@ -335,6 +335,7 @@ pre {
   padding-left: 10px;
   padding-right: 25px;
   margin-bottom: 0;
+  height: 65px;
 }
 .navbar-nav > li > a {
   padding: 22px;
@@ -7738,4 +7739,8 @@ textarea.parsley-error {
 
 .parsley-errors-list.filled {
   opacity: 1;
+}
+
+.dropdown-toggle {
+    height: 64px;
 }
