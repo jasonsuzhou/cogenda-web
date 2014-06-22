@@ -25,17 +25,17 @@ class UserController(BaseController):
         for temp_user in all_users:
             print temp_user.username
 
-        resource = Resource('jd.setup.v001.doc', '1', 'AliYun', 'http://asdfsafsadfsdafsdafsdafsdafsadfsdaf', 1, datetime(2014,6,16,12,12,12), 1)
-        cherrypy.request.db.add(resource)
-        all_resources = Resource.list(cherrypy.request.db)
-        for temp_user in all_resources:
-            print temp_user.name
+        #resource = Resource('jd.setup.v001.doc', '1', 'AliYun', 'http://asdfsafsadfsdafsdafsdafsdafsadfsdaf', 1, datetime(2014,6,16,12,12,12), 1)
+        #cherrypy.request.db.add(resource)
+        #all_resources = Resource.list(cherrypy.request.db)
+        #for temp_user in all_resources:
+        #    print temp_user.name
 
-        resource = Resource('jd.setup.v001.doc', '1', 'AWS S', 'http://12433456346346343456346534565434563', 1, datetime(2014,6,16,12,12,12), 1)
-        cherrypy.request.db.add(resource)
-        all_resources = Resource.list(cherrypy.request.db)
-        for temp_user in all_resources:
-            print temp_user.name
+        #resource = Resource('jd.setup.v001.doc11', '1', 'AWS S', 'http://12433456346346343456346534565434563', 1, datetime(2014,6,16,12,12,12), 1)
+        #cherrypy.request.db.add(resource)
+        #all_resources = Resource.list(cherrypy.request.db)
+        #for temp_user in all_resources:
+        #    print temp_user.name
         
         return self.render_template('index.html', date=datetime.now(), hello=_('hello'))
 
