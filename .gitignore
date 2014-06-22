@@ -21,6 +21,7 @@ parts
 .project
 .pydevproject
 bin/travis_env.txt
+node_modules
 
 data/
 venv/
