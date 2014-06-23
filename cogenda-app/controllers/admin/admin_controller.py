@@ -1,12 +1,13 @@
 #-*- coding:utf-8 -*-
 
 
-from lib.controller import BaseController, route
+from lib.controller import BaseController, route, authenticated
 from datetime import datetime
 from models import User, Resource
 import cherrypy
 from lib.i18ntool import ugettext as _
 import json
+import hmac
 
 import logging 
 log = logging.getLogger(__name__)
@@ -14,19 +15,19 @@ log = logging.getLogger(__name__)
 class AdminController(BaseController):
 
     @route('/admin/user-mgmt')
+    @authenticated
     def user_mgmt(self):
-        self.is_authenticated()
         return self.render_template('admin/user-mgmt/user-container.html')
 
     @route('/admin/resource-mgmt')
+    @authenticated
     def resource_mgmt(self):
-        self.is_authenticated()
         return self.render_template('admin/resource-mgmt/resource-container.html')
 
     @route('/admin/users')
     @cherrypy.tools.json_out()
+    @authenticated
     def user_mgmt_data(self):
-        self.is_authenticated()
         all_users = User.list(cherrypy.request.db)
         users_in_json = []
         for user in all_users:
@@ -35,8 +36,8 @@ class AdminController(BaseController):
 
     @route('/admin/fetch-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
+    @authenticated
     def get_user_by_id(self, uid):
-        self.is_authenticated()
         user = User.get_by_uid(cherrypy.request.db, uid)
         print user
         user_in_json = self.jsonify_model(user)
@@ -44,8 +45,8 @@ class AdminController(BaseController):
 
     @route('/admin/create-user')
     @cherrypy.tools.json_out()
+    @authenticated
     def create_user(self):
-        self.is_authenticated()
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
@@ -54,9 +55,10 @@ class AdminController(BaseController):
         username_checking = self.check_username(json_user['username'])
         if not (username_checking is None):
             return username_checking
+        salt = self.settings.cogenda_app.cogenda_salt
         user = User(
                 json_user['username'], 
-                json_user['password'],
+                hmac.new(salt, json_user['password']).hexdigest(),
                 json_user['company'],
                 json_user['email'],
                 json_user['mobile'],
@@ -71,8 +73,8 @@ class AdminController(BaseController):
 
     @route('/admin/update-user')
     @cherrypy.tools.json_out()
+    @authenticated
     def update_user(self):
-        self.is_authenticated()
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
@@ -81,9 +83,10 @@ class AdminController(BaseController):
         username_checking = self.check_username(json_user['username'])
         if not (username_checking is None):
             return username_checking
+        salt = self.settings.cogenda_app.cogenda_salt
         user = User(
                 json_user['username'],
-                json_user['password'],
+                hmac.new(salt, json_user['password']).hexdigest(),
                 json_user['company'],
                 json_user['email'],
                 json_user['mobile'],
@@ -97,15 +100,15 @@ class AdminController(BaseController):
 
     @route('/admin/delete-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
+    @authenticated
     def destroy_user(self, uid):
-        self.is_authenticated()
         count = User.delete_by_uid(cherrypy.request.db, uid)
         return count
 
     @route('/admin/resources')
     @cherrypy.tools.json_out()
+    @authenticated
     def resource_mgmt_data(self):
-        self.is_authenticated()
         all_resources = Resource.list(cherrypy.request.db)
         resources_in_json = []
         for resource in all_resources:
@@ -128,10 +131,6 @@ class AdminController(BaseController):
                 json[col_name] = col_val
         return json
 
-    def is_authenticated(self):
-        auth = cherrypy.session.get('authenticated_user', None)
-        if auth is None:
-            self.redirect('/admin/login')
 
     def check_username(self, username):
         user = User.get_by_username(cherrypy.request.db, username)

@@ -45,8 +45,8 @@ def authenticated(func):
         user = instance.user
         if user:
             return func(*arguments, **kw)
-        #else:
-            #TODO: redirect to 401 page.
+        else:
+            raise cherrypy.HTTPRedirect('/admin/login')
 
     actual.__name__ = func.__name__
     actual.__doc__ = func.__doc__
@@ -114,16 +114,13 @@ class BaseController(object):
     @property
     def user(self):
         try:
-            print '~~~~~~~~~~~'
-            user = cherrypy.session.get('authenticated_user', None)
-            print user
             return cherrypy.session.get('authenticated_user', None)
         except AttributeError:
             return None
 
     def login(self, user):
         cherrypy.session.regenerate()
-        cherrypy.session['authenticated_user'] = user.username
+        cherrypy.session['authenticated_user'] = (user.username, user.role, user.resource)
 
     def logoff(self):
         cherrypy.session['authenticated_user'] = None
