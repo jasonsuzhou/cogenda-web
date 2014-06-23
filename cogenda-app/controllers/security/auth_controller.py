@@ -21,11 +21,14 @@ class AuthController(BaseController):
         json_user = json.loads(rawbody)
         username = json_user['username']
         password = json_user['password']
+        refer = cherrypy.request.headers.get('Referer','/admin/user-mgmt')
+        if refer.endswith('/admin/login'):
+            refer = '/admin/user-mgmt'
         error_msg = self.check_credentials(username, password)
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg}
         else:
-            resp = {'auth_success': True, 'msg': u"User authenticated successfully."}
+            resp = {'auth_success': True, 'msg': u"User authenticated successfully.", 'refer': refer}
         return json.dumps(resp)
 
 
