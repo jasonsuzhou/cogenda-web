@@ -27,7 +27,7 @@ class User(Base):
     def __init__(self, username, password, company, email, mobile, role, resource, notes, active=True):
         Base.__init__(self)
         self.username = username
-        self.password = hmac.new('cogenda_salt', password).hexdigest()
+        self.password = password
         self.company = company
         self.email = email
         self.mobile = mobile
@@ -45,7 +45,7 @@ class User(Base):
 
     @staticmethod
     def get_by_username(session, username):
-        return session.query(User).filter(User.username==username).first()
+        return session.query(User).filter(User.username==username, User.active==True).first()
 
     @staticmethod
     def get_by_uid(session, uid):

@@ -35,7 +35,7 @@ $(document).ready(function() {
 
                     return
                 }
-                window.location = '/admin/user-mgmt';
+                window.location = result.refer;
             });
 
             authenticate.fail(function(resp, status) {
