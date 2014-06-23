@@ -53,6 +53,8 @@ class Server(object):
                 'tools.trailing_slash.on': True,
                 'log.screen': sets.cogenda_app.as_bool('verbose'),
                 'tools.sessions.on': True,
+                'tools.sessions.storage_type': 'ram',
+                'tools.sessions.timeout': 3600,
                 'tools.I18nTool.on': True,
                 'tools.I18nTool.default': sets.cogenda_app.default_locale, 
                 'tools.I18nTool.mo_dir': os.path.join(os.path.abspath(os.curdir), sets.cogenda_app.app_name ,'i18n'), 

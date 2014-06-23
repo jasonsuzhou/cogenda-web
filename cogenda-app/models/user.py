@@ -36,6 +36,9 @@ class User(Base):
         self.notes = notes
         self.active = active
 
+    def __str__(self):
+        return self.username
+
     @staticmethod
     def is_active(self):
         return self.active

@@ -7720,6 +7720,7 @@ textarea.parsley-error {
   border: 1px solid #EED3D7;
 }
 
+/*
 .parsley-errors-list {
   margin: 2px 0 3px 0;
   padding: 0;
@@ -7740,7 +7741,22 @@ textarea.parsley-error {
 .parsley-errors-list.filled {
   opacity: 1;
 }
+*/
 
 .dropdown-toggle {
     height: 64px;
+}
+
+/*Validation*/
+.parsley-error-list {
+    margin-top: 4px;
+    padding: 0;
+}
+.parsley-error-list li {
+    padding: 0;
+    list-style: none;
+    color: #cc0000;
+}
+.parsley-error {
+    border-color: #c00 !important;
 }
