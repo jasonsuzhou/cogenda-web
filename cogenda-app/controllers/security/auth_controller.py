@@ -6,7 +6,7 @@ from models import User
 import json
 
 class AuthController(BaseController):
-    
+
     @route('/admin/login')
     def index(self):
         #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
@@ -25,14 +25,14 @@ class AuthController(BaseController):
         password = json_user['password']
         error_msg = self.check_credentials(username, password)
         if error_msg:
-            resp = {'auth_success': False, 'msg': error_msg} 
+            resp = {'auth_success': False, 'msg': error_msg}
         else:
             cherrypy.session.regenerate()
-            resp = {'auth_success': True, 'msg': u"User authenccated successfully."}
-        return json.dumps(resp) 
+            resp = {'auth_success': True, 'msg': u"User authenticated successfully."}
+        return json.dumps(resp)
 
 
-    @route('security/logout') 
+    @route('/security/logout')
     def logout(self):
         self.logoff()
         self.redirect('/admin/login')
@@ -41,8 +41,6 @@ class AuthController(BaseController):
     def check_credentials(self, username, password):
         user = User.get_by_username(cherrypy.request.db, username)
         """Verifies credentials for username and password."""
-        if user is None:
-            return u"User %s have not registered yet!" % username
-        if user.password != hmac.new('cogenda_salt', password).hexdigest():
-            return u"Incorrect password!"
+        if user is None or user.password != hmac.new('cogenda_salt', password).hexdigest():
+            return u"Invalid user ID or password."
         self.login(user)

@@ -47,9 +47,6 @@ function ready_navigation_menu() {
     // Handle menu click event.
     $('ul.cl-vnavigation li').each(function(index, li) {
         var sub_menus = $(li).find('ul');
-        //if (sub_menus.length > 0) {
-        //    return;
-        //}
         var $clink = li.children[0];
         if ($clink.href == String(window.location)) {
             $(this).addClass('active');
@@ -144,7 +141,6 @@ function render_user_datatable() {
             if (e) e.preventDefault();
             if ($('#new-modal').parsley().validate()) {
                 save_user();
-                $('#user-new-modal').modal('hide');
             }
         });
     });
@@ -262,7 +258,12 @@ function save_user() {
             type: "POST",
             url: '/admin/update-user',
             success: function(result) {
-                render_user_datatable();
+                if(result.id) {
+                    render_user_datatable();
+                    $('#user-new-modal').modal('hide');
+                } else {
+                    console.log(result);
+                }
             }
         });
     } else {
@@ -273,7 +274,12 @@ function save_user() {
             type: "POST",
             url: '/admin/create-user',
             success: function(result) {
-                render_user_datatable();
+                if(result.id) {
+                    render_user_datatable();
+                    $('#user-new-modal').modal('hide');
+                } else {
+                    console.log(result);
+                }
             }
         });
     }

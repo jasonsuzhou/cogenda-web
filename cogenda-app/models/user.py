@@ -21,13 +21,12 @@ class User(Base):
     resource = Column(String(4000))
     notes = Column(String(4000))
     active = Column(Boolean, default=True)
-    created_date = Column(DateTime, default=datetime.now)
-    updated_date = Column(DateTime, default=datetime.now)
+    created_date = Column(DateTime, default=datetime.now())
+    updated_date = Column(DateTime, default=datetime.now())
 
-    def __init__(self, username, password, company, email, mobile, role, resource, notes, active=True, created_date=datetime.now, updated_date=datetime.now):
+    def __init__(self, username, password, company, email, mobile, role, resource, notes, active=True):
         Base.__init__(self)
         self.username = username
-        print password
         self.password = hmac.new('cogenda_salt', password).hexdigest()
         self.company = company
         self.email = email
@@ -36,8 +35,6 @@ class User(Base):
         self.resource = resource
         self.notes = notes
         self.active = active
-        self.created_date = created_date
-        self.updated_date = updated_date
 
     @staticmethod
     def is_active(self):
@@ -52,9 +49,17 @@ class User(Base):
         return session.query(User).filter(User.id==uid).first()
 
     @staticmethod
-    def update_by_uid(session, uid, company):
+    def update_by_uid(session, uid, _user):
         user = session.query(User).filter(User.id==uid).first()
-        user.company = company
+        user.username = _user.username
+        #user.password = _user.hmac.new('cogenda_salt', _user.password).hexdigest()
+        user.company = _user.company
+        user.email = _user.email
+        user.mobile = _user.mobile
+        user.role = _user.role
+        user.resource = _user.resource
+        user.notes = _user.notes
+        user.active = _user.active
         session.commit()
         return user
 

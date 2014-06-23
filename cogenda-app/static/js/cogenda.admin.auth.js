@@ -20,14 +20,22 @@ $(document).ready(function() {
             });
 
             authenticate.done(function(resp) {
+                $('#password-error ul').children().remove();
                 console.log("Auth done!");
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
                     //TODO: display error msg on UI.
                     console.log(result.msg);
+
+                    $('#auth-error ul').children().remove();
+                    var li = $('<li>');
+                    li.attr('class', 'parsley-required');
+                    li.text(result.msg);
+                    $('#auth-error ul').attr('class', 'parsley-errors-list filled').append(li);
+
                     return
                 }
-                 window.location = '/admin/user-mgmt';
+                window.location = '/admin/user-mgmt';
             });
 
             authenticate.fail(function(resp, status) {
