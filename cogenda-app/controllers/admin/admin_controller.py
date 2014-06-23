@@ -13,25 +13,6 @@ log = logging.getLogger(__name__)
 
 class AdminController(BaseController):
 
-    @route('/admin/auth-login')
-    def index(self):
-        #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
-        return self.render_template('admin/security/login-user.html', date=datetime.now(), hello=_('hello'))
-
-    @route('/admin/authenticate')
-    @cherrypy.tools.json_out(content_type='application/json')
-    def authenticate(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_user = json.loads(rawbody)
-        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Auth User name :>>' + json_user['username']
-        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Auth Password :>>' + json_user['password']
-        authController = AuthController()
-        auth = authController.login(json_user['username'], json_user['password'])
-        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ' + auth
-        security_user = {'auth_token': 'mocked-hmac-authorization-token'}
-        return security_user
-
     @route('/admin/user-mgmt')
     def user_mgmt(self):
         return self.render_template('admin/user-mgmt/user-container.html')

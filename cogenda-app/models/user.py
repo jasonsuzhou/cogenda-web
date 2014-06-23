@@ -4,6 +4,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from datetime import datetime
+import hmac
 
 Base = declarative_base()
 
@@ -26,7 +27,8 @@ class User(Base):
     def __init__(self, username, password, company, email, mobile, role, resource, notes, active=True, created_date=datetime.now, updated_date=datetime.now):
         Base.__init__(self)
         self.username = username
-        self.password = password
+        print password
+        self.password = hmac.new('cogenda_salt', password).hexdigest()
         self.company = company
         self.email = email
         self.mobile = mobile
@@ -40,6 +42,10 @@ class User(Base):
     @staticmethod
     def is_active(self):
         return self.active
+
+    @staticmethod
+    def get_by_username(session, username):
+        return session.query(User).filter(User.username==username).first()
 
     @staticmethod
     def get_by_uid(session, uid):

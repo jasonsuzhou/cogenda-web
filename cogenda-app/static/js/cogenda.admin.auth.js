@@ -14,19 +14,24 @@ $(document).ready(function() {
             var authenticate = $.ajax({
                 dataType: 'json',
                 contentType: "application/json",
-                url: '/admin/authenticate',
+                url: '/security/authenticate',
                 data: JSON.stringify(credentials),
                 type: 'POST'
             });
 
             authenticate.done(function(resp) {
                 console.log("Auth done!");
-                console.log(resp.auth_token);
-                window.location = '/admin/user-mgmt';
+                var result = JSON.parse(resp);
+                if (!result.auth_success) {
+                    //TODO: display error msg on UI.
+                    console.log(result.msg);
+                    return
+                }
+                 window.location = '/admin/user-mgmt';
             });
 
             authenticate.fail(function(resp, status) {
-                //TODO: handle failure.
+                //TODO: display error msg on ui.
             });
         } else {
             console.log('Client side validate error.');
