@@ -38,7 +38,6 @@ class AdminController(BaseController):
     def get_user_by_id(self, uid):
         self.is_authenticated()
         user = User.get_by_uid(cherrypy.request.db, uid)
-        print user
         user_in_json = self.jsonify_model(user)
         return user_in_json
 
@@ -77,10 +76,16 @@ class AdminController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
 
+        # Get original user by id
+        origin_user = User.get_by_uid(cherrypy.request.db, json_user['id'])
+
         # Check username
-        username_checking = self.check_username(json_user['username'])
-        if not (username_checking is None):
-            return username_checking
+        if origin_user.username != json_user['username']:
+            username_checking = self.check_username(json_user['username'])
+            if not (username_checking is None):
+                return username_checking
+
+        # Assemble user
         user = User(
                 json_user['username'],
                 json_user['password'],
@@ -92,7 +97,7 @@ class AdminController(BaseController):
                 json_user['notes'],
                 json_user['active'])
         user.updated_date = datetime.now()
-        user = User.update_by_uid(cherrypy.request.db, json_user['id'], user)
+        user = User.update_by_uid(cherrypy.request.db, json_user['id'], origin_user, user)
         return self.jsonify_model(user)
 
     @route('/admin/delete-user/:uid')

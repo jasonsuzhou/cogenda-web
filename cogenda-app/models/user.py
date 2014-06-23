@@ -52,17 +52,24 @@ class User(Base):
         return session.query(User).filter(User.id==uid).first()
 
     @staticmethod
-    def update_by_uid(session, uid, _user):
-        user = session.query(User).filter(User.id==uid).first()
-        user.username = _user.username
+    def update_by_uid(session, uid, user, _user):
+        if user.username != _user.username:
+            user.username = _user.username
         #user.password = _user.hmac.new('cogenda_salt', _user.password).hexdigest()
-        user.company = _user.company
-        user.email = _user.email
-        user.mobile = _user.mobile
-        user.role = _user.role
-        user.resource = _user.resource
-        user.notes = _user.notes
-        user.active = _user.active
+        if user.company != _user.company:
+            user.company = _user.company
+        if user.email != _user.email:
+            user.email = _user.email
+        if user.mobile != _user.mobile:
+            user.mobile = _user.mobile
+        if user.role != _user.role:
+            user.role = _user.role
+        if user.resource != _user.resource:
+            user.resource = _user.resource
+        if user.notes != _user.notes:
+            user.notes = _user.notes
+        if user.active != _user.active:
+            user.active = _user.active
         session.commit()
         return user
 

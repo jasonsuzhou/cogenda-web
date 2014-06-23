@@ -114,6 +114,8 @@ function render_user_datatable() {
     // Ready common datatable.
     ready_common_datatable("/admin/users", columns, function(datatable) {
 
+        var current_user;
+
         // Call Add modal
         $("#add").click(function(e) {
             reset_user_create_modal();
@@ -123,11 +125,11 @@ function render_user_datatable() {
         // Edit by click edit link & row double click
         $("#edit").click(function(e) {
             if (e) e.preventDefault();
-            edit_user();
+            current_user = edit_user();
         });
         datatable.on("dblclick", "tr", function(e) {
             if (e) e.preventDefault();
-            edit_user(this);
+            current_user = edit_user(this);
         });
 
         // Delete users
@@ -140,7 +142,7 @@ function render_user_datatable() {
         $("#save").on('click', function(e) {
             if (e) e.preventDefault();
             if ($('#new-modal').parsley().validate()) {
-                save_user();
+                save_user(current_user);
             }
         });
     });
@@ -189,14 +191,16 @@ function edit_user(row) {
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
-        $.ajax({
+        var fetchUser = $.ajax({
             "dataType": 'json',
             "type": "GET",
-            "url": '/admin/fetch-user/' + selectedRowID,
-            "success": function(result) {
+            "url": '/admin/fetch-user/' + selectedRowID
+        });
+        fetchUser.done(function(result) {
                 $('#uid').val(result.id);
+                $('#uname').val(result.username);
                 $('#name').val(result.username);
-                $('#password').val(result.password);
+                $('#password').val('admin');//result.password);
                 $('#company').val(result.company);
                 $('#email').val(result.email);
                 $('#mobile').val(result.mobile);
@@ -207,7 +211,6 @@ function edit_user(row) {
                 render_resource_select(result.role, convert_resource(result.resource));
                 // Active switch
                 render_active_switch(result.active);
-            }
         });
         $('#user-new-modal').modal('show');
     } else {
@@ -236,6 +239,7 @@ function save_user() {
         }
     }
 
+    // Assemble user
     var user = {
         id: uid,
         username: username,
@@ -249,7 +253,7 @@ function save_user() {
         role: role_id
     };
 
-    // Add
+    // Modify user
     if($('#uid').val().trim()) {
         $.ajax({
             dataType: 'json',
@@ -266,7 +270,9 @@ function save_user() {
                 }
             }
         });
-    } else {
+    }
+    // Create user
+    else {
         $.ajax({
             dataType: 'json',
             data: JSON.stringify(user),
@@ -274,7 +280,7 @@ function save_user() {
             type: "POST",
             url: '/admin/create-user',
             success: function(result) {
-                if(result.id) {
+                if(result.username) {
                     render_user_datatable();
                     $('#user-new-modal').modal('hide');
                 } else {
@@ -315,7 +321,7 @@ function reset_user_create_modal() {
 function render_active_switch(is_active) {
     var _switch = $('.switch-animate');
     if(typeof(is_active) !== 'undefined') {
-        if(is_active === 'true') {
+        if(is_active) {
             _switch.removeClass('switch-off');
             _switch.addClass('switch-on');
         } else {
@@ -343,22 +349,24 @@ function convert_resource(resource_str) {
 function render_resource_select(selectedRole, selectedResources) {
     if(selectedRole === '2' || selectedRole === 'Resource Owner') { // 'Resource Owner'
         // Populate resource select
-        $.ajax({
+        var resource_list = $.ajax({
             "dataType": 'json',
             "type": "GET",
-            "url": "/admin/resources",
-            "success": function(result) {
-                // console.log(result);
-                for(var i = 0; i < result.length; i++) {
-                    $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: i });
-                }
-            }
+            "url": "/admin/resources"
         });
-        $('#resource').multiSelect('refresh');
-        if(typeof(selectedResources) !== 'undefined') {
-            $('#resource').multiSelect('select', selectedResources);
-        }
-        $('#resource-container').show();
+
+        resource_list.done(function(result) {
+            // console.log(result);
+            $('#resource').multiSelect('refresh');
+            for (var i = 0; i < result.length; i++) {
+                $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: i });
+            }
+            $('#resource').multiSelect('deselect_all');
+            if (typeof(selectedResources) !== 'undefined') {
+                $('#resource').multiSelect('select', selectedResources);
+            }
+            $('#resource-container').show();
+        });
     } else {
         $('#resource-container').hide();
     }
@@ -592,7 +600,7 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
 
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
-                "aaData": processUserResult(result),
+                "aaData": process_user_result(result),
                 "aoColumns": columns
             });
 
@@ -611,10 +619,10 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
     });
 }
 
-function processUserResult(result) {
+function process_user_result(result) {
     for(var i = 0; i < result.length; i++) {
+        result[i].active = get_user_status(result[i].active);
         if(result[i].role) result[i].role = get_role_name(result[i].role);
-        if(result[i].active) result[i].active = get_user_status(result[i].active);
         if(result[i].status) result[i].status = get_resource_status(result[i].status);
         if(result[i].type) result[i].type = get_resource_type(result[i].type);
     }
@@ -652,55 +660,9 @@ function get_role_name(role_id) {
 
 function get_user_status(active) {
     var status = 'No';
-    if(active === 'true')
+    if(active)
         status = 'Yes';
     return status;
-}
-
-function authenticate() {
-    if ($('#security-login-form').parsley().validate()) {
-        var username = $('#username').val().trim();
-        var password = $('#password').val().trim();
-
-        credentials = {
-            username: username,
-            password: password
-        };
-
-        var authenticate = $.ajax({
-            dataType: 'json',
-            contentType: "application/json",
-            url: '/admin/authenticate',
-            data: JSON.stringify(credentials),
-            type: 'POST'
-        });
-
-        authenticate.done(function(resp) {
-            self.location.href = '/admin/user-mgmt';
-            /*self.put('authenticated', true);
-            self.put('security-user', JSON.stringify(resp.security_user));
-            if (!self.get('redirect-url')) {
-                self.location.href = '/admin/user-mgmt';
-                return callback();
-            }
-
-            var redirectUrl = self.get('redirect-url');
-            self.remove('redirect-url');
-            Backbone.history.navigate(redirectUrl, {
-                trigger: true
-            });
-            callback();*/
-        });
-
-        authenticate.fail(function(resp, status) {
-            /*Backbone.history.navigate('#security/login', {
-                trigger: true
-            });*/
-            callback();
-        });
-    } else {
-        console.log('Client side validate error.');
-    }
 }
 
 //***************************************************************
