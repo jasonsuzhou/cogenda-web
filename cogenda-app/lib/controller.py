@@ -114,12 +114,16 @@ class BaseController(object):
     @property
     def user(self):
         try:
+            print '~~~~~~~~~~~'
+            user = cherrypy.session.get('authenticated_user', None)
+            print user
             return cherrypy.session.get('authenticated_user', None)
         except AttributeError:
             return None
 
     def login(self, user):
-        cherrypy.session['authenticated_user'] = user
+        cherrypy.session.regenerate()
+        cherrypy.session['authenticated_user'] = user.username
 
     def logoff(self):
         cherrypy.session['authenticated_user'] = None

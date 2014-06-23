@@ -39,6 +39,9 @@ class User(Base):
         self.created_date = created_date
         self.updated_date = updated_date
 
+    def __str__(self):
+        return self.username
+
     @staticmethod
     def is_active(self):
         return self.active

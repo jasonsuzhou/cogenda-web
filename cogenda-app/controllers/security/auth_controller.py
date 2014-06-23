@@ -27,7 +27,6 @@ class AuthController(BaseController):
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg} 
         else:
-            cherrypy.session.regenerate()
             resp = {'auth_success': True, 'msg': u"User authenccated successfully."}
         return json.dumps(resp) 
 
