@@ -100,7 +100,7 @@ class AdminController(BaseController):
                 json_user['notes'],
                 json_user['active'])
         user.updated_date = datetime.now()
-        user = User.update_by_uid(cherrypy.request.db, json_user['id'], origin_user, user)
+        user = User.update_user(cherrypy.request.db, origin_user, user)
         return self.jsonify_model(user)
 
     @route('/admin/delete-user/:uid')
@@ -119,6 +119,24 @@ class AdminController(BaseController):
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
         return resources_in_json
+
+    @route('/admin/update-resource')
+    @cherrypy.tools.json_out()
+    @authenticated
+    def update_resource(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_resource = json.loads(rawbody)
+
+         # Get original user by id
+        origin_resource = Resource.get_by_rid(cherrypy.request.db, json_resource['id'])
+
+        # Assemble resource
+        resource = Resource(
+                json_resource['type'],
+                json_resource['active'])
+        resource = Resource.update_resource(cherrypy.request.db, origin_resource, resource)
+        return self.jsonify_model(resource)
 
     def jsonify_model(self, model):
         """ Returns a JSON representation of an SQLAlchemy-backed object.

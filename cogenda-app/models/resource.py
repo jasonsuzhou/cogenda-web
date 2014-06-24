@@ -28,7 +28,25 @@ class Resource(Base):
         self.status = status
         self.uploaded_date = uploaded_date
         self.active = active
+
+    def __init__(self, type, active=True):
+        Base.__init__(self)
+        self.type = type
+        self.active = active
     
     @staticmethod
     def list(session):
         return session.query(Resource).all()
+
+    @staticmethod
+    def get_by_rid(session, rid):
+        return session.query(Resource).filter(Resource.id==rid).first()
+
+    @staticmethod
+    def update_resource(session, resource, _resource):
+        if resource.type != _resource.type:
+            resource.type = _resource.type
+        if resource.active != _resource.active:
+            resource.active = _resource.active
+        session.commit()
+        return resource

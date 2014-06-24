@@ -1,0 +1,49 @@
+<!-- Nifty Modal -->
+<div id="resource-status-modal" class="modal fade colored-header in" role="dialog" style="display: none;">
+    <div class="modal-dialog colored-header modal-custom-width-3-5">
+        <div class="md-content">
+            <div class="modal-header">
+                <h3><label id="title">Update Resource</label></h3>
+                <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <form id="status-modal" style="border-radius: 0px;" action="" class="form-horizontal group-border-dashed">
+                <div class="modal-body form">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Name</label>
+                        <div class="col-sm-5">
+                            <p id="r_name" style="margin-bottom: 0; margin-top: 0; padding-top: 7px;"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Vendor</label>
+                        <div class="col-sm-5">
+                            <p id="r_vendor" style="margin-bottom: 0; margin-top: 0; padding-top: 7px;"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Type</label>
+                        <div class="col-sm-5">
+                            <select id="r_type" class="select2">
+                                <option value="1">Public</option>
+                                <option value="2">Restricted</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Active</label>
+                        <div class="col-sm-5">
+                            <input type="hidden" id="rid">
+                            <div class="switch" data-on="success">
+                                <input type="checkbox" checked="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="update" type="submit" class="btn btn-primary btn-flat md-close">Update</button>
+                    <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -52,7 +52,7 @@ class User(Base):
         return session.query(User).filter(User.id==uid).first()
 
     @staticmethod
-    def update_by_uid(session, uid, user, _user):
+    def update_user(session, user, _user):
         if user.username != _user.username:
             user.username = _user.username
         #user.password = _user.hmac.new('cogenda_salt', _user.password).hexdigest()

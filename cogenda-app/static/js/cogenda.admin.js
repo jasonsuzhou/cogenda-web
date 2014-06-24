@@ -1,4 +1,3 @@
-var editor; // use a global for the submit and return data rendering in the examples
 
 $(document).ready(function() {
     // Handle menu click event.
@@ -113,9 +112,6 @@ function render_user_datatable() {
 
     // Ready common datatable.
     ready_common_datatable("/admin/users", columns, function(datatable) {
-
-        var current_user;
-
         // Call Add modal
         $("#add").click(function(e) {
             reset_user_create_modal();
@@ -125,11 +121,11 @@ function render_user_datatable() {
         // Edit by click edit link & row double click
         $("#edit").click(function(e) {
             if (e) e.preventDefault();
-            current_user = edit_user();
+            edit_user();
         });
         datatable.on("dblclick", "tr", function(e) {
             if (e) e.preventDefault();
-            current_user = edit_user(this);
+            edit_user(this);
         });
 
         // Delete users
@@ -142,7 +138,7 @@ function render_user_datatable() {
         $("#save").on('click', function(e) {
             if (e) e.preventDefault();
             if ($('#new-modal').parsley().validate()) {
-                save_user(current_user);
+                save_user();
             }
         });
     });
@@ -377,6 +373,15 @@ function render_resource_select(selectedRole, selectedResources) {
  * TODO: Integrate with new datatable fw.
  */
 function ready_resource_mgmt() {
+    // Read select2
+    ready_common_select2();
+    // Ready switch
+    ready_common_switch();
+
+    render_resource_datatable();
+}
+
+function render_resource_datatable() {
     var columns = [
         {
           "sTitle": "ID",
@@ -410,98 +415,70 @@ function ready_resource_mgmt() {
     ];
 
     // Ready common datatable.
-    ready_common_datatable("/admin/resources", columns, function(datatable) {});
+    ready_common_datatable("/admin/resources", columns, function(datatable) {
+        // Edit by click row double click
+        datatable.on("dblclick", "tr", function(e) {
+            if (e) e.preventDefault();
+            edit_resource(this);
+        });
 
-    /*
-    editor = new $.fn.dataTable.Editor( {
-        ajax: "/admin/resources",
-        table: "#mgmt-datatable",
-        fields: [ {
-                label: "ID",
-                name: "id"
-            }, {
-                label: "Resource Name",
-                name: "name"
-            }, {
-                label: "Vendor",
-                name: "vendor"
-            }, {
-                label: "Upload Date",
-                name: "upload_date"
-            }, {
-                label: "Status",
-                name: "status"
-            }, {
-                label: "Type",
-                name: "type"
-            }, {
-                label: "Active",
-                name: "active"
+        // Update resource
+        $("#update").on('click', function(e) {
+            if (e) e.preventDefault();
+            update_resource();
+        });
+    });
+}
+
+function update_resource() {
+    // Prepare resource data from UI
+    var rid = $('#rid').val().trim();
+    var r_type = $('#r_type').val().trim();
+
+    // Assemble resource
+    var resource = {
+        id: rid,
+        type: r_type,
+        active: ($('.switch-on') && $('.switch-on').length > 0) ? 1 : 0
+    };
+
+    // Update resource
+    $.ajax({
+        dataType: 'json',
+        data: JSON.stringify(resource),
+        contentType: "application/json",
+        type: "POST",
+        url: '/admin/update-resource',
+        success: function(result) {
+            if(result.id) {
+                render_resource_datatable();
+                $('#resource-status-modal').modal('hide');
+            } else {
+                console.log(result);
             }
-        ]
-    } );
-
-    editor.on( 'onOpen', function () {
-            // Listen for a tab key event
-            $(document).on( 'keydown.editor', function ( e ) {
-                if ( e.keyCode === 9 ) {
-                    e.preventDefault();
-
-                    // Find the cell that is currently being edited
-                    var cell = $('div.DTE').parent();
-
-                    if ( e.shiftKey && cell.prev().length && cell.prev().index() !== 0 ) {
-                        // One cell to the left (skipping the first column)
-                        cell.prev().click();
-                    }
-                    else if ( e.shiftKey ) {
-                        // Up to the previous row
-                        cell.parent().prev().children().last(0).click();
-                    }
-                    else if ( cell.next().length ) {
-                        // One cell to the right
-                        cell.next().click();
-                    }
-                    else {
-                        // Down to the next row
-                        cell.parent().next().children().eq(1).click();
-                    }
-                }
-            } );
-        } ).on( 'onClose', function () {
-            $(document).off( 'keydown.editor' );
-        } );
-
-    $('#resourcestable').on( 'click', 'tbody td:not(:first-child)', function (e) {
-        editor.inline( this, {
-            submitOnBlur: true
-        } );
-    } );
-
-    $('#resourcestable').DataTable( {
-        dom: "Tfrtip",
-        ajax: "/admin/resources",
-        columns: [
-            { data: "id" },
-            { data: "name" },
-            { data: "vendor" },
-            { data: "upload_date" },
-            { data: "status" },
-            { data: "type" },
-            { data: "active" }
-        ],
-        order: [ 1, 'asc' ],
-        tableTools: {
-            sRowSelect: "os",
-            sRowSelector: 'td:first-child',
-            aButtons: [
-                { sExtends: "editor_create", editor: editor },
-                { sExtends: "editor_edit",   editor: editor },
-                { sExtends: "editor_remove", editor: editor }
-            ]
         }
-    } );
-    */
+    });
+}
+
+function edit_resource(row) {
+    var datatable = $('#mgmt-datatable').dataTable();
+    var position = datatable.fnGetPosition(row);
+
+    $('#rid').val(datatable.fnGetData(position)['id']);
+    $('#r_name').text(datatable.fnGetData(position)['name']);
+    $('#r_vendor').text(datatable.fnGetData(position)['vendor']);
+
+    var type = datatable.fnGetData(position)['type'] === 'Restricted' ? '2' : '1';
+    var active = datatable.fnGetData(position)['active'] === 'Yes' ? true : false;
+
+    render_resource_type_select(type);
+    render_active_switch(active);
+
+    $('#resource-status-modal').modal('show');
+}
+
+function render_resource_type_select(type) {
+    $('#r_type').select2("val", type);
 }
 
 //***************************************************************
@@ -527,17 +504,6 @@ function ready_common_select2() {
 function ready_common_switch() {
     /*Switch*/
     $('.switch').bootstrapSwitch();
-}
-
-/**
- * Common ready for switch.
- *
- */
-function ready_common_multi_select_group() {
-    /*Multi-Select Group*/
-    $('.privilegeMultiSelect').multiSelect({
-        selectableOptgroup: true
-    });
 }
 
 /**
@@ -601,7 +567,12 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
                 "aaData": process_user_result(result),
-                "aoColumns": columns
+                "aoColumns": columns,
+                "columnDefs": [ {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button>Click!</button>"
+                } ]
             });
 
             // Add/remove class to a row when clicked on
@@ -640,7 +611,7 @@ function get_resource_status(status) {
 
 function get_resource_type(_type) {
     var resource_type = 'Restricted';
-    if(_type == '0')
+    if(_type == '1')
         resource_type = 'Public';
     else
         resource_type = 'Restricted';
