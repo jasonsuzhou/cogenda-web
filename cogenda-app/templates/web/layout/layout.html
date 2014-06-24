@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title> | EDA/TCAD/DFM | Cogenda.com</title>
+<link rel="stylesheet" type="text/css"  href="/static/css/style.web.css"/>
+</head>
+<body>
+<div id="background">
+    <!-- Colors the inner page with #F2F2F2 -->
+    {% include "web/layout/layout-header.html"%}
+    {% include "web/layout/layout-nav.html"%}
+    <!-- Start of index.php, page.php, single.php and archive.php page code -->
+    <div id="outerWrapper">
+        <!-- Sets page width to 960px and centers -->
+        <div id="contentWrapper">
+            <!-- Wraps content and sidebars -->
+            <div id="Content">
+                {% block content %}{% endblock %}
+            </div>
+            <div id="sidebar">
+                {% block sidebar %}{% endblock %}
+            </div>
+            <!-- Close contentWrapper -->
+        </div>
+        <!-- Close outerWrapper -->
+    </div>
+    {% include "web/layout/layout-footer.html"%}
+    <!-- Close background-->
+</div>
+</body>
+<html>

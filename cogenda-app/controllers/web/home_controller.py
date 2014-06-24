@@ -15,13 +15,10 @@ class HomeController(BaseController):
     def index(self):
         #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
         """ testing SQLite and Jinja2 """
-        user = User('Tim', '123', 'Arctic INC.', 'tang.jilong@gmail.com', '1234567890', '1', '', 'This is notes~', 1, datetime(2014,6,16,12,12,12), datetime(2014,6,16,12,12,12))
-        cherrypy.request.db.add(user) 
         all_users = User.list(cherrypy.request.db)
         for temp_user in all_users:
             print temp_user.username
-
-        return self.render_template('web/index.html', date=datetime.now(), hello=_('hello'))
+        return self.render_template('web/home.html')
 
 
     @route('/download/:resource_id')
