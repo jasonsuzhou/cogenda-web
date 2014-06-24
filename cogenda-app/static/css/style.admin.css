@@ -1458,11 +1458,11 @@ body.texture {
 .login-container .middle-login {
   width: 430px;
   margin: 70px auto 0 auto;
-  //left: 50%;
-  //top: 50%;
-  //position: absolute;
-  //margin-top: -170px;
-  //margin-left: -215px;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  margin-top: -170px;
+  margin-left: -215px;
 }
 .login-container .block-flat {
   padding: 0;
@@ -1476,7 +1476,7 @@ body.texture {
 .login-container .block-flat .header {
   padding: 9px 20px;
   background: #F0F0F0;
-  border-bottom: 1px solid #F0F0F0;
+  border-bottom: 1px solid #B8B8B8;
 }
 .login-container .block-flat .header h3 {
   line-height: 35px;
@@ -1484,12 +1484,12 @@ body.texture {
   color: #FFF;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
   position: relative;
-  min-height: 40px;
+  min-height: 48px;
 }
 .login-container .header .logo-img {
   left: 38%;
   margin-left: -63px;
-  margin-top: -3px;
+  margin-top: 2px;
   position: absolute;
   top: 2%;
 }
