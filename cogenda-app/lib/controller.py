@@ -157,10 +157,12 @@ class BaseController(object):
         healthcheck_text = self.settings.cogenda_app.healthcheck_text
         return healthcheck_text or "WORKING"
 
-    def send_mail(self, recipients, message, subject='Request Account'):
+    def send_mail(self, template, name, recipients, message, subject='Request Account'):
+        body = self.render_template(template_file, messagae=message, name=name)
         message = Message(From=self.settings.mailer.smtp_fromaddr, To=recipients, charset="utf-8")
         message.Subject = subject 
-        message.Body = message
+        message.HTML = body
+        message.Body= "Hi Support, \n %s." %(message)
         sender = Mailer(self.settings.mailer.smtp_server, self.settings.mailer.as_int('smtp_server'), True, self.settings.smtp_user, os.environ.get('SMPT_PASSWORD', None))
         sender.send(message)
 
