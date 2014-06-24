@@ -21,6 +21,13 @@ class HomeController(BaseController):
         return self.render_template('web/home.html')
 
 
+    @route('/switch/:locale')
+    def switch_locale(self, locale):
+        refer = cherrypy.request.headers.get('Referer','/')
+        cherrypy.tools.I18nTool.set_custom_language(locale) 
+        self.redirect(refer)
+
+
     @route('/download/:resource_id')
     def download(self, resource_id):
         """Testing download & url with parameter"""
