@@ -929,7 +929,7 @@ input::-webkit-input-speech-button {
   font-size: 21px;
 }
 .sidebar-logo {
-  background: #7761a7 url(../images/logo.png) no-repeat 20px 8px;
+  background: #F0F0F0 url(../images/logo.png) no-repeat 20px 8px;
   padding: 15px 20px;
   display: block;
   height: 64px;
@@ -1475,8 +1475,8 @@ body.texture {
 }
 .login-container .block-flat .header {
   padding: 9px 20px;
-  background: #7761a7;
-  border-bottom: 1px solid #7761a7;
+  background: #F0F0F0;
+  border-bottom: 1px solid #F0F0F0;
 }
 .login-container .block-flat .header h3 {
   line-height: 35px;
@@ -3356,7 +3356,7 @@ table.information > tbody > tr > td {
   outline: none;
 }
 .btn-group.btn-blurbg {
-  background: url("../images/blur_bg1.png") no-repeat;
+  background: url("../images/blur_bg.png") no-repeat;
   padding: 40px;
   margin-bottom: 20px;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
@@ -5003,7 +5003,7 @@ body.modal-open,
   text-align: center;
 }
 .dd-item > button:before {
-  content: "";
+  content: "?";
   display: block;
   position: absolute;
   width: 100%;
@@ -5011,7 +5011,7 @@ body.modal-open,
   text-indent: 0;
 }
 .dd-item > button[data-action="collapse"]:before {
-  content: "";
+  content: "?";
 }
 .dd-placeholder,
 .dd-empty {
@@ -5631,7 +5631,7 @@ body.modal-open,
 }
 /*
 .has-switch span.switch-success.switch-right, .has-switch span.switch-success.switch-right:hover{background:#60C060;}
-.has-switch span.switch-success.switch-right ~ label {border-color:#60C060;} 
+.has-switch span.switch-success.switch-right ~ label {border-color:#60C060;}
 */
 /*Large Size*/
 .has-switch.switch-large {

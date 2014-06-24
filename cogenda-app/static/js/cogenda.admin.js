@@ -1,4 +1,7 @@
-
+/**
+ * Document ready
+ *
+ */
 $(document).ready(function() {
     // Handle menu click event.
     $('ul.cl-vnavigation li').each(function(index, li) {
@@ -21,9 +24,8 @@ $(document).ready(function() {
 });
 
 /**
- *
  * Document ready for optimized pages.
- * TODO: Add details pages & dynamic menu handling.
+ *
  */
 function ready_optimized_page(uri) {
 
@@ -41,6 +43,7 @@ function ready_optimized_page(uri) {
 
 /**
  * Document ready for navigation menu.
+ *
  */
 function ready_navigation_menu() {
     // Handle menu click event.
@@ -55,6 +58,7 @@ function ready_navigation_menu() {
 
 /**
  * Document ready js for user management page.
+ *
  */
 function ready_user_mgmt() {
     // Read select2
@@ -76,6 +80,10 @@ function ready_user_mgmt() {
     render_user_datatable();
 }
 
+/**
+ * Render user datatable
+ *
+ */
 function render_user_datatable() {
     // Prepare displaying columns
     var columns = [
@@ -116,6 +124,7 @@ function render_user_datatable() {
         $("#add").click(function(e) {
             reset_user_create_modal();
             $('#user-new-modal').modal('show');
+            $('#error-msg ul').children().remove();
         });
 
         // Edit by click edit link & row double click
@@ -144,27 +153,44 @@ function render_user_datatable() {
     });
 }
 
+/**
+ * Delete users
+ *
+ */
 function delete_user() {
+    $('#err-msg ul').children().remove();
+    var current_username = $('#username').text().trim();
     var datatable = $('#mgmt-datatable').dataTable();
     var selectedTrs = datatable.$('tr.row_selected');
     var selectedRows = selectedTrs.length;
+    var selectedRowIDs = "";
     if (selectedRows > 0) {
         for(i = 0; i < selectedRows; i++) {
             var position = datatable.fnGetPosition(selectedTrs[i]);
             var selectedRowID = datatable.fnGetData(position)['id'];
-            $.ajax({
-                "dataType": 'json',
-                "type": "DELETE",
-                "url": '/admin/delete-user/' + selectedRowID,
-                "success": function(result) {
-                    console.log(">>>>>>>>>>>>delete" + selectedRowID + "successfully");
-                }
-            });
+            if(current_username === datatable.fnGetData(position)['username']) {
+                pop_error_msg('err-msg', 'You cannot delete yourself.');
+                return;
+            }
+            selectedRowIDs = selectedRowIDs + selectedRowID + ',';
         }
+        console.log(selectedRowIDs.substring(0, selectedRowIDs.length - 1));
+        $.ajax({
+            "dataType": 'json',
+            "type": "DELETE",
+            "url": '/admin/delete-user/' + selectedRowIDs.substring(0, selectedRowIDs.length - 1),
+            "success": function(result) {
+                console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
+            }
+        });
         remove_selected_rows(datatable);
     }
 }
 
+/**
+ * Edit user
+ *
+ */
 function edit_user(row) {
     // Reset parsley
     $('#new-modal').parsley().reset();
@@ -209,11 +235,16 @@ function edit_user(row) {
                 render_active_switch(result.active);
         });
         $('#user-new-modal').modal('show');
+        $('#error-msg ul').children().remove();
     } else {
         alert("Selected more than one object!");
     }
 }
 
+/**
+ * Add/Edit user
+ *
+ */
 function save_user() {
     // Prepare user data from UI
     var uid = $('#uid').val().trim();
@@ -262,7 +293,7 @@ function save_user() {
                     render_user_datatable();
                     $('#user-new-modal').modal('hide');
                 } else {
-                    console.log(result);
+                    pop_error_msg('error-msg', result);
                 }
             }
         });
@@ -280,13 +311,17 @@ function save_user() {
                     render_user_datatable();
                     $('#user-new-modal').modal('hide');
                 } else {
-                    console.log(result);
+                    pop_error_msg('error-msg', result);
                 }
             }
         });
     }
 }
 
+/**
+ * Reset msg & components of user create modal
+ *
+ */
 function reset_user_create_modal() {
     // Reset parsley
     $('#new-modal').parsley().reset();
@@ -314,6 +349,10 @@ function reset_user_create_modal() {
     render_resource_select();
 }
 
+/**
+ * Render active switch component
+ *
+ */
 function render_active_switch(is_active) {
     var _switch = $('.switch-animate');
     if(typeof(is_active) !== 'undefined') {
@@ -330,10 +369,18 @@ function render_active_switch(is_active) {
     }
 }
 
+/**
+ * Render role select component
+ *
+ */
 function render_role_select(selectedRole) {
     $('#role').select2("val", selectedRole);
 }
 
+/**
+ * Convert resource string ids to array
+ *
+ */
 function convert_resource(resource_str) {
     if(resource_str === "")
         return [];
@@ -342,6 +389,10 @@ function convert_resource(resource_str) {
     }
 }
 
+/**
+ * Render resource select component
+ *
+ */
 function render_resource_select(selectedRole, selectedResources) {
     if(selectedRole === '2' || selectedRole === 'Resource Owner') { // 'Resource Owner'
         // Populate resource select
@@ -370,7 +421,7 @@ function render_resource_select(selectedRole, selectedResources) {
 
 /**
  * Document ready js for resource management page.
- * TODO: Integrate with new datatable fw.
+ *
  */
 function ready_resource_mgmt() {
     // Read select2
@@ -381,6 +432,10 @@ function ready_resource_mgmt() {
     render_resource_datatable();
 }
 
+/**
+ * Render resource datatable
+ *
+ */
 function render_resource_datatable() {
     var columns = [
         {
@@ -430,6 +485,10 @@ function render_resource_datatable() {
     });
 }
 
+/**
+ * Update resource type and active
+ *
+ */
 function update_resource() {
     // Prepare resource data from UI
     var rid = $('#rid').val().trim();
@@ -454,12 +513,16 @@ function update_resource() {
                 render_resource_datatable();
                 $('#resource-status-modal').modal('hide');
             } else {
-                console.log(result);
+                pop_error_msg('error-msg', result);
             }
         }
     });
 }
 
+/**
+ * Edit resource
+ *
+ */
 function edit_resource(row) {
     var datatable = $('#mgmt-datatable').dataTable();
     var position = datatable.fnGetPosition(row);
@@ -477,6 +540,10 @@ function edit_resource(row) {
     $('#resource-status-modal').modal('show');
 }
 
+/**
+ * Render resource type select component
+ *
+ */
 function render_resource_type_select(type) {
     $('#r_type').select2("val", type);
 }
@@ -550,7 +617,6 @@ function ready_common_searchable_multi_select() {
 /**
  * Common ready for tables.
  *
- * @param datatable identifier
  */
 function ready_common_datatable(url, columns, fnDatatableCallback) {
     $.ajax({
@@ -590,6 +656,9 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
     });
 }
 
+/**
+ * Process user attributes' values to displaying values
+ */
 function process_user_result(result) {
     for(var i = 0; i < result.length; i++) {
         result[i].active = get_user_status(result[i].active);
@@ -647,4 +716,12 @@ function remove_selected_rows(local_table) {
     selected_rows.each(function(index, row) {
         local_table.fnDeleteRow(row);
     });
+}
+
+function pop_error_msg(msg_container, msg) {
+    $('#'+msg_container+' ul').children().remove();
+    var li = $('<li>');
+    li.attr('class', 'parsley-required');
+    li.text(msg);
+    $('#'+msg_container+' ul').attr('class', 'parsley-errors-list filled').append(li);
 }

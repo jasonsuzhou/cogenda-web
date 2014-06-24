@@ -107,7 +107,10 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def destroy_user(self, uid):
-        count = User.delete_by_uid(cherrypy.request.db, uid)
+        ids = uid.split(",")
+        count = []
+        for id in ids:
+            count.append(User.delete_by_uid(cherrypy.request.db, id))
         return count
 
     @route('/admin/resources')
