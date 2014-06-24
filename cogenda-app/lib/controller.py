@@ -12,6 +12,8 @@ from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
 from babel.support import Translations
 from i18ntool import I18nTool
 
+from mailer import Mailer, Message
+
 import logging 
 log = logging.getLogger(__name__)
 
@@ -154,4 +156,11 @@ class BaseController(object):
     def healthcheck(self):
         healthcheck_text = self.settings.cogenda_app.healthcheck_text
         return healthcheck_text or "WORKING"
+
+    def send_mail(self, recipients, message, subject='Request Account'):
+        message = Message(From=self.settings.mailer.smtp_fromaddr, To=recipients, charset="utf-8")
+        message.Subject = subject 
+        message.Body = message
+        sender = Mailer(self.settings.mailer.smtp_server, self.settings.mailer.as_int('smtp_server'), True, self.settings.smtp_user, os.environ.get('SMPT_PASSWORD', None))
+        sender.send(message)
 

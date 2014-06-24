@@ -1,6 +1,5 @@
 #-*- coding:utf-8 -*-
 
-
 from os.path import abspath, join, exists
 from ConfigParser import ConfigParser, NoSectionError, NoOptionError
 

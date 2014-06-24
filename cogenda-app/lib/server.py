@@ -10,7 +10,6 @@ from cherrypy.process.plugins import Daemonizer, PIDFile
 
 from controller import BaseController
 from context import Context
-from cache import Cache
 from fs import locate, is_file
 from cherrypy.process.plugins import PIDFile
 
@@ -36,7 +35,6 @@ class Server(object):
         self.context = context or Context(root_dir=root_dir)
         self.template_filters = {}
         self.test_connection_error = None
-        self.cache = None
 
 
     def get_server_settings(self):
@@ -129,7 +127,6 @@ class Server(object):
         self.status = ServerStatus.Starting
         self.context.load_settings(abspath(join(self.root_dir, config_path)))
 
-        #self.cache = Cache(size=1000, age="5s", log='cogenda-web.log')
         """ Init cogenda app logging """
         log_dir = self.context.settings.cogenda_app.log_dir
         log_file = self.context.settings.cogenda_app.log_file
