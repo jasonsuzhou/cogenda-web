@@ -1,4 +1,5 @@
 <div class="box" markdown="1">
+{% markdown2 %}
 
 Technical Support Center
 ------------------------
@@ -17,10 +18,12 @@ Before contacting the support team, please take a moment to browse through our F
 
 For your convenience, we try to provide as much support information as we can on our website. If you can't find the information you need on our site, please contact us by email. We'll always try to give you fast, courteous and competent answers.
 
+{% endmarkdown2 %}
 </div>
 
 
 <div class="box" markdown="1">
+{% markdown2 %}
 
 Frequently Asked Questions
 ------------------------
@@ -44,5 +47,6 @@ Genius is a complete new design and new implementation. It is not related to any
 Under what terms is Genius licensed?
 Genius is available under a commercial license agreement, and is distributed in binary form. There is also an open-source edition of Genius released under GPL. You may download the source code in the open-source section.
 
+{% endmarkdown2 %}
 </div>
 

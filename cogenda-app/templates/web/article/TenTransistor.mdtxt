@@ -1,9 +1,11 @@
 <div class="box" markdown="1">
+{% markdown2 %}
+
 Crossing the 10-Transistor Barrier of TCAD Device Simulation
 -----------
 
 [update] New development on this front can be found in 
-[this article]({{NICEDOG_BASE_URL}}/article/Half-Implicit-Solver).
+[this article](/article/Half-Implicit-Solver).
 
 It is traditionally believed that TCAD device simulator is only useful
 for simulating one or two transistors.
@@ -33,7 +35,7 @@ the number of mesh nodes in the TCAD model increases.
 Both time and memory space required in TCAD simulation increases as
 the problem size scales up.
 
-<img src="{{NICEDOG_BASE_URL}}/images/stories/scaling/mesh_ram.png" width="360"/> <br />
+<img src="/static/images/stories/scaling/mesh_ram.png" width="360"/> <br />
 Fig-1 Memory requirement for simulating CMOS circuits with Cogenda's Genius device simulator.
 
 The most expensive computation step in TCAD simulation is the solving
@@ -59,8 +61,8 @@ of two or more very weak current paths, appear in the circuit.
 For example, the latch circuit shown in Fig. 2 will always have two floating nodes
 (dnp/dnn or n3p/n3n). 
 
-<img src="{{NICEDOG_BASE_URL}}/images/stories/scaling/latch_circ.png" width="320"/>
-<img src="{{NICEDOG_BASE_URL}}/images/stories/scaling/latch_mask.png" width="220"/> <br />
+<img src="/static/images/stories/scaling/latch_circ.png" width="320"/>
+<img src="/static/images/stories/scaling/latch_mask.png" width="220"/> <br />
 Fig-2 Circuit diagram and mask layout of a latch circuit.
 
 Floating regions are well-known to cause convergence difficulties in TCAD simulation.
@@ -90,7 +92,7 @@ and nearly 300,000 mesh nodes, which is unprecedented for TCAD device simulators
 Cogenda's Genius device simulator is able to handle this and even larger structures
 smoothly. 
 
-<img src="{{NICEDOG_BASE_URL}}/images/stories/scaling/latch_potential.jpg" width="480"/> <br />
+<img src="/static/images/stories/scaling/latch_potential.jpg" width="480"/> <br />
 Fig-3 Simulated electrostatic potential profile in the latch circuit.
 
 The pseudo-time algorithm is a transient-mode method, and shares the same good
@@ -106,8 +108,8 @@ linear solvers, saving memory space, and is faster.
 In the recent 1.7.2-3 release of Genius, an optimized pseudo-time algorithm has
 been included, which further reduces the simulation time.
 
-<img src="{{NICEDOG_BASE_URL}}/images/stories/scaling/pt_ram.png" width="220"/>
-<img src="{{NICEDOG_BASE_URL}}/images/stories/scaling/pt_time.png" width="220"/> <br />
+<img src="/static/images/stories/scaling/pt_ram.png" width="220"/>
+<img src="/static/images/stories/scaling/pt_time.png" width="220"/> <br />
 Fig-4 Comparison of memory requirement and simulation of a 6T SRAM device on an 8-core workstation.
 
 Although the pseudo-time method contributed a major performance boost to the Genius
@@ -123,5 +125,6 @@ successfully crossed the 10-transistor barrier for TCAD device simulation.
 Simulating circuits with over 20 transistors and 600,000 mesh nodes has
 become practical with cheap hardware and moderate time.
 
+{% endmarkdown2 %}
 </div>
 

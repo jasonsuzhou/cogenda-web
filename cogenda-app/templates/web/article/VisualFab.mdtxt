@@ -1,14 +1,16 @@
 <div class="box" markdown="1">
+{% markdown2 %}
+
 VisualFab : Workbench for Process Experiments
 -----------
-##### [Product Brochure](../../downloads/pubs/VisualFab.pdf) | [Video Demo](./Tutorial-VisualFab:wide)
+##### [Product Brochure](/downloads/VisualFab.pdf) | [Video Demo](/article/Tutorial-VisualFab/wide)
 
 VisualFab is an integrated workbench for process simulation experiments. It adopts the concepts familiar to fab engineers, e.g. process module, split, wafer and split table.
 It also allows user to visualize these concepts and design experiments in a user-friendly GUI.
 
-<img src="../images/vfab/fab_view.jpg" width="500" /><br />
+<img src="/static/images/vfab/fab_view.jpg" width="500" /><br />
 Process experiment from fab engineers' perspective.
-<img src="../images/vfab/vfab_view.jpg" width="500" /><br />
+<img src="/static/images/vfab/vfab_view.jpg" width="500" /><br />
 Experiment view window in VisualFab.
 
 ###### Feature Summary :
@@ -23,8 +25,9 @@ Experiment view window in VisualFab.
  - No repeated simulation of existing wafer states.
  - Visualize wafer states' structure and internal variables.
 
-<img src="../images/vfab/locos.jpg" width="500" /><br />
+<img src="/static/images/vfab/locos.jpg" width="500" /><br />
 Inspecting the structure of a LOCOS structure.
 
+{% endmarkdown2 %}
 </div>
 

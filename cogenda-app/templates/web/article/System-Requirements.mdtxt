@@ -1,5 +1,7 @@
 <div class="box" markdown="1">
 
+{% markdown2 %}
+
 System Requirements
 --------
 
@@ -33,8 +35,6 @@ System Requirements
 
 
 *Trade marks appeared above belong to the respective owners.
+
+{% endmarkdown2 %}
 </div>
-
-
-
-

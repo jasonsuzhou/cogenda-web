@@ -1,5 +1,7 @@
 <div class="box" markdown="1">
 
+{% markdown2 %}
+
 Contacts
 --------
 
@@ -75,5 +77,6 @@ Tel.: 86-512-67900636
 中国江苏省苏州市星湖街328号国际科技园五期22栋306室  
 邮编: 215123
 
+{% endmarkdown2 %}
 </div>
 

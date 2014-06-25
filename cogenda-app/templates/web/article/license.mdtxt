@@ -1,4 +1,5 @@
 <div class="box" markdown="1">
+{% markdown2 %}
 
 Licensing
 ---------
@@ -23,47 +24,47 @@ Visual TCAD / Genius can be purchased for a 'one-time' payment under a perpetual
             <td align="center">PROFESSIONAL</td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" width="5" height="5" />VisualTCAD   (GUI) <br /></td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /></td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /></td> 
+            <td><img src="/static/images/spacer5.gif" width="5" height="5" />VisualTCAD   (GUI) <br /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />Drift-diffusion   solver<br /></td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /></td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /><br /></td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />Drift-diffusion   solver<br /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /><br /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />Lattice   temperature<br /></td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />Lattice   temperature<br /></td> 
             <td align="center">X</td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /><br /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /><br /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />Energy   balance solver<br /></td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />Energy   balance solver<br /></td> 
             <td align="center">X</td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /><br /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /><br /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />2D   mesh<br /></td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /></td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /><br /></td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />2D   mesh<br /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /><br /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />3D   mesh<br /></td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />3D   mesh<br /></td> 
             <td align="center">X</td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /><br /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /><br /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />Optical / FEM / Raytracing</td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />Optical / FEM / Raytracing</td> 
             <td align="center">X</td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />Circuit and device   simulation </td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /></td> 
-            <td align="center"><img src="../images/tick.gif" alt="" width="20" height="16" /></td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />Circuit and device   simulation </td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /></td> 
+            <td align="center"><img src="/static/images/tick.gif" alt="" width="20" height="16" /></td> 
           </tr> 
           <tr> 
-            <td><img src="../images/spacer5.gif" alt="" width="5" height="5" />Parallel   computation<br /></td> 
+            <td><img src="/static/images/spacer5.gif" alt="" width="5" height="5" />Parallel   computation<br /></td> 
             <td align="center">2 CPUs</td> 
             <td align="center">4 CPUs</td> 
           </tr> 
@@ -85,4 +86,5 @@ Gds2Mesh is a 3D TCAD model construction tool that takes GDSII mask layouts as i
 
 All source code related to physical models is provided along with our simulators. Researchers are welcome to study and improve the code and to develop new models using the Genius simulator. Please feel free to check out a copy of the open source edition on the [downloads](./download) page.
 
+{% endmarkdown2 %}
 </div>

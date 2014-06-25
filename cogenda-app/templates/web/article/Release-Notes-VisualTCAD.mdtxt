@@ -1,4 +1,6 @@
 <div class="box" markdown="1">
+{% markdown2 %}
+
 <a name="174-14"></a> VisualTCAD 1.7.4-14
 -------------------------------------
 ##### 2013.3.19
@@ -48,9 +50,12 @@ This is a bug-fix release.
    - Fix a bug that causes button not being functional on some Linux platform.
    - Fix a bug that leads to crash when a vtk/cgns file contains unrecognized material.
 
+{% endmarkdown2 %}
 </div>
 
 <div class="box" markdown="1">
+{% markdown2 %}
+
 <a name="174-8"></a> VisualTCAD 1.7.4-8
 -------------------------------------
 ##### 2012.10.08
@@ -73,9 +78,12 @@ This is a bug-fix release.
    - Misc. fixes in AC simulation setup in GUI.
    - Fix waveform display in voltage/current source setings.
 
+{% endmarkdown2 %}
 </div>
 
 <div class="box" markdown="1">
+{% markdown2 %}
+
 <a name="174-5"></a> VisualTCAD 1.7.4-5
 -------------------------------------
 ##### 2012.08.02
@@ -98,10 +106,13 @@ This is a bug-fix release.
    - Fix specification of mole fraction of two compound semiconductor materials.
    - Miscellaneous fixes.
 
+{% endmarkdown2 %}
 </div>
 
 
 <div class="box" markdown="1">
+
+{% markdown2 %}
 <a name="174-3"></a> VisualTCAD 1.7.4-3
 -------------------------------------
 ##### 2012.07.10
@@ -117,10 +128,13 @@ This is a bug-fix release.
    - Fix a bug in netlist topology calculation in schematic editor.
    - Minor fixes in Windows installer, improve support for Flexlm.
 
+{% endmarkdown2 %}
 </div>
 
 
 <div class="box" markdown="1">
+{% markdown2 %}
+
 <a name="174-2"></a> VisualTCAD 1.7.4-2
 -------------------------------------
 ##### 2012.06.24
@@ -140,10 +154,13 @@ This is a bug-fix release, with some user manual updates.
 #### Gds2mesh Modeller
   - Fix a bug in handling long-narrow 3D objects.
 
+{% endmarkdown2 %}
 </div>
 
 
 <div class="box" markdown="1">
+{% markdown2 %}
+
 <a name="174-1"></a> VisualTCAD 1.7.4-1
 -------------------------------------
 ##### 2012.06.03
@@ -188,11 +205,14 @@ New features. FlexLM floating license manager is used on all platforms.
   - Use unique material reference in GDML output format.
   - Support for TIF3D v1.2 data format.
 
+{% endmarkdown2 %}
 </div>
 
 
 
 <div class="box" markdown="1">
+{% markdown2 %}
+
 <a name="173-2"></a> VisualTCAD 1.7.3-2
 -------------------------------------
 ##### 2012.03.12
@@ -241,9 +261,12 @@ Improvements and bug fixes.
   - Use G4ScreenedNuclearRecoil model by default
   - Adjust the limit to the track step length, for better resolution of the final stage of ion track.
  
+{% endmarkdown2 %}
 </div>
 
 <div class="box" markdown="1">
+
+{% markdown2 %}
 <a name="173"></a> VisualTCAD 1.7.3
 -------------------------------------
 ##### 2012.01.01
@@ -317,12 +340,17 @@ New feature and bug fixes.
   - Fix a bug in doping profile calculation.
 
 
+{% endmarkdown2 %}
 </div>
 
 
 <div class="box" markdown="1">
+{% markdown2 %}
+
 Older Releases
 -------------------------------------
 [Year 2011 and older](./Release-Notes-2011)
+
+{% endmarkdown2 %}
 </div>
 
