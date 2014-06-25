@@ -17,11 +17,10 @@
                         </h5>
                         <hr/>
 
-                        <div class="form-group alert rounded">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <div class="icon"><i class="fa fa-times-circle"></i></div>
-                            <strong>Error!</strong> The server is not responding, try again later.
-                         </div>
+                        <div id="login-msg-container" class="alert alert-warning" style="display: none;">
+                            <i class="fa fa-times-circle sign"></i>
+                            <lable id="login-msg"></lable>
+                        </div>
 
                         <div id="auth-error">
                             <ul />

@@ -7760,3 +7760,11 @@ textarea.parsley-error {
 .parsley-error {
     border-color: #c00 !important;
 }
+
+
+.alert {
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 6px;
+}

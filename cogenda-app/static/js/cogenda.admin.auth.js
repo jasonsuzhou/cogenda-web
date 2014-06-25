@@ -24,16 +24,11 @@ $(document).ready(function() {
                 console.log("Auth done!");
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
-                    //TODO: display error msg on UI.
-                    console.log(result.msg);
+                    // console.log(result.msg);
+                    $('#login-msg').text(result.msg);
+                    $('#login-msg-container').show();
 
-                    $('#auth-error ul').children().remove();
-                    var li = $('<li>');
-                    li.attr('class', 'parsley-required');
-                    li.text(result.msg);
-                    $('#auth-error ul').attr('class', 'parsley-errors-list filled').append(li);
-
-                    return
+                    return;
                 }
                 window.location = result.refer;
             });
