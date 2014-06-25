@@ -124,7 +124,8 @@ function render_user_datatable() {
         $("#add").click(function(e) {
             reset_user_create_modal();
             $('#user-new-modal').modal('show');
-            $('#error-msg ul').children().remove();
+            $('#user-msg-container').hide();
+            $('#user-modal-msg-container').hide();
         });
 
         // Edit by click edit link & row double click
@@ -158,7 +159,7 @@ function render_user_datatable() {
  *
  */
 function delete_user() {
-    $('#err-msg ul').children().remove();
+    $('#user-msg-container').hide();
     var current_username = $('#username').text().trim();
     var datatable = $('#mgmt-datatable').dataTable();
     var selectedTrs = datatable.$('tr.row_selected');
@@ -169,7 +170,7 @@ function delete_user() {
             var position = datatable.fnGetPosition(selectedTrs[i]);
             var selectedRowID = datatable.fnGetData(position)['id'];
             if(current_username === datatable.fnGetData(position)['username']) {
-                pop_error_msg('err-msg', 'You cannot delete yourself.');
+                pop_msg('user-msg', 'You cannot delete yourself.', 1); // Alert
                 return;
             }
             selectedRowIDs = selectedRowIDs + selectedRowID + ',';
@@ -181,6 +182,7 @@ function delete_user() {
             "url": '/admin/delete-user/' + selectedRowIDs.substring(0, selectedRowIDs.length - 1),
             "success": function(result) {
                 console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
+                pop_msg('user-msg', 'Remove user(s) successfully.', 2); // Success
             }
         });
         remove_selected_rows(datatable);
@@ -209,7 +211,7 @@ function edit_user(row) {
     }
 
     if (selectedRows === 0) {
-        alert("Select one object to view!");
+        pop_msg('user-msg', 'Select one object to view!', 1);  // Alert
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
@@ -235,9 +237,10 @@ function edit_user(row) {
                 render_active_switch(result.active);
         });
         $('#user-new-modal').modal('show');
-        $('#error-msg ul').children().remove();
+        $('#user-msg-container').hide();
+        $('#user-modal-msg-container').hide();
     } else {
-        alert("Selected more than one object!");
+        pop_msg('user-msg', 'Selected more than one object!', 1);  // Alert
     }
 }
 
@@ -293,7 +296,7 @@ function save_user() {
                     render_user_datatable();
                     $('#user-new-modal').modal('hide');
                 } else {
-                    pop_error_msg('error-msg', result);
+                    pop_msg('user-modal-msg', result, 0); // Error
                 }
             }
         });
@@ -311,7 +314,7 @@ function save_user() {
                     render_user_datatable();
                     $('#user-new-modal').modal('hide');
                 } else {
-                    pop_error_msg('error-msg', result);
+                    pop_msg('user-modal-msg', result, 0); // Error
                 }
             }
         });
@@ -513,7 +516,7 @@ function update_resource() {
                 render_resource_datatable();
                 $('#resource-status-modal').modal('hide');
             } else {
-                pop_error_msg('error-msg', result);
+                pop_msg('resource-msg', result);
             }
         }
     });
@@ -718,10 +721,22 @@ function remove_selected_rows(local_table) {
     });
 }
 
-function pop_error_msg(msg_container, msg) {
-    $('#'+msg_container+' ul').children().remove();
-    var li = $('<li>');
-    li.attr('class', 'parsley-required');
-    li.text(msg);
-    $('#'+msg_container+' ul').attr('class', 'parsley-errors-list filled').append(li);
+function pop_msg(msg_label, msg, type) {
+    // type = 0 - Error, 1 - Alert, 2 - Success
+    var label_classes = "";
+    var container_classes = "";
+    if(type == 0) {
+        container_classes = 'alert alert-danger';
+        label_classes = 'fa fa-times-circle sign';
+    } else if(type === 1) {
+        container_classes = 'alert alert-warning';
+        label_classes = 'fa fa-warning sign';
+    } else if(type === 2) {
+        container_classes = 'alert alert-success';
+        label_classes = 'fa fa-check sign';
+    }
+    $('#'+msg_label+'-container').attr('class', container_classes);
+    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
+    $('#'+msg_label).text(msg);
+    $('#'+msg_label+'-container').show();
 }
