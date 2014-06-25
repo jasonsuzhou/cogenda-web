@@ -13,12 +13,8 @@ class HomeController(BaseController):
 
     @route('/')
     def index(self):
-        #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
-        """ testing SQLite and Jinja2 """
-        all_users = User.list(cherrypy.request.db)
-        for temp_user in all_users:
-            print temp_user.username
-        return self.render_template('web/home.html')
+        
+        return self.render_template('web/index.html', content='IN PROGRESS', news='IN PROGRESS', sidebar='IN PROGRESS')
 
 
     @route('/switch/:locale')
