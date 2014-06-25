@@ -21,20 +21,20 @@ class Context(object):
         self.settings.load(config_path)
 
     def load_article_files(self, article_dir):
-        self.article_files = locate('*.mdtxt', root=article_dir)
+        self.article_files = locate('*.md', root=article_dir)
 
     def load_sidebar_files(self, sidebar_dir):
-        self.sidebar_files = locate('*.mdtxt', root=sidebar_dir)
+        self.sidebar_files = locate('*.md', root=sidebar_dir)
 
     def load_news_files(self, news_dir):
-        self.news_files = locate('*.mdtxt', root=news_dir)
+        self.news_files = locate('*.md', root=news_dir)
 
     def list_all_media(self):
         """docstring for list_all_media"""
         app_media = {}
 
         for app_path in self.app_paths.values():
-            media_path = join(app_path, 'static')
+            media_path = join(app_path, 'media')
             for file_name in locate("*.txt", "*.py", "*.css", "*.js", "*.rst", "*.html", "*.ini", root=media_path):
                 if not is_file(file_name):
                     continue

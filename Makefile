@@ -80,10 +80,10 @@ babel-compile:
 	@pybabel compile -D ${babel_domain} -d ${babel_i18n}
 
 clean-pyc:
-	@find . -name '*.pyc' -exec rm -f {} +
-	@find . -name '*.pyo' -exec rm -f {} +
-	@find . -name '*.DS_Store' -exec rm -f {} +
-	@find . -name '~' -exec rm -f {} +
+	@find cogenda-app -name '*.pyc'|xargs rm -f
+	@find cogenda-app -name '*.pyo'|xargs rm -f 
+	@find cogenda-app -name '*.DS_Store'|xargs rm -f 
+	@find cogenda-app -name '~'|xargs rm -f
 
 ####################################################################
 #  				     Web Assets Management                         #

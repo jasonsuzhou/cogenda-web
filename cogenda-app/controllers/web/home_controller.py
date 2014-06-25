@@ -17,8 +17,8 @@ class HomeController(BaseController):
 
     @route('/')
     def index(self):
-        content = self.render_template('web/article/index.mdtxt')
-        news = self.render_template('web/news/index.mdtxt')
+        content = self.render_template('web/article/index.md')
+        news = self.render_template('web/news/index.md')
         return self.render_template('web/index.html', 
                 content=content, 
                 news=news, 
@@ -29,7 +29,7 @@ class HomeController(BaseController):
     def serve_article(self, article_name):
         return self.render_template('web/index.html', 
                 content=self._retrieve_optimized_article(article_name), 
-                news=self.render_template('web/news/index.mdtxt'), 
+                news=self.render_template('web/news/index.md'), 
                 sidebar=self._retrieve_random_sidebar())
 
 
@@ -62,7 +62,7 @@ class HomeController(BaseController):
 
 
     def _retrieve_optimized_article(self, article_name):
-        best_choice = 'index.mdtxt'
+        best_choice = 'index.md'
         best_ratio = None
         for (key, val) in self.context.article_files.items():
            article = os.path.splitext(val)[0] 
