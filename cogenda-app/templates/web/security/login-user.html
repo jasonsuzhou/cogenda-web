@@ -1,0 +1,37 @@
+<!-- Nifty Modal -->
+<div id="user-login-modal" class="modal fade colored-header in" role="dialog" style="display: none;">
+    <div class="modal-dialog colored-header custom-width">
+        <div class="md-content">
+            <div class="modal-header">
+                <h3><label id="title">Create User</label></h3>
+                <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <form id="new-modal" style="border-radius: 0px;" action="" data-parsley-validate>
+                <div class="modal-body form">
+                    <div id="user-modal-msg-container" class="alert alert-warning" style="display: none;">
+                        <i class="fa fa-times-circle sign"></i>
+                        <lable id="user-modal-msg"></lable>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">User Name *</label>
+                            <input type="text" id="name" class="form-control" required placeholder="User Name"
+                                    data-parsley-trigger="change" data-parsley-errors-container="#name-error">
+                            <div id="name-error"></div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <label class="control-label">Password *</label>
+                            <input id="password" placeholder="Password" required class="form-control" data-parsley-length="[5, 25]"
+                                    data-parsley-trigger="change" data-parsley-errors-container="#password-error">
+                            <div id="password-error"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save" type="submit" class="btn btn-primary btn-flat md-close">Create</button>
+                    <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
