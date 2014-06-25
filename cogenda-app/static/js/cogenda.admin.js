@@ -516,7 +516,7 @@ function update_resource() {
                 render_resource_datatable();
                 $('#resource-status-modal').modal('hide');
             } else {
-                pop_msg('resource-msg', result);
+                pop_msg('resource-msg', result, 0); // Error
             }
         }
     });

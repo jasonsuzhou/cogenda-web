@@ -7720,7 +7720,6 @@ textarea.parsley-error {
   border: 1px solid #EED3D7;
 }
 
-/*
 .parsley-errors-list {
   margin: 2px 0 3px 0;
   padding: 0;
@@ -7741,7 +7740,6 @@ textarea.parsley-error {
 .parsley-errors-list.filled {
   opacity: 1;
 }
-*/
 
 .dropdown-toggle {
     height: 64px;
@@ -7761,7 +7759,7 @@ textarea.parsley-error {
     border-color: #c00 !important;
 }
 
-
+/* Alert style */
 .alert {
     border: 1px solid rgba(0, 0, 0, 0);
     border-radius: 4px;
