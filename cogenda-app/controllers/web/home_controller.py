@@ -62,11 +62,23 @@ class HomeController(BaseController):
 
 
     def _retrieve_optimized_article(self, article_name):
+        choice = self._optimize_assets(self.context.article_files, article_name)
+        best_choice = 'web/article/%s' %(choice)
+        return self.render_template(best_choice)
+
+
+    def _retrieve_optimized_news(self, news_name):
+        choice = self._optimize_assets(self.context.news_files, news_name)
+        best_choice = 'web/news/%s' %(choice)
+        return self.render_template(best_choice)
+
+
+    def _optimize_assets(self, asset_files, asset_name):
         best_choice = 'index.md'
         best_ratio = None
-        for (key, val) in self.context.article_files.items():
-           article = os.path.splitext(val)[0] 
-           ratio = fuzz.ratio(article_name, article)
+        for (key, val) in asset_files.items():
+           asset= os.path.splitext(val)[0] 
+           ratio = fuzz.ratio(asset_name, asset)
            if not best_ratio:
                best_ratio = ratio
                best_choice = val
@@ -75,8 +87,4 @@ class HomeController(BaseController):
                best_ratio = ratio
                best_choice = val
 
-        best_choice = 'web/article/%s' %(best_choice)
-        return self.render_template(best_choice)
-
-    def _retrieve_optimized_news(self, news_name):
-        pass
+        return best_choice
