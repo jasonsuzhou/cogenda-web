@@ -1,4 +1,4 @@
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 Products
@@ -8,7 +8,7 @@ Cogenda is a vendor of Technology Computer Aided Design (TCAD) software. Our cor
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 <a name="VTCAD"></a> VisualTCAD
 -----------
@@ -22,7 +22,7 @@ Visual TCAD combines with the Genius Device Simulator to create a next-generatio
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 <a name="Genius"></a> Genius Device Simulator
 -----------
@@ -35,7 +35,7 @@ Unlike many TCAD products in the market, the Genius Device Simulator is a comple
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="Gds2Mesh"></a> Gds2Mesh
@@ -58,7 +58,7 @@ The generated device structure can be imported in Genius for device simulation.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 <a name="VFab"></a> GSeat/VisualParticle for Radiation Effects
 -----------
@@ -70,7 +70,7 @@ VisualParticle provides a user-friendly GUI to GSeat.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="VFab"></a> VisualFab Workbench for Process Experiments

@@ -1,4 +1,4 @@
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 Welcome
@@ -11,7 +11,7 @@ If you are building a TCAD team from a group of novices, we will provide practic
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 Visual TCAD
@@ -26,7 +26,7 @@ Visual TCAD combines with the Genius Device Simulator to create a next-generatio
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 Genius Device Simulator
@@ -40,7 +40,7 @@ Unlike many TCAD products in the market, the Genius Device Simulator is a comple
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 GDS2Mesh
@@ -59,7 +59,7 @@ The generated device structure can be imported in Genius for device simulation.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 VisualFab Workbench for Process Experiments
@@ -72,7 +72,7 @@ It also allows user to visualize these concepts and design experiments in a user
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 Technical Support

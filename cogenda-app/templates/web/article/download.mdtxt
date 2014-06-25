@@ -1,4 +1,4 @@
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 Downloads
@@ -11,7 +11,7 @@ Downloads
 ##### Installers (Standard Edition)
 <table width="580" border="0">
   <tr>
-    <td markdown="1"></td>
+    <td ></td>
     <td> </td>
   </tr>
   <tr> 
@@ -32,7 +32,7 @@ Downloads
 ##### Editions
  Several editions are available on each platform, as summarized in the table below:
 
-<div markdown="1" class="articleTable">
+<div  class="articleTable">
 
   Features/Platform                 | WinXP/Vista/7 | RHEL6   |RHEL5    | RHEL4   | Debian7 |
   ----------------------------------|:-------------:|:-------:|:-------:|:-------:|:-------:|

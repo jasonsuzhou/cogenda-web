@@ -1,4 +1,4 @@
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="172-5"></a> 
@@ -59,7 +59,7 @@ New feature and bug fixes.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="172-3"></a> VisualTCAD 1.7.2-3
@@ -85,7 +85,7 @@ New feature and bug fixes.
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="172"></a> VisualTCAD 1.7.2
@@ -123,7 +123,7 @@ New features.
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="171-4"></a> VisualTCAD 1.7.1-4
@@ -144,7 +144,7 @@ Bug fixes.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="171-3"></a> VisualTCAD 1.7.1-3
@@ -169,7 +169,7 @@ Bug fixes.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="171-2"></a> VisualTCAD 1.7.1-2
@@ -193,7 +193,7 @@ Bug fixes with some new features.
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="171-1"></a> VisualTCAD 1.7.1-1
@@ -224,7 +224,7 @@ Bug fixes with some new features.
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="171"></a> VisualTCAD 1.7.1
@@ -255,7 +255,7 @@ New Features and enhancements.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="170-2"></a> VisualTCAD 1.7.0-2
@@ -285,7 +285,7 @@ Enhancements and Bug-fixes to the [1.7.0-1](#170-1) release.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="163-1"></a> VisualTCAD 1.6.3-1
@@ -305,7 +305,7 @@ Maintenance release for the [1.6.x](#163) branch.
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="163"></a> VisualTCAD 1.6.3
@@ -326,7 +326,7 @@ Maintenance release for the [1.6.x](#162-2) branch.
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 
@@ -355,7 +355,7 @@ Bug-fixes to the [1.7.0](#170) release.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="170"></a> VisualTCAD 1.7.0 
@@ -402,7 +402,7 @@ modules:
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="162-2"></a> VisualTCAD 1.6.2-2
@@ -417,7 +417,7 @@ Bug fixes:
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="162-1"></a> VisualTCAD 1.6.2-1
@@ -432,7 +432,7 @@ Bug fixes:
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="162"></a> VisualTCAD 1.6.2
@@ -465,7 +465,7 @@ Bug fixes:
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 
 {% markdown2 %}
 <a name="161"></a> VisualTCAD 1.6.1
@@ -500,7 +500,7 @@ Bug fixes:
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="160"></a> VisualTCAD 1.6.0
@@ -512,7 +512,7 @@ Public release with numerous bug fixes.
 {% endmarkdown2 %}
 </div>
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 <a name="160b"></a> VisualTCAD 1.6.0-beta

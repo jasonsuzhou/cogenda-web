@@ -1,4 +1,4 @@
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 Technical Support Center
@@ -22,7 +22,7 @@ For your convenience, we try to provide as much support information as we can on
 </div>
 
 
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 Frequently Asked Questions

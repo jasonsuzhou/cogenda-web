@@ -1,4 +1,4 @@
-<div class="box" markdown="1">
+<div class="box" >
 {% markdown2 %}
 
 Crossing the 10-Transistor Barrier of TCAD Device Simulation
