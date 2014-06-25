@@ -14,9 +14,20 @@ class Context(object):
     def __init__(self, root_dir):
         #self.bus = Bus()
         self.settings = Settings(root_dir=root_dir)
+        #self.article_files = {}
+        #self.sidebar_files = {}
 
     def load_settings(self, config_path):
         self.settings.load(config_path)
+
+    def load_article_files(self, article_dir):
+        self.article_files = locate('*.mdtxt', root=article_dir)
+
+    def load_sidebar_files(self, sidebar_dir):
+        self.sidebar_files = locate('*.mdtxt', root=sidebar_dir)
+
+    def load_news_files(self, news_dir):
+        self.news_files = locate('*.mdtxt', root=news_dir)
 
     def list_all_media(self):
         """docstring for list_all_media"""

@@ -32,5 +32,4 @@ class Markdown2Extension(jinja2.ext.Extension):
 
 
     def _markdown_support(self, caller):
-        print self.environment.markdowner.convert(caller()).strip()
         return self.environment.markdowner.convert(caller()).strip()

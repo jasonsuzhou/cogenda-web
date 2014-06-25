@@ -10,7 +10,6 @@ from cherrypy.process.plugins import Daemonizer, PIDFile
 
 from controller import BaseController
 from context import Context
-from fs import locate, is_file
 from cherrypy.process.plugins import PIDFile
 
 from saplugin import SAEnginePlugin
@@ -58,7 +57,6 @@ class Server(object):
                 'tools.I18nTool.mo_dir': os.path.join(os.path.abspath(os.curdir), sets.cogenda_app.app_name ,'i18n'), 
                 'tools.I18nTool.domain': sets.cogenda_app.app_name,
                 }
-
 
     def get_mounts(self, dispatcher):
         static_dir = os.path.join(self.root_dir,  'static')
@@ -126,6 +124,12 @@ class Server(object):
     def start(self, config_path, dispatcher, non_block=False):
         self.status = ServerStatus.Starting
         self.context.load_settings(abspath(join(self.root_dir, config_path)))
+        article_dir = os.path.join(self.root_dir,  'templates/web/article')
+        sidebar_dir = os.path.join(self.root_dir,  'templates/web/sidebar')
+        news_dir = os.path.join(self.root_dir,  'templates/web/news')
+        self.context.load_article_files(article_dir)
+        self.context.load_sidebar_files(sidebar_dir)
+        self.context.load_news_files(news_dir)
 
         """ Init cogenda app logging """
         log_dir = self.context.settings.cogenda_app.log_dir

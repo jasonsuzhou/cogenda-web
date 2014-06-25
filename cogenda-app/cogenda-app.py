@@ -16,7 +16,7 @@ from controllers.security import *
 
 def main(settings_file):
 
-    init_files = locate(settings_file)
+    init_files = locate(settings_file).keys()
     if not init_files:
         raise RuntimeError("No files called setting file were found in the current directory structure")
 

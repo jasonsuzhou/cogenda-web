@@ -15,11 +15,12 @@ def locate(*args, **kw):
     root_path = abspath(root)
     patterns = args
 
-    return_files = []
+    return_files = {}
     for path, dirs, files in walk(root_path):
         for pattern in args:
             for filename in fnmatch.filter(files, pattern):
-                return_files.append(join(path, filename))
+                return_files[join(path, filename)] = filename
+                #return_files.append(join(path, filename))
     return return_files
 
 def recursive_copy(from_path, to_path):

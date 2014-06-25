@@ -7,7 +7,6 @@ from os.path import split, abspath, join, dirname
 import cherrypy
 from cherrypy import thread_data
 
-from cache import Cache
 from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
 from babel.support import Translations
 from i18ntool import I18nTool
@@ -93,10 +92,6 @@ class BaseController(object):
     @classmethod
     def all(self):
         return __CONTROLLERS__
-
-    @property
-    def cache(self):
-        return self.server.cache
 
     @property
     def settings(self):
