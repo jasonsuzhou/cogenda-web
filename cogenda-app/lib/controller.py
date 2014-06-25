@@ -13,6 +13,7 @@ from babel.support import Translations
 from i18ntool import I18nTool
 
 from mailer import Mailer, Message
+from md2_extension import Markdown2Extension
 
 import logging 
 log = logging.getLogger(__name__)
@@ -143,7 +144,7 @@ class BaseController(object):
         log.debug(mo_dir)
         locale = str(cherrypy.response.i18n.locale)
         translations = Translations.load(mo_dir, locale, app_name)
-        env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=['jinja2.ext.i18n'])
+        env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=[Markdown2Extension, 'jinja2.ext.i18n'])
         env.install_gettext_translations(translations)
         cherrypy.tools.jinja2env = env 
         template = cherrypy.tools.jinja2env.get_template(template_file)

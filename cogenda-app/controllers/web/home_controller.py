@@ -13,8 +13,8 @@ class HomeController(BaseController):
 
     @route('/')
     def index(self):
-        
-        return self.render_template('web/index.html', content='IN PROGRESS', news='IN PROGRESS', sidebar='IN PROGRESS')
+        content = self.render_template('web/article/index.mdtxt')
+        return self.render_template('web/index.html', content=content,news='IN PROGRESS', sidebar='IN PROGRESS')
 
 
     @route('/switch/:locale')
