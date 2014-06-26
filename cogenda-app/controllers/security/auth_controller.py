@@ -45,6 +45,5 @@ class AuthController(BaseController):
         if user is None or user.password != hmac.new(salt, password).hexdigest():
             return u"Invalid user ID or password."
         if user.role != '3':
-            print '&&&&&&&&&&&&&&&&&&&&&&&'+ user.role
             return u"You have insufficient privileges."
         self.login(user)

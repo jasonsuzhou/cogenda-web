@@ -8,6 +8,7 @@ import cherrypy
 from lib.i18ntool import ugettext as _
 import json
 import hmac
+from sqlalchemy.exc import DBAPIError
 
 import logging 
 log = logging.getLogger(__name__)
@@ -123,6 +124,7 @@ class AdminController(BaseController):
             resources_in_json.append(self.jsonify_model(resource))
         return resources_in_json
 
+
     @route('/admin/update-resource')
     @cherrypy.tools.json_out()
     @authenticated
@@ -140,6 +142,37 @@ class AdminController(BaseController):
                 json_resource['active'])
         resource = Resource.update_resource(cherrypy.request.db, origin_resource, resource)
         return self.jsonify_model(resource)
+
+
+    @route('/api/modify-resource')
+    @cherrypy.tools.json_out()
+    def modify_resource(self):
+        """ API for remote cloud sync service"""
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_resource = json.loads(rawbody)
+        
+        name = json_resource['filename']
+        vendor = json_resource['server']
+        status = json_resource['status']
+        url = json_resource['url']
+        type = json_resource['type']
+        session = cherrypy.request.db
+        try:
+            resource = Resource.get_resource_by_name_vendor(session, name, vendor)
+            if not resource:
+                resource = Resource(name, type, vendor, url, status)
+            else:
+                resource['name'] = name
+                resource['vendor'] = vendor
+                resource['status'] = status
+                resource['url'] = url
+                resource['type'] = type
+            session.commit()
+        except DBAPIError, err:
+            return json.dump({'success': False})
+        return json.dump({'success': True})
+
 
     def jsonify_model(self, model):
         """ Returns a JSON representation of an SQLAlchemy-backed object.

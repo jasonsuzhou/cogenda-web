@@ -43,6 +43,11 @@ class Resource(Base):
         return session.query(Resource).filter(Resource.id==rid).first()
 
     @staticmethod
+    def get_resource_by_name_vendor(session, name, vendor):
+        return session.query(Resource).filter(Resource.name==name, Resource.vendor==vendor).first()
+    
+
+    @staticmethod
     def update_resource(session, resource, _resource):
         if resource.type != _resource.type:
             resource.type = _resource.type
