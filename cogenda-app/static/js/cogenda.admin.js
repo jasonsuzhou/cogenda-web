@@ -455,6 +455,10 @@ function render_resource_datatable() {
           "mData": "vendor"
         },
         {
+          "sTitle": "URL",
+          "mData": "url"
+        },
+        {
           "sTitle": "Uploaded Date",
           "mData": "uploaded_date"
         },
@@ -533,6 +537,7 @@ function edit_resource(row) {
     $('#rid').val(datatable.fnGetData(position)['id']);
     $('#r_name').text(datatable.fnGetData(position)['name']);
     $('#r_vendor').text(datatable.fnGetData(position)['vendor']);
+    $('#r_url').text(datatable.fnGetData(position)['url']);
 
     var type = datatable.fnGetData(position)['type'] === 'Restricted' ? '2' : '1';
     var active = datatable.fnGetData(position)['active'] === 'Yes' ? true : false;
@@ -637,11 +642,6 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
             var datatable = $(datatable_id).dataTable({
                 "aaData": process_user_result(result),
                 "aoColumns": columns,
-                "columnDefs": [ {
-                    "targets": -1,
-                    "data": null,
-                    "defaultContent": "<button>Click!</button>"
-                } ]
             });
 
             // Add/remove class to a row when clicked on
