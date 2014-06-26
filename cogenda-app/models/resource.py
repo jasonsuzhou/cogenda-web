@@ -49,10 +49,10 @@ class Resource(Base):
     
 
     @staticmethod
-    def update_resource(session, resource, _resource):
-        if resource.type != _resource.type:
-            resource.type = _resource.type
-        if resource.active != _resource.active:
-            resource.active = _resource.active
+    def update_resource(session, resource, type, active):
+        if resource.type != type:
+            resource.type = type
+        if resource.active != active:
+            resource.active = active
         session.commit()
         return resource

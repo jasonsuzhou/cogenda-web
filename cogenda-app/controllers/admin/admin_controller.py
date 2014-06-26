@@ -136,12 +136,7 @@ class AdminController(BaseController):
          # Get original user by id
         origin_resource = Resource.get_by_rid(cherrypy.request.db, json_resource['id'])
 
-        # Assemble resource
-        resource = Resource(None,
-                json_resource['type'],
-                None, None, None, None,
-                json_resource['active'])
-        resource = Resource.update_resource(cherrypy.request.db, origin_resource, resource)
+        resource = Resource.update_resource(cherrypy.request.db, origin_resource, json_resource['type'], json_resource['active'])
         return self.jsonify_model(resource)
 
     @route('/admin/fetch-resource/:rid')

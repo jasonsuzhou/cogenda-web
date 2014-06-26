@@ -535,25 +535,25 @@ function edit_resource(row) {
     var datatable = $('#mgmt-datatable').dataTable();
     var position = datatable.fnGetPosition(row);
 
-    var selectedRowID = datatable.fnGetData(position)['id'];
+    var selected_row_id = datatable.fnGetData(position)['id'];
 
-    var fetchUser = $.ajax({
+    var fetch_source = $.ajax({
         "dataType": 'json',
         "type": "GET",
-        "url": '/admin/fetch-resource/' + selectedRowID
+        "url": '/admin/fetch-resource/' + selected_row_id
     });
-    fetchUser.done(function(result) {
+    fetch_source.done(function(result) {
+        $('#rid').val(result.id);
         $('#r_name').text(result.name);
         $('#r_vendor').text(result.vendor);
+
         var url =  result.url;
         $('#r_url').text(get_resource_url(url, 30));
         $('#r_url').attr('href', url);
         $('#r_url').attr('title', url);
-        var type = result.type === 'Restricted' ? '2' : '1';
-        var active = result.active === 'Yes' ? true : false;
 
-        render_resource_type_select(type);
-        render_active_switch(active);
+        render_resource_type_select(result.type);
+        render_active_switch(result.active);
 
         $('#resource-status-modal').modal('show');
     });
