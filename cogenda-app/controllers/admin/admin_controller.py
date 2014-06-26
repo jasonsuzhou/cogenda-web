@@ -144,6 +144,13 @@ class AdminController(BaseController):
         resource = Resource.update_resource(cherrypy.request.db, origin_resource, resource)
         return self.jsonify_model(resource)
 
+    @route('/admin/fetch-resource/:rid')
+    @cherrypy.tools.json_out(content_type='application/json')
+    @authenticated
+    def get_resource_by_id(self, rid):
+        resource = Resource.get_by_rid(cherrypy.request.db, rid)
+        resource_in_json = self.jsonify_model(resource)
+        return resource_in_json
 
     @route('/api/modify-resource')
     @cherrypy.tools.json_out()

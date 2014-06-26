@@ -457,7 +457,7 @@ function render_resource_datatable() {
         {
           "sTitle": "URL",
           "mData": "url",
-          "sWidth": "40%"
+          "sWidth": "30%"
         },
         {
           "sTitle": "Uploaded Date",
@@ -535,18 +535,28 @@ function edit_resource(row) {
     var datatable = $('#mgmt-datatable').dataTable();
     var position = datatable.fnGetPosition(row);
 
-    $('#rid').val(datatable.fnGetData(position)['id']);
-    $('#r_name').text(datatable.fnGetData(position)['name']);
-    $('#r_vendor').text(datatable.fnGetData(position)['vendor']);
-    $('#r_url').text(datatable.fnGetData(position)['url']);
+    var selectedRowID = datatable.fnGetData(position)['id'];
 
-    var type = datatable.fnGetData(position)['type'] === 'Restricted' ? '2' : '1';
-    var active = datatable.fnGetData(position)['active'] === 'Yes' ? true : false;
+    var fetchUser = $.ajax({
+        "dataType": 'json',
+        "type": "GET",
+        "url": '/admin/fetch-resource/' + selectedRowID
+    });
+    fetchUser.done(function(result) {
+        $('#r_name').text(result.name);
+        $('#r_vendor').text(result.vendor);
+        var url =  result.url;
+        $('#r_url').text(get_resource_url(url, 30));
+        $('#r_url').attr('href', url);
+        $('#r_url').attr('title', url);
+        var type = result.type === 'Restricted' ? '2' : '1';
+        var active = result.active === 'Yes' ? true : false;
 
-    render_resource_type_select(type);
-    render_active_switch(active);
+        render_resource_type_select(type);
+        render_active_switch(active);
 
-    $('#resource-status-modal').modal('show');
+        $('#resource-status-modal').modal('show');
+    });
 }
 
 /**
@@ -642,7 +652,7 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
             /* Init the table with dynamic ajax loader.*/
             var datatable = $(datatable_id).dataTable({
                 "aaData": process_user_result(result),
-                "aoColumns": columns,
+                "aoColumns": columns
             });
 
             // Add/remove class to a row when clicked on
@@ -669,8 +679,16 @@ function process_user_result(result) {
         if(result[i].role) result[i].role = get_role_name(result[i].role);
         if(result[i].status) result[i].status = get_resource_status(result[i].status);
         if(result[i].type) result[i].type = get_resource_type(result[i].type);
+        if(result[i].url) result[i].url = get_resource_url(result[i].url, 50);
     }
     return result;
+}
+
+function get_resource_url(url, limit_length) {
+    var cut_url = url;
+    if(url.length >= limit_length)
+        cut_url = url.substring(0, limit_length) + "..."
+    return cut_url;
 }
 
 function get_resource_status(status) {
