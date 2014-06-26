@@ -10,6 +10,9 @@ from cherrypy import thread_data
 from jinja2 import Environment, FileSystemLoader, PackageLoader, ChoiceLoader
 from babel.support import Translations
 from i18ntool import I18nTool
+import hmac
+import hashlib
+import base64
 
 from mailer import Mailer, Message
 from md2_extension import Markdown2Extension
@@ -152,6 +155,14 @@ class BaseController(object):
     def healthcheck(self):
         healthcheck_text = self.settings.cogenda_app.healthcheck_text
         return healthcheck_text or "WORKING"
+
+    def make_auth_token(self, request):
+        """generate auth token """
+        shared_secret='cogenda-ws-secret'
+        message=request.headers['Host']
+        auth_token = base64.b64encode(hmac.new(shared_secret, message, digestmod=hashlib.sha256).digest())
+        return auth_token
+
 
     def send_mail(self, template, name, recipients, message, subject='Request Account'):
         body = self.render_template(template_file, messagae=message, name=name)

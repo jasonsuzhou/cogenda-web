@@ -32,6 +32,21 @@ class AuthController(BaseController):
         return json.dumps(resp)
 
 
+    @route('/security/authenticate-ws')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def authenticate_ws(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_user = json.loads(rawbody)
+        username = json_user['username']
+        password = json_user['password']
+        error_msg = self.check_credentials(username, password)
+        if error_msg:
+            return json.dumps({'auth_success': False, 'msg': error_msg})
+
+        auth_token=self.make_auth_token(cherrypy.request)
+        return json.dumps({'auth_success': True, 'msg': u"User authenticated successfully.", 'auth_token': auth_token})
+
     @route('/security/logout')
     def logout(self):
         self.logoff()

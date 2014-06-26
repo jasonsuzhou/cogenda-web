@@ -149,8 +149,13 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     def modify_resource(self):
         """ API for remote cloud sync service"""
-        #if not self.user:
-        #    return json.dumps({'success': False, 'msg': 'User can not authenticate!'})
+        """ Verify auth token """
+        client_auth_token = cherrypy.request.headers['Authorization']
+        auth_token = self.make_auth_token(cherrypy.request)
+        if client_auth_token != auth_token:
+            return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
+
+        """ Create or update resources """ 
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_resource = json.loads(rawbody)
