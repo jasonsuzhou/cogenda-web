@@ -148,6 +148,8 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     def modify_resource(self):
         """ API for remote cloud sync service"""
+        #if not self.user:
+        #    return json.dumps({'success': False, 'msg': 'User can not authenticate!'})
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_resource = json.loads(rawbody)
@@ -162,16 +164,17 @@ class AdminController(BaseController):
             resource = Resource.get_resource_by_name_vendor(session, name, vendor)
             if not resource:
                 resource = Resource(name, type, vendor, url, status)
+                session.add(resource)
             else:
-                resource['name'] = name
-                resource['vendor'] = vendor
-                resource['status'] = status
-                resource['url'] = url
-                resource['type'] = type
-            session.commit()
+                resource.name = name
+                resource.vendor = vendor
+                resource.status = status
+                resource.url = url
+                resource.type = type
+                session.commit()
         except DBAPIError, err:
-            return json.dump({'success': False})
-        return json.dump({'success': True})
+            return json.dumps({'success': False, 'msg': 'Sync resource failed!'})
+        return json.dumps({'success': True, 'msg': 'Sync resource success!'})
 
 
     def jsonify_model(self, model):

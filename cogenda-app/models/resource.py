@@ -15,11 +15,12 @@ class Resource(Base):
     type = Column(String(2))
     vendor = Column(String(20))
     url = Column(String(1000))
-    status = Column(String(10))
+    #TODO: inconsistent with database type. Should alter to Boolean
+    status = Column(Boolean, default=True)
     uploaded_date = Column(DateTime, default=datetime.now)
     active = Column(Boolean, default=True)
 
-    def __init__(self, name, type, vendor, url, status, uploaded_date=datetime.now, active=True):
+    def __init__(self, name, type, vendor, url, status, uploaded_date=datetime.now(), active=True):
         Base.__init__(self)
         self.name = name
         self.type = type
@@ -29,10 +30,10 @@ class Resource(Base):
         self.uploaded_date = uploaded_date
         self.active = active
 
-    def __init__(self, type, active=True):
-        Base.__init__(self)
-        self.type = type
-        self.active = active
+    # def __init__(self, type, active=True):
+    #     Base.__init__(self)
+    #     self.type = type
+    #     self.active = active
     
     @staticmethod
     def list(session):
