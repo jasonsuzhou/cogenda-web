@@ -456,7 +456,8 @@ function render_resource_datatable() {
         },
         {
           "sTitle": "URL",
-          "mData": "url"
+          "mData": "url",
+          "sWidth": "40%"
         },
         {
           "sTitle": "Uploaded Date",
