@@ -171,8 +171,8 @@ a:visited, a:active {
     text-decoration: none;
     margin: 0px;
     padding-top: 8px;
-    display: block; 
-    padding-right: 20px; 
+    display: block;
+    padding-right: 20px;
     padding-bottom: 8px;
     padding-left: 20px;
 }
@@ -205,7 +205,7 @@ div #lang-select {
 	font-weight: bold;
 }
 .title a:hover {
-	text-decoration:none;	
+	text-decoration:none;
 }
 .description { /*-- This is the line of text below your blog title --*/
 	color: #000;
