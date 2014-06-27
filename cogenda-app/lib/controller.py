@@ -156,10 +156,9 @@ class BaseController(object):
         healthcheck_text = self.settings.cogenda_app.healthcheck_text
         return healthcheck_text or "WORKING"
 
-    def make_auth_token(self, request):
+    def make_auth_token(self, request, message):
         """Generate auth token """
         shared_secret=os.environ.get('COGENDA_SHARED_SECRET', 'cogenda-ws-secret')
-        message=request.headers['Host']
         auth_token = base64.b64encode(hmac.new(shared_secret, message, digestmod=hashlib.sha256).digest())
         return auth_token
 

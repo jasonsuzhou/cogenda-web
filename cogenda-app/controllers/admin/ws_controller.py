@@ -18,19 +18,19 @@ class WSController(BaseController):
     @cherrypy.tools.json_out()
     def modify_resource(self):
         """ API for remote cloud sync service to create ro update resource"""
-        if not self._verify_auth_token(cherrypy.request):
-            return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
 
         """ Create or update resources """ 
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
-        json_resource = json.loads(rawbody)
-        
-        name = json_resource['filename']
-        vendor = json_resource['server']
-        status = json_resource['status']
-        url = json_resource['url']
-        type = json_resource['type']
+        if not self._verify_auth_token(cherrypy.request, rawbody):
+            return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
+
+        payload = json.loads(rawbody)
+        name = payload['filename']
+        vendor = payload['server']
+        status = payload['status']
+        url = payload['url']
+        type = payload['type']
         session = cherrypy.request.db
         try:
             resource = Resource.get_resource_by_name_vendor(session, name, vendor)
@@ -45,6 +45,7 @@ class WSController(BaseController):
                 resource.type = type
                 session.commit()
         except DBAPIError, err:
+            log.error('Database operation error %s' % err)
             return json.dumps({'success': False, 'msg': 'Sync resource failed!'})
         return json.dumps({'success': True, 'msg': 'Sync resource success!'})
 
@@ -53,13 +54,13 @@ class WSController(BaseController):
     @cherrypy.tools.json_out()
     def destory_resource(self):
         """ API for cloud sync service to destroy resource """
-        if not self._verify_auth_token(cherrypy.request):
-            return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
 
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
-        payload = json.loads(rawbody)
+        if not self._verify_auth_token(cherrypy.request,rawbody):
+            return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
 
+        payload = json.loads(rawbody)
         filename = payload['filename']
         vendor = payload['server']
         if not filename or not vendor:
@@ -71,10 +72,10 @@ class WSController(BaseController):
         return json.dumps({'success': True, 'msg': 'Destroy resource success!'})
 
 
-    def _verify_auth_token(self, request):
+    def _verify_auth_token(self, request, message):
         """ Verify auth token """
         client_auth_token = cherrypy.request.headers['Authorization']
-        auth_token = self.make_auth_token(cherrypy.request)
+        auth_token = self.make_auth_token(cherrypy.request, message)
         if client_auth_token != auth_token:
             return False
         return True
