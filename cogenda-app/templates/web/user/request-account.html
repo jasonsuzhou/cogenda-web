@@ -1,0 +1,50 @@
+{% extends "web/layout/layout.html" %}
+
+{% block content %}
+<div class="cl-mcont">
+    <div class="row">
+        <div class="tab-container">
+            <div class="tab-content">
+                <div class="tab-pane active cont" id="home">
+                    <form id="new-modal" style="border-radius: 0px;" action="" data-parsley-validate>
+                        <div class="modal-body form">
+                            <div id="user-modal-msg-container" class="alert alert-warning" style="display: none;">
+                                <i class="fa fa-times-circle sign"></i>
+                                <lable id="user-modal-msg"></lable>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 col-md-6">
+                                    <label class="control-label">Name *</label>
+                                    <input type="text" id="name" class="form-control" required placeholder="User Name"
+                                            data-parsley-trigger="change" data-parsley-errors-container="#name-error">
+                                    <div id="name-error"></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 col-md-6">
+                                    <label class="control-label">Email *</label>
+                                    <input type="text" id="name" class="form-control" required placeholder="User Name"
+                                            data-parsley-trigger="change" data-parsley-errors-container="#name-error">
+                                    <div id="email-error"></div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 col-md-6">
+                                    <label class="control-label">Note *</label>
+                                    <textarea rows="3" cols="20">
+                                    在w3school，你可以找到你所需要的所有的网站建设教程。
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="save" type="submit" class="btn btn-primary btn-flat md-close">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
