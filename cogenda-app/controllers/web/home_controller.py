@@ -47,7 +47,7 @@ class HomeController(BaseController):
 
     @route('/download/:resource_id')
     def serve_downloads(self, resource_id):
-        """Testing download & url with parameter"""
+        """TODO: fetch resource by resource id"""
         log.debug("Download resource: %s" % resource_id);
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
         cd = 'attachment; filename="%s"' % resource_id

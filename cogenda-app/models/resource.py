@@ -56,3 +56,9 @@ class Resource(Base):
             resource.active = active
         session.commit()
         return resource
+
+
+    @staticmethod
+    def delete_resource_by_name_vendor(session, name, vendor):
+        session.query(Resource).filter(Resource.name==name, Resource.vendor==vendor).delete()
+        session.commit()

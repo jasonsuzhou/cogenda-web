@@ -2,5 +2,6 @@
 
 
 from admin_controller import AdminController
+from ws_controller import WSController
 
-__ALL__ = [AdminController]
+__ALL__ = [AdminController, WSController]

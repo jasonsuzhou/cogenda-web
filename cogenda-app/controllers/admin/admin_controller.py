@@ -8,7 +8,6 @@ import cherrypy
 from lib.i18ntool import ugettext as _
 import json
 import hmac
-from sqlalchemy.exc import DBAPIError
 
 import logging 
 log = logging.getLogger(__name__)
@@ -146,44 +145,6 @@ class AdminController(BaseController):
         resource = Resource.get_by_rid(cherrypy.request.db, rid)
         resource_in_json = self.jsonify_model(resource)
         return resource_in_json
-
-    @route('/api/modify-resource')
-    @cherrypy.tools.json_out()
-    def modify_resource(self):
-        """ API for remote cloud sync service"""
-        """ Verify auth token """
-        client_auth_token = cherrypy.request.headers['Authorization']
-        auth_token = self.make_auth_token(cherrypy.request)
-        if client_auth_token != auth_token:
-            return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
-
-        """ Create or update resources """ 
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_resource = json.loads(rawbody)
-        
-        name = json_resource['filename']
-        vendor = json_resource['server']
-        status = json_resource['status']
-        url = json_resource['url']
-        type = json_resource['type']
-        session = cherrypy.request.db
-        try:
-            resource = Resource.get_resource_by_name_vendor(session, name, vendor)
-            if not resource:
-                resource = Resource(name, type, vendor, url, status)
-                session.add(resource)
-            else:
-                resource.name = name
-                resource.vendor = vendor
-                resource.status = status
-                resource.url = url
-                resource.type = type
-                session.commit()
-        except DBAPIError, err:
-            return json.dumps({'success': False, 'msg': 'Sync resource failed!'})
-        return json.dumps({'success': True, 'msg': 'Sync resource success!'})
-
 
     def jsonify_model(self, model):
         """ Returns a JSON representation of an SQLAlchemy-backed object.
