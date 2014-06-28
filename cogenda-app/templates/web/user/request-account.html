@@ -1,6 +1,4 @@
-{% extends "web/layout/layout.html" %}
-
-{% block content %}
+<!--
 <div class="cl-mcont">
     <div class="row">
         <div class="tab-container">
@@ -16,7 +14,7 @@
                                 <div class="col-sm-6 col-md-6">
                                     <label class="control-label">Name *</label>
                                     <input type="text" id="name" class="form-control" required placeholder="User Name"
-                                            data-parsley-trigger="change" data-parsley-errors-container="#name-error">
+                                    data-parsley-trigger="change" data-parsley-errors-container="#name-error">
                                     <div id="name-error"></div>
                                 </div>
                             </div>
@@ -24,7 +22,7 @@
                                 <div class="col-sm-6 col-md-6">
                                     <label class="control-label">Email *</label>
                                     <input type="text" id="name" class="form-control" required placeholder="User Name"
-                                            data-parsley-trigger="change" data-parsley-errors-container="#name-error">
+                                    data-parsley-trigger="change" data-parsley-errors-container="#name-error">
                                     <div id="email-error"></div>
                                 </div>
                             </div>
@@ -32,7 +30,7 @@
                                 <div class="col-sm-6 col-md-6">
                                     <label class="control-label">Note *</label>
                                     <textarea rows="3" cols="20">
-                                    在w3school，你可以找到你所需要的所有的网站建设教程。
+                                        在w3school，你可以找到你所需要的所有的网站建设教程。
                                     </textarea>
                                 </div>
                             </div>
@@ -47,4 +45,26 @@
     </div>
 </div>
 
-{%endblock%}
+-->
+<form class="modal fade" id="requestAccountModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header login-pop">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">
+                    <img src="/static/images/logo.png" />
+                </h4>
+            </div>
+            <img style="margin-top: -2px" src="/static/images/login-border.png" width="100%" />
+            <div class="modal-body">
+                <input type="text" class="form-control" name="username" placeholder="Username" value="">
+                <input type="password" class="form-control" name="email" placeholder="Email" value="">
+                <textarea id="notes" class="form-control" style="resize:none;height: 120px !important;" placeholder="Notes"></textarea>
+            </div>
+            <div class="modal-footer">
+                <p>Please fill your request form.</p>
+                <span onclick="alert('Submit Request Account!');" class="btn btn-primary btn-check"></span>
+            </div>
+        </div>
+    </div>
+</form>
