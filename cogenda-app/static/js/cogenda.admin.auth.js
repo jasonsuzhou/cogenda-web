@@ -20,14 +20,10 @@ $(document).ready(function() {
             });
 
             authenticate.done(function(resp) {
-                $('#password-error ul').children().remove();
-                console.log("Auth done!");
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
-                    // console.log(result.msg);
                     $('#login-msg').text(result.msg);
                     $('#login-msg-container').show();
-
                     return;
                 }
                 window.location = result.refer;

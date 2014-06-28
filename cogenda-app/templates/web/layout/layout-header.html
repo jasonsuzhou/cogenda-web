@@ -7,7 +7,8 @@
         <a href='/switch/en_US'>English</a> 
         </li>
         <li>
-        <a style="cursor: pointer" data-toggle="modal" data-target="#loginModal">Login</a>
+        <a id="login" style="cursor: pointer;" data-toggle="modal" data-target="#loginModal">Login</a>
+        <a id="username" style="cursor: pointer; display: none;" data-toggle="modal" data-target="#myProfileModal">Test</a>
         </li>
     </ul>
 </div>
@@ -15,3 +16,4 @@
 
 {% include "web/user/login-user.html"%}
 {% include "web/user/request-account.html"%}
+{% include "web/user/user-profile.html"%}
