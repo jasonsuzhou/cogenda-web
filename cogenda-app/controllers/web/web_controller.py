@@ -7,6 +7,7 @@ import cherrypy
 from lib.i18ntool import ugettext as _
 from datetime import datetime
 from fuzzywuzzy import fuzz
+from urlparse import urlparse
 import logging 
 import os
 import random
@@ -14,6 +15,8 @@ import random
 log = logging.getLogger(__name__)
 
 class WebController(BaseController):
+
+    LAST_ARTICLE_FLAG='home'
 
     @route('/')
     def index(self):
@@ -40,9 +43,13 @@ class WebController(BaseController):
 
     @route('/switch/:locale')
     def switch_locale(self, locale):
+        cherrypy.tools.I18nTool.set_custom_language(locale)
         refer = cherrypy.request.headers.get('Referer','/')
-        cherrypy.tools.I18nTool.set_custom_language(locale) 
-        self.redirect(refer)
+        path = urlparse(refer).path
+        if path.startswith('/article'): 
+            article_name = path.replace('/article/', '')
+            self.LAST_ARTICLE_FLAG = article_name 
+        return self.serve_article(self.LAST_ARTICLE_FLAG)
 
 
     @route('/download/:resource_id')
