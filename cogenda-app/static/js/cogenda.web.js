@@ -36,26 +36,5 @@ $(document).ready(function() {
         } else {
             console.log('Client side validate error.');
         }
-
-        /*
-         $.ajax({
-         type: "post",
-         dataType: 'json',
-         contentType: "application/json",
-         url: '/security/authenticate',
-         data: $("#loginModal").serialize(),
-         success: function (data) {
-         if (data != null || data != "") {
-         var results = jQuery.parseJSON(data);
-         if (results.is_success) {
-         alert('login success...');
-         } else {
-         alert('login failure');
-         }
-         } else {
-         alert("Invalid response data!");
-         }
-         }
-         })*/
     });
 });

@@ -211,10 +211,3 @@ msgstr "技术支持"
 #: cogenda-app/templates/web/layout/layout.html:42
 msgid "General Enquiries"
 msgstr "普通查询"
-
-#~ msgid "hello"
-#~ msgstr "你好, 世界!"
-
-#~ msgid "jinja2"
-#~ msgstr "您好, Jinja2!"
-
