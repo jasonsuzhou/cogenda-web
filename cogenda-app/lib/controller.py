@@ -163,9 +163,9 @@ class BaseController(object):
         return auth_token
 
 
-    def send_mail(self, template, name, recipients, message, subject='Request Account'):
+    def send_mail(self, template, name, sender, message, subject='Request Account'):
         body = self.render_template(template_file, messagae=message, name=name)
-        message = Message(From=self.settings.mailer.smtp_fromaddr, To=recipients, charset="utf-8")
+        message = Message(From=sender, To=self.settings.smtp_user, charset="utf-8")
         message.Subject = subject 
         message.HTML = body
         message.Body= "Hi Support, \n %s." %(message)

@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
 
-from home_controller import HomeController
+from web_controller import WebController
 
-__ALL__ = [HomeController]
+__ALL__ = [WebController]

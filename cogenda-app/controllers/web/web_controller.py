@@ -13,7 +13,7 @@ import random
 
 log = logging.getLogger(__name__)
 
-class HomeController(BaseController):
+class WebController(BaseController):
 
     @route('/')
     def index(self):
@@ -58,20 +58,22 @@ class HomeController(BaseController):
         #cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403359250&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=vdtP0ldMD0yCskxmGcPxuF0oPuM%3D'
 
 
-    @route('/user/request-account-page')
-    def request_account_page(self):
-        return self.render_template('web/user/request-account.html')
-
     @route('/user/request-an-account')
+    @cherrypy.tools.json_out(content_type='application/json')
     def request_an_account(self):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_request = json.loads(rawbody)
-        json_request['name']
-        json_request['email']
-        json_request['notes']
-        #Send email here...
-        pass
+        name = json_request['name']
+        sender = json_request['email']
+        message = json_request['notes']
+        try:
+            self.send_mail('mail/req_account_tmpl.html', name, sender, message)
+        except err:
+            log.error('Send mail operation error %s' % err)
+            return json.dumps({'is_success': False, 'msg': 'Request mail send failure!'})
+        return json.dumps({'is_success': True, 'msg': 'Request mail send successfully!'})
+
 
     @route('/user/user-profile/:username')
     @authenticated
