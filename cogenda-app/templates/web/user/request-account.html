@@ -10,21 +10,27 @@
             <img style="margin-top: -2px" src="/static/images/login-border.png" width="100%" />
             <div class="modal-body">
                 <h2>Request your account</h2>
-                <hr width="93%"/>
-                <div id="user-modal-msg-container" class="alert alert-warning" style="display: none;">
-                    <i class="fa fa-times-circle sign"></i>
-                    <lable id="request-account-msg"></lable>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <hr />
+                    </div>
                 </div>
-                <div class="form-group spacer">
+                <div class="col-sm-12">
+                    <div id="request-account-msg-container" class="alert alert-warning" style="display: none; text-align: left;">
+                        <i class="fa fa-times-circle sign"></i>
+                        <lable id="request-account-msg"></lable>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-12">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="fa fa-user"></i>
                             </span>
-                            <input type="text" id="username" class="form-control" placeholder="User Name"
-                                value="" data-parsley-trigger="change" data-parsley-errors-container="#username-error" required>
+                            <input type="text" id="username2" class="form-control" placeholder="User Name"
+                                value="" data-parsley-trigger="change" data-parsley-errors-container="#username2-error" required>
                         </div>
-                        <div id="username-error"></div>
+                        <div id="username2-error"></div>
                     </div>
                 </div>
                 <div class="form-group spacer">
@@ -34,9 +40,9 @@
                                 <i class="fa fa-envelope"></i>
                             </span>
                             <input type="text" id="email" class="form-control" placeholder="Email"
-                                value="" data-parsley-length="[1, 25]" data-parsley-trigger="change" data-parsley-errors-container="#password-error" required>
+                                value="" data-parsley-trigger="change" data-parsley-errors-container="#email-error" required>
                         </div>
-                        <div id="password-error"></div>
+                        <div id="email-error"></div>
                     </div>
                 </div>
                 <div class="form-group spacer">
@@ -52,7 +58,7 @@
             </div>
             <div class="modal-footer">
                 <a><u>Please fill your request form.</u></a>
-                <button type="submit" class="btn btn-primary btn-check"></button>
+                <button id="request-account-btn" type="submit" class="btn btn-primary btn-check"></button>
             </div>
         </div>
     </div>

@@ -44,6 +44,6 @@ class AuthController(BaseController):
         salt = self.settings.cogenda_app.cogenda_salt
         if user is None or user.password != hmac.new(salt, password).hexdigest():
             return u"Invalid user ID or password."
-        if user.role != '3':
-            return u"You have insufficient privileges."
+        #if user.role != '3':
+            #return u"You have insufficient privileges."
         self.login(user)

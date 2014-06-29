@@ -11,6 +11,7 @@ from urlparse import urlparse
 import logging 
 import os
 import random
+import json
 
 log = logging.getLogger(__name__)
 
@@ -71,11 +72,14 @@ class WebController(BaseController):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_request = json.loads(rawbody)
-        name = json_request['name']
+        name = json_request['username']
         sender = json_request['email']
         message = json_request['notes']
         try:
-            self.send_mail('mail/req_account_tmpl.html', name, sender, message)
+            #self.send_mail('mail/req_account_tmpl.html', name, sender, message)
+            print "==================================="
+            print name, sender, message
+            print "==================================="
         except err:
             log.error('Send mail operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': 'Request mail send failure!'})
@@ -83,12 +87,12 @@ class WebController(BaseController):
 
 
     @route('/user/user-profile/:username')
+    @cherrypy.tools.json_out()
     @authenticated
     def request_account(self, username):
         user = User.get_by_username(cherrypy.request.db, username)
         user_in_json = self.jsonify_model(user)
-        print user_in_json
-        return self.render_template('web/user/user-profile.html', user_in_json)
+        return user_in_json
 
     @route('/user/change-password')
     @cherrypy.tools.json_out()
@@ -98,10 +102,9 @@ class WebController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
 
-         # Get original user by id
         origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
 
-        user = User.update_user_password(cherrypy.request.db, origin_user, json_user['type'])
+        user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'])
         return self.jsonify_model(user)
 
 
@@ -138,3 +141,17 @@ class WebController(BaseController):
                best_choice = val
 
         return best_choice
+
+    def jsonify_model(self, model):
+        """ Returns a JSON representation of an SQLAlchemy-backed object.
+        """
+        json = {}
+        columns = model._sa_class_manager.mapper.mapped_table.columns
+        for col in columns:
+            col_name = col.name
+            col_val = getattr(model, col_name)
+            if col_name == 'created_date' or col_name == 'updated_date':
+                continue
+            else:
+                json[col_name] = col_val
+        return json

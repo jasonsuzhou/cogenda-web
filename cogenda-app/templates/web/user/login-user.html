@@ -9,9 +9,13 @@
             </div>
             <img style="margin-top: -2px" src="/static/images/login-border.png" width="100%" />
             <div class="modal-body">
-                <div id="user-login-msg-container" class="alert alert-warning" style="display: none;">
-                    <i class="fa fa-times-circle sign"></i>
-                    <lable id="user-login-msg"></lable>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div id="user-login-msg-container" class="alert alert-warning" style="display: none; text-align: left;">
+                            <i class="fa fa-times-circle sign"></i>
+                            <lable id="user-login-msg"></lable>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12">
@@ -39,8 +43,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a data-dismiss="modal" data-toggle="modal" data-target="#requestAccountModal" style="cursor: pointer;"><u>Need an account?</u></a>
-                <button type="submit" class="btn btn-primary btn-check"></button>
+                <a id="request-account" style="cursor: pointer;"><u>Need an account?</u></a>
+                <button id="login-btn" type="submit" class="btn btn-primary btn-check"></button>
             </div>
         </div>
     </div>
