@@ -211,10 +211,3 @@ msgstr "Technical Support"
 #: cogenda-app/templates/web/layout/layout.html:42
 msgid "General Enquiries"
 msgstr "General Enquiries"
-
-#~ msgid "hello"
-#~ msgstr "Hello World!"
-
-#~ msgid "jinja2"
-#~ msgstr "Hello Jinja2!"
-

@@ -1,19 +1,22 @@
 #-*- coding:utf-8 -*-
 
-from lib.controller import BaseController, route
+from lib.controller import BaseController, route, authenticated
 from datetime import datetime
 from models import User, Resource
 import cherrypy
 from lib.i18ntool import ugettext as _
 from datetime import datetime
 from fuzzywuzzy import fuzz
+from urlparse import urlparse
 import logging 
 import os
 import random
 
 log = logging.getLogger(__name__)
 
-class HomeController(BaseController):
+class WebController(BaseController):
+
+    LAST_ARTICLE_FLAG='home'
 
     @route('/')
     def index(self):
@@ -40,9 +43,13 @@ class HomeController(BaseController):
 
     @route('/switch/:locale')
     def switch_locale(self, locale):
+        cherrypy.tools.I18nTool.set_custom_language(locale)
         refer = cherrypy.request.headers.get('Referer','/')
-        cherrypy.tools.I18nTool.set_custom_language(locale) 
-        self.redirect(refer)
+        path = urlparse(refer).path
+        if path.startswith('/article'): 
+            article_name = path.replace('/article/', '')
+            self.LAST_ARTICLE_FLAG = article_name 
+        return self.serve_article(self.LAST_ARTICLE_FLAG)
 
 
     @route('/download/:resource_id')
@@ -56,6 +63,46 @@ class HomeController(BaseController):
         resource_url_partial = resource.url.replace('http://', '')
         cherrypy.response.headers['X-Accel-Redirect'] = '/media/%s' %(resource_url_partial)
         #cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403359250&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=vdtP0ldMD0yCskxmGcPxuF0oPuM%3D'
+
+
+    @route('/user/request-an-account')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def request_an_account(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_request = json.loads(rawbody)
+        name = json_request['name']
+        sender = json_request['email']
+        message = json_request['notes']
+        try:
+            self.send_mail('mail/req_account_tmpl.html', name, sender, message)
+        except err:
+            log.error('Send mail operation error %s' % err)
+            return json.dumps({'is_success': False, 'msg': 'Request mail send failure!'})
+        return json.dumps({'is_success': True, 'msg': 'Request mail send successfully!'})
+
+
+    @route('/user/user-profile/:username')
+    @authenticated
+    def request_account(self, username):
+        user = User.get_by_username(cherrypy.request.db, username)
+        user_in_json = self.jsonify_model(user)
+        print user_in_json
+        return self.render_template('web/user/user-profile.html', user_in_json)
+
+    @route('/user/change-password')
+    @cherrypy.tools.json_out()
+    @authenticated
+    def change_password(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_user = json.loads(rawbody)
+
+         # Get original user by id
+        origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
+
+        user = User.update_user_password(cherrypy.request.db, origin_user, json_user['type'])
+        return self.jsonify_model(user)
 
 
     def _retrieve_random_sidebar(self):

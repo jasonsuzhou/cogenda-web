@@ -1,12 +1,8 @@
 
 $(document).ready(function() {
-
-    $('#login').on('click', function(event) {
+    $("#loginModal").on('click', function (event) {
         if (event) event.preventDefault();
-        console.log(">>>>>>>>>>>>>Login palette show.");
-        $('#user-login-modal').show();
-        /*
-        if ($('#security-login-form').parsley().validate()) {
+        if ($('#loginModal').parsley().validate()) {
             var username = $('#username').val().trim();
             var password = $('#password').val().trim();
 
@@ -23,25 +19,22 @@ $(document).ready(function() {
                 type: 'POST'
             });
 
-            authenticate.done(function(resp) {
-                $('#password-error ul').children().remove();
-                console.log("Auth done!");
+            authenticate.done(function (resp) {
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
-                    // console.log(result.msg);
-                    $('#login-msg').text(result.msg);
-                    $('#login-msg-container').show();
-
+                    $('#user-login-msg').text(result.msg);
+                    $('#user-login-msg-container').show();
                     return;
                 }
-                window.location = result.refer;
+                $('#login').hide();
+                $('#username').show();
             });
 
-            authenticate.fail(function(resp, status) {
+            authenticate.fail(function (resp, status) {
                 //TODO: display error msg on ui.
             });
         } else {
             console.log('Client side validate error.');
-        }*/
+        }
     });
 });

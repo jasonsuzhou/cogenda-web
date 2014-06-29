@@ -30,11 +30,6 @@ class Resource(Base):
         self.uploaded_date = uploaded_date
         self.active = active
 
-    # def __init__(self, type, active=True):
-    #     Base.__init__(self)
-    #     self.type = type
-    #     self.active = active
-    
     @staticmethod
     def list(session):
         return session.query(Resource).all()

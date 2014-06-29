@@ -81,3 +81,11 @@ class User(Base):
     def delete_by_uid(session, uid):
         session.query(User).filter(User.id==uid).delete()
         session.commit()
+
+    @staticmethod
+    def update_user_password(session, user, password):
+        user.password = _user.hmac.new('cogenda_salt', _user.password).hexdigest()
+        session.commit()
+        return user
+
+

@@ -362,7 +362,7 @@ div.articleTable th {
 
 
 
-/*-------------------------------------------------------------------*/
+/*-------------------------- Login Modal----------------------------*/
 
 .modal-open {
   overflow: hidden;
@@ -464,7 +464,7 @@ body.modal-open,
 
 .modal-footer {
   padding: 19px 20px 20px;
-  margin-top: 15px;
+  /*margin-top: 15px;*/
   text-align: right;
   border-top: 1px solid #e5e5e5;
 }
@@ -544,8 +544,8 @@ button.close {
   -webkit-appearance: none;
 }
 
-.modal-custom-width-2 {
-  width: 30%;
+.modal-custom-width {
+  width: 35%;
   max-width: none;
 }
 
@@ -571,41 +571,6 @@ button.close {
   margin-bottom: 15px;
 }
 
-.col-sm-12 {
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
-  width: 100%;
-}
-
-.input-group .btn {
-  margin: 0 !important;
-  margin-left: -1px !important;
-  padding-bottom: 6px;
-  padding-top: 6px;
-  box-shadow: none;
-  line-height: 20px;
-}
-.input-group-btn > .btn + .btn {
-  margin-left: -5px !important;
-}
-.input-group-lg > .input-group-addon {
-  line-height: 0.33;
-  border-radius: 3px 0 0 3px;
-  -webkit-border-radius: 3px 0 0 3px;
-}
-.input-group-addon {
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  padding: 6px 11px;
-}
-.input-group-addon.primary {
-  background-color: #7761a7;
-  color: #fff;
-}
-
-
 .form-control:-moz-placeholder {
   color: #999999;
 }
@@ -624,7 +589,7 @@ button.close {
 
 .form-control {
   display: block;
-  width: 100%;
+  width: 95%;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
@@ -688,6 +653,12 @@ button.close {
   font-size: 15px;
   font-weight: 300;
 }
+.btn-check {
+  background: url("/static/images/submit_btn.png") no-repeat center #D7E2DF;
+  width: 100px;
+  height: 24px;
+  cursor: pointer;
+}
 
 /*Nifty Modals*/
 .md-content {
@@ -730,15 +701,295 @@ body.modal-open,
 .modal {
   overflow: auto;
 }
-@media (min-width: 768px) and (max-width: 979px) {
-  .custom-width {
-    width: 60%;
-    max-width: none;
-  }
+
+.modal-title a {
+    margin-left: 80px;
+    font-size: 14px;
 }
-@media (max-width: 767px) {
-  .custom-width {
-    width: 90%;
-    max-width: none;
-  }
+
+.login-pop {
+    background-color: #D7E2DF;
+}
+
+.modal-title a {
+    color: #666666;
+}
+
+.modal-footer a {
+    color: #999999;
+    font-size: 16px;
+    display: block;
+    float: left;
+}
+
+.modal-footer p {
+    color: #999999;
+    font-size: 16px;
+    display: block;
+    float: left;
+}
+
+.modal-footer span {
+    display: block;
+    width: 100px;
+    float: right;
+}
+
+.modal-footer span i {
+    font-size:20px;
+}
+
+.modal-body input {
+    margin-bottom: 20px;
+}
+
+
+.success-color {
+    color: greenyellow;
+}
+
+.error-color {
+    color: red;
+}
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+
+.col-sm-12 {
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 100%;
+}
+
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+
+.input-group.col {
+  float: none;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.input-group .form-control {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.input-group-lg > .form-control,
+.input-group-lg > .input-group-addon,
+.input-group-lg > .input-group-btn > .btn {
+  height: 45px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+
+select.input-group-lg > .form-control,
+select.input-group-lg > .input-group-addon,
+select.input-group-lg > .input-group-btn > .btn {
+  height: 45px;
+  line-height: 45px;
+}
+
+textarea.input-group-lg > .form-control,
+textarea.input-group-lg > .input-group-addon,
+textarea.input-group-lg > .input-group-btn > .btn {
+  height: auto;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .input-group-addon,
+.input-group-sm > .input-group-btn > .btn {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+select.input-group-sm > .form-control,
+select.input-group-sm > .input-group-addon,
+select.input-group-sm > .input-group-btn > .btn {
+  height: 30px;
+  line-height: 30px;
+}
+
+textarea.input-group-sm > .form-control,
+textarea.input-group-sm > .input-group-addon,
+textarea.input-group-sm > .input-group-btn > .btn {
+  height: auto;
+}
+
+.input-group-addon,
+.input-group-btn,
+.input-group .form-control {
+  display: table-cell;
+}
+
+.input-group-addon:not(:first-child):not(:last-child),
+.input-group-btn:not(:first-child):not(:last-child),
+.input-group .form-control:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+.input-group-addon,
+.input-group-btn {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.input-group-addon {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  text-align: center;
+  background-color: #eeeeee;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+
+.input-group-addon.input-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.input-group-addon.input-lg {
+  padding: 10px 16px;
+  font-size: 18px;
+  border-radius: 6px;
+}
+
+.input-group-addon input[type="radio"],
+.input-group-addon input[type="checkbox"] {
+  margin-top: 0;
+}
+
+.input-group .form-control:first-child,
+.input-group-addon:first-child,
+.input-group-btn:first-child > .btn,
+.input-group-btn:first-child > .dropdown-toggle,
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group-addon:first-child {
+  border-right: 0;
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child > .btn,
+.input-group-btn:last-child > .dropdown-toggle,
+.input-group-btn:first-child > .btn:not(:first-child) {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.input-group-addon:last-child {
+  border-left: 0;
+}
+
+.input-group .btn {
+  margin: 0 !important;
+  margin-left: -1px !important;
+  padding-bottom: 6px;
+  padding-top: 6px;
+  box-shadow: none;
+  line-height: 20px;
+}
+.input-group-btn > .btn + .btn {
+  margin-left: -5px !important;
+}
+.input-group-lg > .input-group-addon {
+  line-height: 0.33;
+  border-radius: 3px 0 0 3px;
+  -webkit-border-radius: 3px 0 0 3px;
+}
+.input-group-addon {
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding: 6px 11px;
+}
+.input-group-addon.primary {
+  background-color: #7761a7;
+  color: #fff;
+}
+
+.form-control:-moz-placeholder {
+  color: #999999;
+}
+
+.form-control::-moz-placeholder {
+  color: #999999;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #999999;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #999999;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+hr {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #eeeeee -moz-use-text-color -moz-use-text-color;
+    border-image: none;
+    border-right: 0 none;
+    border-style: solid none none;
+    border-width: 1px 0 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+hr {
+    box-sizing: content-box;
+    height: 0;
+}
+
+.spacer {
+  margin-top: 20px !important;
 }
