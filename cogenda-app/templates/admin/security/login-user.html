@@ -13,7 +13,7 @@
                 <form style="margin-bottom: 0px !important;" class="form-horizontal" id="security-login-form" action="" data-parsley-validate>
                     <div class="content">
                         <h5 class="title text-center">
-                            <strong>Login User</strong>
+                            <strong>{{_('Login User')}}</strong>
                         </h5>
                         <hr/>
                         <div id="login-msg-container" class="alert alert-warning" style="display: none;">
@@ -26,7 +26,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </span>
-                                    <input type="text" id="username" class="form-control" placeholder="User Name"
+                                    <input type="text" id="username" class="form-control" placeholder="{{_('User Name')}}"
                                         value="" data-parsley-trigger="change" data-parsley-errors-container="#username-error" required>
                                 </div>
                                 <div id="username-error"></div>
@@ -38,7 +38,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-lock"></i>
                                     </span>
-                                    <input type="password" id="password" class="form-control" placeholder="Password"
+                                    <input type="password" id="password" class="form-control" placeholder="{{_('Password')}}"
                                         value="" data-parsley-length="[1, 25]" data-parsley-trigger="change" data-parsley-errors-container="#password-error" required>
                                 </div>
                                 <div id="password-error"></div>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="foot">
-                        <button id="login" class="btn btn-block btn-primary btn-rad btn-lg" type="submit">Log Me In</button>
+                        <button id="login" class="btn btn-block btn-primary btn-rad btn-lg" type="submit">{{_('Log Me In')}}</button>
                     </div>
                 </form>
             </div>
