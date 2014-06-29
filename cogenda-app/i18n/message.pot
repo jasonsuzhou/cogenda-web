@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-06-06 11:54+0800\n"
+"POT-Creation-Date: 2014-06-28 20:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,198 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: cogenda-app/controllers/user_controller.py:22
-msgid "hello"
+#: cogenda-app/templates/admin/layout/layout.html:42
+msgid "Sign Out"
 msgstr ""
 
-#: cogenda-app/templates/index.html:10
-msgid "jinja2"
+#: cogenda-app/templates/admin/resource-mgmt/resource-container.html:8
+msgid "Resource Management"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-mgmt.html:4
+msgid "Loading resources table"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:6
+msgid "Update Resource"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:16
+msgid "Name"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
+msgid "Vendor"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
+msgid "URL"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:36
+msgid "Type"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:39
+msgid "Public"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:40
+msgid "Restricted"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:45
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:70
+msgid "Active"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:55
+msgid "Update"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:56
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:92
+msgid "Cancel"
+msgstr ""
+
+#: cogenda-app/templates/admin/security/login-user.html:16
+msgid "Login User"
+msgstr ""
+
+#: cogenda-app/templates/admin/security/login-user.html:29
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
+msgid "User Name"
+msgstr ""
+
+#: cogenda-app/templates/admin/security/login-user.html:41
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:23
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:24
+msgid "Password"
+msgstr ""
+
+#: cogenda-app/templates/admin/security/login-user.html:49
+msgid "Log Me In"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-container.html:8
+msgid "User Management"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:10
+msgid "New"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:14
+msgid "Edit"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:18
+msgid "Delete"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:22
+msgid "Loading users table"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:6
+msgid "Create User"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:31
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:32
+msgid "E-mail"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:37
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:38
+msgid "Company"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:45
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:46
+msgid "Mobile"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:51
+msgid "Role"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:53
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:61
+msgid "Resource"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:54
+msgid "Resource Owner"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:55
+msgid "Administrator"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:84
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:85
+msgid "Notes"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:91
+msgid "Create"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-header.html:4
+msgid "Chinese"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-header.html:7
+msgid "English"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-header.html:10
+msgid "Login"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-nav.html:5
+msgid "Home"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-nav.html:6
+msgid "Products"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-nav.html:7
+msgid "Applications"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-nav.html:8
+msgid "Licensing"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-nav.html:9
+msgid "Downloads"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-nav.html:10
+msgid "Corporate"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout-nav.html:11
+msgid "Contact"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout.html:38
+msgid "Contact Us"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout.html:40
+msgid "Sales Team"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout.html:41
+msgid "Technical Support"
+msgstr ""
+
+#: cogenda-app/templates/web/layout/layout.html:42
+msgid "General Enquiries"
 msgstr ""
 

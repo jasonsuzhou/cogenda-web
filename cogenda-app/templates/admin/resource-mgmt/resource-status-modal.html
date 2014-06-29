@@ -3,7 +3,7 @@
     <div class="modal-dialog colored-header modal-custom-width-3-5">
         <div class="md-content">
             <div class="modal-header">
-                <h3><label id="title">Update Resource</label></h3>
+                <h3><label id="title">{{_('Update Resource')}}</label></h3>
                 <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form id="status-modal" style="border-radius: 0px;" action="" class="form-horizontal group-border-dashed">
@@ -13,19 +13,19 @@
                         <lable id="resource-msg"></lable>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Name</label>
+                        <label class="col-sm-4 control-label">{{_('Name')}}</label>
                         <div class="col-sm-5">
                             <p id="r_name" style="margin-bottom: 0; margin-top: 0; padding-top: 5px;"></p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Vendor</label>
+                        <label class="col-sm-4 control-label">{{_('Vendor')}}</label>
                         <div class="col-sm-5">
                             <p id="r_vendor" style="margin-bottom: 0; margin-top: 0; padding-top: 5px;"></p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">URL</label>
+                        <label class="col-sm-4 control-label">{{_('URL')}}</label>
                         <div class="col-sm-8">
                             <p style="margin-bottom: 0; margin-top: 0; padding-top: 5px;">
                                 <a id="r_url" href="" title="" target="_blank"></a>
@@ -33,16 +33,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Type</label>
+                        <label class="col-sm-4 control-label">{{_('Type')}}</label>
                         <div class="col-sm-5">
                             <select id="r_type" class="select2">
-                                <option value="1">Public</option>
-                                <option value="2">Restricted</option>
+                                <option value="1">{{_('Public')}}</option>
+                                <option value="2">{{_('Restricted')}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Active</label>
+                        <label class="col-sm-4 control-label">{{_('Active')}}</label>
                         <div class="col-sm-5">
                             <input type="hidden" id="rid">
                             <div class="switch" data-on="success">
@@ -52,8 +52,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="update" type="submit" class="btn btn-primary btn-flat md-close">Update</button>
-                    <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Cancel</button>
+                    <button id="update" type="submit" class="btn btn-primary btn-flat md-close">{{_('Update')}}</button>
+                    <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">{{_('Cancel')}}</button>
                 </div>
             </form>
         </div>
