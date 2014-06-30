@@ -153,7 +153,8 @@ function render_user_datatable() {
         });
 
         // Reset password
-        $("#reset_password u").on('click', function (e) {
+        $("#reset-password").on('click', function (e) {
+            alert("asdfg");
             if (e) e.preventDefault();
             reset_password();
         });
@@ -586,7 +587,7 @@ function render_resource_type_select(type) {
  *
  */
 function reset_password() {
-    var username = $('#username2').val().trim();
+    var username = $('#username').val().trim();
     var email = $('#email').val().trim();
 
     var user_info = {

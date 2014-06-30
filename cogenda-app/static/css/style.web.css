@@ -1336,9 +1336,9 @@ label {
 .img-caption {
     position:absolute;
     width:360px;
-    left:35px;
+    /*left:35px;*/
     height:100px;
-    bottom:77px;
+    bottom:50px;
     background:#000;
     color:#fff;
     z-index:8;
@@ -1439,4 +1439,8 @@ textarea.parsley-error {
 }
 .parsley-error {
     border-color: #c00 !important;
+}
 
+.bx-wrapper {
+    width: 98%;
+}
