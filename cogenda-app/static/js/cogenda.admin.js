@@ -151,6 +151,12 @@ function render_user_datatable() {
                 save_user();
             }
         });
+
+        // Reset password
+        $("#reset_password u").on('click', function (e) {
+            if (e) e.preventDefault();
+            reset_password();
+        });
     });
 }
 
@@ -200,6 +206,10 @@ function edit_user(row) {
     // Reset title/button
     $('#title').text("Modify User");
     $('#save').text("Save");
+
+    // Reset password
+    $('#password').hide();
+    $('#reset-password-container').show();
 
     var datatable = $('#mgmt-datatable').dataTable();
     var selectedRows = datatable.$('tr.row_selected').length;
@@ -341,6 +351,10 @@ function reset_user_create_modal() {
     $('#email').val("");
     $('#mobile').val("");
     $('#notes').val("");
+
+    // Reset password
+    $('#password').show();
+    $('#reset-password-container').hide();
 
     // Active switch
     render_active_switch();
@@ -565,6 +579,41 @@ function edit_resource(row) {
  */
 function render_resource_type_select(type) {
     $('#r_type').select2("val", type);
+}
+
+/**
+ * Reset password
+ *
+ */
+function reset_password() {
+    var username = $('#username2').val().trim();
+    var email = $('#email').val().trim();
+
+    var user_info = {
+        username: username,
+        email: email
+    };
+
+    var reset_password = $.ajax({
+        dataType: 'json',
+        contentType: "application/json",
+        url: '/admin/reset-password',
+        data: JSON.stringify(user_info),
+        type: 'POST'
+    });
+
+    reset_password.done(function (resp) {
+        var result = JSON.parse(resp);
+        if (result.is_success) {
+            pop_msg('user-modal-msg', result.msg, 2);
+        } else {
+            pop_msg('user-modal-msg', result.msg, 1);
+        }
+    });
+
+    reset_password.fail(function (resp, status) {
+        //TODO: display error msg on ui.
+    });
 }
 
 //***************************************************************

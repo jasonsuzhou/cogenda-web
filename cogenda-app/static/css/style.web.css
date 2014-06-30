@@ -755,14 +755,6 @@ body.modal-open,
     color: red;
 }
 
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
 .input-group {
   position: relative;
   display: table;
@@ -1290,7 +1282,7 @@ hr {
 .form-horizontal .control-label {
     text-align: right;
 }
-.form-horizontal .control-label, .form-horizontal .radio, .form-horizontal .checkbox, .form-horizontal .radio-inline, .form-horizontal .checkbox-inline {
+.form-horizontal .control-label {
     margin-bottom: 0;
     margin-top: 0;
     padding-top: 7px;
@@ -1313,6 +1305,14 @@ hr {
 }
 .col-sm-12 {
   width: 100%;
+}
+
+.modal *,
+.modal *:before,
+.modal *:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 label {

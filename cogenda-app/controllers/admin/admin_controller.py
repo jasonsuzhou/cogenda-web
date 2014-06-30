@@ -8,6 +8,8 @@ import cherrypy
 from lib.i18ntool import ugettext as _
 import json
 import hmac
+import string
+from random import choice
 
 import logging 
 log = logging.getLogger(__name__)
@@ -19,10 +21,12 @@ class AdminController(BaseController):
     def user_mgmt(self):
         return self.render_template('admin/user-mgmt/user-container.html')
 
+
     @route('/admin/resource-mgmt')
     @authenticated
     def resource_mgmt(self):
         return self.render_template('admin/resource-mgmt/resource-container.html')
+
 
     @route('/admin/users')
     @cherrypy.tools.json_out()
@@ -34,6 +38,7 @@ class AdminController(BaseController):
             users_in_json.append(self.jsonify_model(user))
         return users_in_json
 
+
     @route('/admin/fetch-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -41,6 +46,7 @@ class AdminController(BaseController):
         user = User.get_by_uid(cherrypy.request.db, uid)
         user_in_json = self.jsonify_model(user)
         return user_in_json
+
 
     @route('/admin/create-user')
     @cherrypy.tools.json_out()
@@ -70,6 +76,7 @@ class AdminController(BaseController):
         print temp_user
         return self.jsonify_model(user)
 
+
     @route('/admin/update-user')
     @cherrypy.tools.json_out()
     @authenticated
@@ -92,6 +99,7 @@ class AdminController(BaseController):
         user = User(
                 json_user['username'],
                 hmac.new(salt, json_user['password']).hexdigest(),
+                None,
                 json_user['company'],
                 json_user['email'],
                 json_user['mobile'],
@@ -103,6 +111,7 @@ class AdminController(BaseController):
         user = User.update_user(cherrypy.request.db, origin_user, user)
         return self.jsonify_model(user)
 
+
     @route('/admin/delete-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -112,6 +121,7 @@ class AdminController(BaseController):
         for id in ids:
             count.append(User.delete_by_uid(cherrypy.request.db, id))
         return count
+
 
     @route('/admin/resources')
     @cherrypy.tools.json_out()
@@ -138,6 +148,7 @@ class AdminController(BaseController):
         resource = Resource.update_resource(cherrypy.request.db, origin_resource, json_resource['type'], json_resource['active'])
         return self.jsonify_model(resource)
 
+
     @route('/admin/fetch-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -145,6 +156,29 @@ class AdminController(BaseController):
         resource = Resource.get_by_rid(cherrypy.request.db, rid)
         resource_in_json = self.jsonify_model(resource)
         return resource_in_json
+
+
+    @route('/admin/reset-password')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def reset_password(self):
+        cl = cherrypy.request.headers['Content-Length']
+        rawbody = cherrypy.request.body.read(int(cl))
+        json_request = json.loads(rawbody)
+        name = json_request['username']
+        sender = json_request['email']
+        length = 8
+        chars = string.letters + string.digits
+        gen_pwd = ''.join(choice(chars) for _ in xrange(length))
+        try:
+            #self.send_mail('mail/req_account_tmpl.html', name, sender, gen_pwd)
+            print "==================================="
+            print name, sender, gen_pwd
+            print "==================================="
+        except err:
+            log.error('Reset password operation error %s' % err)
+            return json.dumps({'is_success': False, 'msg': 'Reset password failure!'})
+        return json.dumps({'is_success': True, 'msg': 'Reset password successfully!'})
+
 
     def jsonify_model(self, model):
         """ Returns a JSON representation of an SQLAlchemy-backed object.
