@@ -1,4 +1,5 @@
 <div class="box" >
+
 {% markdown2 %}
 
 Downloads
@@ -32,17 +33,23 @@ Downloads
 ##### Editions
  Several editions are available on each platform, as summarized in the table below:
 
+{% endmarkdown2 %}
+
 <div  class="articleTable">
 
-  Features/Platform                 | WinXP/Vista/7 | RHEL6   |RHEL5    | RHEL4   | Debian7 |
-  ----------------------------------|:-------------:|:-------:|:-------:|:-------:|:-------:|
-  Standard, 32bit                   | 1.7.4         |*request*| 1.7.4   | -       | -       |
-  Standard, 64bit                   | 1.7.4         | 1.7.4   | 1.7.4   | 1.7.4   | 1.7.4   |
-  Full, 32bit                       | *request*     |*request*|*request*| -       | -       |
-  Full, 64bit                       | *request*     | 1.7.4   | 1.7.4   | 1.7.4   | 1.7.4   |
-  Full, Cluster 64bit               | -             | 1.7.4   | 1.7.4   | -       | -       |
-</div>
+{% markdown2 %}
 
+|| *Features/Platform*      || *WinXP/Vista/7* || *RHEL6*   ||*RHEL5*    || *RHEL4*   || *Debian7* ||
+|| Standard, 32bit          || 1.7.4           ||*request*  || 1.7.4     || -         || -         ||
+|| Standard, 64bit          || 1.7.4           || 1.7.4     || 1.7.4     || 1.7.4     || 1.7.4     ||
+|| Full, 32bit              || *request*       ||*request*  ||*request*  || -         || -         ||
+|| Full, 64bit              || *request*       || 1.7.4     || 1.7.4     || 1.7.4     || 1.7.4     ||
+|| Full, Cluster 64bit      || -               || 1.7.4     || 1.7.4     || -         || -         ||
+
+{% endmarkdown2 %}
+</div>
+ 
+{% markdown2 %}
  - Full: VisualParticle and several other advanced tools are only available in the full package.
  - Cluster: with Infiniband interconnect support, see [supported hardware/software](./System-Requirements#ib).
 
