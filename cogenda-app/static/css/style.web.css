@@ -1330,3 +1330,54 @@ label {
     /*border-bottom: 2px solid #1c4e63 !important;*/
     border-radius: 5px;
 }
+
+
+/* bxslider image caption styles */
+.img-caption {
+    /*position:absolute;*/
+    width:360px;
+    left:35px;
+    height:105px;
+    /*bottom:77px;*/
+    background:#000;
+    color:#fff;
+    z-index:8;
+    padding: 5px 10px 5px 10px;
+    zoom: 1;
+    overflow: hidden;
+    -moz-opacity: 0.8;
+    opacity: 0.8;  /* Firefox, Safari(WebKit), Opera */
+    filter: alpha(opacity=80);      /* IE 4-7 */
+    -ms-filter: "alpha(opacity=80)"; /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.alpha(opacity=80)";
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.img-caption h3 {
+    display: block;
+    font-size: 1.17em;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+
+.img-caption p {
+    padding:5px;
+    margin:0;
+    position:relative;
+    top:-10px;
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+.img-caption span a {
+    display:inline !important;
+    color: #9F5FCD;
+}

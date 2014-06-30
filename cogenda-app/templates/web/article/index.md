@@ -1,11 +1,40 @@
 <ul class="bxslider">
-  <li><a href="/"><img src="/static/images/gds2mesh/d_ff_geom.png" title="image-2"/></a></li>
-  <li><a href="/"><img src="/static/images/gds2mesh/nand_mesh.png" title="image-2"/></a></li>
-  <li><a href="/"/><img src="/static/images/seu_sram/sram_seu.png" title="image-3"/></a></li>
+  <li>
+    <div class="img-caption" style="display: block;">
+        <h3>TCAD Catpion-1</h3> 
+        <p>Introduction of TCAD Details 
+            <br/>
+            <span style="position:relative; top:8px;">
+                <a href="/">Read More &gt;&gt;</a>
+            </span>
+        <p>
+    </div>
+    <img src="/static/images/gds2mesh/d_ff_geom.png"/></li>
+  <li>
+    <div class="img-caption" style="display: block;">
+        <h3>TCAD Catpion-2</h3> 
+        <p>Introduction of TCAD Details 
+            <br/>
+            <span style="position:relative; top:8px;">
+                <a href="/">Read More &gt;&gt;</a>
+            </span>
+        <p>
+    </div>
+    <img src="/static/images/gds2mesh/nand_mesh.png" title="image-2"/></li>
+  <li>
+    <div class="img-caption" style="display: block;">
+        <h3>TCAD Catpion-3</h3> 
+        <p>Introduction of TCAD Details 
+            <br/>
+            <span style="position:relative; top:8px;">
+                <a href="/">Read More &gt;&gt;</a>
+            </span>
+        <p>
+    </div>
+    <img src="/static/images/seu_sram/sram_seu.png" title="image-3"/></li>
 </ul>
 
 <div class="box" >
-
 {% markdown2 %}
 {{ _('Welcome')}}
 -------

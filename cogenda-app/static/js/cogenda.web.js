@@ -6,8 +6,15 @@ $(document).ready(function() {
         autoControls: true,
         adaptiveHeight: true,
         mode: 'fade',
-        preloadImages: 'all'
-        //captions: true
+        preloadImages: 'all',
+        captions: false
+        //onSlideBefore: function() {
+        //    //alert($e);
+        //    //console.log($e);
+        //    //var cap = $e.attr('title');
+        //    //console.log(cap);
+        //    $('#img_caption').html('xxxxxxxxxxxxxxxxxxx');
+        //},
     });
 
     $("#login").on('click', function (event) {
