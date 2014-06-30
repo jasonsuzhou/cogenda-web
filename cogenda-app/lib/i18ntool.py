@@ -172,6 +172,7 @@ class I18nTool(cherrypy.Tool):
         self._name = 'I18nTool'
         self._point = 'before_handler'
         self._root_path = root_path
+        self.default=''
         # Make sure, session tool (priority 50) is loaded before
         self._priority = 100
 
