@@ -48,7 +48,7 @@ def authenticated(func):
     def actual(*arguments, **kw):
         instance = arguments[0]
         user = instance.user
-        if user:
+        if user[0] and user[1] == '3':
             return func(*arguments, **kw)
         else:
             raise cherrypy.HTTPRedirect('/admin/login')
