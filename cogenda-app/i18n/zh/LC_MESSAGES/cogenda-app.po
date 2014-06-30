@@ -168,7 +168,7 @@ msgstr "简体中文"
 
 #: cogenda-app/templates/web/layout/layout-header.html:7
 msgid "English"
-msgstr "英语"
+msgstr "English"
 
 #: cogenda-app/templates/web/layout/layout-header.html:10
 msgid "Login"

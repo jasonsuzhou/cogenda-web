@@ -14,7 +14,7 @@ class Markdown2Extension(jinja2.ext.Extension):
 
     def __init__(self, environment):
         super(Markdown2Extension, self).__init__(environment)
-        environment.extend(markdowner=markdown2.Markdown(extras=["wiki-tables"])) 
+        environment.extend(markdowner=markdown2.Markdown(extras=["wiki-tables", "markdown-in-html", "fenced-code-blocks"])) 
 
 
     def parse(self, parser):
