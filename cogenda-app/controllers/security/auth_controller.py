@@ -21,10 +21,11 @@ class AuthController(BaseController):
         json_user = json.loads(rawbody)
         username = json_user['username']
         password = json_user['password']
+        client = json_user['client']
         refer = cherrypy.request.headers.get('Referer','/admin/user-mgmt')
         if refer.endswith('/admin/login'):
             refer = '/admin/user-mgmt'
-        error_msg = self.check_credentials(username, password)
+        error_msg = self.check_credentials(username, password, client)
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg}
         else:
@@ -38,12 +39,12 @@ class AuthController(BaseController):
         self.redirect('/admin/login')
 
 
-    def check_credentials(self, username, password):
+    def check_credentials(self, username, password, client):
         user = User.get_by_username(cherrypy.request.db, username)
         """Verifies credentials for username and password."""
         salt = self.settings.cogenda_app.cogenda_salt
         if user is None or user.password != hmac.new(salt, password).hexdigest():
             return u"Invalid user ID or password."
-        if user.role != '3':
+        if client == 'admin' and user.role != '3':
             return u"You have insufficient privileges."
         self.login(user)
