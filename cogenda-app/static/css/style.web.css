@@ -380,7 +380,7 @@ body.modal-open,
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 10400;
   display: none;
   overflow: auto;
   overflow-y: scroll;
@@ -403,7 +403,7 @@ body.modal-open,
 }
 
 .modal-dialog {
-  z-index: 1050;
+  z-index: 10500;
   width: auto;
   padding: 10px;
   margin-right: auto;
@@ -428,7 +428,7 @@ body.modal-open,
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1030;
+  z-index: 10300;
   background-color: #000000;
 }
 
@@ -1334,11 +1334,11 @@ label {
 
 /* bxslider image caption styles */
 .img-caption {
-    /*position:absolute;*/
+    position:absolute;
     width:360px;
     left:35px;
-    height:105px;
-    /*bottom:77px;*/
+    height:100px;
+    bottom:77px;
     background:#000;
     color:#fff;
     z-index:8;
@@ -1357,9 +1357,9 @@ label {
 
 .img-caption h3 {
     display: block;
-    font-size: 1.17em;
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
+    font-size: 1.10em;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
     font-weight: bold;

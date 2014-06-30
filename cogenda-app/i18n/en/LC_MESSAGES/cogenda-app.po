@@ -164,7 +164,7 @@ msgstr "Welcome"
 
 #: cogenda-app/templates/web/layout/layout-header.html:4
 msgid "Chinese"
-msgstr "Chinese"
+msgstr "简体中文"
 
 #: cogenda-app/templates/web/layout/layout-header.html:7
 msgid "English"
