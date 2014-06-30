@@ -81,7 +81,7 @@ class WebController(BaseController):
             print "==================================="
             print name, sender, message
             print "==================================="
-            self.send_mail('mail/req_account_tpl.html', name, self.settings.mailer.smtp_user, sender, message)
+            self.send_mail('mail/req_account_tpl.html', name, self.settings.mailer.smtp_user, self.settings.mailer.smtp_user, message)
         except Exception as err:
             log.error('Send mail operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': 'Request mail send failure with error: %s' %err})
