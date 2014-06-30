@@ -54,7 +54,7 @@ $(document).ready(function() {
                 }
                 $('#loginModal').modal('hide');
                 $('#login').hide();
-                $('#login-username').text(username);
+                //$('#login-username').text(username);
                 $('#login-username').show();
             });
 
