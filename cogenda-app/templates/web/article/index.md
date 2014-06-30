@@ -1,3 +1,9 @@
+<ul class="bxslider">
+  <li><a href="/"><img src="/static/images/gds2mesh/d_ff_geom.png" title="image-2"/></a></li>
+  <li><a href="/"><img src="/static/images/gds2mesh/nand_mesh.png" title="image-2"/></a></li>
+  <li><a href="/"/><img src="/static/images/seu_sram/sram_seu.png" title="image-3"/></a></li>
+</ul>
+
 <div class="box" >
 
 {% markdown2 %}

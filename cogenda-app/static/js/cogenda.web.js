@@ -1,5 +1,15 @@
 
 $(document).ready(function() {
+
+    $('.bxslider').bxSlider({
+        auto: true,
+        autoControls: true,
+        adaptiveHeight: true,
+        mode: 'fade',
+        preloadImages: 'all'
+        //captions: true
+    });
+
     $("#login").on('click', function (event) {
         if (event) event.preventDefault();
         $('#loginModal').parsley().reset();
