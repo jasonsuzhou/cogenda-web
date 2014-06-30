@@ -141,6 +141,8 @@ class BaseController(object):
             mo_dir = self.settings.cogenda_app.app_home + mo_dir
         log.debug(mo_dir)
         locale = str(cherrypy.response.i18n.locale)
+        if cherrypy.tools.I18nTool.default:
+            locale = cherrypy.tools.I18nTool.default
         translations = Translations.load(mo_dir, locale, app_name)
         env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=[Markdown2Extension, 'jinja2.ext.i18n'])
         env.install_gettext_translations(translations)
