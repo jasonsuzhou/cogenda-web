@@ -99,7 +99,6 @@ class AdminController(BaseController):
         user = User(
                 json_user['username'],
                 hmac.new(salt, json_user['password']).hexdigest(),
-                None,
                 json_user['company'],
                 json_user['email'],
                 json_user['mobile'],
@@ -170,7 +169,7 @@ class AdminController(BaseController):
         chars = string.letters + string.digits
         gen_pwd = ''.join(choice(chars) for _ in xrange(length))
         try:
-            #self.send_mail('mail/req_account_tmpl.html', name, sender, gen_pwd)
+            #self.send_mail('mail/reset_pwd_tpl.html', name, sender, gen_pwd)
             print "==================================="
             print name, sender, gen_pwd
             print "==================================="
