@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 
 class WebController(BaseController):
 
-    LAST_ARTICLE_FLAG='home'
+    LAST_ARTICLE_FLAG='index'
 
     @route('/')
     def index(self):

@@ -1,7 +1,7 @@
 <div class="box" >
 
 {% markdown2 %}
-Welcome
+{{ _('Welcome')}}
 -------
 ##### [Get more information](/article/corporate)
 
