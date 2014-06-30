@@ -85,6 +85,16 @@ function ready_user_mgmt() {
  *
  */
 function render_user_datatable() {
+    var userTableTitle;
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/admin/init-user-table-title',
+        success: function(data) {
+            userTableTitle = $.parseJSON(data);
+        }
+    });
     // Prepare displaying columns
     var columns = [
         {
@@ -93,27 +103,27 @@ function render_user_datatable() {
           "bVisible": false
         },
         {
-          "sTitle": "User Name",
+          "sTitle": userTableTitle['username'],
           "mData": "username"
         },
         {
-          "sTitle": "Company",
+          "sTitle": userTableTitle['company'],
           "mData": "company"
         },
         {
-          "sTitle": "Email",
+          "sTitle": userTableTitle['email'],
           "mData": "email"
         },
         {
-          "sTitle": "Mobile",
+          "sTitle": userTableTitle['mobile'],
           "mData": "mobile"
         },
         {
-          "sTitle": "Role",
+          "sTitle": userTableTitle['role'],
           "mData": "role"
         },
         {
-          "sTitle": "Active",
+          "sTitle": userTableTitle['active'],
           "mData": "active"
         }
     ];
@@ -440,6 +450,16 @@ function ready_resource_mgmt() {
  *
  */
 function render_resource_datatable() {
+    var resourceTableTitle;
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/admin/init-resource-table-title',
+        success: function(data) {
+            resourceTableTitle = $.parseJSON(data);
+        }
+    });
     var columns = [
         {
           "sTitle": "ID",
@@ -447,32 +467,32 @@ function render_resource_datatable() {
           "bVisible": false
         },
         {
-          "sTitle": "Resource Name",
+          "sTitle": resourceTableTitle['Resource Name'],
           "mData": "name"
         },
         {
-          "sTitle": "Vendor",
+          "sTitle": resourceTableTitle['Vendor'],
           "mData": "vendor"
         },
         {
-          "sTitle": "URL",
+          "sTitle": resourceTableTitle['URL'],
           "mData": "url",
           "sWidth": "30%"
         },
         {
-          "sTitle": "Uploaded Date",
+          "sTitle": resourceTableTitle['Uploaded Date'],
           "mData": "uploaded_date"
         },
         {
-          "sTitle": "Status",
+          "sTitle": resourceTableTitle['Status'],
           "mData": "status"
         },
         {
-          "sTitle": "Type",
+          "sTitle": resourceTableTitle['Type'],
           "mData": "type"
         },
         {
-          "sTitle": "Active",
+          "sTitle": resourceTableTitle['Active'],
           "mData": "active"
         }
     ];
@@ -650,9 +670,32 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
             var datatable_id = "#" + datatable_id;
 
             /* Init the table with dynamic ajax loader.*/
+            var tableLanguage;
+            $.ajax({
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                url:'/admin/init-table-language',
+                success: function(data) {
+                    tableLanguage = $.parseJSON(data);
+                }
+            });
             var datatable = $(datatable_id).dataTable({
                 "aaData": process_user_result(result),
-                "aoColumns": columns
+                "aoColumns": columns,
+                "oLanguage": {
+                    "sLengthMenu" : " "+tableLanguage['sShowRows']+" ",
+                    "sZeroRecords" : tableLanguage['sZeroRecords'],
+                    "sInfo" : tableLanguage['sInfo'],
+                    "sInfoEmpty" : tableLanguage['sInfoEmpty'],
+                    "sInfoFiltered" : tableLanguage['sInfoFiltered'],
+                    "oPaginate": {
+                        "sFirst" : tableLanguage['oPaginate_sFirst'],
+                        "sPrevious" : tableLanguage['oPaginate_sPrevious'],
+                        "sNext" : tableLanguage['oPaginate_sNext'],
+                        "sLast" : tableLanguage['oPaginate_sLast']
+                    }
+                }
             });
 
             // Add/remove class to a row when clicked on
@@ -661,7 +704,7 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
             });
 
             // Search input style
-            $('.dataTables_filter input').addClass('form-control').attr('placeholder', 'Search');
+            $('.dataTables_filter input').addClass('form-control').attr('placeholder', tableLanguage['sSearch']);
             $('.dataTables_length select').addClass('form-control');
 
             // Callback method for datatable
