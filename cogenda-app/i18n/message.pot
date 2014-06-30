@@ -9,7 +9,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cogenda-web 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2014-06-30 09:24+0800\n"
+=======
+"POT-Creation-Date: 2014-06-30 21:41+0800\n"
+>>>>>>> 124184f352aa5017fb6373fb985d6625b5b371b5
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +21,137 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+
+<<<<<<< HEAD
+#: cogenda-app/templates/admin/layout/layout.html:26
+#: cogenda-app/templates/admin/user-mgmt/user-container.html:8
+msgid "User Management"
+msgstr ""
+
+#: cogenda-app/templates/admin/layout/layout.html:27
+#: cogenda-app/templates/admin/resource-mgmt/resource-container.html:8
+msgid "Resource Management"
+msgstr ""
+
+#: cogenda-app/templates/admin/layout/layout.html:42
+msgid "Sign Out"
+msgstr ""
+
+#: cogenda-app/templates/admin/resource-mgmt/resource-mgmt.html:4
+msgid "Loading resources table"
+=======
+#: cogenda-app/controllers/admin/admin_controller.py:49
+#: cogenda-app/templates/admin/security/login-user.html:29
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
+msgid "User Name"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:50
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:37
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:38
+msgid "Company"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:51
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:31
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:32
+msgid "E-mail"
+>>>>>>> 124184f352aa5017fb6373fb985d6625b5b371b5
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:52
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:45
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:46
+msgid "Mobile"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:53
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:51
+msgid "Role"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:54
+#: cogenda-app/controllers/admin/admin_controller.py:67
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:45
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:70
+msgid "Active"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:61
+msgid "Resource Name"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:62
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
+msgid "Vendor"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:63
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
+msgid "URL"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:64
+msgid "Uploaded Date"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:65
+msgid "Status"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:66
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:36
+msgid "Type"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:76
+msgid "sProcessing"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:77
+msgid "ShowRows"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:78
+msgid "sZeroRecords"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:79
+msgid "sInfo"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:80
+msgid "sInfoEmpty"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:81
+msgid "sInfoFiltered"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:82
+msgid "sInfoPostFix"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:83
+msgid "sSearch"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:84
+msgid "oPaginate_sFirst"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:85
+msgid "oPaginate_sPrevious"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:86
+msgid "oPaginate_sNext"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:87
+msgid "oPaginate_sLast"
+msgstr ""
 
 #: cogenda-app/templates/admin/layout/layout.html:26
 #: cogenda-app/templates/admin/user-mgmt/user-container.html:8
@@ -44,29 +179,12 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
-msgid "Vendor"
-msgstr ""
-
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
-msgid "URL"
-msgstr ""
-
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:36
-msgid "Type"
-msgstr ""
-
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:39
 msgid "Public"
 msgstr ""
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:40
 msgid "Restricted"
-msgstr ""
-
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:45
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:70
-msgid "Active"
 msgstr ""
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:55
@@ -80,12 +198,6 @@ msgstr ""
 
 #: cogenda-app/templates/admin/security/login-user.html:16
 msgid "Login User"
-msgstr ""
-
-#: cogenda-app/templates/admin/security/login-user.html:29
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
-msgid "User Name"
 msgstr ""
 
 #: cogenda-app/templates/admin/security/login-user.html:41
@@ -116,25 +228,6 @@ msgstr ""
 
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:6
 msgid "Create User"
-msgstr ""
-
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:31
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:32
-msgid "E-mail"
-msgstr ""
-
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:37
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:38
-msgid "Company"
-msgstr ""
-
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:45
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:46
-msgid "Mobile"
-msgstr ""
-
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:51
-msgid "Role"
 msgstr ""
 
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:53
