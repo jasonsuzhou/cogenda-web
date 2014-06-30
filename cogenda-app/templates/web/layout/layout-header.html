@@ -8,7 +8,10 @@
         </li>
         <li>
         <a id="login" style="cursor: pointer;">{{_('Login')}}</a>
-        <a id="login-username" style="cursor: pointer; display: none;" data-toggle="modal" data-target="#myProfileModal">{{ user[0] }}</a>
+        <div id="login-username" style="cursor: pointer; display: none;">
+            <li><a href="/security/logout">{{_('Sign Out')}}</a></li>
+            <a href="#" class="" data-toggle="dropdown"><span>{{ user[0] }}</span></a>
+        </div>
         </li>
     </div>
 </div>
