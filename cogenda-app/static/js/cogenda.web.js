@@ -88,6 +88,8 @@ $(document).ready(function() {
     $("#request-account-btn").on('click', function (event) {
         if (event) event.preventDefault();
         if ($('#requestAccountModal').parsley().validate()) {
+            $("#request-account-btn").attr('class', 'btn btn-primary btn-processing');
+
             var username = $('#username2').val().trim();
             var email = $('#email').val().trim();
             var notes = $('#notes').val().trim();
@@ -113,9 +115,11 @@ $(document).ready(function() {
                     setTimeout(function() {
                         $('#requestAccountModal').modal('hide');
                     }, 2000);
+                    $('#request-account-btn').off('click');
                 } else {
                     pop_msg('request-account-msg', result.msg, 1);
                 }
+                $("#request-account-btn").attr('class', 'btn btn-primary btn-check');
             });
 
             send_request.fail(function (resp, status) {
