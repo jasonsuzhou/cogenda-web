@@ -255,10 +255,72 @@ div #lang-select {
 	font-weight:bold;
 	padding:8px 20px 0 20px;
 }
+
 #menu ul li a:hover {
 	color:#FFFFFF;
 	height:27px;
 	background:transparent url(../images/nav_bg.png) 0px -35px no-repeat;
+}
+
+#menu ul li div a{
+   color: #773d97;
+   text-decoration: none;
+}
+
+#menu ul li div a:hover {
+    color: gray;
+	background:transparent;
+	height:17px;
+}
+
+#menu ul li div{
+    background: #ffffff;
+    position:absolute;
+    border: 2px solid #8166a2;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.176);
+    font-size: 11px;
+    width: 318px;
+    /*height: 300px;*/
+    top: 36px;
+    z-index: 10000;
+    display:none;
+}
+
+#menu ul li:hover div{
+    display:block;
+}
+
+#sub_menu:before{
+    background: url(../images/menu-tail-up.png) no-repeat;
+    top: -12px;
+    content: "";
+    left: 28px;
+    display: inline-block;
+    height: 43px;
+    width: 17px;
+    position: absolute;
+}
+
+.submenu-title{
+    font-family: Helvetica, Arial;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #4e4e4e;
+    font-weight: bold;
+    text-align: center
+}
+
+.submenu-txt{
+    font-family: Helvetica, Arial;
+    font-size: 11px;
+    color: #4e4e4e;
+}
+
+.submenu-txt-title{
+    color: #773d97;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: helvetica, arial;
 }
 
 
@@ -1444,3 +1506,16 @@ textarea.parsley-error {
 .bx-wrapper {
     width: 98%;
 }
+
+/*Sub Menu*/
+/*
+#nav_menu{
+    position:relative;
+    list-style-type:none;
+    margin:0;
+}
+
+#submenu1:hover #nav_menu{
+    display:block;
+}
+*/
