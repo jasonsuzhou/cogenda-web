@@ -634,10 +634,6 @@ function reset_password() {
         }
         $('#processing').hide();
     });
-
-    reset_password.fail(function (resp, status) {
-        //TODO: display error msg on ui.
-    });
 }
 
 //***************************************************************

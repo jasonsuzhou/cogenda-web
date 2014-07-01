@@ -65,10 +65,6 @@ $(document).ready(function() {
                 $('#login-username').text(username);
                 $('#user-profile-container').show();
             });
-
-            authenticate.fail(function (resp, status) {
-                //TODO: display error msg on ui.
-            });
         } else {
             console.log('Client side validate error.');
         }
@@ -120,10 +116,6 @@ $(document).ready(function() {
                     pop_msg('request-account-msg', result.msg, 1);
                 }
                 $("#request-account-btn").attr('class', 'btn btn-primary btn-check');
-            });
-
-            send_request.fail(function (resp, status) {
-                //TODO: display error msg on ui.
             });
         } else {
             console.log('Client side validate error.');
