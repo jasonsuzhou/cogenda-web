@@ -166,7 +166,6 @@ function render_user_datatable() {
 
         // Reset password
         $("#reset-password").on('click', function (e) {
-            alert("asdfg");
             if (e) e.preventDefault();
             reset_password();
         });
@@ -218,7 +217,7 @@ function edit_user(row) {
 
     // Reset title/button
     $('#title').text("Modify User");
-    //$('#save').text("Save");
+    $('#save').text("Save");
 
     // Reset password
     $('#password').hide();
@@ -609,6 +608,7 @@ function render_resource_type_select(type) {
  *
  */
 function reset_password() {
+    $('#processing').show();
     var username = $('#username').val().trim();
     var email = $('#email').val().trim();
 
@@ -632,6 +632,7 @@ function reset_password() {
         } else {
             pop_msg('user-modal-msg', result.msg, 1);
         }
+        $('#processing').hide();
     });
 
     reset_password.fail(function (resp, status) {

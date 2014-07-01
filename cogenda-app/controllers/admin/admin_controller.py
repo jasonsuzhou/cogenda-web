@@ -220,16 +220,18 @@ class AdminController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_request = json.loads(rawbody)
         name = json_request['username']
-        sender = json_request['email']
+        receiver = json_request['email']
+        sender = self.settings.mailer.smtp_user
         length = 8
         chars = string.letters + string.digits
         gen_pwd = ''.join(choice(chars) for _ in xrange(length))
         try:
-            #self.send_mail('mail/reset_pwd_tpl.html', name, sender, gen_pwd)
+            self.send_mail('mail/reset_pwd_tpl.html', name, sender, receiver, gen_pwd, 'Reset password')
             print "==================================="
             print name, sender, gen_pwd
             print "==================================="
-        except err:
+        except Exception as err:
+            print err
             log.error('Reset password operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': 'Reset password failure!'})
         return json.dumps({'is_success': True, 'msg': 'Reset password successfully!'})

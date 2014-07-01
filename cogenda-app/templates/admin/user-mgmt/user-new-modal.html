@@ -23,6 +23,7 @@
                             <label class="control-label">{{_('Password')}} *</label>
                             <div id="reset-password-container" style="padding-top: 8px; display: none;">
                                 <a id="reset-password" style="cursor: pointer;"><u>{{_('Reset Password')}}</u></a>
+                                <img id="processing" src="/static/images/processing.gif" style="display: none;" />
                             </div>
                             <input id="password" placeholder="{{_('Password')}}" required class="form-control" data-parsley-length="[5, 25]"
                                     data-parsley-trigger="change" data-parsley-errors-container="#password-error">
