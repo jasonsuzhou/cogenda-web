@@ -59,6 +59,7 @@ class AdminController(BaseController):
         active = _('Active')
         return json.dumps({'username': username,'company':company,'email':email,'mobile':mobile,'role':role,'active':active})
 
+
     @route('/admin/init-resource-table-title')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -78,18 +79,18 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def init_table_language(self):
-        sProcessing = _('sProcessing'),
-        sShowRows = _('ShowRows'),
-        sZeroRecords = _('sZeroRecords'),
-        sInfo = _('sInfo'),
-        sInfoEmpty = _('sInfoEmpty'),
-        sInfoFiltered = _('sInfoFiltered'),
-        sInfoPostFix = _('sInfoPostFix'),
-        sSearch = _('sSearch'),
-        oPaginate_sFirst = _('oPaginate_sFirst'),
-        oPaginate_sPrevious = _('oPaginate_sPrevious'),
-        oPaginate_sNext = _('oPaginate_sNext'),
-        oPaginate_sLast = _('oPaginate_sLast'),
+        sProcessing = _('sProcessing')
+        sShowRows = _('ShowRows')
+        sZeroRecords = _('sZeroRecords')
+        sInfo = _('sInfo')
+        sInfoEmpty = _('sInfoEmpty')
+        sInfoFiltered = _('sInfoFiltered')
+        sInfoPostFix = _('sInfoPostFix')
+        sSearch = _('sSearch')
+        oPaginate_sFirst = _('oPaginate_sFirst')
+        oPaginate_sPrevious = _('oPaginate_sPrevious')
+        oPaginate_sNext = _('oPaginate_sNext')
+        oPaginate_sLast = _('oPaginate_sLast')
         return json.dumps({'sProcessing': sProcessing,'sShowRows':sShowRows,'sZeroRecords':sZeroRecords,'sInfo':sInfo,'sInfoEmpty':sInfoEmpty,
                            'sInfoFiltered':sInfoFiltered,'sInfoPostFix':sInfoPostFix,'sSearch':sSearch,'oPaginate_sFirst':oPaginate_sFirst,
                            'oPaginate_sPrevious':oPaginate_sPrevious,'oPaginate_sNext':oPaginate_sNext,'oPaginate_sLast':oPaginate_sLast})

@@ -46,7 +46,6 @@ class WebController(BaseController):
     def switch_locale(self, locale):
         cherrypy.tools.I18nTool.set_custom_language(locale)
         cherrypy.tools.I18nTool.default=locale
-        #cherrypy.response.headers['Content-Language']=locale
         refer = cherrypy.request.headers.get('Referer','/')
         path = urlparse(refer).path
         if path.startswith('/article'): 
@@ -95,6 +94,7 @@ class WebController(BaseController):
         user = User.get_by_username(cherrypy.request.db, username)
         user_in_json = self.jsonify_model(user)
         return user_in_json
+
 
     @route('/user/change-password')
     @cherrypy.tools.json_out()

@@ -218,7 +218,7 @@ function edit_user(row) {
 
     // Reset title/button
     $('#title').text("Modify User");
-    $('#save').text("Save");
+    //$('#save').text("Save");
 
     // Reset password
     $('#password').hide();
@@ -354,7 +354,7 @@ function reset_user_create_modal() {
 
     // Reset title/button
     $('#title').text("Create User");
-    $('#save').text("Create");
+    //$('#save').text("Create");
 
     // Reset values here
     $('#uid').val("");
