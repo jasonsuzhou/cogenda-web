@@ -8,8 +8,8 @@
         </li>
         <li>
         <a id="login" style="cursor: pointer;">{{_('Login')}}</a>
-        <li class="sub" id="login-username" style="cursor: pointer; display: none;">
-            <a href="#" class="" data-toggle="dropdown"><span>{{ user[0] }}</span></a>
+        <li class="sub" id="user-profile-container" style="cursor: pointer;">
+            <a id="login-username" href="#" class="" data-toggle="dropdown"><span>{{ user[0] }}</span></a>
             <ul>
                 <li><a href="/web/logout">{{_('Sign Out')}}</a></li>
                 <li><a id="my-profile" href="/security/logout">My Profile</a></li>

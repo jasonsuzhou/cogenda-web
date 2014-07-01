@@ -1,6 +1,14 @@
 
 $(document).ready(function() {
 
+    if($('#login-username').text().trim()) {
+        $('#login').hide();
+        $('#user-profile-container').show();
+    } else {
+        $('#login').show();
+        $('#user-profile-container').hide();
+    }
+
     $('.bxslider').bxSlider({
         auto: true,
         autoControls: true,
@@ -55,7 +63,7 @@ $(document).ready(function() {
                 $('#loginModal').modal('hide');
                 $('#login').hide();
                 //$('#login-username').text(username);
-                $('#login-username').show();
+                $('#user-profile-container').show();
             });
 
             authenticate.fail(function (resp, status) {

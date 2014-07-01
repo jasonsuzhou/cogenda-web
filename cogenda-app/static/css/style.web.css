@@ -629,7 +629,7 @@ button.close {
 }
 .btn-primary,
 .btn-primary:focus {
-  background-color: #7761a7;
+  background-color: #fff;
   border-color: transparent;
   color: #fff;
 }
@@ -1452,7 +1452,7 @@ textarea.parsley-error {
     color: #fff;
     font-weight: bold;
     text-decoration: none;
-    padding: 6px;
+    padding: 4px;
     display: block;
 }
 #header li a:hover { background-color: #021A1A; }
