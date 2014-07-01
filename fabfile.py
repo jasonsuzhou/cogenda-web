@@ -73,6 +73,7 @@ def migrate_db():
                 run("make db-migrate")
             else:
                 run("make db-init")
+            run("make db-fixture")
     print(red("Auto db migration succeed!"))
 
 
