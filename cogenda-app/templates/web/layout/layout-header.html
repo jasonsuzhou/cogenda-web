@@ -8,10 +8,13 @@
         </li>
         <li>
         <a id="login" style="cursor: pointer;">{{_('Login')}}</a>
-        <div id="login-username" style="cursor: pointer; display: none;">
-            <li><a href="/security/logout">{{_('Sign Out')}}</a></li>
-            <a href="#" class="" data-toggle="dropdown"><span>{{ user[0] }}</span></a>
-        </div>
+        <li class="sub" id="user-profile-container" style="cursor: pointer;">
+            <a id="login-username" href="#" class="" data-toggle="dropdown"><span>{{ user[0] }}</span></a>
+            <ul>
+                <li><a href="/web/logout">{{_('Sign Out')}}</a></li>
+                <li><a id="my-profile" href="/security/logout">My Profile</a></li>
+            </ul>
+        </li>
         </li>
     </div>
 </div>
