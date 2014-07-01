@@ -179,6 +179,6 @@ class BaseController(object):
         #<a href="http://example.com">Here's a link.</a>"""
         message.Body = "Hi Support, \n %s" % msg
         print message.Body
-        sender = Mailer(self.settings.mailer.smtp_server, self.settings.mailer.as_int('smtp_port'), False, self.settings.mailer.smtp_user, 'Nt3Sj7GP9Q')
+        sender = Mailer(self.settings.mailer.smtp_server, self.settings.mailer.as_int('smtp_port'), False, self.settings.mailer.smtp_user, os.environ.get('SMTP_PASSWORD', None))
         sender.send(message)
 
