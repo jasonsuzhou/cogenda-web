@@ -1,43 +1,12 @@
 <div id="navwrap">
-    <!-- Repeats image across page behind navigation -->
     <div id="menu">
         <ul>
-            <li><a href="/">{{_('Home')}}</a>
-            <div id='sub_menu'>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td class="submenu-title" height="30" colspan="3" align="center">home summary</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="center">
-                                <img style="margin-top: -2px" src="/static/images/login-border.png" width="100%">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>&nbsp</td>
-                            <td align="center" valign="top">
-                                <table>
-                                    <tbody>
-                                        <tr><td>Technical Support:</td><td><a href="mailto:support@cogenda.com">support@cogenda.com</a></td></tr>
-                                        <tr><td>Product Sales:</td><td><a href="mailto:sales@cogenda.com">sales@cogenda.com</a></td></tr>
-                                        <tr><td>General Enquiries:</td><td><a href="mailto:contact@cogenda.com">contact@cogenda.com</a></td></tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>&nbsp</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            </li>
-            <li><a href="/article/products">{{_('Products')}}</a>
-            </li>
-            <li><a href="/article/applications">{{_('Applications')}}</a></li>
-            <li><a href="/article/licensing">{{_('Licensing')}}</a></li>
-            <li><a href="/article/downloads">{{_('Downloads')}}</a></li>
-            <li><a href="/article/corporate">{{_('Corporate')}}</a></li>
-            <li><a href="/article/contact-info">{{_('Contact')}}</a></li>
+            {% for nav in nav_infos%}
+                <li>
+                <a href="{{ nav[0] }}">{{ nav[1] }}</a>
+                    {{ nav[2] }}
+                </li>
+             {% endfor %}
         </ul>
 
     </div>

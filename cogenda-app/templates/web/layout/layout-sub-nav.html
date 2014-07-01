@@ -1,0 +1,21 @@
+<div id='sub_menu'>
+    <table>
+        <tbody>
+            <tr>
+                <td class="submenu-title" height="30" colspan="3" align="center">{{ sub_nav_caption }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" align="center">
+                    <img src="/static/images/login-border.png" width="100%">
+                </td>
+            </tr>
+
+            <tr>
+                <td>&nbsp</td>
+                <td align="center" valign="top">
+                    {% block subnav_content %} {% endblock %}
+                </td>
+                <td>&nbsp</td></tr>
+        </tbody>
+    </table>
+</div>

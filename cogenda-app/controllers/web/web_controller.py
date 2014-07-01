@@ -23,7 +23,9 @@ class WebController(BaseController):
     def index(self):
         content = self.render_template('web/article/index.md')
         news = self.render_template('web/news/index.md')
+        nav_infos = self._retrieve_nav_info()
         return self.render_template('web/index.html', 
+                nav_infos=nav_infos,
                 content=content, 
                 news=news, 
                 sidebar=self._retrieve_random_sidebar())
@@ -31,7 +33,9 @@ class WebController(BaseController):
 
     @route('/article/:article_name')
     def serve_article(self, article_name):
+        nav_infos = self._retrieve_nav_info()
         return self.render_template('web/index.html', 
+                nav_infos=nav_infos,
                 content=self._retrieve_optimized_article(article_name), 
                 news=self.render_template('web/news/index.md'), 
                 sidebar=self._retrieve_random_sidebar())
@@ -110,6 +114,22 @@ class WebController(BaseController):
         return self.jsonify_model(user)
 
 
+    def _retrieve_nav_info(self):
+        site_navs = self.settings.web.site_navs
+        sub_nav_captions=self.settings.web.sub_nav_captions.split('|')
+        nav_infos=[]
+        for idx, nav_name in enumerate(site_navs.split('|')):
+            link = '/'
+            if nav_name.lower().strip() != 'home':
+               link = "%sarticle/%s" %(link, nav_name.lower().strip())
+            caption = _(nav_name)
+            sub_nav_caption = sub_nav_captions[idx]
+            print sub_nav_caption
+            subnav_content=self.render_template('web/subnav/subnav-%s.md' %(nav_name.lower()), sub_nav_caption=sub_nav_caption)
+            nav = (link, caption, subnav_content)
+            nav_infos.append(nav)
+        return nav_infos
+
     def _retrieve_random_sidebar(self):
         sidebar_files = self.context.sidebar_files.values()
         sidebar_choice = random.choice(sidebar_files)
@@ -144,6 +164,7 @@ class WebController(BaseController):
 
         return best_choice
 
+
     def jsonify_model(self, model):
         """ Returns a JSON representation of an SQLAlchemy-backed object.
         """
@@ -157,3 +178,4 @@ class WebController(BaseController):
             else:
                 json[col_name] = col_val
         return json
+
