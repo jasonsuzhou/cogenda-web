@@ -118,7 +118,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#login-username").on('click', function (event) {
+    $("#my-profile").on('click', function (event) {
         if (event) event.preventDefault();
         $('#password1').val('');
         $('#password2').val('');

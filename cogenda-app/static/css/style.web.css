@@ -1444,3 +1444,31 @@ textarea.parsley-error {
 .bx-wrapper {
     width: 98%;
 }
+
+#header li.sub:hover > a {
+}
+
+#header li a {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 6px;
+    display: block;
+}
+#header li a:hover { background-color: #021A1A; }
+
+#header li ul {
+    background: #fff;
+    margin-top: -2px;
+    display: none;
+}
+#header li:hover ul {
+    display:block;
+    position:absolute;
+}
+#header li ul {
+    padding: 1px 0 0;
+}
+#header li ul li a:hover {
+    text-decoration: underline;
+}

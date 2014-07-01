@@ -38,6 +38,12 @@ class AuthController(BaseController):
         self.redirect('/admin/login')
 
 
+    @route('/web/logout')
+    def web_logout(self):
+        self.logoff()
+        self.redirect('/')
+
+
     def check_credentials(self, username, password, client):
         user = User.get_by_username(cherrypy.request.db, username)
         """Verifies credentials for username and password."""
