@@ -47,6 +47,10 @@ class AdminController(BaseController):
         user_in_json = self.jsonify_model(user)
         return user_in_json
 
+
+    """
+    TODO: Need to combined load user data 
+    """ 
     @route('/admin/init-user-table-title')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -60,6 +64,9 @@ class AdminController(BaseController):
         return json.dumps({'username': username,'company':company,'email':email,'mobile':mobile,'role':role,'active':active})
 
 
+    """
+    TODO: Need to combined to load resource data 
+    """ 
     @route('/admin/init-resource-table-title')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -94,6 +101,7 @@ class AdminController(BaseController):
         return json.dumps({'sProcessing': sProcessing,'sShowRows':sShowRows,'sZeroRecords':sZeroRecords,'sInfo':sInfo,'sInfoEmpty':sInfoEmpty,
                            'sInfoFiltered':sInfoFiltered,'sInfoPostFix':sInfoPostFix,'sSearch':sSearch,'oPaginate_sFirst':oPaginate_sFirst,
                            'oPaginate_sPrevious':oPaginate_sPrevious,'oPaginate_sNext':oPaginate_sNext,'oPaginate_sLast':oPaginate_sLast})
+
 
 
     @route('/admin/create-user')

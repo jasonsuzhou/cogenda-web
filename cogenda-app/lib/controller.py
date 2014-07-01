@@ -48,10 +48,12 @@ def authenticated(func):
     def actual(*arguments, **kw):
         instance = arguments[0]
         user = instance.user
-        if user and user[0] and user[1] == '3':
-            return func(*arguments, **kw)
-        else:
-            raise cherrypy.HTTPRedirect('/admin/login')
+        if user:
+            if user[1] == 'web':
+                return func(*arguments, **kw)
+            if user[1] == 'admin' and user[2] == '3':
+                return func(*arguments, **kw)
+        raise cherrypy.HTTPRedirect('/admin/login')
 
     actual.__name__ = func.__name__
     actual.__doc__ = func.__doc__
@@ -119,9 +121,9 @@ class BaseController(object):
         except AttributeError:
             return None
 
-    def login(self, user):
+    def login(self, user, from_sys):
         cherrypy.session.regenerate()
-        cherrypy.session['authenticated_user'] = (user.username, user.role, user.resource)
+        cherrypy.session['authenticated_user'] = (user.username, from_sys, user.role, user.resource)
 
     def logoff(self):
         cherrypy.session['authenticated_user'] = None

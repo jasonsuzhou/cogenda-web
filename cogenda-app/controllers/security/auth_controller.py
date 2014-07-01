@@ -9,7 +9,6 @@ class AuthController(BaseController):
 
     @route('/admin/login')
     def index(self):
-        #cherrypy.tools.I18nTool.set_custom_language('en_US') 'zh_CN'
         return self.render_template('admin/security/login-user.html')
 
 
@@ -47,4 +46,4 @@ class AuthController(BaseController):
             return u"Invalid user ID or password."
         if client == 'admin' and user.role != '3':
             return u"You have insufficient privileges."
-        self.login(user)
+        self.login(user, client)
