@@ -230,6 +230,9 @@ class AdminController(BaseController):
             print "==================================="
             print name, sender, gen_pwd
             print "==================================="
+
+            #TODO: Update user password here...
+
         except Exception as err:
             print err
             log.error('Reset password operation error %s' % err)
