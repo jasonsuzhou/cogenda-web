@@ -215,6 +215,7 @@ class AdminController(BaseController):
 
     @route('/admin/reset-password')
     @cherrypy.tools.json_out(content_type='application/json')
+    @authenticated
     def reset_password(self):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
@@ -222,17 +223,15 @@ class AdminController(BaseController):
         name = json_request['username']
         receiver = json_request['email']
         sender = self.settings.mailer.smtp_user
-        length = 8
         chars = string.letters + string.digits
-        gen_pwd = ''.join(choice(chars) for _ in xrange(length))
+        gen_pwd = ''.join(choice(chars) for _ in xrange(8))
+        msg = 'Your password has been reset to: '+ gen_pwd + '.'
         try:
-            self.send_mail('mail/reset_pwd_tpl.html', name, sender, receiver, gen_pwd, 'Reset password')
-            print "==================================="
-            print name, sender, gen_pwd
-            print "==================================="
+            self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
 
-            #TODO: Update user password here...
-
+            #Update user password here...
+            origin_user = User.get_by_username(cherrypy.request.db, name)
+            User.update_user_password(cherrypy.request.db, origin_user, gen_pwd)
         except Exception as err:
             print err
             log.error('Reset password operation error %s' % err)

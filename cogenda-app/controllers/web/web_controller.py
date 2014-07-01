@@ -81,10 +81,7 @@ class WebController(BaseController):
         sender = json_request['email']
         message = json_request['notes']
         try:
-            print "==================================="
-            print name, sender, message
-            print "==================================="
-            self.send_mail('mail/req_account_tpl.html', name, self.settings.mailer.smtp_user, 'kkiiiu@gmail.com', message)
+            self.send_mail('mail/req_account_tpl.html', name, 'Support', self.settings.mailer.smtp_user, 'kkiiiu@gmail.com', message)
         except Exception as err:
             log.error('Send mail operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': 'Request mail send failure with error: %s' %err})

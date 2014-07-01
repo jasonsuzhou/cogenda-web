@@ -609,7 +609,7 @@ function render_resource_type_select(type) {
  */
 function reset_password() {
     $('#processing').show();
-    var username = $('#username').val().trim();
+    var username = $('#name').val().trim();
     var email = $('#email').val().trim();
 
     var user_info = {
