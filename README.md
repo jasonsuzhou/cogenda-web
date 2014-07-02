@@ -24,7 +24,7 @@
     ```
     $ wget -N https://github.com/maxmind/geoip-api-c/releases/download/v1.6.1/GeoIP-1.6.1.tar.gz
     $ tar -xvf GeoIP-1.6.1.tar.gz
-    $ cd GeoIP-1.6.1.tar.gz && ./configure
+    $ cd GeoIP-1.6.1 && ./configure
     $ make 
     $ sudo make install
     ```
