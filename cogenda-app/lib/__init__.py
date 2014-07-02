@@ -4,4 +4,3 @@ from settings import *
 from context import *
 from controller import *
 from server import *
-from auth import *

@@ -14,7 +14,6 @@ import random
 import json
 
 log = logging.getLogger(__name__)
-
 class WebController(BaseController):
 
     LAST_ARTICLE_FLAG='index'
@@ -39,6 +38,20 @@ class WebController(BaseController):
                 content=self._retrieve_optimized_article(article_name), 
                 news=self.render_template('web/news/index.md'), 
                 sidebar=self._retrieve_random_sidebar())
+
+
+    @route('/resource/:type')
+    def load_resource(self, type):
+        remote_ip = cherrypy.request.remote.ip
+        forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
+        country_code = self.context.geoip.country_code_by_addr(forwarded_ip or remote_ip)
+        log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
+        if country_code and country_code == 'CN':
+            log.info('load resource from vendor AliYun OSS')
+        else:
+            log.info('load resource from vendor AWS S3.')
+        #TODO: load resources from SQLite3 database.
+        pass
 
 
     @route('/news/:news_name')

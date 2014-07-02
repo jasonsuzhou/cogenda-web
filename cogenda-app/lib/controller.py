@@ -20,8 +20,9 @@ from urlparse import urlparse
 import logging 
 log = logging.getLogger(__name__)
 
-#Initialization of I18nTool
+#Initialize of I18nTool
 cherrypy.tools.I18nTool = I18nTool(os.path.abspath( __file__ ))
+
 
 __CONTROLLERS__ = []
 __CONTROLLERSDICT__ = {}

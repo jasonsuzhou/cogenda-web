@@ -19,6 +19,7 @@
     $ brew install node
     $ make web-setup
 	```
+> If you failed in setenv command on Mac, please refer: http://www.krishnasunuwar.com.np/2014/02/installation-maxmind-geoip-python-library-in-os-x-10-9-mavericks/ to install GeoIP.
 
 - Start Web Server
 

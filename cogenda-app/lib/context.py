@@ -9,6 +9,7 @@ import cherrypy
 
 from settings import Settings
 from fs import locate, is_file 
+import GeoIP
 
 class Context(object):
     def __init__(self, root_dir):
@@ -25,3 +26,6 @@ class Context(object):
 
     def load_news_files(self, news_dir):
         self.news_files = locate('*.md', root=news_dir)
+
+    def load_geodat(self, geodat_path):
+        self.geoip = GeoIP.open(geodat_path, GeoIP.GEOIP_MEMORY_CACHE) 

@@ -131,9 +131,11 @@ class Server(object):
         article_dir = os.path.join(self.root_dir,  'templates/web/article')
         sidebar_dir = os.path.join(self.root_dir,  'templates/web/sidebar')
         news_dir = os.path.join(self.root_dir,  'templates/web/news')
+        geodat_path = os.path.join(self.root_dir, 'GeoIP.dat')
         self.context.load_article_files(article_dir)
         self.context.load_sidebar_files(sidebar_dir)
         self.context.load_news_files(news_dir)
+        self.context.load_geodat(geodat_path)
 
         """ Init cogenda app logging """
         log_dir = self.context.settings.cogenda_app.log_dir
