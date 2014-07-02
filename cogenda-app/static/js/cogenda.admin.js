@@ -784,11 +784,12 @@ function get_resource_url(url, limit_length) {
 }
 
 function get_resource_status(status) {
-    var resource_status = 'Fail';
-    if(status === '1')
+    var resource_status = 'Failure';
+    if(status === '1'){
         resource_status = 'Successful';
-    else
-        resource_status = 'Fail';
+    }
+    //else
+    //    resource_status = 'Fail';
     return resource_status;
 }
 

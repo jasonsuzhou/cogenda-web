@@ -124,6 +124,10 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
     <td>Suprem4 (binaries of the Stanford release)</td> 
     <td><a href="http://github.com/cogenda/Suprem4">Source Repository at Github</a></td> 
   </tr> 
+  <tr> 
+    <td>Testing AliYun OSS & AWS S3 Downloads</td> 
+    <td><a href="/download/1">Download Testing</a></td> 
+  </tr> 
 </table> 
 <br />
  

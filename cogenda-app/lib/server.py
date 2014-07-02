@@ -60,7 +60,6 @@ class Server(object):
 
     def get_mounts(self, dispatcher):
         static_dir = os.path.join(self.root_dir,  'static')
-        media_dir = os.path.join(self.root_dir,  'media')
 
         conf = {
                 '/': {

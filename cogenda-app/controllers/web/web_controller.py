@@ -61,14 +61,14 @@ class WebController(BaseController):
     @route('/download/:resource_id')
     def serve_downloads(self, resource_id):
         """TODO: web login verification """
-        log.debug("Fetch db resource id: %s" % resource_id);
+        log.debug("Fetch db resource id: %s" % resource_id)
         resource = Resource.get_by_rid(cherrypy.request.db, resource_id)
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
         cd = 'attachment; filename="%s"' % resource.name
         cherrypy.response.headers["Content-Disposition"] = cd
-        resource_url_partial = resource.url.replace('http://', '')
-        cherrypy.response.headers['X-Accel-Redirect'] = '/media/%s' %(resource_url_partial)
-        #cherrypy.response.headers['X-Accel-Redirect'] = '/media/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403359250&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=vdtP0ldMD0yCskxmGcPxuF0oPuM%3D'
+        resource_url_partial = resource.url.replace('http://', '').replace('https://', '')
+        cherrypy.response.headers['X-Accel-Redirect'] = '/resource/%s' %(resource_url_partial)
+        #cherrypy.response.headers['X-Accel-Redirect'] = '/resource/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403359250&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=vdtP0ldMD0yCskxmGcPxuF0oPuM%3D'
 
 
     @route('/user/request-an-account')
