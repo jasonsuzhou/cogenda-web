@@ -25,13 +25,13 @@ script:
 - cd /home/travis/build/cogenda/cogenda-web
 - make web-setup
 - make web
-- echo 'Ready to sync with AWS S3 and AliYun OSS.'
-- pwd && echo $COGENDA_STATIC_HOME
-- git clone --depth=50 --branch=master https://github.com/cogenda/cloud-sync.git /home/travis/build/cogenda/cloud-sync
-- cd /home/travis/build/cogenda/cloud-sync
-- ./setenv.sh
-- source venv/bin/activate
-- make travis
+#- echo 'Ready to sync with AWS S3 and AliYun OSS.'
+#- pwd && echo $COGENDA_STATIC_HOME
+#- git clone --depth=50 --branch=master https://github.com/cogenda/cloud-sync.git /home/travis/build/cogenda/cloud-sync
+#- cd /home/travis/build/cogenda/cloud-sync
+#- ./setenv.sh
+#- source venv/bin/activate
+#- make travis
 after_success:
 - echo 'Ready to deploy to Linode production server.'
 - cd /home/travis/build/cogenda/cogenda-web
