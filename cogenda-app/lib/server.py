@@ -43,6 +43,7 @@ class Server(object):
                 #'server.socket_host': sets.cogenda_app.host,
                 #'server.socket_port': sets.cogenda_app.as_int('port'),
                 #'server.thread_pool': sets.cogenda_app.as_int('threads'),
+                'tools.proxy.on': True,
                 'request.base': sets.cogenda_app.baseurl,
                 'tools.encode.on': True, 
                 'tools.encode.encoding': 'utf-8',
