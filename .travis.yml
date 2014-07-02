@@ -31,7 +31,7 @@ script:
 - cd /home/travis/build/cogenda/cloud-sync
 - ./setenv.sh
 - source venv/bin/activate
-#- make travis
+- make travis
 after_success:
 - echo 'Ready to deploy to Linode production server.'
 - cd /home/travis/build/cogenda/cogenda-web
