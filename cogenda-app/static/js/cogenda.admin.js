@@ -499,10 +499,11 @@ function render_resource_datatable() {
           "sTitle": resourceTableTitle['Uploaded Date'],
           "mData": "uploaded_date"
         },
+        /* Attribute 'Status' is useless
         {
           "sTitle": resourceTableTitle['Status'],
           "mData": "status"
-        },
+        },*/
         {
           "sTitle": resourceTableTitle['Type'],
           "mData": "type"
@@ -769,7 +770,7 @@ function process_user_result(result) {
     for(var i = 0; i < result.length; i++) {
         result[i].active = get_user_status(result[i].active);
         if(result[i].role) result[i].role = get_role_name(result[i].role);
-        if(result[i].status) result[i].status = get_resource_status(result[i].status);
+        // if(result[i].status) result[i].status = get_resource_status(result[i].status);
         if(result[i].type) result[i].type = get_resource_type(result[i].type);
         if(result[i].url) result[i].url = get_resource_url(result[i].url, 50);
     }
@@ -783,6 +784,7 @@ function get_resource_url(url, limit_length) {
     return cut_url;
 }
 
+/*
 function get_resource_status(status) {
     var resource_status = 'Failure';
     if(status === '1'){
@@ -791,14 +793,20 @@ function get_resource_status(status) {
     //else
     //    resource_status = 'Fail';
     return resource_status;
-}
+}*/
 
 function get_resource_type(_type) {
-    var resource_type = 'Restricted';
+    var resource_type = 'Private';
     if(_type == '1')
-        resource_type = 'Public';
-    else
-        resource_type = 'Restricted';
+        resource_type = 'Publications';
+    else if(_type == '2')
+        resource_type = 'Documentation';
+    else if(_type == '3')
+        resource_type = 'Examples';
+    else if(_type == '4')
+        resource_type = 'Software Packages';
+    else if(_type == '5')
+        resource_type = 'Private';
     return resource_type;
 }
 

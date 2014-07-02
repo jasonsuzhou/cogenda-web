@@ -40,18 +40,25 @@ class WebController(BaseController):
                 sidebar=self._retrieve_random_sidebar())
 
 
-    @route('/resource/:type')
-    def load_resource(self, type):
+    @route('/resources')
+    @cherrypy.tools.json_out()
+    def load_resource(self):
         remote_ip = cherrypy.request.remote.ip
         forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
         country_code = self.context.geoip.country_code_by_addr(forwarded_ip or remote_ip)
         log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
+        resources_in_json = []
+        vendar = 'AliYun'
         if country_code and country_code == 'CN':
             log.info('load resource from vendor AliYun OSS')
+            vendar = 'AliYun'
         else:
             log.info('load resource from vendor AWS S3.')
-        #TODO: load resources from SQLite3 database.
-        pass
+            vendar = 'AWS S3'
+        all_resources = Resource.list_resource_by_vendor(cherrypy.request.db, vendar)
+        for resource in all_resources:
+            resources_in_json.append(self.jsonify_model(resource))
+        return resources_in_json
 
 
     @route('/news/:news_name')
@@ -183,7 +190,7 @@ class WebController(BaseController):
         for col in columns:
             col_name = col.name
             col_val = getattr(model, col_name)
-            if col_name == 'created_date' or col_name == 'updated_date':
+            if col_name == 'created_date' or col_name == 'updated_date' or col_name == 'uploaded_date':
                 continue
             else:
                 json[col_name] = col_val

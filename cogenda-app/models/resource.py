@@ -35,6 +35,10 @@ class Resource(Base):
         return session.query(Resource).all()
 
     @staticmethod
+    def list_resource_by_vendor(session, vendor):
+        return session.query(Resource).filter(Resource.vendor==vendor).all()
+
+    @staticmethod
     def get_by_rid(session, rid):
         return session.query(Resource).filter(Resource.id==rid).first()
 

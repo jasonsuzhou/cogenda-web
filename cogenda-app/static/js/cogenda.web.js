@@ -16,13 +16,6 @@ $(document).ready(function() {
         mode: 'fade',
         preloadImages: 'all',
         captions: false
-        //onSlideBefore: function() {
-        //    //alert($e);
-        //    //console.log($e);
-        //    //var cap = $e.attr('title');
-        //    //console.log(cap);
-        //    $('#img_caption').html('xxxxxxxxxxxxxxxxxxx');
-        //},
     });
 
     $("#login").on('click', function (event) {
@@ -180,6 +173,22 @@ $(document).ready(function() {
             });
         }
     });
+
+    // Load download page
+    if(self.location.href.indexOf('article/downloads') > 0) {
+        var resources;
+        $.ajax({
+            type: 'GET',
+            async: false,
+            dataType: 'json',
+            url:'/resources',
+            success: function(data) {
+                //resources = $.parseJSON(data);
+                console.log(data);
+                //TODO: integrate with website
+            }
+        });
+    }
 });
 
 function pop_msg(msg_label, msg, type) {
