@@ -15,6 +15,11 @@ before_script:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
+- echo 'Install GeoIP API C'
+- git clone --branch=master https://github.com/maxmind/geoip-api-c.git  /home/travis/build/cogenda/geoip-api-c
+- cd /home/travis/build/cogenda/geoip-api-c && git checkout v1.6.1
+- ./configure
+- make && make install
 - echo 'Ready to optimize assets files.'
 - cd /home/travis/build/cogenda/cogenda-web
 - make web-setup

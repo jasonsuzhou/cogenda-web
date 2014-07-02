@@ -72,8 +72,7 @@ def migrate_db():
             if exists(COGENDA_DB):
                 run("make db-migrate")
             else:
-                run("make db-init")
-            run("make db-fixture")
+                run("make db-setup")
     print(red("Auto db migration succeed!"))
 
 
