@@ -60,6 +60,7 @@ class Server(object):
 
     def get_mounts(self, dispatcher):
         static_dir = os.path.join(self.root_dir,  'static')
+        media_dir = os.path.join(self.root_dir,  'media')
 
         conf = {
                 '/': {
@@ -67,6 +68,10 @@ class Server(object):
                     'request.dispatch': dispatcher,
                     'tools.db.on': True
                     },
+                '/media': {
+                    'tools.gzip.on': True,
+                    'tools.staticdir.on': True,
+                    'tools.staticdir.dir': 'media'},
                 '/static': {
                     'tools.gzip.on': True,
                     'tools.staticdir.on': True,
