@@ -798,11 +798,11 @@ function get_resource_status(status) {
 function get_resource_type(_type) {
     var resource_type = 'Private';
     if(_type == '1')
-        resource_type = 'Publications';
+        resource_type = 'Public - Publications';
     else if(_type == '2')
-        resource_type = 'Documentation';
+        resource_type = 'Public - Documentation';
     else if(_type == '3')
-        resource_type = 'Examples';
+        resource_type = 'Public - Examples';
     else if(_type == '4')
         resource_type = 'Software Packages';
     else if(_type == '5')

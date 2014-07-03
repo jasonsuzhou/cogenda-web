@@ -141,7 +141,9 @@ class WebController(BaseController):
                link = "%sarticle/%s" %(link, nav_name.lower().strip())
             caption = _(nav_name)
             sub_nav_caption = sub_nav_captions[idx]
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             print sub_nav_caption
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             subnav_content=self.render_template('web/subnav/subnav-%s.md' %(nav_name.lower()), sub_nav_caption=sub_nav_caption)
             nav = (link, caption, subnav_content)
             nav_infos.append(nav)

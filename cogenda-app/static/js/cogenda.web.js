@@ -183,9 +183,11 @@ $(document).ready(function() {
             dataType: 'json',
             url:'/resources',
             success: function(data) {
-                //resources = $.parseJSON(data);
                 console.log(data);
-                //TODO: integrate with website
+                for(var i = 0; i < data.length; i++) {
+                    var tr = "<tr><td >" + JSON.stringify(data[i]) + "</td></tr>";
+                    $('#test tr:last').after(tr);
+                }
             }
         });
     }

@@ -199,8 +199,10 @@ class AdminController(BaseController):
 
          # Get original user by id
         origin_resource = Resource.get_by_rid(cherrypy.request.db, json_resource['id'])
-
         resource = Resource.update_resource(cherrypy.request.db, origin_resource, json_resource['type'], json_resource['active'])
+
+        #Update related resource
+        self.update_related_resource(origin_resource.name, origin_resource.vendor, json_resource['type'], json_resource['active'])
         return self.jsonify_model(resource)
 
 
@@ -260,3 +262,11 @@ class AdminController(BaseController):
         user = User.get_by_username(cherrypy.request.db, username)
         if not (user is None):
             return  u"The username is existing."
+
+    def update_related_resource(self, name, vendor, type, active):
+        another_vendor = 'AliYun'
+        if vendor == 'AliYun':
+            another_vendor = 'AWS S3'
+        related_resource = Resource.get_resource_by_name_vendor(cherrypy.request.db, name, another_vendor)
+        Resource.update_resource(cherrypy.request.db, related_resource, type, active)
+
