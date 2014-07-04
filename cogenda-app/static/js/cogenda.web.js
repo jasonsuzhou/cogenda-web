@@ -183,9 +183,8 @@ $(document).ready(function() {
             dataType: 'json',
             url:'/resources',
             success: function(data) {
-                console.log(data);
                 for(var i = 0; i < data.length; i++) {
-                    var tr = "<tr><td >" + data[i].description + "</td><td ><a href=\"" + data[i].url + "\">" + data[i].name + "</a></td></tr>";
+                    var tr = "<tr><td >" + data[i].description + "</td><td ><a href=\"/download/" + data[i].id + ":" + data[i].type + "\">" + data[i].name + "</a></td></tr>";
                     if(data[i].type === '1')
                         $('#documentations tr:last').after(tr);
                     if(data[i].type === '2')
@@ -194,8 +193,10 @@ $(document).ready(function() {
                         $('#brochures tr:last').after(tr);
                     if(data[i].type === '4')
                         $('#installers tr:last').after(tr);
-                    if(data[i].type === '5')
+                    if(data[i].type === '5') {
                         $('#private tr:last').after(tr);
+                        $('#private-area').show();
+                    }
                 }
             }
         });

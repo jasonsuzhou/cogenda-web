@@ -55,13 +55,10 @@ class WebController(BaseController):
         else:
             log.info('load resource from vendor AWS S3.')
             vendar = 'AWS S3'
+        #if self.user[]
         all_resources = Resource.list_resource_by_vendor(cherrypy.request.db, vendar)
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
-
-            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-            print self.jsonify_model(resource)
-            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
         return resources_in_json
 
 
@@ -82,8 +79,19 @@ class WebController(BaseController):
         return self.serve_article(self.LAST_ARTICLE_FLAG)
 
 
-    @route('/download/:resource_id')
-    def serve_downloads(self, resource_id):
+    @route('/download/:param')
+    def serve_downloads(self, param):
+        resource_id = param.split(":")[0]
+        resource_type = param.split(":")[1]
+        print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}" + resource_id, resource_type
+        print self.user
+        if resource_type == '4' or resource_type == '5':
+            print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}1"
+            if self.user is None:
+                print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}2"
+                cherrypy.HTTPRedirect('/admin/login')
+                return
+        print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}3"
         """TODO: web login verification """
         log.debug("Fetch db resource id: %s" % resource_id)
         resource = Resource.get_by_rid(cherrypy.request.db, resource_id)

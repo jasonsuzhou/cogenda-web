@@ -5,22 +5,34 @@
 Downloads
 --------
 
-<br />
+{% endmarkdown2 %}
+
+<br /><br />
+
+<div id="private-area" style="display: none;">
+
+{% markdown2 %}
 
 #### Download Private
+
+{% endmarkdown2 %}
+
 <table id="private" width="580" border="0">
-<tr>
-    <td ></td>
-  </tr>
+    <tr>
+        <td width="300"></td>
+        <td></td>
+    </tr>
 </table>
+<br /><br />
+</div>
 
-<br />
-
+{% markdown2 %}
 #### Download Publications
 <table id="publications" width="580" border="0">
-<tr>
-    <td ></td>
-  </tr>
+    <tr>
+        <td width="300"></td>
+        <td></td>
+    </tr>
 </table>
 
 <br />
@@ -30,7 +42,7 @@ Downloads
 ##### Installers (Standard Edition)
 <table id="installers" width="580" border="0">
   <tr>
-    <td ></td>
+    <td width="300"></td>
     <td> </td>
   </tr>
   <tr> 
@@ -79,7 +91,7 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 
 <table id="documentations" width="580" border="0">
   <tr> 
-    <td>Genius User Guide</td> 
+    <td width="300">Genius User Guide</td>
     <td><a href="../downloads/docs/genius_ug_en.pdf">genius_ug_en.pdf</a></td> 
   </tr> 
   <tr> 
@@ -105,7 +117,7 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 
 <table id="brochures" width="580" border="0">
   <tr> 
-    <td>VisualTCAD</td> 
+    <td width="300">VisualTCAD</td>
     <td><a href="../downloads/pubs/VisualTCAD.pdf">VisualTCAD.pdf</a></td> 
   </tr> 
   <tr> 
