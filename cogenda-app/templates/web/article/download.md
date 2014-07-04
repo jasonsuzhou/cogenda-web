@@ -7,8 +7,17 @@ Downloads
 
 <br />
 
-#### Download Test
-<table id="test" width="580" border="0">
+#### Download Private
+<table id="private" width="580" border="0">
+<tr>
+    <td ></td>
+  </tr>
+</table>
+
+<br />
+
+#### Download Publications
+<table id="publications" width="580" border="0">
 <tr>
     <td ></td>
   </tr>
@@ -19,7 +28,7 @@ Downloads
 #### Cogenda TCAD Software
 ##### *[Release Notes](./Release-Notes-VisualTCAD#174-14)* | *[System Requirements](./System-Requirements)*
 ##### Installers (Standard Edition)
-<table width="580" border="0">
+<table id="installers" width="580" border="0">
   <tr>
     <td ></td>
     <td> </td>
@@ -68,7 +77,7 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 
 #### Documentation
 
-<table width="580" border="0"> 
+<table id="documentations" width="580" border="0">
   <tr> 
     <td>Genius User Guide</td> 
     <td><a href="../downloads/docs/genius_ug_en.pdf">genius_ug_en.pdf</a></td> 
@@ -94,7 +103,7 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 
 #### Brochures
 
-<table width="580" border="0"> 
+<table id="brochures" width="580" border="0">
   <tr> 
     <td>VisualTCAD</td> 
     <td><a href="../downloads/pubs/VisualTCAD.pdf">VisualTCAD.pdf</a></td> 

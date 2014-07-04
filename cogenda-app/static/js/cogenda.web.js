@@ -185,8 +185,17 @@ $(document).ready(function() {
             success: function(data) {
                 console.log(data);
                 for(var i = 0; i < data.length; i++) {
-                    var tr = "<tr><td >" + JSON.stringify(data[i]) + "</td></tr>";
-                    $('#test tr:last').after(tr);
+                    var tr = "<tr><td >" + data[i].name + "</td><td ><a href=\"" + data[i].url + "\">" + data[i].name + "</a></td></tr>";
+                    if(data[i].type === '1')
+                        $('#documentations tr:last').after(tr);
+                    if(data[i].type === '2')
+                        $('#publications tr:last').after(tr);
+                    if(data[i].type === '3')
+                        $('#brochures tr:last').after(tr);
+                    if(data[i].type === '4')
+                        $('#installers tr:last').after(tr);
+                    if(data[i].type === '5')
+                        $('#private tr:last').after(tr);
                 }
             }
         });
