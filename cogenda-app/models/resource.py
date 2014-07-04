@@ -12,6 +12,7 @@ class Resource(Base):
     __tablename__ = 'Resources'
     id = Column(Integer, nullable=False, primary_key=True)
     name = Column(String(400))
+    description = Column(String(400))
     type = Column(String(2))
     vendor = Column(String(20))
     url = Column(String(1000))
@@ -20,9 +21,10 @@ class Resource(Base):
     uploaded_date = Column(DateTime, default=datetime.now)
     active = Column(Boolean, default=True)
 
-    def __init__(self, name, type, vendor, url, status, uploaded_date=datetime.now(), active=True):
+    def __init__(self, name, description, type, vendor, url, status, uploaded_date=datetime.now(), active=True):
         Base.__init__(self)
         self.name = name
+        self.description = description
         self.type = type
         self.vendor = vendor
         self.url = url
@@ -48,7 +50,9 @@ class Resource(Base):
     
 
     @staticmethod
-    def update_resource(session, resource, type, active):
+    def update_resource(session, resource, desc, type, active):
+        if resource.description != desc:
+            resource.description = desc
         if resource.type != type:
             resource.type = type
         if resource.active != active:

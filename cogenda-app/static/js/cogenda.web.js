@@ -185,7 +185,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.log(data);
                 for(var i = 0; i < data.length; i++) {
-                    var tr = "<tr><td >" + data[i].name + "</td><td ><a href=\"" + data[i].url + "\">" + data[i].name + "</a></td></tr>";
+                    var tr = "<tr><td >" + data[i].description + "</td><td ><a href=\"" + data[i].url + "\">" + data[i].name + "</a></td></tr>";
                     if(data[i].type === '1')
                         $('#documentations tr:last').after(tr);
                     if(data[i].type === '2')

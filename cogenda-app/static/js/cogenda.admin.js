@@ -487,6 +487,10 @@ function render_resource_datatable() {
           "mData": "name"
         },
         {
+          "sTitle": resourceTableTitle['Description'],
+          "mData": "description"
+        },
+        {
           "sTitle": resourceTableTitle['Vendor'],
           "mData": "vendor"
         },
@@ -537,11 +541,13 @@ function render_resource_datatable() {
 function update_resource() {
     // Prepare resource data from UI
     var rid = $('#rid').val().trim();
+    var r_desc = $('#r_desc').val().trim();
     var r_type = $('#r_type').val().trim();
 
     // Assemble resource
     var resource = {
         id: rid,
+        desc: r_desc,
         type: r_type,
         active: ($('.switch-on') && $('.switch-on').length > 0) ? 1 : 0
     };
@@ -581,6 +587,7 @@ function edit_resource(row) {
     });
     fetch_source.done(function(result) {
         $('#rid').val(result.id);
+        $('#r_desc').val(result.description);
         $('#r_name').text(result.name);
         $('#r_vendor').text(result.vendor);
 

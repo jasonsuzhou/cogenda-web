@@ -58,6 +58,10 @@ class WebController(BaseController):
         all_resources = Resource.list_resource_by_vendor(cherrypy.request.db, vendar)
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
+
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+            print self.jsonify_model(resource)
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
         return resources_in_json
 
 
@@ -141,9 +145,6 @@ class WebController(BaseController):
                link = "%sarticle/%s" %(link, nav_name.lower().strip())
             caption = _(nav_name)
             sub_nav_caption = sub_nav_captions[idx]
-            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-            print sub_nav_caption
-            print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             subnav_content=self.render_template('web/subnav/subnav-%s.md' %(nav_name.lower()), sub_nav_caption=sub_nav_caption)
             nav = (link, caption, subnav_content)
             nav_infos.append(nav)
