@@ -36,7 +36,7 @@ class WSController(BaseController):
         try:
             resource = Resource.get_resource_by_name_vendor(session, name, vendor)
             if not resource:
-                resource = Resource(name, type, vendor, url, status)
+                resource = Resource(name, desc, type, vendor, url, status)
                 session.add(resource)
             else:
                 resource.name = name
@@ -44,6 +44,7 @@ class WSController(BaseController):
                 resource.status = status
                 resource.url = url
                 resource.type = type
+                resource.description = desc
                 session.commit()
         except DBAPIError, err:
             log.error('Database operation error %s' % err)

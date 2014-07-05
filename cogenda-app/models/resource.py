@@ -20,7 +20,7 @@ class Resource(Base):
     uploaded_date = Column(DateTime, default=datetime.now)
     active = Column(Boolean, default=True)
 
-    def __init__(self, name, description, type, vendor, url, status, desc, uploaded_date=datetime.now(), active=True):
+    def __init__(self, name, description, type, vendor, url, status, uploaded_date=datetime.now(), active=True):
         Base.__init__(self)
         self.name = name
         self.description = description
