@@ -77,7 +77,8 @@ class AdminController(BaseController):
         uploaded_date = _('Uploaded Date')
         type = _('Type')
         active = _('Active')
-        return json.dumps({'Resource Name': resource_name,'Vendor':vendor,'URL':url,'Uploaded Date':uploaded_date, 'Type':type,'Active':active})
+        description=_('Description')
+        return json.dumps({'Resource Name': resource_name, 'Description':description, 'Vendor':vendor, 'URL':url, 'Uploaded Date':uploaded_date, 'Type':type, 'Active':active})
 
 
     @route('/admin/init-table-language')
