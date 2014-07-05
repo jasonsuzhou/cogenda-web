@@ -28,7 +28,6 @@ class Resource(Base):
         self.vendor = vendor
         self.url = url
         self.status = status
-        self.description = desc
         self.uploaded_date = uploaded_date
         self.active = active
 

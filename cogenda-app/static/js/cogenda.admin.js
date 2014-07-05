@@ -811,8 +811,10 @@ function get_resource_type(_type) {
     else if(_type == '3')
         resource_type = 'Public - Examples';
     else if(_type == '4')
-        resource_type = 'Software Packages';
-    else if(_type == '5')
+        resource_type = 'AllUser - Software Packages';
+    else if(_type =='5')
+        resource_type = 'AllUser - Installer';
+    else if(_type == '6')
         resource_type = 'Private';
     return resource_type;
 }
