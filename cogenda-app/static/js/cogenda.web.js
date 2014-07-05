@@ -184,16 +184,16 @@ $(document).ready(function() {
             url:'/resources',
             success: function(data) {
                 for(var i = 0; i < data.length; i++) {
-                    var tr = "<tr><td >" + data[i].description + "</td><td ><a href=\"/download/" + data[i].id + ":" + data[i].type + "\">" + data[i].name + "</a></td></tr>";
+                    var tr = "<tr><td >" + data[i].description + "</td><td ><a class=\"resource-class\">" + data[i].name + "<input type=\"hidden\" value=\"" + data[i].id + "\"></a></td></tr>";
                     if(data[i].type === '1')
                         $('#documentations tr:last').after(tr);
                     if(data[i].type === '2')
                         $('#publications tr:last').after(tr);
                     if(data[i].type === '3')
                         $('#brochures tr:last').after(tr);
-                    if(data[i].type === '4')
+                    if(data[i].type === '4' || data[i].type === '5')
                         $('#installers tr:last').after(tr);
-                    if(data[i].type === '5') {
+                    if(data[i].type === '6') {
                         $('#private tr:last').after(tr);
                         $('#private-area').show();
                     }
@@ -201,6 +201,25 @@ $(document).ready(function() {
             }
         });
     }
+
+    $('.resource-class').on('click', function (event) {
+        if (event) event.preventDefault();
+        var r_id = event.target.children[0].value;
+        var checkResource = $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": "/check-resource/" + r_id
+        });
+
+        checkResource.done(function (resp) {
+            var result = JSON.parse(resp);
+            if (result.auth_status) {
+                self.location = result.link;
+            } else {
+                $('#loginModal').modal('show');
+            }
+        });
+    });
 });
 
 function pop_msg(msg_label, msg, type) {

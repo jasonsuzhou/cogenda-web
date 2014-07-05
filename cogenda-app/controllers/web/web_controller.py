@@ -62,6 +62,18 @@ class WebController(BaseController):
         return resources_in_json
 
 
+    @route('/check-resource/:rid')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def check_resource(self, rid):
+        resource = Resource.get_by_rid(cherrypy.request.db, rid)
+        if resource.type == '4' or resource.type == '5' or resource.type == '6':
+            if self.user is None:
+                return json.dumps({'auth_status': False})
+            else:
+                return json.dumps({'auth_status': True, 'link': '/download/'+rid})
+        return json.dumps({'auth_status': True, 'link': '/download/'+rid})
+
+
     @route('/news/:news_name')
     def serve_news(self, news_name):
         pass
@@ -79,19 +91,8 @@ class WebController(BaseController):
         return self.serve_article(self.LAST_ARTICLE_FLAG)
 
 
-    @route('/download/:param')
-    def serve_downloads(self, param):
-        resource_id = param.split(":")[0]
-        resource_type = param.split(":")[1]
-        print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}" + resource_id, resource_type
-        print self.user
-        if resource_type == '4' or resource_type == '5':
-            print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}1"
-            if self.user is None:
-                print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}2"
-                cherrypy.HTTPRedirect('/admin/login')
-                return
-        print "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}3"
+    @route('/download/:resource_id')
+    def serve_downloads(self, resource_id):
         """TODO: web login verification """
         log.debug("Fetch db resource id: %s" % resource_id)
         resource = Resource.get_by_rid(cherrypy.request.db, resource_id)
