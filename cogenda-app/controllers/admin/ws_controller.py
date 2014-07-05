@@ -28,7 +28,6 @@ class WSController(BaseController):
         payload = json.loads(rawbody)
         name = payload['filename']
         vendor = payload['server']
-        status = payload['status']
         url = payload['url']
         type = payload['type']
         desc = payload['desc']
@@ -36,12 +35,11 @@ class WSController(BaseController):
         try:
             resource = Resource.get_resource_by_name_vendor(session, name, vendor)
             if not resource:
-                resource = Resource(name, desc, type, vendor, url, status)
+                resource = Resource(name, desc, type, vendor, url)
                 session.add(resource)
             else:
                 resource.name = name
                 resource.vendor = vendor
-                resource.status = status
                 resource.url = url
                 resource.type = type
                 resource.description = desc
