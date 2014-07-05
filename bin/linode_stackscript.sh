@@ -9,6 +9,7 @@
 # <UDF name="deploy_password" Label="Password for deployment user" />
 # <UDF name="deploy_sshkey" Label="Deployment user public ssh key" />
 # <UDF name="smtp_password" Label="Cogenda mail server password" />
+# <UDF name="cogenda_shared_secret" Label="Cogenda webserice HMAC based shared key" default="cogenda-ws-secret"/>
 # <UDF name="ssh_port" Label="SSH Port" default="22" />
 # <UDF name="notify_email" Label="Send Finish Notification To" example="Email address to send notification to when finished.
 
@@ -23,6 +24,7 @@ function log {
 }
 
 export SMTP_PASSWORD="$SMTP_PASSWORD"
+export COGENDA_SHARED_SECRET="$COGENDA_SHARED_SECRET"
 
 function create_deployment_user {
   system_add_user $DEPLOY_USER $DEPLOY_PASSWORD "users,sudo"
