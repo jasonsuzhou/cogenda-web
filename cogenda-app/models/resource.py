@@ -16,12 +16,11 @@ class Resource(Base):
     type = Column(String(2))
     vendor = Column(String(20))
     url = Column(String(1000))
-    #TODO: inconsistent with database type. Should alter to Boolean
     status = Column(Boolean, default=True)
     uploaded_date = Column(DateTime, default=datetime.now)
     active = Column(Boolean, default=True)
 
-    def __init__(self, name, description, type, vendor, url, status, uploaded_date=datetime.now(), active=True):
+    def __init__(self, name, description, type, vendor, url, status, desc, uploaded_date=datetime.now(), active=True):
         Base.__init__(self)
         self.name = name
         self.description = description
@@ -29,6 +28,7 @@ class Resource(Base):
         self.vendor = vendor
         self.url = url
         self.status = status
+        self.description = desc
         self.uploaded_date = uploaded_date
         self.active = active
 

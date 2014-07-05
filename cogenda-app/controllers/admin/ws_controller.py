@@ -31,6 +31,7 @@ class WSController(BaseController):
         status = payload['status']
         url = payload['url']
         type = payload['type']
+        desc = payload['desc']
         session = cherrypy.request.db
         try:
             resource = Resource.get_resource_by_name_vendor(session, name, vendor)
