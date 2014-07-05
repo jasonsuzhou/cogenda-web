@@ -62,17 +62,17 @@ class WebController(BaseController):
             if resource.type == '6':
                 if self.user:
                     # Resource
-                    if self.user[1] == 1:
+                    if self.user[2] == '1':
                         continue
                     # Resource Owner
-                    elif self.user[1] == 2:
+                    elif self.user[2] == '2':
                         p1 = "," + str(resource.id) + ","
                         p2 = ":" + str(resource.id) + ","
                         p3 = "," + str(resource.id) + ":"
                         if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
                             continue
                     # Administrator
-                    elif self.user and self.user[1] == 3:
+                    elif self.user and self.user[2] == '3':
                         resources_in_json.append(self.jsonify_model(resource))
                 else:
                     continue
