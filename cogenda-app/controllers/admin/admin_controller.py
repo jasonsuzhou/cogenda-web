@@ -183,8 +183,20 @@ class AdminController(BaseController):
     def resource_mgmt_data(self):
         all_resources = Resource.list(cherrypy.request.db)
         resources_in_json = []
+
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
+
+        for i in range(len(resources_in_json)):
+            if i == len(resources_in_json):
+                break
+            resource = resources_in_json[i]
+            if i != len(resources_in_json) - 1:
+                next_resource = resources_in_json[i + 1]
+                if resource['name'] == next_resource['name']:
+                    resource['id'] = resource['id'] + ":" + next_resource['id']
+                    resource['vendor'] = resource['vendor'] + "/" + next_resource['vendor']
+                    resources_in_json.remove(next_resource)
         return resources_in_json
 
 
@@ -196,22 +208,34 @@ class AdminController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_resource = json.loads(rawbody)
 
-         # Get original user by id
-        origin_resource = Resource.get_by_rid(cherrypy.request.db, json_resource['id'])
-        resource = Resource.update_resource(cherrypy.request.db, origin_resource, json_resource['desc'], json_resource['type'], json_resource['active'])
-
-        #Update related resource
-        self.update_related_resource(origin_resource.name, origin_resource.vendor, json_resource['desc'], json_resource['type'], json_resource['active'])
-        return self.jsonify_model(resource)
+        ids = []
+        resources_in_json = []
+        if ":" in json_resource['id']:
+            ids = json_resource['id'].split(":")
+        else:
+            ids.append(json_resource['id'])
+        # Get resources by ids
+        all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
+        for resource in all_resources:
+            resource = Resource.update_resource(cherrypy.request.db, resource, json_resource['desc'], json_resource['type'], json_resource['active'])
+            resources_in_json.append(self.jsonify_model(resource))
+        return resources_in_json
 
 
     @route('/admin/fetch-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def get_resource_by_id(self, rid):
-        resource = Resource.get_by_rid(cherrypy.request.db, rid)
-        resource_in_json = self.jsonify_model(resource)
-        return resource_in_json
+        ids = []
+        resources_in_json = []
+        if ":" in rid:
+            ids = rid.split(":")
+        else:
+            ids.append(rid)
+        all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
+        for resource in all_resources:
+            resources_in_json.append(self.jsonify_model(resource))
+        return resources_in_json
 
 
     @route('/admin/reset-password')
@@ -252,6 +276,8 @@ class AdminController(BaseController):
                 continue
             elif col_name == 'uploaded_date':
                 json[col_name] = datetime.strftime(col_val, '%Y-%m-%d %H:%M:%S')
+            elif col_name == 'id':
+                json[col_name] = str(col_val)
             else:
                 json[col_name] = col_val
         return json
@@ -261,11 +287,3 @@ class AdminController(BaseController):
         user = User.get_by_username(cherrypy.request.db, username)
         if not (user is None):
             return  u"The username is existing."
-
-    def update_related_resource(self, name, vendor, desc , type, active):
-        another_vendor = 'AliYun'
-        if vendor == 'AliYun':
-            another_vendor = 'AWS S3'
-        related_resource = Resource.get_resource_by_name_vendor(cherrypy.request.db, name, another_vendor)
-        Resource.update_resource(cherrypy.request.db, related_resource, desc, type, active)
-

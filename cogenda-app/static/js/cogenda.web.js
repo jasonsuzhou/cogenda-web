@@ -184,7 +184,7 @@ $(document).ready(function() {
             url:'/resources',
             success: function(data) {
                 for(var i = 0; i < data.length; i++) {
-                    var tr = "<tr><td >" + data[i].description + "</td><td ><a class=\"resource-class\">" + data[i].name + "<input type=\"hidden\" value=\"" + data[i].id + "\"></a></td></tr>";
+                    var tr = "<tr><td >" + data[i].description + "</td><td ><a style=\"cursor: pointer;\" class=\"resource-class\">" + data[i].name + "<input type=\"hidden\" value=\"" + data[i].id + "\"></a></td></tr>";
                     if(data[i].type === '1')
                         $('#documentations tr:last').after(tr);
                     if(data[i].type === '2')

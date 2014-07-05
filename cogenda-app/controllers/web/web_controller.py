@@ -55,9 +55,27 @@ class WebController(BaseController):
         else:
             log.info('load resource from vendor AWS S3.')
             vendar = 'AWS S3'
-        #if self.user[]
+        if self.user:
+            restricted_res = "," + self.user[3] + ","
         all_resources = Resource.list_resource_by_vendor(cherrypy.request.db, vendar)
         for resource in all_resources:
+            if resource.type == '6':
+                if self.user:
+                    # Resource
+                    if self.user[1] == 1:
+                        continue
+                    # Resource Owner
+                    elif self.user[1] == 2:
+                        p1 = "," + str(resource.id) + ","
+                        p2 = ":" + str(resource.id) + ","
+                        p3 = "," + str(resource.id) + ":"
+                        if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
+                            continue
+                    # Administrator
+                    elif self.user and self.user[1] == 3:
+                        resources_in_json.append(self.jsonify_model(resource))
+                else:
+                    continue
             resources_in_json.append(self.jsonify_model(resource))
         return resources_in_json
 
@@ -93,7 +111,6 @@ class WebController(BaseController):
 
     @route('/download/:resource_id')
     def serve_downloads(self, resource_id):
-        """TODO: web login verification """
         log.debug("Fetch db resource id: %s" % resource_id)
         resource = Resource.get_by_rid(cherrypy.request.db, resource_id)
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"

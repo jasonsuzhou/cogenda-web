@@ -31,7 +31,7 @@ class Resource(Base):
 
     @staticmethod
     def list(session):
-        return session.query(Resource).all()
+        return session.query(Resource).order_by(Resource.name.desc(), Resource.id.desc()).all()
 
     @staticmethod
     def list_resource_by_vendor(session, vendor):
@@ -40,6 +40,10 @@ class Resource(Base):
     @staticmethod
     def get_by_rid(session, rid):
         return session.query(Resource).filter(Resource.id==rid).first()
+
+    @staticmethod
+    def get_by_rids(session, rids):
+        return session.query(Resource).filter(Resource.id.in_(rids)).all()
 
     @staticmethod
     def get_resource_by_name_vendor(session, name, vendor):

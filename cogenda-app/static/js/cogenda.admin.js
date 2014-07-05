@@ -494,11 +494,12 @@ function render_resource_datatable() {
           "sTitle": resourceTableTitle['Vendor'],
           "mData": "vendor"
         },
+        /*
         {
           "sTitle": resourceTableTitle['URL'],
           "mData": "url",
           "sWidth": "30%"
-        },
+        },*/
         {
           "sTitle": resourceTableTitle['Uploaded Date'],
           "mData": "uploaded_date"
@@ -555,7 +556,7 @@ function update_resource() {
         type: "POST",
         url: '/admin/update-resource',
         success: function(result) {
-            if(result.id) {
+            if(result.length > 0 && result[0].id) {
                 render_resource_datatable();
                 $('#resource-status-modal').modal('hide');
             } else {
@@ -581,18 +582,29 @@ function edit_resource(row) {
         "url": '/admin/fetch-resource/' + selected_row_id
     });
     fetch_source.done(function(result) {
-        $('#rid').val(result.id);
-        $('#r_desc').val(result.description);
-        $('#r_name').text(result.name);
-        $('#r_vendor').text(result.vendor);
+        if(result.length === 1) {
+            $('#rid').val(result[0].id);
+            $('#r_vendor_2').text('');
+            $('#r_url_2').hide();
+            $('#r_url_2').attr('href', '');
+            $('#r_url_2').attr('title', '');
+        } else if(result.length === 2) {
+            $('#rid').val(result[0].id + ":" + result[1].id);
+            $('#r_vendor_2').text(result[1].vendor);
+            $('#r_url_2').show();
+            $('#r_url_2').attr('href', result[1].url);
+            $('#r_url_2').attr('title', result[1].url);
+        }
 
-        var url =  result.url;
-        $('#r_url').text(get_resource_url(url, 30));
-        $('#r_url').attr('href', url);
-        $('#r_url').attr('title', url);
+        $('#r_desc').val(result[0].description);
+        $('#r_name').text(result[0].name);
+        $('#r_vendor_1').text(result[0].vendor);
 
-        render_resource_type_select(result.type);
-        render_active_switch(result.active);
+        $('#r_url_1').attr('href', result[0].url);
+        $('#r_url_1').attr('title', result[0].url);
+
+        render_resource_type_select(result[0].type);
+        render_active_switch(result[0].active);
 
         $('#resource-status-modal').modal('show');
     });
@@ -773,16 +785,8 @@ function process_user_result(result) {
         result[i].active = get_user_status(result[i].active);
         if(result[i].role) result[i].role = get_role_name(result[i].role);
         if(result[i].type) result[i].type = get_resource_type(result[i].type);
-        if(result[i].url) result[i].url = get_resource_url(result[i].url, 50);
     }
     return result;
-}
-
-function get_resource_url(url, limit_length) {
-    var cut_url = url;
-    if(url.length >= limit_length)
-        cut_url = url.substring(0, limit_length) + "..."
-    return cut_url;
 }
 
 function get_resource_type(_type) {
