@@ -31,11 +31,15 @@ class Resource(Base):
 
     @staticmethod
     def list(session):
-        return session.query(Resource).order_by(Resource.name.desc(), Resource.id.desc()).all()
+        return session.query(Resource).filter(Resource.active==True).order_by(Resource.name.desc(), Resource.id.desc()).all()
 
     @staticmethod
     def list_resource_by_vendor(session, vendor):
         return session.query(Resource).filter(Resource.vendor==vendor).all()
+
+    @staticmethod
+    def list_resource_by_type(session, type):
+        return session.query(Resource).filter(Resource.type==type).all()
 
     @staticmethod
     def get_by_rid(session, rid):

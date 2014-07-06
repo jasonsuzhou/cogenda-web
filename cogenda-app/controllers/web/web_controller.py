@@ -44,45 +44,14 @@ class WebController(BaseController):
     @route('/resources')
     @cherrypy.tools.json_out()
     def load_resource(self):
-        remote_ip = cherrypy.request.remote.ip
-        forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
-        match = geolite2.lookup(forwarded_ip or remote_ip)
-        country_code = None 
-        if match:
-            country_code = match.country
-            log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
-        resources_in_json = []
-        vendar = 'AliYun'
-        if country_code and country_code == 'CN':
-            log.info('load resource from vendor AliYun OSS')
-            vendar = 'AliYun'
-        else:
-            log.info('load resource from vendor AWS S3.')
-            vendar = 'AWS S3'
-        if self.user:
-            restricted_res = "," + self.user[3] + ","
-        all_resources = Resource.list_resource_by_vendor(cherrypy.request.db, vendar)
-        for resource in all_resources:
-            if resource.type == '6':
-                if self.user:
-                    # Resource
-                    if self.user[2] == '1':
-                        continue
-                    # Resource Owner
-                    elif self.user[2] == '2':
-                        p1 = "," + str(resource.id) + ","
-                        p2 = ":" + str(resource.id) + ","
-                        p3 = "," + str(resource.id) + ":"
-                        if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
-                            continue
-                    # Administrator
-                    elif self.user and self.user[2] == '3':
-                        resources_in_json.append(self.jsonify_model(resource))
-                else:
-                    continue
-            resources_in_json.append(self.jsonify_model(resource))
-        return resources_in_json
+        all_resources = Resource.list(cherrypy.request.db)
+        return self.filter_resources_by_vendor(all_resources)
 
+    @route('/private-resources')
+    @cherrypy.tools.json_out()
+    def load_private_resource(self):
+        private_resources = Resource.list_resource_by_type(cherrypy.request.db, '6')
+        return self.filter_resources_by_vendor(private_resources)
 
     @route('/check-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -90,7 +59,7 @@ class WebController(BaseController):
         resource = Resource.get_by_rid(cherrypy.request.db, rid)
         if resource.type == '4' or resource.type == '5' or resource.type == '6':
             if self.user is None:
-                return json.dumps({'auth_status': False})
+                return json.dumps({'auth_status': False, 'msg': 'This kind resource requires your login.'})
             else:
                 return json.dumps({'auth_status': True, 'link': '/download/'+rid})
         return json.dumps({'auth_status': True, 'link': '/download/'+rid})
@@ -229,3 +198,64 @@ class WebController(BaseController):
                 json[col_name] = col_val
         return json
 
+    def auth_private_resource(self, resource, resources_in_json):
+        restricted_res = "," + self.user[3] + ","
+        # Resource
+        if self.user[2] == '1':
+            return
+        # Resource Owner
+        elif self.user[2] == '2':
+            p1 = "," + str(resource.id) + ","
+            p2 = ":" + str(resource.id) + ","
+            p3 = "," + str(resource.id) + ":"
+            if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
+                return
+            else:
+                resources_in_json.append(self.jsonify_model(resource))
+        # Administrator
+        elif self.user[2] == '3':
+            resources_in_json.append(self.jsonify_model(resource))
+
+    def gen_vendor(self):
+        remote_ip = cherrypy.request.remote.ip
+        forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
+        match = geolite2.lookup(forwarded_ip or remote_ip)
+        country_code = None
+        if match:
+            country_code = match.country
+            log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
+
+        vendor = 'AliYun'
+        if country_code and country_code == 'CN':
+            log.info('load resource from vendor AliYun OSS')
+            vendor = 'AliYun'
+        else:
+            log.info('load resource from vendor AWS S3.')
+            vendor = 'AWS S3'
+        return vendor
+
+    def filter_resources_by_vendor(self, all_resources):
+        vendar = self.gen_vendor()
+        resources_in_json = []
+        for i in range(len(all_resources)):
+            if i == len(all_resources):
+                break
+            _resource = resource = all_resources[i]
+            if i != len(all_resources) - 1:
+                next_resource = all_resources[i + 1]
+                if resource.name == next_resource.name:
+                    if resource.vendor != vendar:
+                        _resource = next_resource
+                        all_resources.remove(resource)
+                    else:
+                        all_resources.remove(next_resource)
+            # Processing picked resource
+            if _resource.type == '6':
+                if self.user:
+                    self.auth_private_resource(_resource, resources_in_json)
+                else:
+                    continue
+            # Other type resource: 1, 2, 3, 4, 5
+            else:
+                resources_in_json.append(self.jsonify_model(_resource))
+        return resources_in_json

@@ -49,14 +49,18 @@ $(document).ready(function() {
             authenticate.done(function (resp) {
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
-                    $('#user-login-msg').text(result.msg);
-                    $('#user-login-msg-container').show();
+                    pop_msg('user-login-msg', result.msg, 0);
                     return;
                 }
                 $('#loginModal').modal('hide');
                 $('#login').hide();
                 $('#login-username').text(username);
                 $('#user-profile-container').show();
+
+                // If @ download page
+                if(self.location.href.indexOf('article/downloads') > 0) {
+                    self.location = "/article/downloads";
+                }
             });
         } else {
             console.log('Client side validate error.');
@@ -176,7 +180,6 @@ $(document).ready(function() {
 
     // Load download page
     if(self.location.href.indexOf('article/downloads') > 0) {
-        var resources;
         $.ajax({
             type: 'GET',
             async: false,
@@ -216,6 +219,7 @@ $(document).ready(function() {
             if (result.auth_status) {
                 self.location = result.link;
             } else {
+                pop_msg('user-login-msg', result.msg, 1);
                 $('#loginModal').modal('show');
             }
         });
