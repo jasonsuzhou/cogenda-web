@@ -12,6 +12,7 @@ import logging
 import os
 import random
 import json
+from geoip import geolite2
 
 log = logging.getLogger(__name__)
 class WebController(BaseController):
@@ -45,8 +46,11 @@ class WebController(BaseController):
     def load_resource(self):
         remote_ip = cherrypy.request.remote.ip
         forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
-        country_code = self.context.geoip.country_code_by_addr(forwarded_ip or remote_ip)
-        log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
+        match = geolite2.lookup(forwarded_ip or remote_ip)
+        country_code = None 
+        if match:
+            country_code = match.country
+            log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
         resources_in_json = []
         vendar = 'AliYun'
         if country_code and country_code == 'CN':

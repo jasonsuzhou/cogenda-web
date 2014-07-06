@@ -17,7 +17,6 @@ from satool import SATool
 
 import logging
 from logconfig import init_logging
-from cherrypy import wsgiserver
 
 class ServerStatus(object):
     Unknown = 0
@@ -136,7 +135,6 @@ class Server(object):
         self.context.load_article_files(article_dir)
         self.context.load_sidebar_files(sidebar_dir)
         self.context.load_news_files(news_dir)
-        self.context.load_geodat(geodat_path)
 
         """ Init cogenda app logging """
         log_dir = self.context.settings.cogenda_app.log_dir

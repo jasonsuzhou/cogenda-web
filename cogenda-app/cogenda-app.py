@@ -9,7 +9,6 @@ import hashlib
 import os
 from lib.controller import BaseController
 
-from cherrypy import wsgiserver
 from controllers.web import *
 from controllers.admin import *
 from controllers.security import *
