@@ -44,7 +44,7 @@ class WebController(BaseController):
     @route('/resources')
     @cherrypy.tools.json_out()
     def load_resource(self):
-        all_resources = Resource.list(cherrypy.request.db)
+        all_resources = Resource.list_active_resources(cherrypy.request.db)
         return self.filter_resources_by_vendor(all_resources)
 
     @route('/private-resources')
