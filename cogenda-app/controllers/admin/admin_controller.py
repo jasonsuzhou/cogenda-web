@@ -46,7 +46,7 @@ class AdminController(BaseController):
     def get_user_by_id(self, uid):
         user = User.get_by_uid(cherrypy.request.db, uid)
         user_in_json = self.jsonify_model(user)
-        user_in_json.append(self.init_user_table_title())
+        #user_in_json.append(self.init_user_table_title())
         return user_in_json
 
     def init_user_table_title(self):
