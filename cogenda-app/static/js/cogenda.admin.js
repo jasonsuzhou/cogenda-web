@@ -169,6 +169,12 @@ function render_user_datatable() {
             if (e) e.preventDefault();
             reset_password();
         });
+
+        // Save as new user
+        $("#save-as").click(function(e) {
+            if (e) e.preventDefault();
+            save_as_user();
+        });
     });
 }
 
@@ -208,6 +214,56 @@ function delete_user() {
 }
 
 /**
+ * Save as user
+ *
+ */
+function save_as_user(row) {
+    // Reset parsley
+    $('#new-modal').parsley().reset();
+
+    // Reset title/button
+    $('#title').text("Create User");
+    $('#save').text("Save");
+
+    // Reset password
+    $('#password').show();
+    $('#reset-password-container').hide();
+
+    var datatable = $('#mgmt-datatable').dataTable();
+    var selectedRows = datatable.$('tr.row_selected').length;
+
+    var selected_row = datatable.$('tr.row_selected')[0];
+    if(typeof(row) !== 'undefined') {
+        selected_row = row;
+        selectedRows = 1;
+    }
+
+    if (selectedRows === 0) {
+        pop_msg('user-msg', 'Select one user!', 1);  // Alert
+    } else if (selectedRows === 1) {
+        var position = datatable.fnGetPosition(selected_row);
+        var selectedRowID = datatable.fnGetData(position)['id'];
+        var fetchUser = $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": '/admin/fetch-user/' + selectedRowID
+        });
+        fetchUser.done(function(result) {
+                // Role select
+                render_role_select(result.role);
+                // Resource select
+                render_resource_select(result.role, convert_resource(result.resource));
+        });
+        $('#user-new-modal').modal('show');
+        $('#user-msg-container').hide();
+        $('#user-modal-msg-container').hide();
+    } else {
+        pop_msg('user-msg', 'Selected more than one user!', 1);  // Alert
+    }
+}
+
+
+/**
  * Edit user
  *
  */
@@ -233,7 +289,7 @@ function edit_user(row) {
     }
 
     if (selectedRows === 0) {
-        pop_msg('user-msg', 'Select one object to view!', 1);  // Alert
+        pop_msg('user-msg', 'Select one user to edit!', 1);  // Alert
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
@@ -262,7 +318,7 @@ function edit_user(row) {
         $('#user-msg-container').hide();
         $('#user-modal-msg-container').hide();
     } else {
-        pop_msg('user-msg', 'Selected more than one object!', 1);  // Alert
+        pop_msg('user-msg', 'Selected more than one user!', 1);  // Alert
     }
 }
 
