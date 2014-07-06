@@ -99,7 +99,6 @@ class AdminController(BaseController):
                            'oPaginate_sPrevious':oPaginate_sPrevious,'oPaginate_sNext':oPaginate_sNext,'oPaginate_sLast':oPaginate_sLast})
 
 
-
     @route('/admin/create-user')
     @cherrypy.tools.json_out()
     @authenticated
@@ -233,7 +232,7 @@ class AdminController(BaseController):
         all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
-        resources_in_json.append(self.init_resource_table_title())
+        #resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
 
 
