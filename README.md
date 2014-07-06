@@ -11,31 +11,21 @@
 
 - Preparation: Install pip, virtualenv and dependency libs.
 
-	```
-	$ sudo easy_install pip
-	$ pip install virtualenv
-	$ ./setenv.sh
-	$ source venv/bin/activate
+    ```
+    $ sudo easy_install pip
+    $ pip install virtualenv
+    $ ./setenv.sh
+    $ source venv/bin/activate
     $ brew install node
     $ make web-setup
-	```
-- Install GeoIP API
-
     ```
-    $ wget -N https://github.com/maxmind/geoip-api-c/releases/download/v1.6.1/GeoIP-1.6.1.tar.gz
-    $ tar -xvf GeoIP-1.6.1.tar.gz
-    $ cd GeoIP-1.6.1 && ./configure
-    $ make 
-    $ sudo make install
-    ```
-> If you failed in setenv command on Mac, please refer: http://www.krishnasunuwar.com.np/2014/02/installation-maxmind-geoip-python-library-in-os-x-10-9-mavericks/ to install GeoIP.
 
 - Start Web Server
 
-	```
+    ```
     $ make db-init (optional: If migration/cogenda-app.db not create yet)
-	$ make run
-	```
+    $ make run
+    ```
     > Open url http://localhost:8088
 
 - SQLite Migration

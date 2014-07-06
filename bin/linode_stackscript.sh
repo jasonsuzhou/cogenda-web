@@ -71,13 +71,13 @@ function install_nginx_with_geoip {
     gunzip GeoIP.dat.gz
 }
 
-function install_geo_api_c {
-    wget -N https://github.com/maxmind/geoip-api-c/releases/download/v1.6.1/GeoIP-1.6.1.tar.gz
-    tar -xvf GeoIP-1.6.1.tar.gz
-    cd GeoIP-1.6.1 && ./configure
-    make
-    sudo make install
-}
+#function install_geo_api_c {
+#    wget -N https://github.com/maxmind/geoip-api-c/releases/download/v1.6.1/GeoIP-1.6.1.tar.gz
+#    tar -xvf GeoIP-1.6.1.tar.gz
+#    cd GeoIP-1.6.1 && ./configure
+#    make
+#    sudo make install
+#}
 
 log "Updating System..."
 system_update
@@ -104,9 +104,6 @@ log "Install Dependencie Env..."
 install_env 
 
 log "Install nginx..."
-install_nginx_with_geoip
-
-log "Install GeoIP API..."
 install_nginx_with_geoip
 
 log "Restarting Services..."
