@@ -86,52 +86,8 @@ function ready_user_mgmt() {
  *
  */
 function render_user_datatable() {
-    var userTableTitle;
-    $.ajax({
-        type: 'GET',
-        async: false,
-        dataType: 'json',
-        url:'/admin/init-user-table-title',
-        success: function(data) {
-            userTableTitle = $.parseJSON(data);
-        }
-    });
-    console.log(userTableTitle);
-    // Prepare displaying columns
-    var columns = [
-        {
-          "sTitle": "ID",
-          "mData": "id",
-          "bVisible": false
-        },
-        {
-          "sTitle": userTableTitle['username'],
-          "mData": "username"
-        },
-        {
-          "sTitle": userTableTitle['company'],
-          "mData": "company"
-        },
-        {
-          "sTitle": userTableTitle['email'],
-          "mData": "email"
-        },
-        {
-          "sTitle": userTableTitle['mobile'],
-          "mData": "mobile"
-        },
-        {
-          "sTitle": userTableTitle['role'],
-          "mData": "role"
-        },
-        {
-          "sTitle": userTableTitle['active'],
-          "mData": "active"
-        }
-    ];
-
     // Ready common datatable.
-    ready_common_datatable("/admin/users", columns, function(datatable) {
+    ready_common_datatable("/admin/users", function(datatable) {
         // Call Add modal
         $("#add").click(function(e) {
             reset_user_create_modal();
@@ -212,12 +168,22 @@ function delete_user() {
  *
  */
 function edit_user(row) {
+    var commonLanguge;
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/admin/init-common-language',
+        success: function(data) {
+            commonLanguge = $.parseJSON(data);
+        }
+    });
     // Reset parsley
     $('#new-modal').parsley().reset();
 
     // Reset title/button
-    $('#title').text("Modify User");
-    $('#save').text("Save");
+    $('#title').text(commonLanguge['Modify User']);
+    $('#save').text(commonLanguge['Save']);
 
     // Reset password
     $('#password').hide();
@@ -466,56 +432,8 @@ function ready_resource_mgmt() {
  *
  */
 function render_resource_datatable() {
-    var resourceTableTitle;
-    $.ajax({
-        type: 'GET',
-        async: false,
-        dataType: 'json',
-        url:'/admin/init-resource-table-title',
-        success: function(data) {
-            resourceTableTitle = $.parseJSON(data);
-        }
-    });
-    var columns = [
-        {
-          "sTitle": "ID",
-          "mData": "id",
-          "bVisible": false
-        },
-        {
-          "sTitle": resourceTableTitle['Resource Name'],
-          "mData": "name"
-        },
-        {
-          "sTitle": resourceTableTitle['Description'],
-          "mData": "description"
-        },
-        {
-          "sTitle": resourceTableTitle['Vendor'],
-          "mData": "vendor"
-        },
-        /*
-        {
-          "sTitle": resourceTableTitle['URL'],
-          "mData": "url",
-          "sWidth": "30%"
-        },*/
-        {
-          "sTitle": resourceTableTitle['Uploaded Date'],
-          "mData": "uploaded_date"
-        },
-        {
-          "sTitle": resourceTableTitle['Type'],
-          "mData": "type"
-        },
-        {
-          "sTitle": resourceTableTitle['Active'],
-          "mData": "active"
-        }
-    ];
-
     // Ready common datatable.
-    ready_common_datatable("/admin/resources", columns, function(datatable) {
+    ready_common_datatable("/admin/resources", function(datatable) {
         // Edit by click row double click
         datatable.on("dblclick", "tr", function(e) {
             if (e) e.preventDefault();
@@ -721,7 +639,7 @@ function ready_common_searchable_multi_select() {
  * Common ready for tables.
  *
  */
-function ready_common_datatable(url, columns, fnDatatableCallback) {
+function ready_common_datatable(url, fnDatatableCallback) {
     $.ajax({
         "dataType": 'json',
         "type": "GET",
@@ -744,6 +662,8 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
                     tableLanguage = $.parseJSON(data);
                 }
             });
+            var tableColumns = result[result.length-1];
+            var columns = get_table_columns(tableColumns,url);
             var datatable = $(datatable_id).dataTable({
                 "aaData": process_user_result(result),
                 "aoColumns": columns,
@@ -778,9 +698,98 @@ function ready_common_datatable(url, columns, fnDatatableCallback) {
 }
 
 /**
+ * Get table columns via the url
+ */
+function get_table_columns(tableTitle, url) {
+    if('/admin/users' == url) {
+       return get_user_table_columns(tableTitle);
+    }
+    if('/admin/resources' == url) {
+        return get_resource_table_columns(tableTitle);
+    }
+}
+
+function get_user_table_columns(userTableTitle) {
+    var columns = [
+        {
+          "sTitle": "ID",
+          "mData": "id",
+          "bVisible": false
+        },
+        {
+          "sTitle": userTableTitle['username'],
+          "mData": "username"
+        },
+        {
+          "sTitle": userTableTitle['company'],
+          "mData": "company"
+        },
+        {
+          "sTitle": userTableTitle['email'],
+          "mData": "email"
+        },
+        {
+          "sTitle": userTableTitle['mobile'],
+          "mData": "mobile"
+        },
+        {
+          "sTitle": userTableTitle['role'],
+          "mData": "role"
+        },
+        {
+          "sTitle": userTableTitle['active'],
+          "mData": "active"
+        }
+        ];
+        return columns;
+}
+
+function get_resource_table_columns(resourceTableTitle) {
+    var columns = [
+        {
+          "sTitle": "ID",
+          "mData": "id",
+          "bVisible": false
+        },
+        {
+          "sTitle": resourceTableTitle['Resource Name'],
+          "mData": "name"
+        },
+        {
+          "sTitle": resourceTableTitle['Description'],
+          "mData": "description"
+        },
+        {
+          "sTitle": resourceTableTitle['Vendor'],
+          "mData": "vendor"
+        },
+        /*
+        {
+          "sTitle": resourceTableTitle['URL'],
+          "mData": "url",
+          "sWidth": "30%"
+        },*/
+        {
+          "sTitle": resourceTableTitle['Uploaded Date'],
+          "mData": "uploaded_date"
+        },
+        {
+          "sTitle": resourceTableTitle['Type'],
+          "mData": "type"
+        },
+        {
+          "sTitle": resourceTableTitle['Active'],
+          "mData": "active"
+        }
+    ];
+    return columns;
+}
+
+/**
  * Process user attributes' values to displaying values
  */
 function process_user_result(result) {
+    result.splice(result.length-1,result.length);
     for(var i = 0; i < result.length; i++) {
         result[i].active = get_user_status(result[i].active);
         if(result[i].role) result[i].role = get_role_name(result[i].role);

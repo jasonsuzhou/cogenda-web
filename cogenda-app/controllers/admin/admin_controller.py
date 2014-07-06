@@ -36,6 +36,7 @@ class AdminController(BaseController):
         users_in_json = []
         for user in all_users:
             users_in_json.append(self.jsonify_model(user))
+        users_in_json.append(self.init_user_table_title())
         return users_in_json
 
 
@@ -45,41 +46,37 @@ class AdminController(BaseController):
     def get_user_by_id(self, uid):
         user = User.get_by_uid(cherrypy.request.db, uid)
         user_in_json = self.jsonify_model(user)
+        user_in_json.append(self.init_user_table_title())
         return user_in_json
 
-
-    """
-    TODO: Need to combined load user data 
-    """ 
-    @route('/admin/init-user-table-title')
-    @cherrypy.tools.json_out(content_type='application/json')
-    @authenticated
     def init_user_table_title(self):
-        username = _('User Name')
-        company = _('Company')
-        email = _('E-mail')
-        mobile = _('Mobile')
-        role = _('Role')
-        active = _('Active')
-        return json.dumps({'username': username,'company':company,'email':email,'mobile':mobile,'role':role,'active':active})
+        userTableTitle = {}
+        userTableTitle['username'] = _('User Name')
+        userTableTitle['company'] = _('Company')
+        userTableTitle['email'] = _('E-mail')
+        userTableTitle['mobile'] = _('Mobile')
+        userTableTitle['role'] = _('Role')
+        userTableTitle['active'] = _('Active')
+        return userTableTitle
 
+    def init_resource_table_title(self):
+        resourceTable = {}
+        resourceTable['Resource Name'] = _('Resource Name')
+        resourceTable['Description'] = _('Description')
+        resourceTable['Vendor'] = _('Vendor')
+        resourceTable['URL'] = _('URL')
+        resourceTable['Uploaded Date'] = _('Uploaded Date')
+        resourceTable['Type'] = _('Type')
+        resourceTable['Active'] = _('Active')
+        return resourceTable
 
-    """
-    TODO: Need to combined to load resource data 
-    """ 
-    @route('/admin/init-resource-table-title')
+    @route('/admin/init-common-language')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
-    def init_resource_table_title(self):
-        resource_name = _('Resource Name')
-        vendor = _('Vendor')
-        url = _('URL')
-        uploaded_date = _('Uploaded Date')
-        type = _('Type')
-        active = _('Active')
-        description=_('Description')
-        return json.dumps({'Resource Name': resource_name, 'Description':description, 'Vendor':vendor, 'URL':url, 'Uploaded Date':uploaded_date, 'Type':type, 'Active':active})
-
+    def init_common_language(self):
+        modify_user = _('Modify User')
+        save = _('Save')
+        return json.dumps({'Modify User':modify_user, 'Save':save})
 
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -197,6 +194,7 @@ class AdminController(BaseController):
                     resource['id'] = resource['id'] + ":" + next_resource['id']
                     resource['vendor'] = resource['vendor'] + "/" + next_resource['vendor']
                     resources_in_json.remove(next_resource)
+        resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
 
 
@@ -235,6 +233,7 @@ class AdminController(BaseController):
         all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
+        resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
 
 
