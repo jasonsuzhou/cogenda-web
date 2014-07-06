@@ -1,17 +1,48 @@
 <div class="box" >
+
 {% markdown2 %}
 
 Downloads
 --------
+
+{% endmarkdown2 %}
+
+<br /><br />
+
+<div id="private-area" style="display: none;">
+
+{% markdown2 %}
+
+#### Download Private
+
+{% endmarkdown2 %}
+
+<table id="private" width="580" border="0">
+    <tr>
+        <td width="300"></td>
+        <td></td>
+    </tr>
+</table>
+<br /><br />
+</div>
+
+{% markdown2 %}
+#### Download Publications
+<table id="publications" width="580" border="0">
+    <tr>
+        <td width="300"></td>
+        <td></td>
+    </tr>
+</table>
 
 <br />
 
 #### Cogenda TCAD Software
 ##### *[Release Notes](./Release-Notes-VisualTCAD#174-14)* | *[System Requirements](./System-Requirements)*
 ##### Installers (Standard Edition)
-<table width="580" border="0">
+<table id="installers" width="580" border="0">
   <tr>
-    <td ></td>
+    <td width="300"></td>
     <td> </td>
   </tr>
   <tr> 
@@ -32,17 +63,23 @@ Downloads
 ##### Editions
  Several editions are available on each platform, as summarized in the table below:
 
+{% endmarkdown2 %}
+
 <div  class="articleTable">
 
-  Features/Platform                 | WinXP/Vista/7 | RHEL6   |RHEL5    | RHEL4   | Debian7 |
-  ----------------------------------|:-------------:|:-------:|:-------:|:-------:|:-------:|
-  Standard, 32bit                   | 1.7.4         |*request*| 1.7.4   | -       | -       |
-  Standard, 64bit                   | 1.7.4         | 1.7.4   | 1.7.4   | 1.7.4   | 1.7.4   |
-  Full, 32bit                       | *request*     |*request*|*request*| -       | -       |
-  Full, 64bit                       | *request*     | 1.7.4   | 1.7.4   | 1.7.4   | 1.7.4   |
-  Full, Cluster 64bit               | -             | 1.7.4   | 1.7.4   | -       | -       |
-</div>
+{% markdown2 %}
 
+|| *Features/Platform*      || *WinXP/Vista/7* || *RHEL6*   ||*RHEL5*    || *RHEL4*   || *Debian7* ||
+|| Standard, 32bit          || 1.7.4           ||*request*  || 1.7.4     || -         || -         ||
+|| Standard, 64bit          || 1.7.4           || 1.7.4     || 1.7.4     || 1.7.4     || 1.7.4     ||
+|| Full, 32bit              || *request*       ||*request*  ||*request*  || -         || -         ||
+|| Full, 64bit              || *request*       || 1.7.4     || 1.7.4     || 1.7.4     || 1.7.4     ||
+|| Full, Cluster 64bit      || -               || 1.7.4     || 1.7.4     || -         || -         ||
+
+{% endmarkdown2 %}
+</div>
+ 
+{% markdown2 %}
  - Full: VisualParticle and several other advanced tools are only available in the full package.
  - Cluster: with Infiniband interconnect support, see [supported hardware/software](./System-Requirements#ib).
 
@@ -52,9 +89,9 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 
 #### Documentation
 
-<table width="580" border="0"> 
+<table id="documentations" width="580" border="0">
   <tr> 
-    <td>Genius User Guide</td> 
+    <td width="300">Genius User Guide</td>
     <td><a href="../downloads/docs/genius_ug_en.pdf">genius_ug_en.pdf</a></td> 
   </tr> 
   <tr> 
@@ -78,9 +115,9 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 
 #### Brochures
 
-<table width="580" border="0"> 
+<table id="brochures" width="580" border="0">
   <tr> 
-    <td>VisualTCAD</td> 
+    <td width="300">VisualTCAD</td>
     <td><a href="../downloads/pubs/VisualTCAD.pdf">VisualTCAD.pdf</a></td> 
   </tr> 
   <tr> 
@@ -116,6 +153,10 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
   <tr> 
     <td>Suprem4 (binaries of the Stanford release)</td> 
     <td><a href="http://github.com/cogenda/Suprem4">Source Repository at Github</a></td> 
+  </tr> 
+  <tr> 
+    <td>Testing AliYun OSS & AWS S3 Downloads</td> 
+    <td><a href="/download/1">Download Testing</a></td> 
   </tr> 
 </table> 
 <br />

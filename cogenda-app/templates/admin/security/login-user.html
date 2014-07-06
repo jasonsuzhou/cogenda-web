@@ -39,11 +39,12 @@
                                         <i class="fa fa-lock"></i>
                                     </span>
                                     <input type="password" id="password" class="form-control" placeholder="{{_('Password')}}"
-                                        value="" data-parsley-length="[1, 25]" data-parsley-trigger="change" data-parsley-errors-container="#password-error" required>
+                                        value="" data-parsley-length="[5, 25]" data-parsley-trigger="change" data-parsley-errors-container="#password-error" required>
                                 </div>
                                 <div id="password-error"></div>
                             </div>
                         </div>
+                        <input type="hidden" id="client" value="admin">
                     </div>
                     <div class="foot">
                         <button id="login" class="btn btn-block btn-primary btn-rad btn-lg" type="submit">{{_('Log Me In')}}</button>

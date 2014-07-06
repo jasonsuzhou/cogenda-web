@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-06-30 21:41+0800\n"
+"POT-Creation-Date: 2014-07-05 20:39+0800\n"
 "PO-Revision-Date: 2014-06-06 11:56+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -17,115 +17,119 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: cogenda-app/controllers/admin/admin_controller.py:49
+#: cogenda-app/controllers/admin/admin_controller.py:58
 #: cogenda-app/templates/admin/security/login-user.html:29
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
 msgid "User Name"
 msgstr "用户名"
 
-#: cogenda-app/controllers/admin/admin_controller.py:50
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:37
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:38
+#: cogenda-app/controllers/admin/admin_controller.py:59
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:41
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:42
+#: cogenda-app/templates/web/user/user-profile.html:31
 msgid "Company"
 msgstr "公司"
 
-#: cogenda-app/controllers/admin/admin_controller.py:51
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:31
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:32
+#: cogenda-app/controllers/admin/admin_controller.py:60
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:35
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:36
 msgid "E-mail"
 msgstr "邮箱地址"
 
-#: cogenda-app/controllers/admin/admin_controller.py:52
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:45
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:46
+#: cogenda-app/controllers/admin/admin_controller.py:61
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:49
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:50
+#: cogenda-app/templates/web/user/user-profile.html:37
 msgid "Mobile"
 msgstr "联系电话"
 
-#: cogenda-app/controllers/admin/admin_controller.py:53
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:51
+#: cogenda-app/controllers/admin/admin_controller.py:62
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:55
 msgid "Role"
 msgstr "角色"
 
-#: cogenda-app/controllers/admin/admin_controller.py:54
-#: cogenda-app/controllers/admin/admin_controller.py:67
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:45
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:70
+#: cogenda-app/controllers/admin/admin_controller.py:63
+#: cogenda-app/controllers/admin/admin_controller.py:79
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:55
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:74
 msgid "Active"
 msgstr "激活"
 
-#: cogenda-app/controllers/admin/admin_controller.py:61
+#: cogenda-app/controllers/admin/admin_controller.py:74
 msgid "Resource Name"
 msgstr "资源名称"
 
-#: cogenda-app/controllers/admin/admin_controller.py:62
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
+#: cogenda-app/controllers/admin/admin_controller.py:75
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
 msgid "Vendor"
 msgstr "供应商"
 
-#: cogenda-app/controllers/admin/admin_controller.py:63
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
+#: cogenda-app/controllers/admin/admin_controller.py:76
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:34
 msgid "URL"
 msgstr "链接"
 
-#: cogenda-app/controllers/admin/admin_controller.py:64
+#: cogenda-app/controllers/admin/admin_controller.py:77
 msgid "Uploaded Date"
 msgstr "上传时间"
 
-#: cogenda-app/controllers/admin/admin_controller.py:65
-msgid "Status"
-msgstr "状态"
-
-#: cogenda-app/controllers/admin/admin_controller.py:66
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:36
+#: cogenda-app/controllers/admin/admin_controller.py:78
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:42
 msgid "Type"
 msgstr "类型"
 
-#: cogenda-app/controllers/admin/admin_controller.py:76
+#: cogenda-app/controllers/admin/admin_controller.py:80
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:24
+msgid "Description"
+msgstr "描述"
+
+#: cogenda-app/controllers/admin/admin_controller.py:88
 msgid "sProcessing"
 msgstr "正在获取数据, 请稍后..."
 
-#: cogenda-app/controllers/admin/admin_controller.py:77
+#: cogenda-app/controllers/admin/admin_controller.py:89
 msgid "ShowRows"
 msgstr "显示 _MENU_ 条"
 
-#: cogenda-app/controllers/admin/admin_controller.py:78
+#: cogenda-app/controllers/admin/admin_controller.py:90
 msgid "sZeroRecords"
 msgstr "没有您要搜索的内容"
 
-#: cogenda-app/controllers/admin/admin_controller.py:79
+#: cogenda-app/controllers/admin/admin_controller.py:91
 msgid "sInfo"
 msgstr "从 _START_ 到 _END_ 条记录 共 _TOTAL_ 条"
 
-#: cogenda-app/controllers/admin/admin_controller.py:80
+#: cogenda-app/controllers/admin/admin_controller.py:92
 msgid "sInfoEmpty"
 msgstr "记录数为0"
 
-#: cogenda-app/controllers/admin/admin_controller.py:81
+#: cogenda-app/controllers/admin/admin_controller.py:93
 msgid "sInfoFiltered"
 msgstr "(全部记录数 _MAX_ 条)"
 
-#: cogenda-app/controllers/admin/admin_controller.py:82
+#: cogenda-app/controllers/admin/admin_controller.py:94
 msgid "sInfoPostFix"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:83
+#: cogenda-app/controllers/admin/admin_controller.py:95
 msgid "sSearch"
 msgstr "搜索"
 
-#: cogenda-app/controllers/admin/admin_controller.py:84
+#: cogenda-app/controllers/admin/admin_controller.py:96
 msgid "oPaginate_sFirst"
 msgstr "首页"
 
-#: cogenda-app/controllers/admin/admin_controller.py:85
+#: cogenda-app/controllers/admin/admin_controller.py:97
 msgid "oPaginate_sPrevious"
 msgstr "上一页"
 
-#: cogenda-app/controllers/admin/admin_controller.py:86
+#: cogenda-app/controllers/admin/admin_controller.py:98
 msgid "oPaginate_sNext"
 msgstr "下一页"
 
-#: cogenda-app/controllers/admin/admin_controller.py:87
+#: cogenda-app/controllers/admin/admin_controller.py:99
 msgid "oPaginate_sLast"
 msgstr "末页"
 
@@ -140,35 +144,29 @@ msgid "Resource Management"
 msgstr "资源管理"
 
 #: cogenda-app/templates/admin/layout/layout.html:42
+#: cogenda-app/templates/web/layout/layout-header.html:15
 msgid "Sign Out"
 msgstr "注销"
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-mgmt.html:4
 msgid "Loading resources table"
-msgstr "正在加载资源"
+msgstr "正在加载资源列表"
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:6
 msgid "Update Resource"
 msgstr "更新资源"
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:16
+#: cogenda-app/templates/web/user/user-profile.html:19
 msgid "Name"
 msgstr "名称"
 
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:39
-msgid "Public"
-msgstr "公开的"
-
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:40
-msgid "Restricted"
-msgstr "受限的"
-
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:55
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:65
 msgid "Update"
 msgstr "更新"
 
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:56
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:92
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:66
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:96
 msgid "Cancel"
 msgstr "取消"
 
@@ -178,11 +176,12 @@ msgstr "用户登录"
 
 #: cogenda-app/templates/admin/security/login-user.html:41
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:23
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:24
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:28
+#: cogenda-app/templates/web/user/user-profile.html:62
 msgid "Password"
 msgstr "密码"
 
-#: cogenda-app/templates/admin/security/login-user.html:49
+#: cogenda-app/templates/admin/security/login-user.html:50
 msgid "Log Me In"
 msgstr "登录"
 
@@ -200,33 +199,41 @@ msgstr "删除"
 
 #: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:22
 msgid "Loading users table"
-msgstr "正在加载用户"
+msgstr "正在加载用户列表"
 
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:6
 msgid "Create User"
 msgstr "创建用户"
 
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:53
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:61
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:25
+msgid "Reset Password"
+msgstr "重置密码"
+
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:57
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:65
 msgid "Resource"
 msgstr "资源管理员"
 
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:54
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:58
 msgid "Resource Owner"
 msgstr "资源拥有者"
 
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:55
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:59
 msgid "Administrator"
 msgstr "系统管理员"
 
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:84
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:85
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:88
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:89
 msgid "Notes"
 msgstr "备注"
 
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:91
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:95
 msgid "Create"
-msgstr "创建"
+msgstr "保存"
+
+#: cogenda-app/templates/web/article/index.md:39
+msgid "Welcome"
+msgstr "欢迎"
 
 #: cogenda-app/templates/web/layout/layout-header.html:4
 msgid "Chinese"
@@ -234,53 +241,63 @@ msgstr "简体中文"
 
 #: cogenda-app/templates/web/layout/layout-header.html:7
 msgid "English"
-msgstr "英语"
+msgstr "English"
 
 #: cogenda-app/templates/web/layout/layout-header.html:10
 msgid "Login"
 msgstr "登陆"
 
-#: cogenda-app/templates/web/layout/layout-nav.html:5
-msgid "Home"
-msgstr "首页"
-
-#: cogenda-app/templates/web/layout/layout-nav.html:6
-msgid "Products"
-msgstr "产品展示"
-
-#: cogenda-app/templates/web/layout/layout-nav.html:7
-msgid "Applications"
-msgstr "应用案例"
-
-#: cogenda-app/templates/web/layout/layout-nav.html:8
-msgid "Licensing"
-msgstr "许可"
-
-#: cogenda-app/templates/web/layout/layout-nav.html:9
-msgid "Downloads"
-msgstr "下载中心"
-
-#: cogenda-app/templates/web/layout/layout-nav.html:10
-msgid "Corporate"
-msgstr "关于我们"
-
-#: cogenda-app/templates/web/layout/layout-nav.html:11
-msgid "Contact"
-msgstr "联系我们"
-
-#: cogenda-app/templates/web/layout/layout.html:30
+#: cogenda-app/templates/web/layout/layout.html:31
 msgid "Contact Us"
 msgstr "联系我们"
 
-#: cogenda-app/templates/web/layout/layout.html:32
+#: cogenda-app/templates/web/layout/layout.html:33
 msgid "Sales Team"
 msgstr "销售团队"
 
-#: cogenda-app/templates/web/layout/layout.html:33
+#: cogenda-app/templates/web/layout/layout.html:34
 msgid "Technical Support"
 msgstr "技术支持"
 
-#: cogenda-app/templates/web/layout/layout.html:34
+#: cogenda-app/templates/web/layout/layout.html:35
 msgid "General Enquiries"
-msgstr "普通查询"
+msgstr "咨询方式"
+
+#: cogenda-app/templates/web/user/user-profile.html:25
+msgid "Email"
+msgstr "邮箱地址"
+
+#: cogenda-app/templates/web/user/user-profile.html:74
+msgid "Confirm Password"
+msgstr "确认密码"
+
+#~ msgid "Status"
+#~ msgstr "状态"
+
+#~ msgid "Public"
+#~ msgstr "公开的"
+
+#~ msgid "Restricted"
+#~ msgstr "受限的"
+
+#~ msgid "Home"
+#~ msgstr "首页"
+
+#~ msgid "Products"
+#~ msgstr "产品展示"
+
+#~ msgid "Applications"
+#~ msgstr "应用案例"
+
+#~ msgid "Licensing"
+#~ msgstr "许可"
+
+#~ msgid "Downloads"
+#~ msgstr "下载中心"
+
+#~ msgid "Corporate"
+#~ msgstr "关于我们"
+
+#~ msgid "Contact"
+#~ msgstr "联系方式"
 

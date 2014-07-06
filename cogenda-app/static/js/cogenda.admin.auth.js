@@ -5,10 +5,12 @@ $(document).ready(function() {
         if ($('#security-login-form').parsley().validate()) {
             var username = $('#username').val().trim();
             var password = $('#password').val().trim();
+            var client = $('#client').val().trim();
 
             credentials = {
                 username: username,
-                password: password
+                password: password,
+                client: client
             };
 
             var authenticate = $.ajax({

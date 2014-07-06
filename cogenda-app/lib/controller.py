@@ -16,12 +16,13 @@ import base64
 
 from mailer import Mailer, Message
 from md2_extension import Markdown2Extension
-
+from urlparse import urlparse
 import logging 
 log = logging.getLogger(__name__)
 
-#Initialization of I18nTool
+#Initialize of I18nTool
 cherrypy.tools.I18nTool = I18nTool(os.path.abspath( __file__ ))
+
 
 __CONTROLLERS__ = []
 __CONTROLLERSDICT__ = {}
@@ -48,10 +49,15 @@ def authenticated(func):
     def actual(*arguments, **kw):
         instance = arguments[0]
         user = instance.user
+        current_url = urlparse(cherrypy.url()).path
+        secured_urls = instance.settings.cogenda_app.secured_urls.split('|') 
+
         if user:
-            return func(*arguments, **kw)
-        else:
-            raise cherrypy.HTTPRedirect('/admin/login')
+            if user[1] == 'web' and current_url not in secured_urls:
+                return func(*arguments, **kw)
+            if user[2] == '3':
+                return func(*arguments, **kw)
+        raise cherrypy.HTTPRedirect('/admin/login')
 
     actual.__name__ = func.__name__
     actual.__doc__ = func.__doc__
@@ -119,9 +125,9 @@ class BaseController(object):
         except AttributeError:
             return None
 
-    def login(self, user):
+    def login(self, user, from_sys):
         cherrypy.session.regenerate()
-        cherrypy.session['authenticated_user'] = (user.username, user.role, user.resource)
+        cherrypy.session['authenticated_user'] = (user.username, from_sys, user.role, user.resource)
 
     def logoff(self):
         cherrypy.session['authenticated_user'] = None
@@ -141,6 +147,8 @@ class BaseController(object):
             mo_dir = self.settings.cogenda_app.app_home + mo_dir
         log.debug(mo_dir)
         locale = str(cherrypy.response.i18n.locale)
+        if cherrypy.tools.I18nTool.default:
+            locale = cherrypy.tools.I18nTool.default
         translations = Translations.load(mo_dir, locale, app_name)
         env = Environment(loader = PackageLoader(app_name, 'templates'), extensions=[Markdown2Extension, 'jinja2.ext.i18n'])
         env.install_gettext_translations(translations)
@@ -163,12 +171,12 @@ class BaseController(object):
         return auth_token
 
 
-    def send_mail(self, template, name, sender, message, subject='Request Account'):
-        body = self.render_template(template_file, messagae=message, name=name)
-        message = Message(From=sender, To=self.settings.smtp_user, charset="utf-8")
-        message.Subject = subject 
-        message.HTML = body
-        message.Body= "Hi Support, \n %s." %(message)
-        sender = Mailer(self.settings.mailer.smtp_server, self.settings.mailer.as_int('smtp_server'), True, self.settings.smtp_user, os.environ.get('SMPT_PASSWORD', None))
+    def send_mail(self, template_file, from_name, to_name, sender, receiver, msg, subject='Request Account'):
+        body = self.render_template(template_file, message=msg, from_name=from_name, to_name=to_name)
+        message = Message(From=sender, To=receiver, charset="utf-8")
+        message.Subject = subject
+        message.Html = body
+        message.Body = "This is body."
+        sender = Mailer(self.settings.mailer.smtp_server, self.settings.mailer.as_int('smtp_port'), False, self.settings.mailer.smtp_user, os.environ.get('SMTP_PASSWORD', None))
         sender.send(message)
 

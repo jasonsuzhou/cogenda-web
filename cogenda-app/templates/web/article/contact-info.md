@@ -1,7 +1,7 @@
 <div class="box" >
 
-{% markdown2 %}
 
+{% markdown2 %}
 Contacts
 --------
 
@@ -11,14 +11,12 @@ You can reach us in many ways, but the most recommended one is contact us by ema
 
 Any questions? Send us an e-mail here.
 
-|                     |                                                     |
-|---------------------|-----------------------------------------------------|
-|Technical Support:	  | [support@cogenda.com](mailto:support@cogenda.com)   |
-|Product Sales:	      | [sales@cogenda.com](mailto:sales@cogenda.com)       |
-|General Enquiries:	  | [contact@cogenda.com](mailto:contact@cogenda.com)   |
+|| Technical Support:	  || [support@cogenda.com](mailto:support@cogenda.com)   ||
+|| Product Sales:	      || [sales@cogenda.com](mailto:sales@cogenda.com)       ||
+|| General Enquiries:	  || [contact@cogenda.com](mailto:contact@cogenda.com)   ||
 
-<p />
-<p />
+</p>
+</p>
 
 #### Distributors
 International customers may contact us direct or via your exclusive local distributor at the following locations:

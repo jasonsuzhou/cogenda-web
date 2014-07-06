@@ -3,7 +3,7 @@
     <div class="modal-dialog colored-header custom-width">
         <div class="md-content">
             <div class="modal-header">
-                <h3><label id="title">{{_('Create User')}}</label></h3>
+                <h3><label id="title">{{_('Create User') }}</label></h3>
                 <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <form id="new-modal" style="border-radius: 0px;" action="" data-parsley-validate>
@@ -21,6 +21,10 @@
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">{{_('Password')}} *</label>
+                            <div id="reset-password-container" style="padding-top: 8px; display: none;">
+                                <a id="reset-password" style="cursor: pointer;"><u>{{_('Reset Password')}}</u></a>
+                                <img id="processing" src="/static/images/processing.gif" style="display: none;" />
+                            </div>
                             <input id="password" placeholder="{{_('Password')}}" required class="form-control" data-parsley-length="[5, 25]"
                                     data-parsley-trigger="change" data-parsley-errors-container="#password-error">
                             <div id="password-error"></div>

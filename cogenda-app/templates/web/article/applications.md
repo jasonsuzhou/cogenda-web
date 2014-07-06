@@ -20,7 +20,7 @@ With the precedented performance and the highly integrative work-flow, it is now
 A 3D SRAM structure is generated from the GDSII mask layouts, and its writing sequence simulated in Genius.
 The model contains over 96,000 mesh nodes, and the entire write sequence is simulated in about 4 hours.
 
-<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="500" height="364"><param name="width" value="500" /><param name="height" value="364" /><param name="src" value="../images/stories/genius/sram_write.swf" /><embed type="application/x-shockwave-flash" width="500" height="364" src="../images/stories/genius/sram_write.swf"></embed></object> 
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="500" height="364"><param name="width" value="500" /><param name="height" value="364" /><param name="src" value="/static/media/genius/sram_write.swf" /><embed type="application/x-shockwave-flash" width="500" height="364" src="/static/media/genius/sram_write.swf"></embed></object> 
 
 
 #### ESD Protection Devices

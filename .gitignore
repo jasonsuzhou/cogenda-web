@@ -23,6 +23,9 @@ parts
 bin/travis_env.txt
 node_modules
 
+*.flv
+*.swf
+
 data/
 venv/
 cover/

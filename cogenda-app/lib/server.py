@@ -43,6 +43,7 @@ class Server(object):
                 #'server.socket_host': sets.cogenda_app.host,
                 #'server.socket_port': sets.cogenda_app.as_int('port'),
                 #'server.thread_pool': sets.cogenda_app.as_int('threads'),
+                'tools.proxy.on': True,
                 'request.base': sets.cogenda_app.baseurl,
                 'tools.encode.on': True, 
                 'tools.encode.encoding': 'utf-8',
@@ -67,6 +68,10 @@ class Server(object):
                     'request.dispatch': dispatcher,
                     'tools.db.on': True
                     },
+                '/media': {
+                    'tools.gzip.on': True,
+                    'tools.staticdir.on': True,
+                    'tools.staticdir.dir': 'media'},
                 '/static': {
                     'tools.gzip.on': True,
                     'tools.staticdir.on': True,
@@ -127,9 +132,11 @@ class Server(object):
         article_dir = os.path.join(self.root_dir,  'templates/web/article')
         sidebar_dir = os.path.join(self.root_dir,  'templates/web/sidebar')
         news_dir = os.path.join(self.root_dir,  'templates/web/news')
+        geodat_path = os.path.join(self.root_dir, 'GeoIP.dat')
         self.context.load_article_files(article_dir)
         self.context.load_sidebar_files(sidebar_dir)
         self.context.load_news_files(news_dir)
+        self.context.load_geodat(geodat_path)
 
         """ Init cogenda app logging """
         log_dir = self.context.settings.cogenda_app.log_dir

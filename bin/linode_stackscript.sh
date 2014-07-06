@@ -8,6 +8,8 @@
 # <UDF name="deploy_user" Label="Name of deployment user" default="deploy" />
 # <UDF name="deploy_password" Label="Password for deployment user" />
 # <UDF name="deploy_sshkey" Label="Deployment user public ssh key" />
+# <UDF name="smtp_password" Label="Cogenda mail server password" />
+# <UDF name="cogenda_shared_secret" Label="Cogenda webserice HMAC based shared key" default="cogenda-ws-secret"/>
 # <UDF name="ssh_port" Label="SSH Port" default="22" />
 # <UDF name="notify_email" Label="Send Finish Notification To" example="Email address to send notification to when finished.
 
@@ -21,6 +23,8 @@ function log {
   echo "### $1 -- `date '+%D %T'`"
 }
 
+export SMTP_PASSWORD="$SMTP_PASSWORD"
+export COGENDA_SHARED_SECRET="$COGENDA_SHARED_SECRET"
 
 function create_deployment_user {
   system_add_user $DEPLOY_USER $DEPLOY_PASSWORD "users,sudo"
@@ -67,6 +71,14 @@ function install_nginx_with_geoip {
     gunzip GeoIP.dat.gz
 }
 
+function install_geo_api_c {
+    wget -N https://github.com/maxmind/geoip-api-c/releases/download/v1.6.1/GeoIP-1.6.1.tar.gz
+    tar -xvf GeoIP-1.6.1.tar.gz
+    cd GeoIP-1.6.1 && ./configure
+    make
+    sudo make install
+}
+
 log "Updating System..."
 system_update
 
@@ -92,6 +104,9 @@ log "Install Dependencie Env..."
 install_env 
 
 log "Install nginx..."
+install_nginx_with_geoip
+
+log "Install GeoIP API..."
 install_nginx_with_geoip
 
 log "Restarting Services..."

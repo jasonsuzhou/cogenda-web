@@ -11,7 +11,6 @@ resources = Table(
         Column('type', String(1), nullable=False),
         Column('vendor', String(20), nullable=False),
         Column('url', String(1000), nullable=False),
-        Column('status', Boolean, nullable=False),
         Column('uploaded_date', DateTime, default=datetime.now),
         Column('active', Boolean, default=True),
         )

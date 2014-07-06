@@ -70,14 +70,15 @@ babel_domain=cogenda-app
 babel_i18n=./cogenda-app/i18n
 
 babel-extract:
-	@pybabel extract -F babel.cfg -o ${babel_dict_loc} ./
+	@python setup.py extract_messages -o ${babel_dict_loc}
 
-.PHONY: babel-update
-babel-update: babel-extract
-	@pybabel update -i ${babel_dict_loc} -D ${babel_domain} -d ${babel_i18n}
+
+babel-update:
+	@python setup.py update_catalog -i ${babel_dict_loc} -D ${babel_domain} -d ${babel_i18n}
+
 
 babel-compile:
-	@pybabel compile -D ${babel_domain} -d ${babel_i18n}
+	@python setup.py compile_catalog -D ${babel_domain} -d ${babel_i18n}
 
 clean-pyc:
 	@find cogenda-app -name '*.pyc'|xargs rm -f
@@ -99,7 +100,7 @@ web:
 #  				     Production Server Deployment                  #
 ####################################################################
 deploy:
-	@fab prepare install_app restart_app restart_nginx
+	@fab prepare install_app migrate_db restart_app restart_nginx
 
 encrypt-key:
 	@./bin/travis_encrypt_key.sh 
