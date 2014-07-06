@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-05 20:39+0800\n"
+"POT-Creation-Date: 2014-07-06 13:52+0800\n"
 "PO-Revision-Date: 2014-06-06 08:30+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -51,7 +51,7 @@ msgstr "Role"
 
 #: cogenda-app/controllers/admin/admin_controller.py:63
 #: cogenda-app/controllers/admin/admin_controller.py:79
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:55
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:54
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:74
 msgid "Active"
 msgstr "Active"
@@ -66,7 +66,6 @@ msgid "Vendor"
 msgstr "Vendor"
 
 #: cogenda-app/controllers/admin/admin_controller.py:76
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:34
 msgid "URL"
 msgstr "URL"
 
@@ -75,7 +74,7 @@ msgid "Uploaded Date"
 msgstr "Uploaded Date"
 
 #: cogenda-app/controllers/admin/admin_controller.py:78
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:42
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:41
 msgid "Type"
 msgstr "Type"
 
@@ -85,51 +84,59 @@ msgstr "Type"
 msgid "Description"
 msgstr "Description"
 
+#: cogenda-app/controllers/admin/admin_controller.py:87
+msgid "Modify User"
+msgstr "Modify User"
+
 #: cogenda-app/controllers/admin/admin_controller.py:88
+msgid "Save"
+msgstr "Save"
+
+#: cogenda-app/controllers/admin/admin_controller.py:95
 msgid "sProcessing"
 msgstr "Loading data, please wait..."
 
-#: cogenda-app/controllers/admin/admin_controller.py:89
+#: cogenda-app/controllers/admin/admin_controller.py:96
 msgid "ShowRows"
 msgstr "Show _MENU_ Rows"
 
-#: cogenda-app/controllers/admin/admin_controller.py:90
+#: cogenda-app/controllers/admin/admin_controller.py:97
 msgid "sZeroRecords"
 msgstr "No matching records found"
 
-#: cogenda-app/controllers/admin/admin_controller.py:91
+#: cogenda-app/controllers/admin/admin_controller.py:98
 msgid "sInfo"
 msgstr "Showing _START_ to _END_ of _TOTAL_ entries"
 
-#: cogenda-app/controllers/admin/admin_controller.py:92
+#: cogenda-app/controllers/admin/admin_controller.py:99
 msgid "sInfoEmpty"
 msgstr "0 Record"
 
-#: cogenda-app/controllers/admin/admin_controller.py:93
+#: cogenda-app/controllers/admin/admin_controller.py:100
 msgid "sInfoFiltered"
 msgstr "(Total _MAX_ Rows)"
 
-#: cogenda-app/controllers/admin/admin_controller.py:94
+#: cogenda-app/controllers/admin/admin_controller.py:101
 msgid "sInfoPostFix"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:95
+#: cogenda-app/controllers/admin/admin_controller.py:102
 msgid "sSearch"
 msgstr "Search"
 
-#: cogenda-app/controllers/admin/admin_controller.py:96
+#: cogenda-app/controllers/admin/admin_controller.py:103
 msgid "oPaginate_sFirst"
 msgstr "First"
 
-#: cogenda-app/controllers/admin/admin_controller.py:97
+#: cogenda-app/controllers/admin/admin_controller.py:104
 msgid "oPaginate_sPrevious"
 msgstr "Previous"
 
-#: cogenda-app/controllers/admin/admin_controller.py:98
+#: cogenda-app/controllers/admin/admin_controller.py:105
 msgid "oPaginate_sNext"
 msgstr "Next"
 
-#: cogenda-app/controllers/admin/admin_controller.py:99
+#: cogenda-app/controllers/admin/admin_controller.py:106
 msgid "oPaginate_sLast"
 msgstr "Last"
 
@@ -144,7 +151,7 @@ msgid "Resource Management"
 msgstr "Resource Management"
 
 #: cogenda-app/templates/admin/layout/layout.html:42
-#: cogenda-app/templates/web/layout/layout-header.html:15
+#: cogenda-app/templates/web/layout/layout-header.html:14
 msgid "Sign Out"
 msgstr "Sign Out"
 
@@ -161,11 +168,11 @@ msgstr "Update Resource"
 msgid "Name"
 msgstr "Name"
 
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:65
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:64
 msgid "Update"
 msgstr "Update"
 
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:66
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:65
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:96
 msgid "Cancel"
 msgstr "Cancel"
@@ -247,6 +254,11 @@ msgstr "English"
 msgid "Login"
 msgstr "Login"
 
+#: cogenda-app/templates/web/layout/layout-header.html:15
+#: cogenda-app/templates/web/user/user-profile.html:12
+msgid "My Profile"
+msgstr "My Profile"
+
 #: cogenda-app/templates/web/layout/layout.html:31
 msgid "Contact Us"
 msgstr "Contact Us"
@@ -263,9 +275,17 @@ msgstr "Technical Support"
 msgid "General Enquiries"
 msgstr "General Enquiries"
 
+#: cogenda-app/templates/web/news/index.md:1
+msgid "Whats New"
+msgstr "What's New"
+
 #: cogenda-app/templates/web/user/user-profile.html:25
 msgid "Email"
 msgstr "E-mail"
+
+#: cogenda-app/templates/web/user/user-profile.html:48
+msgid "Change Your Password"
+msgstr "Change Your Password"
 
 #: cogenda-app/templates/web/user/user-profile.html:74
 msgid "Confirm Password"

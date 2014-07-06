@@ -1,4 +1,4 @@
-<h5>What's New</h5>
+<h5>{{_('Whats New')}}</h5>
 
 {% markdown2 %}
  * Cogenda to present the [world's largest TCAD device simulation](/article/Half-Implicit-Solver#LargestTCAD) 
