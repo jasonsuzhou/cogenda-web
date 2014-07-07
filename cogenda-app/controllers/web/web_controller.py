@@ -74,6 +74,7 @@ class WebController(BaseController):
     def switch_locale(self, locale):
         cherrypy.tools.I18nTool.set_custom_language(locale)
         cherrypy.tools.I18nTool.default=locale
+        cherrypy.session['_lang_'] = locale
         refer = cherrypy.request.headers.get('Referer','/')
         path = urlparse(refer).path
         if path.startswith('/article'): 
