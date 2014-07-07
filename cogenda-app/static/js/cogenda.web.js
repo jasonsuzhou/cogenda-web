@@ -1,6 +1,21 @@
 
 $(document).ready(function() {
 
+    $("#hello").jPlayer( {
+        ready: function () {
+            var params = $("#hello").attr('rel').split(':');
+            alert(params);
+
+            $(this).jPlayer("setMedia", {
+                flv: params[0] // Defines the m4v url
+            }).jPlayer("play"); // Attempts to Auto-Play the media
+        },
+        solution: "flash, html", // Flash with an HTML5 fallback.
+        supplied: "flv",
+        swfPath: "/static/js",
+        size: {width:600, height:400}
+    });
+
     /******************************
      * Setting parsley locale
      *****************************/
