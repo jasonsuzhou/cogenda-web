@@ -76,7 +76,6 @@ function ready_user_mgmt() {
         render_resource_select($(this).children('option:selected').val());
     });
 
-    console.log('xxxx');
     // Render User datatable
     render_user_datatable();
 }
@@ -174,17 +173,6 @@ function delete_user() {
  *
  */
 function save_as_user(row) {
-    // Reset parsley
-    $('#new-modal').parsley().reset();
-
-    // Reset title/button
-    $('#title').text("Create User");
-    $('#save').text("Save");
-
-    // Reset password
-    $('#password').show();
-    $('#reset-password-container').hide();
-
     var datatable = $('#mgmt-datatable').dataTable();
     var selectedRows = datatable.$('tr.row_selected').length;
 
@@ -205,10 +193,12 @@ function save_as_user(row) {
             "url": '/admin/fetch-user/' + selectedRowID
         });
         fetchUser.done(function(result) {
-                // Role select
-                render_role_select(result.role);
-                // Resource select
-                render_resource_select(result.role, convert_resource(result.resource));
+            // Reset as create user modal
+            reset_user_create_modal();
+            // Role select
+            render_role_select(result.role);
+            // Resource select
+            render_resource_select(result.role, convert_resource(result.resource));
         });
         $('#user-new-modal').modal('show');
         $('#user-msg-container').hide();
@@ -224,27 +214,6 @@ function save_as_user(row) {
  *
  */
 function edit_user(row) {
-    var commonLanguge;
-    $.ajax({
-        type: 'GET',
-        async: false,
-        dataType: 'json',
-        url:'/admin/init-common-language',
-        success: function(data) {
-            commonLanguge = $.parseJSON(data);
-        }
-    });
-    // Reset parsley
-    $('#new-modal').parsley().reset();
-
-    // Reset title/button
-    $('#title').text(commonLanguge['Modify User']);
-    $('#save').text(commonLanguge['Save']);
-
-    // Reset password
-    $('#password').hide();
-    $('#reset-password-container').show();
-
     var datatable = $('#mgmt-datatable').dataTable();
     var selectedRows = datatable.$('tr.row_selected').length;
 
@@ -280,12 +249,37 @@ function edit_user(row) {
                 // Active switch
                 render_active_switch(result.active);
         });
-        $('#user-new-modal').modal('show');
-        $('#user-msg-container').hide();
-        $('#user-modal-msg-container').hide();
+        prepare_edit_user_modal();
     } else {
         pop_msg('user-msg', 'Selected more than one user!', 1);  // Alert
     }
+}
+
+function prepare_edit_user_modal() {
+    var commonLanguge;
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/admin/init-common-language',
+        success: function(data) {
+            commonLanguge = $.parseJSON(data);
+        }
+    });
+    // Reset parsley
+    $('#new-modal').parsley().reset();
+
+    // Reset title/button
+    $('#title').text(commonLanguge['Modify User']);
+    $('#save').text(commonLanguge['Save']);
+
+    // Reset password
+    $('#password').hide();
+    $('#reset-password-container').show();
+
+    $('#user-new-modal').modal('show');
+    $('#user-msg-container').hide();
+    $('#user-modal-msg-container').hide();
 }
 
 /**
@@ -450,20 +444,23 @@ function render_resource_select(selectedRole, selectedResources) {
         var resource_list = $.ajax({
             "dataType": 'json',
             "type": "GET",
-            "url": "/admin/resources"
+            "url": "/admin/resources",
+            "success": function(result) {
+                // console.log(result);
+                $('#resource').multiSelect('refresh');
+                for (var i = 0; i < result.length - 1; i++) {
+                    $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: i });
+                }
+                $('#resource').multiSelect('deselect_all');
+                if (typeof(selectedResources) !== 'undefined') {
+                    $('#resource').multiSelect('select', selectedResources);
+                }
+                $('#resource-container').show();
+            }
         });
 
         resource_list.done(function(result) {
-            // console.log(result);
-            $('#resource').multiSelect('refresh');
-            for (var i = 0; i < result.length; i++) {
-                $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: i });
-            }
-            $('#resource').multiSelect('deselect_all');
-            if (typeof(selectedResources) !== 'undefined') {
-                $('#resource').multiSelect('select', selectedResources);
-            }
-            $('#resource-container').show();
+
         });
     } else {
         $('#resource-container').hide();

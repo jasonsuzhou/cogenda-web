@@ -57,6 +57,9 @@ class AdminController(BaseController):
         userTableTitle['mobile'] = _('Mobile')
         userTableTitle['role'] = _('Role')
         userTableTitle['active'] = _('Active')
+        print "=============================="
+        print _('User Name')
+        print "=============================="
         return userTableTitle
 
     def init_resource_table_title(self):
