@@ -46,7 +46,6 @@ class AdminController(BaseController):
     def get_user_by_id(self, uid):
         user = User.get_by_uid(cherrypy.request.db, uid)
         user_in_json = self.jsonify_model(user)
-        #user_in_json.append(self.init_user_table_title())
         return user_in_json
 
     def init_user_table_title(self):
@@ -57,9 +56,6 @@ class AdminController(BaseController):
         userTableTitle['mobile'] = _('Mobile')
         userTableTitle['role'] = _('Role')
         userTableTitle['active'] = _('Active')
-        print "=============================="
-        print _('User Name')
-        print "=============================="
         return userTableTitle
 
     def init_resource_table_title(self):
@@ -235,7 +231,6 @@ class AdminController(BaseController):
         all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
-        #resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
 
 
