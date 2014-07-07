@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cogenda-web 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-06 13:52+0800\n"
+"POT-Creation-Date: 2014-07-07 08:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,126 +18,126 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: cogenda-app/controllers/admin/admin_controller.py:58
+#: cogenda-app/controllers/admin/admin_controller.py:54
 #: cogenda-app/templates/admin/security/login-user.html:29
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
 msgid "User Name"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:59
+#: cogenda-app/controllers/admin/admin_controller.py:55
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:41
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:42
 #: cogenda-app/templates/web/user/user-profile.html:31
 msgid "Company"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:60
+#: cogenda-app/controllers/admin/admin_controller.py:56
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:35
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:36
 msgid "E-mail"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:61
+#: cogenda-app/controllers/admin/admin_controller.py:57
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:49
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:50
 #: cogenda-app/templates/web/user/user-profile.html:37
 msgid "Mobile"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:62
+#: cogenda-app/controllers/admin/admin_controller.py:58
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:55
 msgid "Role"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:63
-#: cogenda-app/controllers/admin/admin_controller.py:79
+#: cogenda-app/controllers/admin/admin_controller.py:59
+#: cogenda-app/controllers/admin/admin_controller.py:70
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:54
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:74
 msgid "Active"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:74
+#: cogenda-app/controllers/admin/admin_controller.py:64
 msgid "Resource Name"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:75
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
-msgid "Vendor"
-msgstr ""
-
-#: cogenda-app/controllers/admin/admin_controller.py:76
-msgid "URL"
-msgstr ""
-
-#: cogenda-app/controllers/admin/admin_controller.py:77
-msgid "Uploaded Date"
-msgstr ""
-
-#: cogenda-app/controllers/admin/admin_controller.py:78
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:41
-msgid "Type"
-msgstr ""
-
-#: cogenda-app/controllers/admin/admin_controller.py:80
+#: cogenda-app/controllers/admin/admin_controller.py:65
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:24
 msgid "Description"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:87
+#: cogenda-app/controllers/admin/admin_controller.py:66
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
+msgid "Vendor"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:67
+msgid "URL"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:68
+msgid "Uploaded Date"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:69
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:41
+msgid "Type"
+msgstr ""
+
+#: cogenda-app/controllers/admin/admin_controller.py:77
 msgid "Modify User"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:88
+#: cogenda-app/controllers/admin/admin_controller.py:78
 msgid "Save"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:95
+#: cogenda-app/controllers/admin/admin_controller.py:85
 msgid "sProcessing"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:96
+#: cogenda-app/controllers/admin/admin_controller.py:86
 msgid "ShowRows"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:97
+#: cogenda-app/controllers/admin/admin_controller.py:87
 msgid "sZeroRecords"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:98
+#: cogenda-app/controllers/admin/admin_controller.py:88
 msgid "sInfo"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:99
+#: cogenda-app/controllers/admin/admin_controller.py:89
 msgid "sInfoEmpty"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:100
+#: cogenda-app/controllers/admin/admin_controller.py:90
 msgid "sInfoFiltered"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:101
+#: cogenda-app/controllers/admin/admin_controller.py:91
 msgid "sInfoPostFix"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:102
+#: cogenda-app/controllers/admin/admin_controller.py:92
 msgid "sSearch"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:103
+#: cogenda-app/controllers/admin/admin_controller.py:93
 msgid "oPaginate_sFirst"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:104
+#: cogenda-app/controllers/admin/admin_controller.py:94
 msgid "oPaginate_sPrevious"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:105
+#: cogenda-app/controllers/admin/admin_controller.py:95
 msgid "oPaginate_sNext"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:106
+#: cogenda-app/controllers/admin/admin_controller.py:96
 msgid "oPaginate_sLast"
 msgstr ""
 
@@ -202,10 +202,14 @@ msgid "Edit"
 msgstr ""
 
 #: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:18
-msgid "Delete"
+msgid "Save As"
 msgstr ""
 
 #: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:22
+msgid "Delete"
+msgstr ""
+
+#: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:26
 msgid "Loading users table"
 msgstr ""
 
