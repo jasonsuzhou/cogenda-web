@@ -1,6 +1,15 @@
 
 $(document).ready(function() {
 
+    /******************************
+     * Setting parsley locale
+     *****************************/
+    locale = $('#locale').val();
+    if (locale === 'zh') {
+        locale = locale + '_cn';
+    }
+    window.ParsleyValidator.setLocale(locale);
+
     if($('#login-username').text().trim()) {
         $('#login').hide();
         $('#user-profile-container').show();

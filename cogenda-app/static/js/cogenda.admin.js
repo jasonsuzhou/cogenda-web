@@ -3,6 +3,16 @@
  *
  */
 $(document).ready(function() {
+
+    /******************************
+     * Setting parsley locale
+     *****************************/
+    locale = $('#locale').val();
+    if (locale === 'zh') {
+        locale = locale + '_cn';
+    }
+    window.ParsleyValidator.setLocale(locale);
+
     // Handle menu click event.
     $('ul.cl-vnavigation li').each(function(index, li) {
         $(li).click(function(e) {

@@ -1,5 +1,14 @@
 
 $(document).ready(function() {
+    /******************************
+     * Setting parsley locale
+     *****************************/
+    locale = $('#locale').val();
+    if (locale === 'zh') {
+        locale = locale + '_cn';
+    }
+    window.ParsleyValidator.setLocale(locale);
+
     $('#login').on('click', function(event) {
         if (event) event.preventDefault();
         if ($('#security-login-form').parsley().validate()) {
