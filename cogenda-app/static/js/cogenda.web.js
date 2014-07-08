@@ -23,6 +23,9 @@ $(document).ready(function() {
     if (locale === 'zh') {
         locale = locale + '_cn';
     }
+    if (locale === 'en_US') {
+        locale = 'en';
+    }
     window.ParsleyValidator.setLocale(locale);
 
     if($('#login-username').text().trim()) {
