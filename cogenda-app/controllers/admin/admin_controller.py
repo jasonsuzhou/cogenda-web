@@ -76,7 +76,13 @@ class AdminController(BaseController):
         modify_user = _('Modify User')
         save = _('Save')
         create_user = _('Create User')
-        return json.dumps({'Create user': create_user, 'Modify User':modify_user, 'Save':save})
+        select_one_user = _('Select one user')
+        select_more_than_one_user = _('Selected more than one user')
+        remove_user_successful = _('Remove user successful')
+        you_cannot_delete_yourself = _('You cannot delete yourself')
+        return json.dumps({'Create user': create_user, 'Modify User': modify_user, 'Save': save,
+                           'Select one user': select_one_user, 'Selected more than one user': select_more_than_one_user,
+                           'Remove user successful': remove_user_successful, 'You cannot delete yourself': you_cannot_delete_yourself})
 
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -257,8 +263,8 @@ class AdminController(BaseController):
         except Exception as err:
             print err
             log.error('Reset password operation error %s' % err)
-            return json.dumps({'is_success': False, 'msg': 'Reset password failure!'})
-        return json.dumps({'is_success': True, 'msg': 'Reset password successfully!'})
+            return json.dumps({'is_success': False, 'msg': _('Reset password failure')})
+        return json.dumps({'is_success': True, 'msg': _('Reset password successfully')})
 
 
     def jsonify_model(self, model):
@@ -283,4 +289,4 @@ class AdminController(BaseController):
     def check_username(self, username):
         user = User.get_by_username(cherrypy.request.db, username)
         if not (user is None):
-            return  u"The username is existing."
+            return  _('The username is existing')

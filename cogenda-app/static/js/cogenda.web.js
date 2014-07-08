@@ -1,7 +1,22 @@
 
 $(document).ready(function() {
 
-    $('video,audio').mediaelementplayer({
+    var commonLanguge;
+
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/web/init-common-language',
+        success: function(data) {
+            commonLanguge = $.parseJSON(data);
+        }
+    });
+
+    // Set values to element
+    $()
+
+    $('video').mediaelementplayer({
         features: ['playpause','progress','current','duration','tracks','volume','fullscreen']
     });
 
@@ -168,7 +183,7 @@ $(document).ready(function() {
             var password2 = $('#password2').val().trim();
 
             if (password1 !== password2) {
-                pop_msg('change-password-msg', 'Two passwords are not the same.', 1);
+                pop_msg('change-password-msg', commonLanguge['Two passwords are not the same'], 1);
                 return;
             }
 
@@ -185,9 +200,9 @@ $(document).ready(function() {
                 url: '/user/change-password',
                 success: function (result) {
                     if (result.id) {
-                        pop_msg('change-password-msg', 'Password is changed.', 2);
+                        pop_msg('change-password-msg', commonLanguge['Password is changed successfully'], 2);
                     } else {
-                        pop_msg('change-password-msg', 'Encounter error in server.', 0);
+                        pop_msg('change-password-msg', commonLanguge['Encounter error in server'], 0);
                     }
                 }
             });

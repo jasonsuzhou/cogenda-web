@@ -3,6 +3,7 @@ from lib.controller import BaseController, route
 import cherrypy
 import hmac
 from models import User
+from lib.i18ntool import ugettext as _
 import json
 
 class AuthController(BaseController):
@@ -10,6 +11,17 @@ class AuthController(BaseController):
     @route('/admin/login')
     def index(self):
         return self.render_template('admin/security/login-user.html')
+
+
+    @route('/security/init-common-language')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def init_common_language(self):
+        user_authenticated_successfully = _('User authenticated successfully')
+        invalid_userid_or_password = _('Invalid user ID or password')
+        you_have_insufficient_privileges = _('You have insufficient privileges')
+        return json.dumps({'User authenticated successfully': user_authenticated_successfully,
+                           'Invalid user ID or password': invalid_userid_or_password,
+                           'You have insufficient privileges': you_have_insufficient_privileges})
 
 
     @route('/security/authenticate')
@@ -28,7 +40,7 @@ class AuthController(BaseController):
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg}
         else:
-            resp = {'auth_success': True, 'msg': u"User authenticated successfully.", 'refer': refer}
+            resp = {'auth_success': True, 'msg': _('User authenticated successfully'), 'refer': refer}
         return json.dumps(resp)
 
 
@@ -49,7 +61,7 @@ class AuthController(BaseController):
         """Verifies credentials for username and password."""
         salt = self.settings.cogenda_app.cogenda_salt
         if user is None or user.password != hmac.new(salt, password).hexdigest():
-            return u"Invalid user ID or password."
+            return _('Invalid user ID or password')
         if client == 'admin' and user.role != '3':
-            return u"You have insufficient privileges."
+            return _('You have insufficient privileges')
         self.login(user, client)

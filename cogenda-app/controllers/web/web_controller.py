@@ -60,7 +60,7 @@ class WebController(BaseController):
         resource = Resource.get_by_rid(cherrypy.request.db, rid)
         if resource.type == '4' or resource.type == '5' or resource.type == '6':
             if self.user is None:
-                return json.dumps({'auth_status': False, 'msg': 'This kind resource requires your login.'})
+                return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
             else:
                 return json.dumps({'auth_status': True, 'link': '/download/'+rid})
         return json.dumps({'auth_status': True, 'link': '/download/'+rid})
@@ -84,6 +84,16 @@ class WebController(BaseController):
             self.LAST_ARTICLE_FLAG = article_name 
         return json.dumps({'is_success': True, 'uri':self.LAST_ARTICLE_FLAG})
 
+
+    @route('/web/init-common-language')
+    @cherrypy.tools.json_out(content_type='application/json')
+    def init_common_language(self):
+        two_passwords_not_same = _('Two passwords are not the same')
+        password_changed_successfully = _('Password is changed successfully')
+        encounter_error_in_server = _('Encounter error in server')
+        return json.dumps({'Two passwords are not the same': two_passwords_not_same,
+                           'Password is changed successfully': password_changed_successfully,
+                           'Encounter error in server': encounter_error_in_server})
 
     @route('/download/:resource_id')
     def serve_downloads(self, resource_id):
@@ -111,7 +121,7 @@ class WebController(BaseController):
         except Exception as err:
             log.error('Send mail operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': 'Request mail send failure with error: %s' %err})
-        return json.dumps({'is_success': True, 'msg': 'Request mail send successfully!'})
+        return json.dumps({'is_success': True, 'msg': _('Request mail send successfully')})
 
 
     @route('/user/user-profile/:username')

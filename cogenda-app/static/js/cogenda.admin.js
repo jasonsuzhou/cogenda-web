@@ -117,8 +117,10 @@ function ready_user_mgmt() {
 function render_user_datatable() {
     // Ready common datatable.
     ready_common_datatable("/admin/users", function(datatable) {
+        off_user_click_event();
+
         // Call Add modal
-        $("#add").click(function(e) {
+        $("#add").on('click', function(e) {
             reset_user_create_modal();
             $('#user-new-modal').modal('show');
             $('#user-msg-container').hide();
@@ -126,7 +128,7 @@ function render_user_datatable() {
         });
 
         // Edit by click edit link & row double click
-        $("#edit").click(function(e) {
+        $("#edit").on('click', function(e) {
             if (e) e.preventDefault();
             edit_user();
         });
@@ -136,7 +138,7 @@ function render_user_datatable() {
         });
 
         // Delete users
-        $("#delete").click(function(e) {
+        $("#delete").on('click', function(e) {
             if (e) e.preventDefault();
             delete_user();
         });
@@ -156,11 +158,31 @@ function render_user_datatable() {
         });
 
         // Save as new user
-        $("#save-as").click(function(e) {
+        $("#save-as").on('click', function(e) {
             if (e) e.preventDefault();
             save_as_user();
         });
     });
+}
+
+function off_user_click_event() {
+    // Call Add modal
+    $("#add").off('click');
+
+    // Edit by click edit link & row double click
+    $("#edit").off('click');
+
+    // Delete users
+    $("#delete").off('click');
+
+    // Create new user
+    $("#save").off('click');
+
+    // Reset password
+    $("#reset-password").off('click');
+
+    // Save as new user
+    $("#save-as").off('click');
 }
 
 /**
@@ -179,7 +201,7 @@ function delete_user() {
             var position = datatable.fnGetPosition(selectedTrs[i]);
             var selectedRowID = datatable.fnGetData(position)['id'];
             if(current_username === datatable.fnGetData(position)['username']) {
-                pop_msg('user-msg', 'You cannot delete yourself.', 1); // Alert
+                pop_msg('user-msg', commonLanguge['You cannot delete yourself'], 1); // Alert
                 return;
             }
             selectedRowIDs = selectedRowIDs + selectedRowID + ',';
@@ -190,8 +212,8 @@ function delete_user() {
             "type": "DELETE",
             "url": '/admin/delete-user/' + selectedRowIDs.substring(0, selectedRowIDs.length - 1),
             "success": function(result) {
-                console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
-                pop_msg('user-msg', 'Remove user(s) successfully.', 2); // Success
+                //console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
+                pop_msg('user-msg', commonLanguge['Remove user successful'], 2); // Success
             }
         });
         remove_selected_rows(datatable);
@@ -213,7 +235,7 @@ function save_as_user(row) {
     }
 
     if (selectedRows === 0) {
-        pop_msg('user-msg', 'Select one user!', 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Select one user'], 1);  // Alert
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
@@ -234,7 +256,7 @@ function save_as_user(row) {
         $('#user-msg-container').hide();
         $('#user-modal-msg-container').hide();
     } else {
-        pop_msg('user-msg', 'Selected more than one user!', 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Selected more than one user'], 1);  // Alert
     }
 }
 
@@ -254,7 +276,7 @@ function edit_user(row) {
     }
 
     if (selectedRows === 0) {
-        pop_msg('user-msg', 'Select one user to edit!', 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Select one user'], 1);  // Alert
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
@@ -281,7 +303,7 @@ function edit_user(row) {
         });
         prepare_edit_user_modal();
     } else {
-        pop_msg('user-msg', 'Selected more than one user!', 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Selected more than one user'], 1);  // Alert
     }
 }
 
@@ -512,6 +534,8 @@ function render_resource_datatable() {
             if (e) e.preventDefault();
             edit_resource(this);
         });
+
+        $("#update").off('click');
 
         // Update resource
         $("#update").on('click', function(e) {
