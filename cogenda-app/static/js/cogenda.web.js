@@ -13,9 +13,6 @@ $(document).ready(function() {
         }
     });
 
-    // Set values to element
-    $()
-
     $('video').mediaelementplayer({
         features: ['playpause','progress','current','duration','tracks','volume','fullscreen']
     });
