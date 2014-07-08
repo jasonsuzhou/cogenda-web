@@ -75,7 +75,8 @@ class AdminController(BaseController):
     def init_common_language(self):
         modify_user = _('Modify User')
         save = _('Save')
-        return json.dumps({'Modify User':modify_user, 'Save':save})
+        create_user = _('Create User')
+        return json.dumps({'Create user': create_user, 'Modify User':modify_user, 'Save':save})
 
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
