@@ -261,3 +261,18 @@ function pop_msg(msg_label, msg, type) {
     $('#'+msg_label).text(msg);
     $('#'+msg_label+'-container').show();
 }
+
+function switch_locale(locale) {
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/switch/' + locale,
+        success: function(resp) {
+            var result = JSON.parse(resp);
+            if (result.is_success) {
+                window.location = '/article/'+result.uri;
+            }
+        }
+    });
+}

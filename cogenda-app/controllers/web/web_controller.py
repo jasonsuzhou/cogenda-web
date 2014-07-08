@@ -53,6 +53,7 @@ class WebController(BaseController):
         private_resources = Resource.list_resource_by_type(cherrypy.request.db, '6')
         return self.filter_resources_by_vendor(private_resources)
 
+
     @route('/check-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     def check_resource(self, rid):
@@ -71,6 +72,7 @@ class WebController(BaseController):
 
 
     @route('/switch/:locale')
+    @cherrypy.tools.json_out(content_type='application/json')
     def switch_locale(self, locale):
         cherrypy.tools.I18nTool.set_custom_language(locale)
         cherrypy.tools.I18nTool.default=locale
@@ -80,7 +82,7 @@ class WebController(BaseController):
         if path.startswith('/article'): 
             article_name = path.replace('/article/', '')
             self.LAST_ARTICLE_FLAG = article_name 
-        return self.serve_article(self.LAST_ARTICLE_FLAG)
+        return json.dumps({'is_success': True, 'uri':self.LAST_ARTICLE_FLAG})
 
 
     @route('/download/:resource_id')
