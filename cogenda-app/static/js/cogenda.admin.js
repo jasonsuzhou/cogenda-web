@@ -44,6 +44,8 @@ function ready_optimized_page(uri) {
 
     ready_navigation_menu();
 
+    ready_common_i18n_info();
+
     switch (uri) {
     case "/admin/user-mgmt":
         ready_user_mgmt();
@@ -53,6 +55,21 @@ function ready_optimized_page(uri) {
         break;
     }
 }
+
+var commonLanguge;
+
+function ready_common_i18n_info() {
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/admin/init-common-language',
+        success: function(data) {
+            commonLanguge = $.parseJSON(data);
+        }
+    });
+}
+
 
 /**
  * Document ready for navigation menu.
@@ -269,16 +286,7 @@ function edit_user(row) {
 }
 
 function prepare_edit_user_modal() {
-    var commonLanguge;
-    $.ajax({
-        type: 'GET',
-        async: false,
-        dataType: 'json',
-        url:'/admin/init-common-language',
-        success: function(data) {
-            commonLanguge = $.parseJSON(data);
-        }
-    });
+
     // Reset parsley
     $('#new-modal').parsley().reset();
 
@@ -381,8 +389,7 @@ function reset_user_create_modal() {
     $('#new-modal').parsley().reset();
 
     // Reset title/button
-    $('#title').text("Create User");
-    //$('#save').text("Create");
+    $('#title').text(commonLanguge['Create User']);
 
     // Reset values here
     $('#uid').val("");
