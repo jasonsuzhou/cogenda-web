@@ -111,7 +111,7 @@ msgstr "移除用户成功！"
 
 #: cogenda-app/controllers/admin/admin_controller.py:82
 msgid "You cannot delete yourself"
-msgstr "你不能删除你自己！"
+msgstr "您不能删除您自己！"
 
 #: cogenda-app/controllers/admin/admin_controller.py:91
 msgid "sProcessing"
@@ -213,16 +213,16 @@ msgstr "需要一个账户?"
 
 #: cogenda-app/controllers/web/web_controller.py:95
 msgid "Please fill your request form"
-msgstr "请填写请求表单"
+msgstr "请填写申请表单"
 
 #: cogenda-app/controllers/web/web_controller.py:96
 msgid "Request your account"
-msgstr "申请你的账户"
+msgstr "申请您的账户"
 
 #: cogenda-app/controllers/web/web_controller.py:130
 #, fuzzy
 msgid "Request mail send successfully"
-msgstr "账户请求邮件发送成功！"
+msgstr "账户申请邮件发送成功！"
 
 #: cogenda-app/templates/admin/layout/layout.html:26
 #: cogenda-app/templates/admin/user-mgmt/user-container.html:8
@@ -241,7 +241,7 @@ msgstr "注销"
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-mgmt.html:4
 msgid "Loading resources table"
-msgstr "正在加载资源列表"
+msgstr "正在加载资源列表..."
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:6
 msgid "Update Resource"
@@ -294,7 +294,7 @@ msgstr "删除"
 
 #: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:26
 msgid "Loading users table"
-msgstr "正在加载用户列表"
+msgstr "正在加载用户列表..."
 
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:25
 msgid "Reset Password"

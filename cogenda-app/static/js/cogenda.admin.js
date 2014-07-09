@@ -490,8 +490,10 @@ function render_resource_select(selectedRole, selectedResources) {
             "success": function(result) {
                 // console.log(result);
                 $('#resource').multiSelect('refresh');
+                var k = 0;
                 for (var i = 0; i < result.length - 1; i++) {
-                    $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: i });
+                    if(result[i].type === '6')
+                        $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: k++ });
                 }
                 $('#resource').multiSelect('deselect_all');
                 if (typeof(selectedResources) !== 'undefined') {

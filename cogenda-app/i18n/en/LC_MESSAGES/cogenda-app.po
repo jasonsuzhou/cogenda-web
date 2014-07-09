@@ -241,7 +241,7 @@ msgstr "Sign Out"
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-mgmt.html:4
 msgid "Loading resources table"
-msgstr "Loading resources table"
+msgstr "Loading resources table..."
 
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:6
 msgid "Update Resource"
@@ -294,7 +294,7 @@ msgstr "Delete"
 
 #: cogenda-app/templates/admin/user-mgmt/user-mgmt.html:26
 msgid "Loading users table"
-msgstr "Loading users table"
+msgstr "Loading users table..."
 
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:25
 msgid "Reset Password"

@@ -154,15 +154,15 @@ class WebController(BaseController):
 
     def _retrieve_nav_info(self):
         site_navs = self.settings.web.site_navs
-        sub_nav_captions=self.settings.web.sub_nav_captions.split('|')
-        nav_infos=[]
+        sub_nav_captions = self.settings.web.sub_nav_captions.split('|')
+        nav_infos = []
         for idx, nav_name in enumerate(site_navs.split('|')):
             link = '/'
             if nav_name.lower().strip() != 'home':
                link = "%sarticle/%s" %(link, nav_name.lower().strip())
             caption = _(nav_name)
             sub_nav_caption = sub_nav_captions[idx]
-            subnav_content=self.render_template('web/subnav/subnav-%s.md' %(nav_name.lower()), sub_nav_caption=sub_nav_caption)
+            subnav_content = self.render_template('web/subnav/subnav-%s.md' %(nav_name.lower()), sub_nav_caption=sub_nav_caption)
             nav = (link, caption, subnav_content)
             nav_infos.append(nav)
         return nav_infos
@@ -189,16 +189,14 @@ class WebController(BaseController):
         best_choice = 'index.md'
         best_ratio = None
         for (key, val) in asset_files.items():
-           asset= os.path.splitext(val)[0] 
+           asset = os.path.splitext(val)[0]
            ratio = fuzz.ratio(asset_name, asset)
            if not best_ratio:
                best_ratio = ratio
                best_choice = val
-
            if best_ratio < ratio:
                best_ratio = ratio
                best_choice = val
-
         return best_choice
 
 
@@ -242,7 +240,6 @@ class WebController(BaseController):
         if match:
             country_code = match.country
             log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
-
         vendor = 'AliYun'
         if country_code and country_code == 'CN':
             log.info('load resource from vendor AliYun OSS')
