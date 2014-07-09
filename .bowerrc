@@ -1,3 +1,7 @@
 {
-    "directory": "cogenda-app/static/components"
+    "directory": "cogenda-app/static/bower-components",
+    "json": "bower.json",
+    "scripts": {
+            "postinstall": "grunt wdep"
+        }
 }

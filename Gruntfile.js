@@ -46,6 +46,20 @@ module.exports = function(grunt) {
         },
         clean: {
             dist: ['cogenda-app/static/css/cogenda.min.css', 'cogenda-app/static/js/cogenda.min.js']
+        },
+        wiredep: {
+            target: {
+                src: [
+                    'cogenda-app/templates/web/layout/layout.html',
+                ],
+                cwd: '',
+                dependencies: true,
+                devDependencies: false,
+                exclude: [/bootstrap-switch/],
+                fileTypes: {},
+                ignorePath: '../../..',
+                overrides: {}
+            }
         }
     });
 
@@ -55,7 +69,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-svgmin');
+    grunt.loadNpmTasks('grunt-wiredep');
 
     // Register tasks
     grunt.registerTask('default', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
+    grunt.registerTask('wdep', ['wiredep']);
 };
