@@ -8,10 +8,10 @@ $(document).ready(function() {
      * Setting parsley locale
      *****************************/
     locale = $('#locale').val();
-    if (locale === 'zh') {
+    if (locale.indexOf('zh') >=0) {
         locale = locale + '_cn';
     }
-    if (locale === 'en_US') {
+    if (locale.indexOf('en') >=0) {
         locale = 'en';
     }
     window.ParsleyValidator.setLocale(locale);
