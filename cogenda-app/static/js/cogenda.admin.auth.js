@@ -5,7 +5,7 @@ $(document).ready(function() {
      *****************************/
     locale = $('#locale').val();
     if (locale.indexOf('zh') >=0) {
-        locale = locale + '_cn';
+        locale = 'zh_cn';
     }
     if (locale.indexOf('en') >=0) {
         locale = 'en';
