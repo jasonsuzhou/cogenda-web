@@ -1549,3 +1549,7 @@ textarea.parsley-error {
 #header li ul li a:hover {
     text-decoration: underline;
 }
+
+ul.bxslider {
+    color: #F2F2F2;
+}
