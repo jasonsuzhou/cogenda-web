@@ -40,7 +40,8 @@ class AuthController(BaseController):
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg}
         else:
-            resp = {'auth_success': True, 'msg': _('User authenticated successfully'), 'refer': refer}
+            menu = '<a id="login-username" href="#"><span>'+username+'</span></a><ul><li><a href="/web/logout">'+_('Sign Out')+'</a></li><li><a id="my-profile">'+_('My Profile')+'</a></li></ul>'
+            resp = {'auth_success': True, 'msg': _('User authenticated successfully'), 'refer': refer, 'element': menu}
         return json.dumps(resp)
 
 

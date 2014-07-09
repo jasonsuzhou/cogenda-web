@@ -21,16 +21,18 @@ $(document).ready(function() {
      * Setting parsley locale
      *****************************/
     locale = $('#locale').val();
-    if (locale === 'zh') {
-        locale = locale + '_cn';
+    if (locale.indexOf('zh') >=0) {
+        locale = 'zh_cn';
     }
-    if (locale === 'en_US') {
+    if (locale.indexOf('en') >=0) {
         locale = 'en';
     }
     window.ParsleyValidator.setLocale(locale);
 
-    if($('#login-username').text().trim()) {
+    // Menu
+    if(commonLanguge['username'].trim().length > 0) {
         $('#login').hide();
+        show_profile_menu(commonLanguge['username'], commonLanguge['myprofile'], commonLanguge['signout']);
         $('#user-profile-container').show();
     } else {
         $('#login').show();
@@ -82,7 +84,7 @@ $(document).ready(function() {
                 }
                 $('#loginModal').modal('hide');
                 $('#login').hide();
-                $('#login-username').text(username);
+                show_profile_menu(username, commonLanguge['myprofile'], commonLanguge['signout']);
                 $('#user-profile-container').show();
 
                 // If @ download page
@@ -145,31 +147,6 @@ $(document).ready(function() {
         } else {
             console.log('Client side validate error.');
         }
-    });
-
-    $("#my-profile").on('click', function (event) {
-        if (event) event.preventDefault();
-        $('#password1').val('');
-        $('#password2').val('');
-        $('#userProfileModal').parsley().reset();
-        $('#userProfileModal').modal('show');
-        $('#change-password-msg-container').hide();
-
-        var username = $('#login-username').text();
-
-        var fetchUserProfile = $.ajax({
-            "dataType": 'json',
-            "type": "GET",
-            "url": "/user/user-profile/" + username
-        });
-
-        fetchUserProfile.done(function (result) {
-            //$('#uid').val(result.id);
-            $('#u_name').text(result.username);
-            $('#u_company').text(result.company);
-            $('#u_email').text(result.email);
-            $('#u_mobile').text(result.mobile);
-        });
     });
 
     $("#change-password-btn").on('click', function (event) {
@@ -286,5 +263,34 @@ function switch_locale(locale) {
                 window.location = '/article/'+result.uri;
             }
         }
+    });
+}
+
+function show_profile_menu(userName, myProfile, signOut) {
+    $('#user-profile-container').append('<a id="login-username" href="#"><span>'+userName+'</span></a><ul><li><a href="/web/logout">'+signOut+'</a></li><li><a id="my-profile">'+myProfile+'</a></li></ul>');
+
+    $("#my-profile").on('click', function (event) {
+        if (event) event.preventDefault();
+        $('#password1').val('');
+        $('#password2').val('');
+        $('#userProfileModal').parsley().reset();
+        $('#userProfileModal').modal('show');
+        $('#change-password-msg-container').hide();
+
+        var username = $('#login-username').text();
+
+        var fetchUserProfile = $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": "/user/user-profile/" + username
+        });
+
+        fetchUserProfile.done(function (result) {
+            //$('#uid').val(result.id);
+            $('#u_name').text(result.username);
+            $('#u_company').text(result.company);
+            $('#u_email').text(result.email);
+            $('#u_mobile').text(result.mobile);
+        });
     });
 }

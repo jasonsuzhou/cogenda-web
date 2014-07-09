@@ -375,33 +375,33 @@ msgstr "Change Your Password"
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#~ msgid "Status"
-#~ msgstr "Status"
+msgid "Status"
+msgstr "Status"
 
-#~ msgid "Public"
-#~ msgstr "Public"
+msgid "Public"
+msgstr "Public"
 
-#~ msgid "Restricted"
-#~ msgstr "Restricted"
+msgid "Restricted"
+msgstr "Restricted"
 
-#~ msgid "Home"
-#~ msgstr "Home"
+msgid "Home"
+msgstr "Home"
 
-#~ msgid "Products"
-#~ msgstr "Products"
+msgid "Products"
+msgstr "Products"
 
-#~ msgid "Applications"
-#~ msgstr "Applications"
+msgid "Applications"
+msgstr "Applications"
 
-#~ msgid "Licensing"
-#~ msgstr "Licensing"
+msgid "Licensing"
+msgstr "Licensing"
 
-#~ msgid "Downloads"
-#~ msgstr "Downloads"
+msgid "Downloads"
+msgstr "Downloads"
 
-#~ msgid "Corporate"
-#~ msgstr "Corporate"
+msgid "Corporate"
+msgstr "Corporate"
 
-#~ msgid "Contact"
-#~ msgstr "Contact"
+msgid "Contact"
+msgstr "Contact"
 

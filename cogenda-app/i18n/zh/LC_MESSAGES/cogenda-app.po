@@ -375,33 +375,33 @@ msgstr "修改您的密码"
 msgid "Confirm Password"
 msgstr "确认密码"
 
-#~ msgid "Status"
-#~ msgstr "状态"
+msgid "Status"
+msgstr "状态"
 
-#~ msgid "Public"
-#~ msgstr "公开的"
+msgid "Public"
+msgstr "公开的"
 
-#~ msgid "Restricted"
-#~ msgstr "受限的"
+msgid "Restricted"
+msgstr "受限的"
 
-#~ msgid "Home"
-#~ msgstr "首页"
+msgid "Home"
+msgstr "首页"
 
-#~ msgid "Products"
-#~ msgstr "产品展示"
+msgid "Products"
+msgstr "产品展示"
 
-#~ msgid "Applications"
-#~ msgstr "应用案例"
+msgid "Applications"
+msgstr "应用案例"
 
-#~ msgid "Licensing"
-#~ msgstr "许可"
+msgid "Licensing"
+msgstr "许可"
 
-#~ msgid "Downloads"
-#~ msgstr "下载中心"
+msgid "Downloads"
+msgstr "下载中心"
 
-#~ msgid "Corporate"
-#~ msgstr "关于我们"
+msgid "Corporate"
+msgstr "关于我们"
 
-#~ msgid "Contact"
-#~ msgstr "联系方式"
+msgid "Contact"
+msgstr "联系方式"
 
