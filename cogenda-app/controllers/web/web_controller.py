@@ -46,7 +46,7 @@ class WebController(BaseController):
     @route('/resources')
     @cherrypy.tools.json_out()
     def load_resource(self):
-        log.debug("Fetch all resources.")
+        log.debug("[Cogenda-web] - Fetch all resources.")
         all_resources = Resource.list_active_resources(cherrypy.request.db)
         return self.filter_resources_by_vendor(all_resources)
 
@@ -54,7 +54,7 @@ class WebController(BaseController):
     @route('/private-resources')
     @cherrypy.tools.json_out()
     def load_private_resource(self):
-        log.debug("Fetch private resources.")
+        log.debug("[Cogenda-web] - Fetch private resources.")
         private_resources = Resource.list_resource_by_type(cherrypy.request.db, '6')
         return self.filter_resources_by_vendor(private_resources)
 
@@ -62,7 +62,7 @@ class WebController(BaseController):
     @route('/check-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     def check_resource(self, rid):
-        log.debug("Check restricted resource: %s." %rid)
+        log.debug("[Cogenda-web] - Check restricted resource: %s." %rid)
         try:
             resource = Resource.get_by_rid(cherrypy.request.db, rid)
         except DBAPIError, err:
@@ -114,7 +114,7 @@ class WebController(BaseController):
 
     @route('/download/:resource_id')
     def serve_downloads(self, resource_id):
-        log.debug("Fetch db resource id: %s" % resource_id)
+        log.debug("[Cogenda-web] - Fetch db resource id: %s" % resource_id)
         try:
             resource = Resource.get_by_rid(cherrypy.request.db, resource_id)
         except DBAPIError, err:
@@ -137,7 +137,7 @@ class WebController(BaseController):
         name = json_request['username']
         sender = json_request['email']
         message = json_request['notes']
-        log.debug("Request an account: %s,%s,%s" %(name, sender, message))
+        log.debug("[Cogenda-web] - Request an account: %s,%s,%s" %(name, sender, message))
         try:
             self.send_mail('mail/req_account_tpl.html', name, 'Support', self.settings.mailer.smtp_user, 'kkiiiu@gmail.com', message)
         except Exception as err:
@@ -150,7 +150,7 @@ class WebController(BaseController):
     @cherrypy.tools.json_out()
     @authenticated
     def fetch_user_profile(self, username):
-        log.debug("Fetch user profile: %s" %username)
+        log.debug("[Cogenda-web] - Fetch user profile: %s" %username)
         user = User.get_by_username(cherrypy.request.db, username)
         user_in_json = self.jsonify_model(user)
         return user_in_json
@@ -163,7 +163,7 @@ class WebController(BaseController):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
-        log.debug("Change user password: %s" %json_user['username'])
+        log.debug("[Cogenda-web] - Change user password: %s" %json_user['username'])
         origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
         user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'])
         return self.jsonify_model(user)
@@ -233,8 +233,8 @@ class WebController(BaseController):
 
     def auth_private_resource(self, resource, resources_in_json):
         restricted_res = "," + self.user[3] + ","
-        log.debug('[Cogenda] - User:%s, own resource:%s' %(self.user[0], restricted_res))
-        log.debug('[Cogenda] - User requires resource:%s' %resource.id)
+        log.debug('[Cogenda-web] - User:%s, own resource:%s' %(self.user[0], restricted_res))
+        log.debug('[Cogenda-web] - User requires resource:%s' %resource.id)
         # Resource
         if self.user[2] == '1':
             return

@@ -42,9 +42,10 @@ class AuthController(BaseController):
         error_msg = self.check_credentials(username, password, client)
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg}
-            log.debug('[Cogenda] - Auth failed msg: %s,%s,%s' %(username, password, error_msg))
+            log.debug('[Cogenda-web] - Auth failed msg: %s,%s,%s' %(username, password, error_msg))
         else:
             resp = {'auth_success': True, 'msg': _('User authenticated successfully'), 'refer': refer}
+            log.debug('[Cogenda-web] - User %s login successfully.' % username)
         return json.dumps(resp)
 
 

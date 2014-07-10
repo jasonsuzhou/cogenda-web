@@ -32,7 +32,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     @authenticated
     def user_mgmt_data(self):
-        log.debug('[Cogenda] - Fetch all user.')
+        log.debug('[Cogenda-web] - Fetch all user.')
         all_users = User.list(cherrypy.request.db)
         users_in_json = []
         for user in all_users:
@@ -45,7 +45,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def get_user_by_id(self, uid):
-        log.debug('[Cogenda] - Fetch user:%s' % uid)
+        log.debug('[Cogenda-web] - Fetch user:%s' % uid)
         user = User.get_by_uid(cherrypy.request.db, uid)
         user_in_json = self.jsonify_model(user)
         return user_in_json
@@ -115,7 +115,7 @@ class AdminController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
 
-        log.debug('[Cogenda] - Create user:%s' % json_user['username'])
+        log.debug('[Cogenda-web] - Create user:%s' % json_user['username'])
 
         # Check username
         username_checking = self.check_username(json_user['username'])
@@ -145,7 +145,7 @@ class AdminController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
 
-        log.debug('[Cogenda] - Update user:%s' % json_user['username'])
+        log.debug('[Cogenda-web] - Update user:%s' % json_user['username'])
 
         # Get original user by id
         origin_user = User.get_by_uid(cherrypy.request.db, json_user['id'])
@@ -177,7 +177,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def destroy_user(self, uid):
-        log.debug('[Cogenda] - Delete users:%s' % uid)
+        log.debug('[Cogenda-web] - Delete users:%s' % uid)
         ids = uid.split(",")
         count = []
         for id in ids:
@@ -189,7 +189,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     @authenticated
     def resource_mgmt_data(self):
-        log.debug('[Cogenda] - Fetch all resources.')
+        log.debug('[Cogenda-web] - Fetch all resources.')
         all_resources = Resource.list(cherrypy.request.db)
         resources_in_json = []
 
@@ -218,7 +218,7 @@ class AdminController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_resource = json.loads(rawbody)
 
-        log.debug('[Cogenda] - Update resource:%s' % json_resource['id'])
+        log.debug('[Cogenda-web] - Update resource:%s' % json_resource['id'])
 
         ids = []
         resources_in_json = []
@@ -238,7 +238,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def get_resource_by_id(self, rid):
-        log.debug('[Cogenda] - Fetch resource:%s' % rid)
+        log.debug('[Cogenda-web] - Fetch resource:%s' % rid)
         ids = []
         resources_in_json = []
         if ":" in rid:
@@ -264,7 +264,7 @@ class AdminController(BaseController):
         chars = string.letters + string.digits
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
         msg = 'Your password has been reset to: '+ gen_pwd + '.'
-        log.debug('[Cogenda] - Reset password for user:%s' % name)
+        log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:
             self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
 
@@ -297,7 +297,7 @@ class AdminController(BaseController):
 
 
     def check_username(self, username):
-        log.debug('[Cogenda] - Check username:%s' % username)
+        log.debug('[Cogenda-web] - Check username:%s' % username)
         user = User.get_by_username(cherrypy.request.db, username)
         if not (user is None):
             return  _('The username is existing')
