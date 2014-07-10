@@ -48,7 +48,7 @@ module.exports = function(grunt) {
             dist: ['cogenda-app/static/css/cogenda.min.css', 'cogenda-app/static/js/cogenda.min.js']
         },
         wiredep: {
-            target: {
+            web: {
                 src: [
                     'cogenda-app/templates/web/layout/layout.html',
                 ],
@@ -56,6 +56,19 @@ module.exports = function(grunt) {
                 dependencies: true,
                 devDependencies: false,
                 exclude: ['bootstrap.css', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect'],
+                fileTypes: {},
+                ignorePath: '../../..',
+                overrides: {}
+            },
+
+            admin: {
+                src: [
+                    'cogenda-app/templates/admin/layout/layout-include-js.html',
+                ],
+                cwd: '',
+                dependencies: true,
+                devDependencies: false,
+                exclude: ['mediaelement', 'bxslider-4'],
                 fileTypes: {},
                 ignorePath: '../../..',
                 overrides: {}
@@ -73,5 +86,5 @@ module.exports = function(grunt) {
 
     // Register tasks
     grunt.registerTask('default', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
-    grunt.registerTask('web', ['wiredep']);
+    grunt.registerTask('web', ['wiredep:web', 'wiredep:admin']);
 };
