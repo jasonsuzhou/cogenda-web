@@ -212,6 +212,9 @@ $(document).ready(function() {
 
     $('.resource-class').on('click', function (event) {
         if (event) event.preventDefault();
+
+        $('#download-msg-container').hide();
+
         var r_id = event.target.children[0].value;
         var checkResource = $.ajax({
             "dataType": 'json',
@@ -221,7 +224,9 @@ $(document).ready(function() {
 
         checkResource.done(function (resp) {
             var result = JSON.parse(resp);
-            if (result.auth_status) {
+            if (typeof(result.auth_status) === 'undefined') {
+                pop_msg('download-msg', result.msg, 0);
+            } else if (result.auth_status) {
                 self.location = result.link;
             } else {
                 pop_msg('user-login-msg', result.msg, 1);

@@ -6,6 +6,9 @@ from models import User
 from lib.i18ntool import ugettext as _
 import json
 
+import logging
+log = logging.getLogger(__name__)
+
 class AuthController(BaseController):
 
     @route('/admin/login')
@@ -39,6 +42,7 @@ class AuthController(BaseController):
         error_msg = self.check_credentials(username, password, client)
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg}
+            log.debug('[Cogenda] - Auth failed msg: %s,%s,%s' %(username, password, error_msg))
         else:
             resp = {'auth_success': True, 'msg': _('User authenticated successfully'), 'refer': refer}
         return json.dumps(resp)

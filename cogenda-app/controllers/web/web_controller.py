@@ -13,8 +13,10 @@ import os
 import random
 import json
 from geoip import geolite2
+from sqlalchemy.exc import DBAPIError
 
 log = logging.getLogger(__name__)
+
 class WebController(BaseController):
 
     LAST_ARTICLE_FLAG='index'
@@ -44,12 +46,15 @@ class WebController(BaseController):
     @route('/resources')
     @cherrypy.tools.json_out()
     def load_resource(self):
+        log.debug("Fetch all resources.")
         all_resources = Resource.list_active_resources(cherrypy.request.db)
         return self.filter_resources_by_vendor(all_resources)
+
 
     @route('/private-resources')
     @cherrypy.tools.json_out()
     def load_private_resource(self):
+        log.debug("Fetch private resources.")
         private_resources = Resource.list_resource_by_type(cherrypy.request.db, '6')
         return self.filter_resources_by_vendor(private_resources)
 
@@ -57,7 +62,14 @@ class WebController(BaseController):
     @route('/check-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     def check_resource(self, rid):
-        resource = Resource.get_by_rid(cherrypy.request.db, rid)
+        log.debug("Check restricted resource: %s." %rid)
+        try:
+            resource = Resource.get_by_rid(cherrypy.request.db, rid)
+        except DBAPIError, err:
+            log.error('Database operation error %s' % err)
+            return json.dumps({'msg': _('Encounter error in server')})
+
+        # 4-AllUser - Software Packages, 5-AllUser - Installer, 6-Private
         if resource.type == '4' or resource.type == '5' or resource.type == '6':
             if self.user is None:
                 return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
@@ -103,7 +115,11 @@ class WebController(BaseController):
     @route('/download/:resource_id')
     def serve_downloads(self, resource_id):
         log.debug("Fetch db resource id: %s" % resource_id)
-        resource = Resource.get_by_rid(cherrypy.request.db, resource_id)
+        try:
+            resource = Resource.get_by_rid(cherrypy.request.db, resource_id)
+        except DBAPIError, err:
+            log.error('Database operation error %s' % err)
+            return json.dumps({'msg': _('Encounter error in server')})
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
         cd = 'attachment; filename="%s"' % resource.name
         cherrypy.response.headers["Content-Disposition"] = cd
@@ -121,6 +137,7 @@ class WebController(BaseController):
         name = json_request['username']
         sender = json_request['email']
         message = json_request['notes']
+        log.debug("Request an account: %s,%s,%s" %(name, sender, message))
         try:
             self.send_mail('mail/req_account_tpl.html', name, 'Support', self.settings.mailer.smtp_user, 'kkiiiu@gmail.com', message)
         except Exception as err:
@@ -132,7 +149,8 @@ class WebController(BaseController):
     @route('/user/user-profile/:username')
     @cherrypy.tools.json_out()
     @authenticated
-    def request_account(self, username):
+    def fetch_user_profile(self, username):
+        log.debug("Fetch user profile: %s" %username)
         user = User.get_by_username(cherrypy.request.db, username)
         user_in_json = self.jsonify_model(user)
         return user_in_json
@@ -145,9 +163,8 @@ class WebController(BaseController):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
-
+        log.debug("Change user password: %s" %json_user['username'])
         origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
-
         user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'])
         return self.jsonify_model(user)
 
@@ -216,6 +233,8 @@ class WebController(BaseController):
 
     def auth_private_resource(self, resource, resources_in_json):
         restricted_res = "," + self.user[3] + ","
+        log.debug('[Cogenda] - User:%s, own resource:%s' %(self.user[0], restricted_res))
+        log.debug('[Cogenda] - User requires resource:%s' %resource.id)
         # Resource
         if self.user[2] == '1':
             return
@@ -265,6 +284,7 @@ class WebController(BaseController):
                     else:
                         all_resources.remove(next_resource)
             # Processing picked resource
+            # 6-Private
             if _resource.type == '6':
                 if self.user:
                     self.auth_private_resource(_resource, resources_in_json)

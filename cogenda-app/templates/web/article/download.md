@@ -7,7 +7,15 @@ Downloads
 
 {% endmarkdown2 %}
 
-<br /><br />
+
+<br />
+
+<div id="download-msg-container" class="alert alert-warning" style="display: none;">
+    <i class="fa fa-times-circle sign"></i>
+    <lable id="download-msg"></lable>
+</div>
+
+<br />
 
 <div id="private-area" style="display: none;">
 
