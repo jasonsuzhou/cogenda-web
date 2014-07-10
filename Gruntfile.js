@@ -55,7 +55,7 @@ module.exports = function(grunt) {
                 cwd: '',
                 dependencies: true,
                 devDependencies: false,
-                exclude: [/bootstrap-switch/],
+                exclude: ['bootstrap.css', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect'],
                 fileTypes: {},
                 ignorePath: '../../..',
                 overrides: {}
