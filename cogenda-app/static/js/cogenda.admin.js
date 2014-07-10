@@ -16,24 +16,29 @@ $(document).ready(function() {
     }
     window.ParsleyValidator.setLocale(locale);
 
-    // Handle menu click event.
-    $('ul.cl-vnavigation li').each(function(index, li) {
-        $(li).click(function(e) {
-            var sub_menus = $(li).find('ul');
-            if (sub_menus.length > 0) {
-                return;
-            }
-            var parent = $('#main-content');
-            var loading = $('<div id="loading" class="loading"><i class="fa fa-spinner"></i></div>');
-            loading.appendTo(parent);
-            loading.fadeIn(0);
-            var $clink = li.children[0];
-            self.location.href = $clink;
-            $('ul.cl-vnavigation li.active').removeClass('active');
-            $(li).addClass('active');
+    var url = window.location.pathname;
+    if(url === "/admin/login") {
+        ready_login_page();
+    } else {
+        // Handle menu click event.
+        $('ul.cl-vnavigation li').each(function(index, li) {
+            $(li).click(function(e) {
+                var sub_menus = $(li).find('ul');
+                if (sub_menus.length > 0) {
+                    return;
+                }
+                var parent = $('#main-content');
+                var loading = $('<div id="loading" class="loading"><i class="fa fa-spinner"></i></div>');
+                loading.appendTo(parent);
+                loading.fadeIn(0);
+                var $clink = li.children[0];
+                self.location.href = $clink;
+                $('ul.cl-vnavigation li.active').removeClass('active');
+                $(li).addClass('active');
+            });
         });
-    });
-    ready_optimized_page(window.location.pathname);
+        ready_optimized_page(url);
+    }
 });
 
 /**
@@ -70,6 +75,47 @@ function ready_common_i18n_info() {
     });
 }
 
+
+function ready_login_page() {
+    $('#login').on('click', function(event) {
+        if (event) event.preventDefault();
+        if ($('#security-login-form').parsley().validate()) {
+            var username = $('#username').val().trim();
+            var password = $('#password').val().trim();
+            var client = $('#client').val().trim();
+
+            credentials = {
+                username: username,
+                password: password,
+                client: client
+            };
+
+            var authenticate = $.ajax({
+                dataType: 'json',
+                contentType: "application/json",
+                url: '/security/authenticate',
+                data: JSON.stringify(credentials),
+                type: 'POST'
+            });
+
+            authenticate.done(function(resp) {
+                var result = JSON.parse(resp);
+                if (!result.auth_success) {
+                    $('#login-msg').text(result.msg);
+                    $('#login-msg-container').show();
+                    return;
+                }
+                window.location = result.refer;
+            });
+
+            authenticate.fail(function(resp, status) {
+                //TODO: display error msg on ui.
+            });
+        } else {
+            console.log('Client side validate error.');
+        }
+    });
+}
 
 /**
  * Document ready for navigation menu.
