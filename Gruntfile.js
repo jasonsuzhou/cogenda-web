@@ -2,19 +2,6 @@
 module.exports = function(grunt) {
 
     grunt.initConfig({
-        bower:{
-            install: {
-                options: {
-                    targetDir: 'cogenda-app/static/bower-components',
-                    install: true,
-                    layout: 'byComponent', //byType
-                    verbose: true,
-                    //cleanup: false,
-                    cleanTargetDir: false,
-                    cleanBowerDir: false,
-                }
-            }
-        },
         recess: {
             dist: {
                 options: {
@@ -83,9 +70,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-svgmin');
     grunt.loadNpmTasks('grunt-wiredep');
-    grunt.loadNpmTasks('grunt-bower-task');
 
     // Register tasks
     grunt.registerTask('default', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
-    grunt.registerTask('web', ['bower', 'wiredep']);
+    grunt.registerTask('web', ['wiredep']);
 };
