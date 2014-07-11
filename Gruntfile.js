@@ -81,7 +81,7 @@ module.exports = function(grunt) {
                 cwd: '',
                 dependencies: true,
                 devDependencies: false,
-                exclude: ['mediaelement', 'bxslider-4'],
+                exclude: ['mediaelement', 'bxslider-4', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect'],
                 fileTypes: {},
                 ignorePath: '../../..',
                 overrides: {}
