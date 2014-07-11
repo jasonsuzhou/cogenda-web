@@ -64,6 +64,19 @@ module.exports = function(grunt) {
             admin: {
                 src: [
                     'cogenda-app/templates/admin/layout/layout-include-js.html',
+                    'cogenda-app/templates/admin/layout/layout-include-css.html',
+                ],
+                cwd: '',
+                dependencies: true,
+                devDependencies: false,
+                exclude: ['mediaelement', 'bxslider-4'],
+                fileTypes: {},
+                ignorePath: '../../..',
+                overrides: {}
+            },
+            auth: {
+                src: [
+                    'cogenda-app/templates/admin/security/security-container.html',
                 ],
                 cwd: '',
                 dependencies: true,
@@ -86,5 +99,5 @@ module.exports = function(grunt) {
 
     // Register tasks
     grunt.registerTask('default', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
-    grunt.registerTask('web', ['wiredep:web', 'wiredep:admin']);
+    grunt.registerTask('web', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };
