@@ -47,16 +47,6 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        svgmin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: 'cogenda-app/static/images/',
-                    src: '{,*/}*.svg',
-                    dest: 'cogenda-app/static/images/'
-                }]
-            }
-        },
         clean: {
             dist: ['cogenda-app/static/css/cogenda.min.css', 'cogenda-app/static/js/cogenda.min.js']
         },
@@ -112,7 +102,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
     // Register tasks
-    grunt.registerTask('optimize', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
+    grunt.registerTask('optimize', ['clean', 'recess', 'uglify', 'imagemin']);
     //grunt.registerTask('web', ['bower', 'wiredep:web', 'wiredep:admin', 'wiredep:auth']);
     grunt.registerTask('web', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };
