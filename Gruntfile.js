@@ -5,7 +5,7 @@ module.exports = function(grunt) {
         bower:{
             install: {
                 options: {
-                    targetDir: 'cogenda-app/static/bower-components',
+                    targetDir: 'cogenda-app/static/bower_components',
                     install: true,
                     layout: 'byComponent', //byType
                     verbose: true,
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
                 cwd: '',
                 dependencies: true,
                 devDependencies: false,
-                exclude: ['mediaelement', 'bxslider-4'],
+                exclude: ['mediaelement', 'bxslider-4', 'dataTables.css', 'multi-select.js'],
                 fileTypes: {},
                 ignorePath: '../../..',
                 overrides: {}
@@ -113,6 +113,5 @@ module.exports = function(grunt) {
 
     // Register tasks
     grunt.registerTask('default', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
-    grunt.registerTask('install', ['bower']);
-    grunt.registerTask('web', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
+    grunt.registerTask('web', ['bower', 'wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };

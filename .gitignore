@@ -32,4 +32,4 @@ cover/
 .externalToolBuilders
 .settings
 
-cogenda-app/static/bower-components/
+cogenda-app/static/bower_components/
