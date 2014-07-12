@@ -89,14 +89,12 @@ clean-pyc:
 ####################################################################
 #  				     Web Assets Management                         #
 ####################################################################
-web-setup:
+web:
 	@npm install
 	@sudo npm install -g grunt-cli
 	@sudo npm install -g bower
-
-web:
-	@grunt optimize
 	@bower install
+	@grunt optimize
 	@grunt web
 
 ####################################################################

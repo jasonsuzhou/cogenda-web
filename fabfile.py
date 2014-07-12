@@ -64,7 +64,6 @@ def install_app():
         with cd(APP_PATH):
             run("git clone %s" %(COGENDA_REPO))
     with cd(COGENDA_HOME):
-        run("make web-setup")
         run("make web")
         run("./setenv.sh")
     print(red("Auto install cogenda app succeed!"))

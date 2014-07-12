@@ -17,7 +17,6 @@
     $ ./setenv.sh
     $ source venv/bin/activate
     $ brew install node
-    $ make web-setup
     $ make web
     ```
 
