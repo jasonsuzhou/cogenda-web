@@ -1,0 +1,33 @@
+{
+  "name": "cogenda-web",
+  "homepage": "https://github.com/cogenda/cogenda-web",
+  "authors": [
+    "cogenda-dev-team"
+  ],
+  "description": "Cogenda website",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.11.1",
+    "bootstrap": "3.0.0",
+    "jquery-ui": "~1.11.0",
+    "bxslider-4": "~4.1.2",
+    "mediaelement": "2.14.2",
+    "datatables": "~1.9.4",
+    "multiselect": "~0.9.10",
+    "parsleyjs": "~2.0.0",
+    "quicksearch": "~2.0.4",
+    "font-awesome": "~4.0.3",
+    "select2": "~3.4.5",
+    "bootstrap-switch": "~1.8",
+    "datatables-bootstrap3": "0.1"
+  },
+  "resolutions": {
+    "jquery": "1.11.1"
+  }
+}

@@ -51,17 +51,20 @@ def install_app():
     - make app location
     - install db-migrate
     - install dependency libs
+    - install dependency js libs
     """
     if not exists(APP_PATH):
         run("mkdir -p %s" %(APP_PATH))
 
     if exists(COGENDA_HOME):
         with cd(COGENDA_HOME):
+            run("git checkout .")
             run("git pull -f origin master")
     else:
         with cd(APP_PATH):
             run("git clone %s" %(COGENDA_REPO))
     with cd(COGENDA_HOME):
+        run("make web")
         run("./setenv.sh")
     print(red("Auto install cogenda app succeed!"))
 

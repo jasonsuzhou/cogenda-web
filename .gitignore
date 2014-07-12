@@ -23,8 +23,7 @@ parts
 bin/travis_env.txt
 node_modules
 
-*.flv
-*.swf
+
 
 data/
 venv/
@@ -32,3 +31,5 @@ cover/
 
 .externalToolBuilders
 .settings
+
+cogenda-app/static/bower_components/

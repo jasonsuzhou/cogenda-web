@@ -32,6 +32,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     @authenticated
     def user_mgmt_data(self):
+        log.debug('[Cogenda-web] - Fetch all user.')
         all_users = User.list(cherrypy.request.db)
         users_in_json = []
         for user in all_users:
@@ -44,9 +45,9 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def get_user_by_id(self, uid):
+        log.debug('[Cogenda-web] - Fetch user:%s' % uid)
         user = User.get_by_uid(cherrypy.request.db, uid)
         user_in_json = self.jsonify_model(user)
-        user_in_json.append(self.init_user_table_title())
         return user_in_json
 
     def init_user_table_title(self):
@@ -76,7 +77,14 @@ class AdminController(BaseController):
     def init_common_language(self):
         modify_user = _('Modify User')
         save = _('Save')
-        return json.dumps({'Modify User':modify_user, 'Save':save})
+        create_user = _('Create User')
+        select_one_user = _('Select one user')
+        select_more_than_one_user = _('Selected more than one user')
+        remove_user_successful = _('Remove user successful')
+        you_cannot_delete_yourself = _('You cannot delete yourself')
+        return json.dumps({'Create user': create_user, 'Modify User': modify_user, 'Save': save,
+                           'Select one user': select_one_user, 'Selected more than one user': select_more_than_one_user,
+                           'Remove user successful': remove_user_successful, 'You cannot delete yourself': you_cannot_delete_yourself})
 
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -99,7 +107,6 @@ class AdminController(BaseController):
                            'oPaginate_sPrevious':oPaginate_sPrevious,'oPaginate_sNext':oPaginate_sNext,'oPaginate_sLast':oPaginate_sLast})
 
 
-
     @route('/admin/create-user')
     @cherrypy.tools.json_out()
     @authenticated
@@ -107,6 +114,8 @@ class AdminController(BaseController):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
+
+        log.debug('[Cogenda-web] - Create user:%s' % json_user['username'])
 
         # Check username
         username_checking = self.check_username(json_user['username'])
@@ -124,8 +133,7 @@ class AdminController(BaseController):
                 json_user['notes'],
                 json_user['active'])
         user.created_date = datetime.now()
-        temp_user = cherrypy.request.db.add(user)
-        print temp_user
+        cherrypy.request.db.add(user)
         return self.jsonify_model(user)
 
 
@@ -136,6 +144,8 @@ class AdminController(BaseController):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
+
+        log.debug('[Cogenda-web] - Update user:%s' % json_user['username'])
 
         # Get original user by id
         origin_user = User.get_by_uid(cherrypy.request.db, json_user['id'])
@@ -167,6 +177,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def destroy_user(self, uid):
+        log.debug('[Cogenda-web] - Delete users:%s' % uid)
         ids = uid.split(",")
         count = []
         for id in ids:
@@ -178,6 +189,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     @authenticated
     def resource_mgmt_data(self):
+        log.debug('[Cogenda-web] - Fetch all resources.')
         all_resources = Resource.list(cherrypy.request.db)
         resources_in_json = []
 
@@ -206,6 +218,8 @@ class AdminController(BaseController):
         rawbody = cherrypy.request.body.read(int(cl))
         json_resource = json.loads(rawbody)
 
+        log.debug('[Cogenda-web] - Update resource:%s' % json_resource['id'])
+
         ids = []
         resources_in_json = []
         if ":" in json_resource['id']:
@@ -224,6 +238,7 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def get_resource_by_id(self, rid):
+        log.debug('[Cogenda-web] - Fetch resource:%s' % rid)
         ids = []
         resources_in_json = []
         if ":" in rid:
@@ -233,7 +248,6 @@ class AdminController(BaseController):
         all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
         for resource in all_resources:
             resources_in_json.append(self.jsonify_model(resource))
-        resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
 
 
@@ -250,6 +264,7 @@ class AdminController(BaseController):
         chars = string.letters + string.digits
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
         msg = 'Your password has been reset to: '+ gen_pwd + '.'
+        log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:
             self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
 
@@ -257,10 +272,9 @@ class AdminController(BaseController):
             origin_user = User.get_by_username(cherrypy.request.db, name)
             User.update_user_password(cherrypy.request.db, origin_user, gen_pwd)
         except Exception as err:
-            print err
             log.error('Reset password operation error %s' % err)
-            return json.dumps({'is_success': False, 'msg': 'Reset password failure!'})
-        return json.dumps({'is_success': True, 'msg': 'Reset password successfully!'})
+            return json.dumps({'is_success': False, 'msg': _('Reset password failure')})
+        return json.dumps({'is_success': True, 'msg': _('Reset password successfully')})
 
 
     def jsonify_model(self, model):
@@ -283,6 +297,7 @@ class AdminController(BaseController):
 
 
     def check_username(self, username):
+        log.debug('[Cogenda-web] - Check username:%s' % username)
         user = User.get_by_username(cherrypy.request.db, username)
         if not (user is None):
-            return  u"The username is existing."
+            return  _('The username is existing')

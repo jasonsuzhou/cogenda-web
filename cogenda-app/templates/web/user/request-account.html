@@ -9,7 +9,7 @@
             </div>
             <img style="margin-top: -2px" src="/static/images/login-border.png" width="100%" />
             <div class="modal-body">
-                <h2>Request your account</h2>
+                <h2>{{_('Request your account')}}</h2>
                 <div class="form-group">
                     <div class="col-sm-12">
                         <hr />
@@ -27,7 +27,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-user"></i>
                             </span>
-                            <input type="text" id="username2" class="form-control" placeholder="User Name"
+                            <input type="text" id="username2" class="form-control" placeholder="{{_('User Name')}}"
                                 value="" data-parsley-trigger="change" data-parsley-errors-container="#username2-error" required>
                         </div>
                         <div id="username2-error"></div>
@@ -39,7 +39,7 @@
                             <span class="input-group-addon">
                                 <i class="fa fa-envelope"></i>
                             </span>
-                            <input type="email" id="email" class="form-control" placeholder="Email"
+                            <input type="email" id="email" class="form-control" placeholder="{{_('Email')}}"
                                 value="" data-parsley-trigger="change" data-parsley-errors-container="#email-error" required>
                         </div>
                         <div id="email-error"></div>
@@ -48,13 +48,13 @@
                 <div class="form-group spacer">
                     <div class="col-sm-12">
                         <div class="input-group" style="width: 100%">
-                            <textarea id="notes" class="form-control" style="resize:none;height: 120px !important;" placeholder="Notes"></textarea>
+                            <textarea id="notes" class="form-control" style="resize:none;height: 120px !important;" placeholder="{{_('Notes')}}"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <a><u>Please fill your request form.</u></a>
+                <a><u>{{_('Please fill your request form')}}</u></a>
                 <button id="request-account-btn" type="submit" class="btn btn-primary btn-check"></button>
             </div>
         </div>

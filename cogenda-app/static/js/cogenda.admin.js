@@ -3,24 +3,42 @@
  *
  */
 $(document).ready(function() {
-    // Handle menu click event.
-    $('ul.cl-vnavigation li').each(function(index, li) {
-        $(li).click(function(e) {
-            var sub_menus = $(li).find('ul');
-            if (sub_menus.length > 0) {
-                return;
-            }
-            var parent = $('#main-content');
-            var loading = $('<div id="loading" class="loading"><i class="fa fa-spinner"></i></div>');
-            loading.appendTo(parent);
-            loading.fadeIn(0);
-            var $clink = li.children[0];
-            self.location.href = $clink;
-            $('ul.cl-vnavigation li.active').removeClass('active');
-            $(li).addClass('active');
+
+    /******************************
+     * Setting parsley locale
+     *****************************/
+    locale = $('#locale').val();
+    if (locale.indexOf('zh') >=0) {
+        locale = 'zh_cn';
+    }
+    if (locale.indexOf('en') >=0) {
+        locale = 'en';
+    }
+    window.ParsleyValidator.setLocale(locale);
+
+    var url = window.location.pathname;
+    if(url === "/admin/login") {
+        ready_login_page();
+    } else {
+        // Handle menu click event.
+        $('ul.cl-vnavigation li').each(function(index, li) {
+            $(li).click(function(e) {
+                var sub_menus = $(li).find('ul');
+                if (sub_menus.length > 0) {
+                    return;
+                }
+                var parent = $('#main-content');
+                var loading = $('<div id="loading" class="loading"><i class="fa fa-spinner"></i></div>');
+                loading.appendTo(parent);
+                loading.fadeIn(0);
+                var $clink = li.children[0];
+                self.location.href = $clink;
+                $('ul.cl-vnavigation li.active').removeClass('active');
+                $(li).addClass('active');
+            });
         });
-    });
-    ready_optimized_page(window.location.pathname);
+        ready_optimized_page(url);
+    }
 });
 
 /**
@@ -31,6 +49,8 @@ function ready_optimized_page(uri) {
 
     ready_navigation_menu();
 
+    ready_common_i18n_info();
+
     switch (uri) {
     case "/admin/user-mgmt":
         ready_user_mgmt();
@@ -39,6 +59,62 @@ function ready_optimized_page(uri) {
         ready_resource_mgmt();
         break;
     }
+}
+
+var commonLanguge;
+
+function ready_common_i18n_info() {
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/admin/init-common-language',
+        success: function(data) {
+            commonLanguge = $.parseJSON(data);
+        }
+    });
+}
+
+
+function ready_login_page() {
+    $('#login').on('click', function(event) {
+        if (event) event.preventDefault();
+        if ($('#security-login-form').parsley().validate()) {
+            var username = $('#username').val().trim();
+            var password = $('#password').val().trim();
+            var client = $('#client').val().trim();
+
+            credentials = {
+                username: username,
+                password: password,
+                client: client
+            };
+
+            var authenticate = $.ajax({
+                dataType: 'json',
+                contentType: "application/json",
+                url: '/security/authenticate',
+                data: JSON.stringify(credentials),
+                type: 'POST'
+            });
+
+            authenticate.done(function(resp) {
+                var result = JSON.parse(resp);
+                if (!result.auth_success) {
+                    $('#login-msg').text(result.msg);
+                    $('#login-msg-container').show();
+                    return;
+                }
+                window.location = result.refer;
+            });
+
+            authenticate.fail(function(resp, status) {
+                //TODO: display error msg on ui.
+            });
+        } else {
+            console.log('Client side validate error.');
+        }
+    });
 }
 
 /**
@@ -76,7 +152,6 @@ function ready_user_mgmt() {
         render_resource_select($(this).children('option:selected').val());
     });
 
-    console.log('xxxx');
     // Render User datatable
     render_user_datatable();
 }
@@ -88,8 +163,10 @@ function ready_user_mgmt() {
 function render_user_datatable() {
     // Ready common datatable.
     ready_common_datatable("/admin/users", function(datatable) {
+        off_user_click_event();
+
         // Call Add modal
-        $("#add").click(function(e) {
+        $("#add").on('click', function(e) {
             reset_user_create_modal();
             $('#user-new-modal').modal('show');
             $('#user-msg-container').hide();
@@ -97,7 +174,7 @@ function render_user_datatable() {
         });
 
         // Edit by click edit link & row double click
-        $("#edit").click(function(e) {
+        $("#edit").on('click', function(e) {
             if (e) e.preventDefault();
             edit_user();
         });
@@ -107,7 +184,7 @@ function render_user_datatable() {
         });
 
         // Delete users
-        $("#delete").click(function(e) {
+        $("#delete").on('click', function(e) {
             if (e) e.preventDefault();
             delete_user();
         });
@@ -125,7 +202,33 @@ function render_user_datatable() {
             if (e) e.preventDefault();
             reset_password();
         });
+
+        // Save as new user
+        $("#save-as").on('click', function(e) {
+            if (e) e.preventDefault();
+            save_as_user();
+        });
     });
+}
+
+function off_user_click_event() {
+    // Call Add modal
+    $("#add").off('click');
+
+    // Edit by click edit link & row double click
+    $("#edit").off('click');
+
+    // Delete users
+    $("#delete").off('click');
+
+    // Create new user
+    $("#save").off('click');
+
+    // Reset password
+    $("#reset-password").off('click');
+
+    // Save as new user
+    $("#save-as").off('click');
 }
 
 /**
@@ -144,7 +247,7 @@ function delete_user() {
             var position = datatable.fnGetPosition(selectedTrs[i]);
             var selectedRowID = datatable.fnGetData(position)['id'];
             if(current_username === datatable.fnGetData(position)['username']) {
-                pop_msg('user-msg', 'You cannot delete yourself.', 1); // Alert
+                pop_msg('user-msg', commonLanguge['You cannot delete yourself'], 1); // Alert
                 return;
             }
             selectedRowIDs = selectedRowIDs + selectedRowID + ',';
@@ -155,8 +258,8 @@ function delete_user() {
             "type": "DELETE",
             "url": '/admin/delete-user/' + selectedRowIDs.substring(0, selectedRowIDs.length - 1),
             "success": function(result) {
-                console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
-                pop_msg('user-msg', 'Remove user(s) successfully.', 2); // Success
+                //console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
+                pop_msg('user-msg', commonLanguge['Remove user successful'], 2); // Success
             }
         });
         remove_selected_rows(datatable);
@@ -164,31 +267,10 @@ function delete_user() {
 }
 
 /**
- * Edit user
+ * Save as user
  *
  */
-function edit_user(row) {
-    var commonLanguge;
-    $.ajax({
-        type: 'GET',
-        async: false,
-        dataType: 'json',
-        url:'/admin/init-common-language',
-        success: function(data) {
-            commonLanguge = $.parseJSON(data);
-        }
-    });
-    // Reset parsley
-    $('#new-modal').parsley().reset();
-
-    // Reset title/button
-    $('#title').text(commonLanguge['Modify User']);
-    $('#save').text(commonLanguge['Save']);
-
-    // Reset password
-    $('#password').hide();
-    $('#reset-password-container').show();
-
+function save_as_user(row) {
     var datatable = $('#mgmt-datatable').dataTable();
     var selectedRows = datatable.$('tr.row_selected').length;
 
@@ -199,7 +281,48 @@ function edit_user(row) {
     }
 
     if (selectedRows === 0) {
-        pop_msg('user-msg', 'Select one object to view!', 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Select one user'], 1);  // Alert
+    } else if (selectedRows === 1) {
+        var position = datatable.fnGetPosition(selected_row);
+        var selectedRowID = datatable.fnGetData(position)['id'];
+        var fetchUser = $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": '/admin/fetch-user/' + selectedRowID
+        });
+        fetchUser.done(function(result) {
+            // Reset as create user modal
+            reset_user_create_modal();
+            // Role select
+            render_role_select(result.role);
+            // Resource select
+            render_resource_select(result.role, convert_resource(result.resource));
+        });
+        $('#user-new-modal').modal('show');
+        $('#user-msg-container').hide();
+        $('#user-modal-msg-container').hide();
+    } else {
+        pop_msg('user-msg', commonLanguge['Selected more than one user'], 1);  // Alert
+    }
+}
+
+
+/**
+ * Edit user
+ *
+ */
+function edit_user(row) {
+    var datatable = $('#mgmt-datatable').dataTable();
+    var selectedRows = datatable.$('tr.row_selected').length;
+
+    var selected_row = datatable.$('tr.row_selected')[0];
+    if(typeof(row) !== 'undefined') {
+        selected_row = row;
+        selectedRows = 1;
+    }
+
+    if (selectedRows === 0) {
+        pop_msg('user-msg', commonLanguge['Select one user'], 1);  // Alert
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
@@ -224,12 +347,28 @@ function edit_user(row) {
                 // Active switch
                 render_active_switch(result.active);
         });
-        $('#user-new-modal').modal('show');
-        $('#user-msg-container').hide();
-        $('#user-modal-msg-container').hide();
+        prepare_edit_user_modal();
     } else {
-        pop_msg('user-msg', 'Selected more than one object!', 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Selected more than one user'], 1);  // Alert
     }
+}
+
+function prepare_edit_user_modal() {
+
+    // Reset parsley
+    $('#new-modal').parsley().reset();
+
+    // Reset title/button
+    $('#title').text(commonLanguge['Modify User']);
+    $('#save').text(commonLanguge['Save']);
+
+    // Reset password
+    $('#password').hide();
+    $('#reset-password-container').show();
+
+    $('#user-new-modal').modal('show');
+    $('#user-msg-container').hide();
+    $('#user-modal-msg-container').hide();
 }
 
 /**
@@ -318,8 +457,7 @@ function reset_user_create_modal() {
     $('#new-modal').parsley().reset();
 
     // Reset title/button
-    $('#title').text("Create User");
-    //$('#save').text("Create");
+    $('#title').text(commonLanguge['Create User']);
 
     // Reset values here
     $('#uid').val("");
@@ -394,20 +532,25 @@ function render_resource_select(selectedRole, selectedResources) {
         var resource_list = $.ajax({
             "dataType": 'json',
             "type": "GET",
-            "url": "/admin/resources"
+            "url": "/admin/resources",
+            "success": function(result) {
+                // console.log(result);
+                $('#resource').multiSelect('refresh');
+                var k = 0;
+                for (var i = 0; i < result.length - 1; i++) {
+                    if(result[i].type === '6')
+                        $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: k++ });
+                }
+                $('#resource').multiSelect('deselect_all');
+                if (typeof(selectedResources) !== 'undefined') {
+                    $('#resource').multiSelect('select', selectedResources);
+                }
+                $('#resource-container').show();
+            }
         });
 
         resource_list.done(function(result) {
-            // console.log(result);
-            $('#resource').multiSelect('refresh');
-            for (var i = 0; i < result.length; i++) {
-                $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: i });
-            }
-            $('#resource').multiSelect('deselect_all');
-            if (typeof(selectedResources) !== 'undefined') {
-                $('#resource').multiSelect('select', selectedResources);
-            }
-            $('#resource-container').show();
+
         });
     } else {
         $('#resource-container').hide();
@@ -439,6 +582,8 @@ function render_resource_datatable() {
             if (e) e.preventDefault();
             edit_resource(this);
         });
+
+        $("#update").off('click');
 
         // Update resource
         $("#update").on('click', function(e) {

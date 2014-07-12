@@ -7,7 +7,15 @@ Downloads
 
 {% endmarkdown2 %}
 
-<br /><br />
+
+<br />
+
+<div id="download-msg-container" class="alert alert-warning" style="display: none;">
+    <i class="fa fa-times-circle sign"></i>
+    <lable id="download-msg"></lable>
+</div>
+
+<br />
 
 <div id="private-area" style="display: none;">
 
@@ -45,18 +53,6 @@ Downloads
     <td width="300"></td>
     <td> </td>
   </tr>
-  <tr> 
-    <td>Visual TCAD 1.7.4 - Windows 64bit</td> 
-    <td><a href="../downloads/trial/VisualTCAD-1.7.4-14-Setup-Win64-Flexlm.exe">VisualTCAD-1.7.4-14-Setup-Win64-Flexlm.exe</a></td> 
-  </tr> 
-  <tr> 
-    <td>Visual TCAD 1.7.4 - Windows 32bit</td> 
-    <td><a href="../downloads/trial/VisualTCAD-1.7.4-14-Setup-Win32-Flexlm.exe">VisualTCAD-1.7.4-14-Setup-Win32-Flexlm.exe</a></td> 
-  </tr> 
-  <tr> 
-    <td>Visual TCAD 1.7.4 - RHEL 4/5/6 32/64bit</td> 
-    <td><a href="../downloads/trial/Cogenda-Linux-1.7.4-14.bin">Cogenda-Linux-1.7.4-14.bin</a></td>
-  </tr> 
 </table>
 <br />
 
@@ -90,25 +86,9 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 #### Documentation
 
 <table id="documentations" width="580" border="0">
-  <tr> 
-    <td width="300">Genius User Guide</td>
-    <td><a href="../downloads/docs/genius_ug_en.pdf">genius_ug_en.pdf</a></td> 
-  </tr> 
-  <tr> 
-    <td>VisualTCAD User Guide</td> 
-    <td><a href="../downloads/docs/vtcad_ug_en.pdf">vtcad_ug_en.pdf</a></td> 
-  </tr>
-  <tr> 
-    <td>Gds2Mesh User Guide</td> 
-    <td><a href="../downloads/docs/gds2mesh.pdf">gds2mesh.pdf</a></td> 
-  </tr> 
-  <tr> 
-    <td>VisualFab User Guide</td> 
-    <td><a href="../downloads/docs/vtcad_ug_en.pdf">vfab_ug_en.pdf</a></td> 
-  </tr>
-  <tr> 
-    <td width="300">VisualParticle/GSeat User Guide</td> 
-    <td width="270"><a href="../downloads/docs/gseat_ug_en.pdf">gseat_ug_en.pdf</a></td> 
+  <tr>
+    <td width="300"></td>
+    <td> </td>
   </tr>
 </table> 
 <br />
@@ -116,22 +96,10 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 #### Brochures
 
 <table id="brochures" width="580" border="0">
-  <tr> 
-    <td width="300">VisualTCAD</td>
-    <td><a href="../downloads/pubs/VisualTCAD.pdf">VisualTCAD.pdf</a></td> 
-  </tr> 
-  <tr> 
-    <td>VisualFab</td> 
-    <td><a href="../downloads/pubs/VisualFab.pdf">VisualFab.pdf</a></td> 
-  </tr> 
-  <tr> 
-    <td>Gds2Mesh</td> 
-    <td><a href="../downloads/pubs/Gds2Mesh.pdf">Gds2Mesh.pdf</a></td> 
-  </tr> 
-  <tr> 
-    <td width="300">SEU of SRAM</td> 
-    <td width="270"><a href="../downloads/pubs/SRAM_SEU.pdf">SRAM_SEU.pdf</a></td> 
-  </tr> 
+  <tr>
+    <td width="300"></td>
+    <td> </td>
+  </tr>
 </table>
 <br />
 

@@ -1,8 +1,38 @@
 
 $(document).ready(function() {
 
-    if($('#login-username').text().trim()) {
+    var commonLanguge;
+
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/web/init-common-language',
+        success: function(data) {
+            commonLanguge = $.parseJSON(data);
+        }
+    });
+
+    $('video').mediaelementplayer({
+        features: ['playpause','progress','current','duration','tracks','volume','fullscreen']
+    });
+
+    /******************************
+     * Setting parsley locale
+     *****************************/
+    locale = $('#locale').val();
+    if (locale.indexOf('zh') >=0) {
+        locale = 'zh_cn';
+    }
+    if (locale.indexOf('en') >=0) {
+        locale = 'en';
+    }
+    window.ParsleyValidator.setLocale(locale);
+
+    // Menu
+    if(commonLanguge['username'].trim().length > 0) {
         $('#login').hide();
+        show_profile_menu(commonLanguge['username'], commonLanguge['myprofile'], commonLanguge['signout']);
         $('#user-profile-container').show();
     } else {
         $('#login').show();
@@ -49,14 +79,18 @@ $(document).ready(function() {
             authenticate.done(function (resp) {
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
-                    $('#user-login-msg').text(result.msg);
-                    $('#user-login-msg-container').show();
+                    pop_msg('user-login-msg', result.msg, 0);
                     return;
                 }
                 $('#loginModal').modal('hide');
                 $('#login').hide();
-                $('#login-username').text(username);
+                show_profile_menu(username, commonLanguge['myprofile'], commonLanguge['signout']);
                 $('#user-profile-container').show();
+
+                // If @ download page
+                if(self.location.href.indexOf('article/downloads') > 0) {
+                    self.location = "/article/downloads";
+                }
             });
         } else {
             console.log('Client side validate error.');
@@ -115,31 +149,6 @@ $(document).ready(function() {
         }
     });
 
-    $("#my-profile").on('click', function (event) {
-        if (event) event.preventDefault();
-        $('#password1').val('');
-        $('#password2').val('');
-        $('#userProfileModal').parsley().reset();
-        $('#userProfileModal').modal('show');
-        $('#change-password-msg-container').hide();
-
-        var username = $('#login-username').text();
-
-        var fetchUserProfile = $.ajax({
-            "dataType": 'json',
-            "type": "GET",
-            "url": "/user/user-profile/" + username
-        });
-
-        fetchUserProfile.done(function (result) {
-            //$('#uid').val(result.id);
-            $('#u_name').text(result.username);
-            $('#u_company').text(result.company);
-            $('#u_email').text(result.email);
-            $('#u_mobile').text(result.mobile);
-        });
-    });
-
     $("#change-password-btn").on('click', function (event) {
         if (event) event.preventDefault();
         if ($('#userProfileModal').parsley().validate()) {
@@ -148,7 +157,7 @@ $(document).ready(function() {
             var password2 = $('#password2').val().trim();
 
             if (password1 !== password2) {
-                pop_msg('change-password-msg', 'Two passwords are not the same.', 1);
+                pop_msg('change-password-msg', commonLanguge['Two passwords are not the same'], 1);
                 return;
             }
 
@@ -165,9 +174,9 @@ $(document).ready(function() {
                 url: '/user/change-password',
                 success: function (result) {
                     if (result.id) {
-                        pop_msg('change-password-msg', 'Password is changed.', 2);
+                        pop_msg('change-password-msg', commonLanguge['Password is changed successfully'], 2);
                     } else {
-                        pop_msg('change-password-msg', 'Encounter error in server.', 0);
+                        pop_msg('change-password-msg', commonLanguge['Encounter error in server'], 0);
                     }
                 }
             });
@@ -176,7 +185,6 @@ $(document).ready(function() {
 
     // Load download page
     if(self.location.href.indexOf('article/downloads') > 0) {
-        var resources;
         $.ajax({
             type: 'GET',
             async: false,
@@ -204,6 +212,9 @@ $(document).ready(function() {
 
     $('.resource-class').on('click', function (event) {
         if (event) event.preventDefault();
+
+        $('#download-msg-container').hide();
+
         var r_id = event.target.children[0].value;
         var checkResource = $.ajax({
             "dataType": 'json',
@@ -213,9 +224,12 @@ $(document).ready(function() {
 
         checkResource.done(function (resp) {
             var result = JSON.parse(resp);
-            if (result.auth_status) {
+            if (typeof(result.auth_status) === 'undefined') {
+                pop_msg('download-msg', result.msg, 0);
+            } else if (result.auth_status) {
                 self.location = result.link;
             } else {
+                pop_msg('user-login-msg', result.msg, 1);
                 $('#loginModal').modal('show');
             }
         });
@@ -240,4 +254,48 @@ function pop_msg(msg_label, msg, type) {
     $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
     $('#'+msg_label).text(msg);
     $('#'+msg_label+'-container').show();
+}
+
+function switch_locale(locale) {
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/switch/' + locale,
+        success: function(resp) {
+            var result = JSON.parse(resp);
+            if (result.is_success) {
+                window.location = '/article/'+result.uri;
+            }
+        }
+    });
+}
+
+function show_profile_menu(userName, myProfile, signOut) {
+    $('#user-profile-container').append('<a id="login-username" href="#"><span>'+userName+'</span></a><ul><li><a href="/web/logout">'+signOut+'</a></li><li><a id="my-profile">'+myProfile+'</a></li></ul>');
+
+    $("#my-profile").on('click', function (event) {
+        if (event) event.preventDefault();
+        $('#password1').val('');
+        $('#password2').val('');
+        $('#userProfileModal').parsley().reset();
+        $('#userProfileModal').modal('show');
+        $('#change-password-msg-container').hide();
+
+        var username = $('#login-username').text();
+
+        var fetchUserProfile = $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": "/user/user-profile/" + username
+        });
+
+        fetchUserProfile.done(function (result) {
+            //$('#uid').val(result.id);
+            $('#u_name').text(result.username);
+            $('#u_company').text(result.company);
+            $('#u_email').text(result.email);
+            $('#u_mobile').text(result.mobile);
+        });
+    });
 }

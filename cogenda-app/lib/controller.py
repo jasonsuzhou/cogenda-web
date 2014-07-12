@@ -135,7 +135,7 @@ class BaseController(object):
     def register_routes(self, dispatcher):
         for route in self.__routes__:
             route_name = "%s_%s" % (self.name, route[0])
-            print 'route name >> [%s] router >> [%s] controller >> [%s] action >> [%s]' %(route_name, route[1]["route"], self, route[1]["method"])
+            log.debug('[Cogenda-web] - route name >> [%s] router >> [%s] controller >> [%s] action >> [%s]' %(route_name, route[1]["route"], self, route[1]["method"]))
             dispatcher.connect(route_name, route[1]["route"], controller=self, action=route[1]["method"])
 
 
@@ -154,7 +154,7 @@ class BaseController(object):
         env.install_gettext_translations(translations)
         cherrypy.tools.jinja2env = env 
         template = cherrypy.tools.jinja2env.get_template(template_file)
-        return template.render(user=self.user, settings=self.settings, **kw)
+        return template.render(locale=locale, user=self.user, settings=self.settings, **kw)
 
 
     def redirect(self, url):

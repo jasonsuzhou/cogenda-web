@@ -89,12 +89,13 @@ clean-pyc:
 ####################################################################
 #  				     Web Assets Management                         #
 ####################################################################
-web-setup:
-	@npm install
-	@npm install -g grunt-cli
-
 web:
-	@grunt
+	@npm install
+	@sudo npm install -g grunt-cli
+	@sudo npm install -g bower
+	@bower install
+	@grunt optimize
+	@grunt web
 
 ####################################################################
 #  				     Production Server Deployment                  #
