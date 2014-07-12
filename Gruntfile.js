@@ -112,6 +112,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
 
     // Register tasks
-    grunt.registerTask('default', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
+    grunt.registerTask('optimize', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
     grunt.registerTask('web', ['bower', 'wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };

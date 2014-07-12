@@ -92,9 +92,11 @@ clean-pyc:
 web-setup:
 	@npm install
 	@npm install -g grunt-cli
+	@npm install -g bower
 
 web:
-	@grunt
+	@grunt optimize
+	@grunt web
 
 ####################################################################
 #  				     Production Server Deployment                  #

@@ -71,6 +71,11 @@ function install_nginx_with_geoip {
     gunzip GeoIP.dat.gz
 }
 
+function install_nodejs {
+    apt-get -y install nodejs
+    apt-get -y install npm
+}
+
 #function install_geo_api_c {
 #    wget -N https://github.com/maxmind/geoip-api-c/releases/download/v1.6.1/GeoIP-1.6.1.tar.gz
 #    tar -xvf GeoIP-1.6.1.tar.gz
@@ -102,6 +107,9 @@ service ssh reload
 
 log "Install Dependencie Env..."
 install_env 
+
+log "Install NodeJS..."
+install_nodejs
 
 log "Install nginx..."
 install_nginx_with_geoip
