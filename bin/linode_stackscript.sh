@@ -71,9 +71,13 @@ function install_nginx_with_geoip {
     gunzip GeoIP.dat.gz
 }
 
-function install_nodejs {
-    apt-get -y install nodejs
-    apt-get -y install npm
+function install_node {
+    wget http://nodejs.org/dist/v0.10.22/node-v0.10.22.tar.gz 
+    tar -xvzf node-v0.10.22.tar.gz
+    cd node-v0.10.22
+    ./configure
+    make
+    sudo make install
 }
 
 #function install_geo_api_c {
@@ -109,7 +113,7 @@ log "Install Dependencie Env..."
 install_env 
 
 log "Install NodeJS..."
-install_nodejs
+install_node
 
 log "Install nginx..."
 install_nginx_with_geoip
