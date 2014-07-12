@@ -96,6 +96,7 @@ web-setup:
 
 web:
 	@grunt optimize
+	@bower install
 	@grunt web
 
 ####################################################################

@@ -113,5 +113,6 @@ module.exports = function(grunt) {
 
     // Register tasks
     grunt.registerTask('optimize', ['clean', 'recess', 'uglify', 'imagemin', 'svgmin']);
-    grunt.registerTask('web', ['bower', 'wiredep:web', 'wiredep:admin', 'wiredep:auth']);
+    //grunt.registerTask('web', ['bower', 'wiredep:web', 'wiredep:admin', 'wiredep:auth']);
+    grunt.registerTask('web', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };
