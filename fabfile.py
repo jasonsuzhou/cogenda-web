@@ -58,6 +58,7 @@ def install_app():
 
     if exists(COGENDA_HOME):
         with cd(COGENDA_HOME):
+            run("git checkout .")
             run("git pull -f origin master")
     else:
         with cd(APP_PATH):

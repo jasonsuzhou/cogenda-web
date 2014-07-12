@@ -18,6 +18,7 @@
     $ source venv/bin/activate
     $ brew install node
     $ make web-setup
+    $ make web
     ```
 
 - Start Web Server
