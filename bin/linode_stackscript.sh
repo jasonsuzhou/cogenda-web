@@ -13,8 +13,9 @@
 # <UDF name="ssh_port" Label="SSH Port" default="22" />
 # <UDF name="notify_email" Label="Send Finish Notification To" example="Email address to send notification to when finished." />
 
-source <ssinclude StackScriptID=1> # https://www.linode.com/stackscripts/view/1
-source <ssinclude StackScriptID=123> # https://www.linode.com/stackscripts/view/123
+source <ssinclude StackScriptID="1">
+source <ssinclude StackScriptID="9685">
+
 
 USER_GROUPS=sudo
 
@@ -22,6 +23,8 @@ exec &> /root/stackscript.log
 
 export SMTP_PASSWORD="$SMTP_PASSWORD"
 export COGENDA_SHARED_SECRET="$COGENDA_SHARED_SECRET"
+
+
 
 function create_deployment_user {
   system_add_user $DEPLOY_USER $DEPLOY_PASSWORD "users,sudo"
@@ -32,8 +35,7 @@ function create_deployment_user {
   echo "Added deploy user account"
 }
 
-
-function system_tunning{
+function system_tunning {
   echo "Tunning system settings..."
   update-alternatives --set editor /usr/bin/vim
   sed -i 's/X11Forwarding yes/X11Forwarding no/g' /etc/ssh/sshd_config
@@ -91,7 +93,12 @@ $DEPLOY_USER ALL=(ALL) NOPASSWD: ALL
 EOF
 
 echo "Make Basic Settings..."
-system_tunning 
+system_tunning
+
+system_security_fail2ban
+echo "Installed fail2ban"
+
+system_security_ufw_configure_basic
 
 service ssh reload
 
