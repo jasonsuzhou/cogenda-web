@@ -1,33 +1,75 @@
 {
-  "name": "cogenda-web",
-  "homepage": "https://github.com/cogenda/cogenda-web",
-  "authors": [
-    "cogenda-dev-team"
-  ],
-  "description": "Cogenda website",
-  "ignore": [
-    "**/.*",
+    "name": "cogenda-web",
+    "homepage": "https://github.com/cogenda/cogenda-web",
+    "authors": [
+        "cogenda-dev-team"
+        ],
+    "main":["cogenda-app/static/css/admin.min.css", "cogenda-app/static/css/web.min.css", "cogenda-app/static/js/cogenda.admin.min.js", "cogenda-app/static/js/cogenda.web.min.js"],
+    "description": "Cogenda website",
+    "ignore": [
+        "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "jquery": "1.11.1",
-    "bootstrap": "3.0.0",
-    "jquery-ui": "~1.11.0",
-    "bxslider-4": "~4.1.2",
-    "mediaelement": "2.14.2",
-    "datatables": "~1.9.4",
-    "multiselect": "~0.9.10",
-    "parsleyjs": "~2.0.0",
-    "quicksearch": "~2.0.4",
-    "font-awesome": "~4.0.3",
-    "select2": "~3.4.5",
-    "bootstrap-switch": "~1.8",
-    "datatables-bootstrap3": "0.1"
-  },
-  "resolutions": {
-    "jquery": "1.11.1"
-  }
+        ],
+    "dependencies": {
+        "font-awesome": "~4.0.3",
+        "jquery": "1.11.1",
+        "bootstrap": "3.0.0",
+        "jquery-ui": "~1.11.0",
+        "bxslider-4": "~4.1.2",
+        "mediaelement": "2.14.2",
+        "datatables": "~1.9.4",
+        "quicksearch": "~2.0.4",
+        "multiselect": "~0.9.10",
+        "parsleyjs": "~2.0.0",
+        "select2": "~3.4.5",
+        "bootstrap-switch": "~1.8.0",
+        "datatables-bootstrap3": "0.1"
+    },
+    "resolutions": {
+        "jquery": "1.11.1"
+    },
+    "overrides": {
+        "jquery": {
+            "main": "dist/jquery.min.js"
+        },
+        "bootstrap": {
+            "main": ["dist/js/bootstrap.min.js", "dist/css/bootstrap.css"]
+        },
+        "bxslider-4": {
+            "main": ["jquery.bxslider.min.js", "jquery.bxslider.css"] 
+        },
+        "parsleyjs": {
+            "main": "dist/parsley.min.js" 
+        },
+        "mediaelement": {
+            "main": ["build/mediaelementplayer.css", "build/mediaelement-and-player.min.js"] 
+        },
+        "multiselect": {
+            "main": ["js/jquery.multi-select.js", "css/multi-select.css"]
+        },
+        "select2": {
+            "main": ["select2.min.js", "select2.css"] 
+        },
+        "bootstrap-switch": {
+            "main": ["static/js/bootstrap-switch.js", "static/stylesheets/bootstrap-switch.css"]
+        },
+        "datatables-bootstrap3": {
+            "main": ["BS3/assets/js/datatables.js", "BS3/assets/css/datatables.css"] 
+        },
+        "datatables": {
+            "main": "media/js/jquery.dataTables.js"
+        },
+        "jquery-ui": {
+            "main": "jquery-ui.min.js" 
+        },
+        "quicksearch": {
+            "main": "dist/jquery.quicksearch.js"
+        },
+        "font-awesome": {
+            "main": "css/font-awesome.min.css" 
+        }
+   }
 }

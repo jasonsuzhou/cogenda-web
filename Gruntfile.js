@@ -9,14 +9,16 @@ module.exports = function(grunt) {
                     compress: true
                 },
                 files: {
-                    'cogenda-app/static/css/cogenda.min.css': ['cogenda-app/static/css/*.css']
+                    'cogenda-app/static/css/cogenda.admin.min.css': ['cogenda-app/static/css/cogenda.admin.css'],
+                    'cogenda-app/static/css/cogenda.web.min.css': ['cogenda-app/static/css/cogenda.web.css']
                 }
             }
         },
         uglify: {
             dist: {
                 files: {
-                    'cogenda-app/static/js/cogenda.min.js': ['cogenda-app/static/js/cogenda.*.js']
+                    'cogenda-app/static/js/cogenda.admin.min.js': ['cogenda-app/static/js/cogenda.admin.js'],
+                    'cogenda-app/static/js/cogenda.web.min.js': ['cogenda-app/static/js/cogenda.web.js']
                 }
             }
         },
@@ -43,14 +45,14 @@ module.exports = function(grunt) {
                     'cogenda-app/templates/web/layout/layout.html',
                 ],
                 cwd: '',
+                includeSelf: false,
                 dependencies: true,
                 devDependencies: false,
-                exclude: ['bootstrap.css', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect'],
+                exclude: ['bootstrap.css', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect', 'quicksearch'],
                 fileTypes: {},
                 ignorePath: '../../..',
                 overrides: {}
             },
-
             admin: {
                 src: [
                     'cogenda-app/templates/admin/layout/layout-include-js.html',
@@ -59,7 +61,8 @@ module.exports = function(grunt) {
                 cwd: '',
                 dependencies: true,
                 devDependencies: false,
-                exclude: ['mediaelement', 'bxslider-4', 'dataTables.css', 'multi-select.js'],
+                //exclude: ['mediaelement', 'bxslider-4', 'dataTables.css', 'multi-select.js'],
+                exclude: ['mediaelement', 'bxslider-4', 'dataTables.css'],
                 fileTypes: {},
                 ignorePath: '../../..',
                 overrides: {}
@@ -71,7 +74,7 @@ module.exports = function(grunt) {
                 cwd: '',
                 dependencies: true,
                 devDependencies: false,
-                exclude: ['mediaelement', 'bxslider-4', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect'],
+                exclude: ['mediaelement', 'bxslider-4', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect', 'quicksearch'],
                 fileTypes: {},
                 ignorePath: '../../..',
                 overrides: {}
