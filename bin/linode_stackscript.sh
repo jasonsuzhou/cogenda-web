@@ -107,3 +107,5 @@ install_nginx_with_geoip
 echo "Restarting Services..."
 restart_services
 restart_initd_services
+
+echo "Finished..."
