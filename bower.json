@@ -42,7 +42,7 @@
             "main": ["jquery.bxslider.min.js", "jquery.bxslider.css"] 
         },
         "parsleyjs": {
-            "main": "dist/parsley.min.js" 
+            "main": ["dist/parsley.min.js", "src/i18n/zh_cn.js"]
         },
         "mediaelement": {
             "main": ["build/mediaelementplayer.css", "build/mediaelement-and-player.min.js"] 
