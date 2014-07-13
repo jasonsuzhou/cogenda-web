@@ -120,17 +120,25 @@ class WebController(BaseController):
         except DBAPIError, err:
             log.error('Database operation error %s' % err)
             return json.dumps({'msg': _('Encounter error in server')})
-        #TODO: Check privilege here.......
         if resource == None:
-            return json.dumps({'msg': _('Encounter error in server')})
-        if resource.type in ('4', '5', '6') and not self.user:
-            return json.dumps({'msg': "Invalid access resource!"})
+            return self.index()
+        # 4,5-Installer, 6-Private
+        if self.user is None and resource.type in ('4', '5', '6'):
+            return self.index()
+        # 6-Private
+        resources_in_json = []
+        if resource.type == '6':
+            if self.user:
+                self.auth_private_resource(resource, resources_in_json)
+                if len(resources_in_json) == 0:
+                    return self.index()
+            else:
+                return self.index()
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
         cd = 'attachment; filename="%s"' % resource.name
         cherrypy.response.headers["Content-Disposition"] = cd
         resource_url_partial = resource.url.replace('http://', '').replace('https://', '')
         cherrypy.response.headers['X-Accel-Redirect'] = '/resource/%s' %(resource_url_partial)
-        #cherrypy.response.headers['X-Accel-Redirect'] = '/resource/cogenda-media.oss-cn-hangzhou.aliyuncs.com/media/123.png?Expires=1403359250&OSSAccessKeyId=DvSB6U5JdgjPj1Zr&Signature=vdtP0ldMD0yCskxmGcPxuF0oPuM%3D'
 
 
     @route('/user/request-an-account')
