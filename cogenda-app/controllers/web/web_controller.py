@@ -259,13 +259,13 @@ class WebController(BaseController):
         if match:
             country_code = match.country
             log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
-        vendor = 'AliYun'
+        vendor = 'oss'
         if country_code and country_code == 'CN':
             log.info('load resource from vendor AliYun OSS')
-            vendor = 'AliYun'
+            vendor = 'oss'
         else:
             log.info('load resource from vendor AWS S3.')
-            vendor = 'AWS S3'
+            vendor = 's3'
         return vendor
 
     def filter_resources_by_vendor(self, all_resources):
