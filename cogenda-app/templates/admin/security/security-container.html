@@ -18,7 +18,11 @@
         <script src="/static/bower_components/parsleyjs/dist/parsley.min.js"></script>
         <script src="/static/bower_components/parsleyjs/src/i18n/zh_cn.js"></script>
         <!-- endbower -->
-        <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
+        {% if settings.cogenda_app.env == 'dev' %}
+            <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
+        {% elif settings.cogenda_app.env == 'prod' %}
+            <script type="text/javascript" src="/static/js/cogenda.admin.min.js"></script>
+        {% endif %}
 
         <!-- deprecated use bower components instead.
         <script type="text/javascript" src="/static/js/jquery.js"></script>

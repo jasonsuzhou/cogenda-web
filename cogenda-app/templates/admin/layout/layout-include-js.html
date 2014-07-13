@@ -12,7 +12,13 @@
 <script src="/static/bower_components/datatables-bootstrap3/BS3/assets/js/datatables.js"></script>
 <!-- endbower -->
 <script type="text/javascript" src="/static/js/jquery.niftymodals/js/jquery.modalEffects.js"></script>
-<script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
+
+{% if settings.cogenda_app.env == 'dev' %}
+    <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
+{% elif settings.cogenda_app.env == 'prod' %}
+    <script type="text/javascript" src="/static/js/cogenda.admin.min.js"></script>
+{% endif %}
+
 
 <!-- deprecated to use bower components instead.
 <script type="text/javascript" src="/static/js/jquery.js"></script>
@@ -30,5 +36,4 @@
 <script type="text/javascript" src="/static/js/i18n/zh_cn.js"></script>
 <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
 -->
-
 <input type="hidden" name="language" id="locale" value="{{ locale }}" />

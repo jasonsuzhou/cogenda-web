@@ -9,7 +9,11 @@
         <link rel="stylesheet" href="/static/bower_components/bxslider-4/jquery.bxslider.css" />
         <link rel="stylesheet" href="/static/bower_components/mediaelement/build/mediaelementplayer.css" />
         <!-- endbower -->
-        <link rel="stylesheet" type="text/css"  href="/static/css/cogenda.web.css" />
+        {% if settings.cogenda_app.env == 'dev' %}
+            <link rel="stylesheet" type="text/css"  href="/static/css/cogenda.web.css" />
+        {% elif settings.cogenda_app.env == 'prod' %}
+            <link rel="stylesheet" type="text/css"  href="/static/css/cogenda.web.min.css" />
+        {% endif %}
 
         <!-- deprecated use bower components instead
         <link rel="stylesheet" type="text/css" href="/static/fonts/font-awesome-4/css/font-awesome.min.css" />
@@ -66,7 +70,12 @@
         <script src="/static/bower_components/parsleyjs/dist/parsley.min.js"></script>
         <script src="/static/bower_components/parsleyjs/src/i18n/zh_cn.js"></script>
         <!-- endbower -->
-        <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
+
+        {% if settings.cogenda_app.env == 'dev' %}
+            <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
+        {% elif settings.cogenda_app.env == 'prod' %}
+            <script type="text/javascript" src="/static/js/cogenda.web.min.js"></script>
+        {% endif %}
 
         <!-- deprecated js import, please user bower components.
         <script type="text/javascript" src="/static/js/jquery.js"></script>

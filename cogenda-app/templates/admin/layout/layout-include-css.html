@@ -7,7 +7,12 @@
 <link rel="stylesheet" href="/static/bower_components/datatables-bootstrap3/BS3/assets/css/datatables.css" />
 <!-- endbower -->
 <link rel="stylesheet" type="text/css" href="/static/js/jquery.niftymodals/css/component.css" />
-<link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.css" />
+
+{% if settings.cogenda_app.env == 'dev' %}
+    <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.css" />
+{% elif settings.cogenda_app.env == 'prod' %}
+    <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.min.css" />
+{% endif %}
 
 <!-- deprecated please use bower components
 <link rel="stylesheet" type="text/css" href="/static/js/bootstrap/dist/css/bootstrap.css" />
