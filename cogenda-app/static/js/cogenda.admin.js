@@ -653,7 +653,7 @@ function edit_resource(row) {
             $('#r_url_2').attr('title', '');
         } else if(result.length === 2) {
             $('#rid').val(result[0].id + ":" + result[1].id);
-            $('#r_vendor_2').text(result[1].vendor);
+            $('#r_vendor_2').text(convert_vendor_name(result[1].vendor));
             $('#r_url_2').show();
             $('#r_url_2').attr('href', result[1].url);
             $('#r_url_2').attr('title', result[1].url);
@@ -661,7 +661,7 @@ function edit_resource(row) {
 
         $('#r_desc').val(result[0].description);
         $('#r_name').text(result[0].name);
-        $('#r_vendor_1').text(result[0].vendor);
+        $('#r_vendor_1').text(convert_vendor_name(result[0].vendor));
 
         $('#r_url_1').attr('href', result[0].url);
         $('#r_url_1').attr('title', result[0].url);
@@ -1009,4 +1009,13 @@ function pop_msg(msg_label, msg, type) {
     $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
     $('#'+msg_label).text(msg);
     $('#'+msg_label+'-container').show();
+}
+
+function convert_vendor_name(vendor) {
+    if(vendor === 'oss')
+        return 'AliYun'
+    else if(vendor === 's3')
+        return 'AWS S3'
+    else
+         return vendor
 }

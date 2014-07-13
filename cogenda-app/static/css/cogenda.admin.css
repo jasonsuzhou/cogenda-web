@@ -1937,3 +1937,45 @@ textarea.parsley-error {
   max-height: none;
   position: relative;
 }
+
+/*Multiselect*/
+.multiselect-container > li > label.multiselect-group {
+  font-size: 13px;
+  font-weight: 600;
+}
+.ms-container .ms-list {
+  box-shadow: none;
+}
+.ms-container .ms-list.ms-focus {
+  border-color: #7761a7;
+  box-shadow: none;
+}
+.ms-container .ms-selectable li.ms-hover,
+.ms-container .ms-selection li.ms-hover {
+  background: #7761a7;
+}
+#ms-custom-headers .custom-header {
+  background: #7761a7;
+  color: #FFFFFF;
+  padding: 7px 10px;
+  font-size: 14px;
+}
+#ms-custom-headers .ms-list {
+  border-radius: 0 0 3px 3px;
+  border-top: none;
+}
+#ms-searchable .ms-list {
+  border-radius: 0 0 3px 3px;
+  border-top: none;
+}
+.ms-container {
+  width: 100%;
+}
+
+.ms-container .ms-selectable, .ms-container .ms-selection {
+    width: 47%;
+}
+
+table.table-bordered.dataTable tr.row_selected td {
+    background-color: #E6F1F6;
+}

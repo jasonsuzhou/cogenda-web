@@ -130,5 +130,7 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 <br />
  
 {% endmarkdown2 %}
+
+<input type='hidden' id='r_id'/>
 </div>
 

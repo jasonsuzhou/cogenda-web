@@ -120,6 +120,11 @@ class WebController(BaseController):
         except DBAPIError, err:
             log.error('Database operation error %s' % err)
             return json.dumps({'msg': _('Encounter error in server')})
+        #TODO: Check privilege here.......
+        if resource == None:
+            return json.dumps({'msg': _('Encounter error in server')})
+        if resource.type in ('4', '5', '6') and not self.user:
+            return json.dumps({'msg': "Invalid access resource!"})
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
         cd = 'attachment; filename="%s"' % resource.name
         cherrypy.response.headers["Content-Disposition"] = cd
@@ -259,13 +264,13 @@ class WebController(BaseController):
         if match:
             country_code = match.country
             log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
-        vendor = 'oss'
+        vendor = 'AliYun'
         if country_code and country_code == 'CN':
             log.info('load resource from vendor AliYun OSS')
-            vendor = 'oss'
+            vendor = 'AliYun'
         else:
             log.info('load resource from vendor AWS S3.')
-            vendor = 's3'
+            vendor = 'AWS S3'
         return vendor
 
     def filter_resources_by_vendor(self, all_resources):

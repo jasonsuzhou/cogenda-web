@@ -204,7 +204,7 @@ class AdminController(BaseController):
                 next_resource = resources_in_json[i + 1]
                 if resource['name'] == next_resource['name']:
                     resource['id'] = resource['id'] + ":" + next_resource['id']
-                    resource['vendor'] = resource['vendor'] + "/" + next_resource['vendor']
+                    resource['vendor'] = self.convert_vendor_name(resource['vendor']) + "/" + self.convert_vendor_name(next_resource['vendor'])
                     resources_in_json.remove(next_resource)
         resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
@@ -301,3 +301,12 @@ class AdminController(BaseController):
         user = User.get_by_username(cherrypy.request.db, username)
         if not (user is None):
             return  _('The username is existing')
+
+
+    def convert_vendor_name(self, vendor):
+        if vendor == 'oss':
+            return 'AliYun'
+        elif vendor == 's3':
+            return 'AWS S3'
+        else:
+            return vendor

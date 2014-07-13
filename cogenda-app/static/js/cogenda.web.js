@@ -89,7 +89,12 @@ $(document).ready(function() {
 
                 // If @ download page
                 if(self.location.href.indexOf('article/downloads') > 0) {
-                    self.location = "/article/downloads";
+                    if($('#r_id').val() !== null && $('#r_id').val().trim().length > 0) {
+                        self.location = "/download/"+ $('#r_id').val();
+                    }
+                    setTimeout(function() {
+                        self.location = "/article/downloads";
+                    }, 500);
                 }
             });
         } else {
@@ -219,6 +224,7 @@ $(document).ready(function() {
         $('#download-msg-container').hide();
 
         var r_id = event.target.children[0].value;
+        $('#r_id').val(r_id);
         var checkResource = $.ajax({
             "dataType": 'json',
             "type": "GET",
