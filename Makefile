@@ -94,8 +94,8 @@ web:
 	@sudo npm install -g grunt-cli
 	@sudo npm install -g bower
 	@bower install
-	@grunt optimize
-	@grunt web
+	@grunt build
+	@grunt inject
 
 ####################################################################
 #  				     Production Server Deployment                  #

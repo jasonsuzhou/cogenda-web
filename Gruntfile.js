@@ -89,9 +89,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-svgmin');
     grunt.loadNpmTasks('grunt-wiredep');
-    grunt.loadNpmTasks('grunt-bower-task');
 
     // Register tasks
-    grunt.registerTask('optimize', ['clean', 'recess', 'uglify', 'imagemin']);
-    grunt.registerTask('web', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
+    grunt.registerTask('build', ['clean', 'recess', 'uglify', 'imagemin']);
+    grunt.registerTask('inject', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };
