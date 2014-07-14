@@ -272,14 +272,11 @@ class WebController(BaseController):
         country_code = None
         if match:
             country_code = match.country
-            log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
-        vendor = const.VENDOR_TYPE_OOS
+        log.info('[Cogenda-web] - Web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
+        vendor = const.VENDOR_TYPE_S3
         if country_code and country_code == 'CN':
-            log.info('load resource from vendor AliYun OSS')
             vendor = const.VENDOR_TYPE_OOS
-        else:
-            log.info('load resource from vendor AWS S3.')
-            vendor = const.VENDOR_TYPE_S3
+        log.info('[Cogenda-web] - load resource from vendor %s' % vendor)
         return vendor
 
     def filter_resources_by_vendor(self, all_resources):
