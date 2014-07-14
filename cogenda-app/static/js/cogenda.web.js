@@ -79,7 +79,7 @@ $(document).ready(function() {
             authenticate.done(function (resp) {
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
-                    pop_msg('user-login-msg', result.msg, 0);
+                    pop_msg('user-login-msg', result.msg, MSG_ERROR);
                     return;
                 }
                 $('#loginModal').modal('hide');
@@ -139,13 +139,13 @@ $(document).ready(function() {
             send_request.done(function (resp) {
                 var result = JSON.parse(resp);
                 if (result.is_success) {
-                    pop_msg('request-account-msg', result.msg, 2);
+                    pop_msg('request-account-msg', result.msg, MSG_SUCCESS);
                     setTimeout(function() {
                         $('#requestAccountModal').modal('hide');
                     }, 2000);
                     $('#request-account-btn').off('click');
                 } else {
-                    pop_msg('request-account-msg', result.msg, 1);
+                    pop_msg('request-account-msg', result.msg, MSG_ALERT);
                 }
                 $("#request-account-btn").attr('class', 'btn btn-primary btn-check');
             });
@@ -162,7 +162,7 @@ $(document).ready(function() {
             var password2 = $('#password2').val().trim();
 
             if (password1 !== password2) {
-                pop_msg('change-password-msg', commonLanguge['Two passwords are not the same'], 1);
+                pop_msg('change-password-msg', commonLanguge['Two passwords are not the same'], MSG_ALERT);
                 return;
             }
 
@@ -179,9 +179,9 @@ $(document).ready(function() {
                 url: '/user/change-password',
                 success: function (result) {
                     if (result.id) {
-                        pop_msg('change-password-msg', commonLanguge['Password is changed successfully'], 2);
+                        pop_msg('change-password-msg', commonLanguge['Password is changed successfully'], MSG_SUCCESS);
                     } else {
-                        pop_msg('change-password-msg', commonLanguge['Encounter error in server'], 0);
+                        pop_msg('change-password-msg', commonLanguge['Encounter error in server'], MSG_ERROR);
                     }
                 }
             });
@@ -201,15 +201,15 @@ $(document).ready(function() {
                     if(desc === null || desc.length === 0)
                         desc = data[i].name;
                     var tr = "<tr><td >" + desc + "</td><td ><a style=\"cursor: pointer;\" class=\"resource-class\">" + data[i].name + "<input type=\"hidden\" value=\"" + data[i].id + "\"></a></td></tr>";
-                    if(data[i].type === '1')
+                    if(data[i].type === RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
                         $('#documentations tr:last').after(tr);
-                    if(data[i].type === '2')
+                    if(data[i].type === RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
                         $('#publications tr:last').after(tr);
-                    if(data[i].type === '3')
+                    if(data[i].type === RESOURCE_TYPE_PUBLIC_EXAMPLES)
                         $('#brochures tr:last').after(tr);
-                    if(data[i].type === '4' || data[i].type === '5')
+                    if(data[i].type === RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES || data[i].type === RESOURCE_TYPE_ALLUSER_INSTALLER)
                         $('#installers tr:last').after(tr);
-                    if(data[i].type === '6') {
+                    if(data[i].type === RESOURCE_TYPE_PRIVATE) {
                         $('#private tr:last').after(tr);
                         $('#private-area').show();
                     }
@@ -234,11 +234,11 @@ $(document).ready(function() {
         checkResource.done(function (resp) {
             var result = JSON.parse(resp);
             if (typeof(result.auth_status) === 'undefined') {
-                pop_msg('download-msg', result.msg, 0);
+                pop_msg('download-msg', result.msg, MSG_ERROR);
             } else if (result.auth_status) {
                 self.location = result.link;
             } else {
-                pop_msg('user-login-msg', result.msg, 1);
+                pop_msg('user-login-msg', result.msg, MSG_ALERT);
                 $('#loginModal').modal('show');
             }
         });
@@ -308,3 +308,23 @@ function show_profile_menu(userName, myProfile, signOut) {
         });
     });
 }
+
+
+//***************************************************************
+//
+//                    Constant variables
+//
+//***************************************************************
+
+// Message type
+var MSG_ERROR = 0;
+var MSG_ALERT = 1;
+var MSG_SUCCESS = 2;
+
+// Resource type
+var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1'
+var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2'
+var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3'
+var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4'
+var RESOURCE_TYPE_ALLUSER_INSTALLER = '5'
+var RESOURCE_TYPE_PRIVATE = '6'

@@ -45,7 +45,7 @@ class User(Base):
 
     @staticmethod
     def get_by_username(session, username):
-        return session.query(User).filter(User.username==username, User.active==True).first()
+        return session.query(User).filter(User.username==username).first()
 
     @staticmethod
     def get_by_uid(session, uid):
@@ -55,7 +55,6 @@ class User(Base):
     def update_user(session, user, _user):
         if user.username != _user.username:
             user.username = _user.username
-        #user.password = _user.hmac.new('cogenda_salt', _user.password).hexdigest()
         if user.company != _user.company:
             user.company = _user.company
         if user.email != _user.email:

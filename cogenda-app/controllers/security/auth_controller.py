@@ -5,6 +5,7 @@ import hmac
 from models import User
 from lib.i18ntool import ugettext as _
 import json
+from lib import const
 
 import logging
 log = logging.getLogger(__name__)
@@ -67,6 +68,8 @@ class AuthController(BaseController):
         salt = self.settings.cogenda_app.cogenda_salt
         if user is None or user.password != hmac.new(salt, password).hexdigest():
             return _('Invalid user ID or password')
-        if client == 'admin' and user.role != '3':
+        if not user.active:
+            return _('This user is inactive')
+        if client == const.CLIENT_TYPE_ADMIN and user.role != const.USER_TYPE_ADMINISTRATOR:
             return _('You have insufficient privileges')
         self.login(user, client)

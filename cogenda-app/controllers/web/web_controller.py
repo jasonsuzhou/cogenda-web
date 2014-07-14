@@ -14,6 +14,7 @@ import random
 import json
 from geoip import geolite2
 from sqlalchemy.exc import DBAPIError
+from lib import const
 
 log = logging.getLogger(__name__)
 
@@ -55,7 +56,7 @@ class WebController(BaseController):
     @cherrypy.tools.json_out()
     def load_private_resource(self):
         log.debug("[Cogenda-web] - Fetch private resources.")
-        private_resources = Resource.list_resource_by_type(cherrypy.request.db, '6')
+        private_resources = Resource.list_resource_by_type(cherrypy.request.db, const.RESOURCE_TYPE_PRIVATE)
         return self.filter_resources_by_vendor(private_resources)
 
 
@@ -70,7 +71,7 @@ class WebController(BaseController):
             return json.dumps({'msg': _('Encounter error in server')})
 
         # 4-AllUser - Software Packages, 5-AllUser - Installer, 6-Private
-        if resource.type == '4' or resource.type == '5' or resource.type == '6':
+        if resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES or resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER or resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user is None:
                 return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
             else:
@@ -120,14 +121,14 @@ class WebController(BaseController):
         except DBAPIError, err:
             log.error('Database operation error %s' % err)
             return json.dumps({'msg': _('Encounter error in server')})
-        if resource == None:
+        if resource is None:
             return self.index()
         # 4,5-Installer, 6-Private
-        if self.user is None and resource.type in ('4', '5', '6'):
+        if self.user is None and resource.type in (const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES, const.RESOURCE_TYPE_ALLUSER_INSTALLER, const.RESOURCE_TYPE_PRIVATE):
             return self.index()
         # 6-Private
         resources_in_json = []
-        if resource.type == '6':
+        if resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user:
                 self.auth_private_resource(resource, resources_in_json)
                 if len(resources_in_json) == 0:
@@ -249,10 +250,10 @@ class WebController(BaseController):
         log.debug('[Cogenda-web] - User:%s, own resource:%s' %(self.user[0], restricted_res))
         log.debug('[Cogenda-web] - User requires resource:%s' %resource.id)
         # Resource
-        if self.user[2] == '1':
+        if self.user[2] == const.USER_TYPE_RESOURCE:
             return
         # Resource Owner
-        elif self.user[2] == '2':
+        elif self.user[2] == const.USER_TYPE_RESOURCE_OWNER:
             p1 = "," + str(resource.id) + ","
             p2 = ":" + str(resource.id) + ","
             p3 = "," + str(resource.id) + ":"
@@ -261,7 +262,7 @@ class WebController(BaseController):
             else:
                 resources_in_json.append(self.jsonify_model(resource))
         # Administrator
-        elif self.user[2] == '3':
+        elif self.user[2] == const.USER_TYPE_ADMINISTRATOR:
             resources_in_json.append(self.jsonify_model(resource))
 
     def gen_vendor(self):
@@ -272,13 +273,13 @@ class WebController(BaseController):
         if match:
             country_code = match.country
             log.info('web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
-        vendor = 'AliYun'
+        vendor = const.VENDOR_TYPE_OOS
         if country_code and country_code == 'CN':
             log.info('load resource from vendor AliYun OSS')
-            vendor = 'AliYun'
+            vendor = const.VENDOR_TYPE_OOS
         else:
             log.info('load resource from vendor AWS S3.')
-            vendor = 'AWS S3'
+            vendor = const.VENDOR_TYPE_S3
         return vendor
 
     def filter_resources_by_vendor(self, all_resources):
@@ -298,7 +299,7 @@ class WebController(BaseController):
                         all_resources.remove(next_resource)
             # Processing picked resource
             # 6-Private
-            if _resource.type == '6':
+            if _resource.type == const.RESOURCE_TYPE_PRIVATE:
                 if self.user:
                     self.auth_private_resource(_resource, resources_in_json)
                 else:

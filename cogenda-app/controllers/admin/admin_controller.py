@@ -10,8 +10,9 @@ import json
 import hmac
 import string
 from random import choice
+from lib import const
 
-import logging 
+import logging
 log = logging.getLogger(__name__)
 
 class AdminController(BaseController):
@@ -84,7 +85,9 @@ class AdminController(BaseController):
         you_cannot_delete_yourself = _('You cannot delete yourself')
         return json.dumps({'Create user': create_user, 'Modify User': modify_user, 'Save': save,
                            'Select one user': select_one_user, 'Selected more than one user': select_more_than_one_user,
-                           'Remove user successful': remove_user_successful, 'You cannot delete yourself': you_cannot_delete_yourself})
+                           'Remove user successful': remove_user_successful, 'You cannot delete yourself': you_cannot_delete_yourself,
+                           'Resource': _('Resource'), 'Resource Owner': _('Resource Owner'), 'Administrator': _('Administrator'),
+                           'Yes': _('Yes'), 'No': _('No'), 'Filter String': _('Filter String')})
 
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -268,7 +271,7 @@ class AdminController(BaseController):
         try:
             self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
 
-            #Update user password here...
+            # Update user password here...
             origin_user = User.get_by_username(cherrypy.request.db, name)
             User.update_user_password(cherrypy.request.db, origin_user, gen_pwd)
         except Exception as err:
@@ -304,9 +307,9 @@ class AdminController(BaseController):
 
 
     def convert_vendor_name(self, vendor):
-        if vendor == 'oss':
-            return 'AliYun'
-        elif vendor == 's3':
-            return 'AWS S3'
+        if vendor == const.VENDOR_TYPE_OOS:
+            return const.VENDOR_OOS_DISPLAY_NAME
+        elif vendor == const.VENDOR_TYPE_S3:
+            return const.VENDOR_S3_DISPLAY_NAME
         else:
             return vendor

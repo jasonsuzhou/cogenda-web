@@ -1,4 +1,4 @@
-<!-- bower:js -->
+<!-- bower:js
 <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/static/bower_components/jquery-ui/jquery-ui.min.js"></script>
@@ -11,6 +11,7 @@
 <script src="/static/bower_components/bootstrap-switch/static/js/bootstrap-switch.js"></script>
 <script src="/static/bower_components/datatables-bootstrap3/BS3/assets/js/datatables.js"></script>
 <!-- endbower -->
+<!--
 <script type="text/javascript" src="/static/js/jquery.niftymodals/js/jquery.modalEffects.js"></script>
 
 {% if settings.cogenda_app.env == 'dev' %}
@@ -18,9 +19,9 @@
 {% elif settings.cogenda_app.env == 'prod' %}
     <script type="text/javascript" src="/static/js/cogenda.admin.min.js"></script>
 {% endif %}
+-->
 
-
-<!-- deprecated to use bower components instead.
+<!-- deprecated to use bower components instead.-->
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script type="text/javascript" src="/static/js/jquery-ui.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -35,5 +36,5 @@
 <script type="text/javascript" src="/static/js/jquery.parsley/2.0.0/parsley.js"></script>
 <script type="text/javascript" src="/static/js/i18n/zh_cn.js"></script>
 <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
--->
+<!-- -->
 <input type="hidden" name="language" id="locale" value="{{ locale }}" />

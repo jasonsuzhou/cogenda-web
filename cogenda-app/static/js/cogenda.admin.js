@@ -139,7 +139,7 @@ function ready_navigation_menu() {
 function ready_user_mgmt() {
     // Read select2
     ready_common_select2();
-    render_role_select("1");
+    render_role_select(USER_TYPE_RESOURCE);
 
     // Ready multi-select
     ready_common_searchable_multi_select();
@@ -247,7 +247,7 @@ function delete_user() {
             var position = datatable.fnGetPosition(selectedTrs[i]);
             var selectedRowID = datatable.fnGetData(position)['id'];
             if(current_username === datatable.fnGetData(position)['username']) {
-                pop_msg('user-msg', commonLanguge['You cannot delete yourself'], 1); // Alert
+                pop_msg('user-msg', commonLanguge['You cannot delete yourself'], MSG_ALERT); // Alert
                 return;
             }
             selectedRowIDs = selectedRowIDs + selectedRowID + ',';
@@ -259,7 +259,7 @@ function delete_user() {
             "url": '/admin/delete-user/' + selectedRowIDs.substring(0, selectedRowIDs.length - 1),
             "success": function(result) {
                 //console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
-                pop_msg('user-msg', commonLanguge['Remove user successful'], 2); // Success
+                pop_msg('user-msg', commonLanguge['Remove user successful'], MSG_SUCCESS); // Success
             }
         });
         remove_selected_rows(datatable);
@@ -281,7 +281,7 @@ function save_as_user(row) {
     }
 
     if (selectedRows === 0) {
-        pop_msg('user-msg', commonLanguge['Select one user'], 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Select one user'], MSG_ALERT);  // Alert
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
@@ -302,7 +302,7 @@ function save_as_user(row) {
         $('#user-msg-container').hide();
         $('#user-modal-msg-container').hide();
     } else {
-        pop_msg('user-msg', commonLanguge['Selected more than one user'], 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Selected more than one user'], MSG_ALERT);  // Alert
     }
 }
 
@@ -322,7 +322,7 @@ function edit_user(row) {
     }
 
     if (selectedRows === 0) {
-        pop_msg('user-msg', commonLanguge['Select one user'], 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Select one user'], MSG_ALERT);  // Alert
     } else if (selectedRows === 1) {
         var position = datatable.fnGetPosition(selected_row);
         var selectedRowID = datatable.fnGetData(position)['id'];
@@ -349,7 +349,7 @@ function edit_user(row) {
         });
         prepare_edit_user_modal();
     } else {
-        pop_msg('user-msg', commonLanguge['Selected more than one user'], 1);  // Alert
+        pop_msg('user-msg', commonLanguge['Selected more than one user'], MSG_ALERT);  // Alert
     }
 }
 
@@ -384,7 +384,7 @@ function save_user() {
 
     var resource_ids = "";
     var role_id = $('#role').val().trim();
-    if(role_id === '2') {
+    if(role_id === USER_TYPE_RESOURCE_OWNER) {
         var selected_resources = $('#resource').val();
         if(selected_resources) {
             for (var i = 0; i < selected_resources.length; i++) {
@@ -423,7 +423,7 @@ function save_user() {
                     render_user_datatable();
                     $('#user-new-modal').modal('hide');
                 } else {
-                    pop_msg('user-modal-msg', result, 0); // Error
+                    pop_msg('user-modal-msg', result, MSG_ERROR); // Error
                 }
             }
         });
@@ -441,7 +441,7 @@ function save_user() {
                     render_user_datatable();
                     $('#user-new-modal').modal('hide');
                 } else {
-                    pop_msg('user-modal-msg', result, 0); // Error
+                    pop_msg('user-modal-msg', result, MSG_ERROR); // Error
                 }
             }
         });
@@ -476,7 +476,7 @@ function reset_user_create_modal() {
     render_active_switch();
 
     // Role select
-    render_role_select("1");
+    render_role_select(USER_TYPE_RESOURCE);
 
     // Resource select
     render_resource_select();
@@ -527,7 +527,7 @@ function convert_resource(resource_str) {
  *
  */
 function render_resource_select(selectedRole, selectedResources) {
-    if(selectedRole === '2' || selectedRole === 'Resource Owner') { // 'Resource Owner'
+    if(selectedRole === USER_TYPE_RESOURCE_OWNER || selectedRole === 'Resource Owner') { // 'Resource Owner'
         // Populate resource select
         var resource_list = $.ajax({
             "dataType": 'json',
@@ -623,7 +623,7 @@ function update_resource() {
                 render_resource_datatable();
                 $('#resource-status-modal').modal('hide');
             } else {
-                pop_msg('resource-msg', result, 0); // Error
+                pop_msg('resource-msg', result, MSG_ERROR); // Error
             }
         }
     });
@@ -706,9 +706,9 @@ function reset_password() {
     reset_password.done(function (resp) {
         var result = JSON.parse(resp);
         if (result.is_success) {
-            pop_msg('user-modal-msg', result.msg, 2);
+            pop_msg('user-modal-msg', result.msg, MSG_SUCCESS);
         } else {
-            pop_msg('user-modal-msg', result.msg, 1);
+            pop_msg('user-modal-msg', result.msg, MSG_ALERT);
         }
         $('#processing').hide();
     });
@@ -746,8 +746,8 @@ function ready_common_switch() {
 function ready_common_searchable_multi_select() {
     /*Multi-Select Search*/
     $('.searchable').multiSelect({
-        selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Filter String'>",
-        selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder='Filter String'>",
+        selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder="+ commonLanguge['Filter String'] +">",
+        selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder="+ commonLanguge['Filter String'] +">",
         afterInit: function(ms) {
             var that = this,
                 $selectableSearch = that.$selectableUl.prev(),
@@ -945,36 +945,36 @@ function process_user_result(result) {
 
 function get_resource_type(_type) {
     var resource_type = 'Private';
-    if(_type == '1')
+    if(_type == RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
         resource_type = 'Public - Publications';
-    else if(_type == '2')
+    else if(_type == RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
         resource_type = 'Public - Documentation';
-    else if(_type == '3')
+    else if(_type == RESOURCE_TYPE_PUBLIC_EXAMPLES)
         resource_type = 'Public - Examples';
-    else if(_type == '4')
+    else if(_type == RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES)
         resource_type = 'AllUser - Software Packages';
-    else if(_type =='5')
+    else if(_type == RESOURCE_TYPE_ALLUSER_INSTALLER)
         resource_type = 'AllUser - Installer';
-    else if(_type == '6')
+    else if(_type == RESOURCE_TYPE_PRIVATE)
         resource_type = 'Private';
     return resource_type;
 }
 
 function get_role_name(role_id) {
-    var role_name = 'Resource';
-    if(role_id == '1')
-        role_name = 'Resource';
-    else if(role_id == '2')
-        role_name = 'Resource Owner';
-    else if(role_id == '3')
-        role_name = 'Administrator';
+    var role_name = commonLanguge['Resource'];
+    if(role_id == USER_TYPE_RESOURCE)
+        role_name = commonLanguge['Resource'];
+    else if(role_id == USER_TYPE_RESOURCE_OWNER)
+        role_name = commonLanguge['Resource Owner'];
+    else if(role_id == USER_TYPE_ADMINISTRATOR)
+        role_name = commonLanguge['Administrator'];
     return role_name;
 }
 
 function get_user_status(active) {
-    var status = 'No';
+    var status = commonLanguge['No'];
     if(active)
-        status = 'Yes';
+        status = commonLanguge['Yes'];
     return status;
 }
 
@@ -995,13 +995,13 @@ function pop_msg(msg_label, msg, type) {
     // type = 0 - Error, 1 - Alert, 2 - Success
     var label_classes = "";
     var container_classes = "";
-    if(type == 0) {
+    if(type == MSG_ERROR) {
         container_classes = 'alert alert-danger';
         label_classes = 'fa fa-times-circle sign';
-    } else if(type === 1) {
+    } else if(type === MSG_ALERT) {
         container_classes = 'alert alert-warning';
         label_classes = 'fa fa-warning sign';
-    } else if(type === 2) {
+    } else if(type === MSG_SUCCESS) {
         container_classes = 'alert alert-success';
         label_classes = 'fa fa-check sign';
     }
@@ -1012,10 +1012,43 @@ function pop_msg(msg_label, msg, type) {
 }
 
 function convert_vendor_name(vendor) {
-    if(vendor === 'oss')
-        return 'AliYun'
-    else if(vendor === 's3')
-        return 'AWS S3'
+    if(vendor === VENDOR_TYPE_OOS)
+        return VENDOR_OOS_DISPLAY_NAME
+    else if(vendor === VENDOR_TYPE_S3)
+        return VENDOR_S3_DISPLAY_NAME
     else
-         return vendor
+        return vendor
 }
+
+
+//***************************************************************
+//
+//                    Constant variables
+//
+//***************************************************************
+
+// Message type
+var MSG_ERROR = 0;
+var MSG_ALERT = 1;
+var MSG_SUCCESS = 2;
+
+// Resource type
+var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1'
+var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2'
+var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3'
+var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4'
+var RESOURCE_TYPE_ALLUSER_INSTALLER = '5'
+var RESOURCE_TYPE_PRIVATE = '6'
+
+// User type
+var USER_TYPE_RESOURCE = '1'
+var USER_TYPE_RESOURCE_OWNER = '2'
+var USER_TYPE_ADMINISTRATOR = '3'
+
+// Vendor type
+var VENDOR_TYPE_OOS = 'oos'
+var VENDOR_TYPE_S3 = 's3'
+
+// Vendor display name
+var VENDOR_OOS_DISPLAY_NAME = 'AliYun'
+var VENDOR_S3_DISPLAY_NAME = 'AWS S3'
