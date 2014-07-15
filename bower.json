@@ -51,7 +51,7 @@
             "main": ["js/jquery.multi-select.js", "css/multi-select.css"]
         },
         "select2": {
-            "main": ["select2.min.js", "select2.css"] 
+            "main": ["select2.min.js", "select2_locale_zh-CN.js", "select2.css"] 
         },
         "bootstrap-switch": {
             "main": ["static/js/bootstrap-switch.js", "static/stylesheets/bootstrap-switch.css"]
