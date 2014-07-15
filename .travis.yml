@@ -25,7 +25,8 @@ script:
 - cd /home/travis/build/cogenda/cogenda-web
 - ./setenv.sh
 - source venv/bin/activate
-- make web
+- npm install
+- npm install -g grunt-cli
 - make pylint 
 - make jslint
 #- make web-setup
