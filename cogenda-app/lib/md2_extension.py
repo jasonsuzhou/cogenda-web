@@ -14,8 +14,7 @@ class Markdown2Extension(jinja2.ext.Extension):
 
     def __init__(self, environment):
         super(Markdown2Extension, self).__init__(environment)
-        environment.extend(markdowner=markdown2.Markdown(extras=["wiki-tables", "markdown-in-html", "fenced-code-blocks"])) 
-
+        environment.extend(markdowner=markdown2.Markdown(extras=["wiki-tables", "markdown-in-html", "fenced-code-blocks"]))
 
     def parse(self, parser):
         lineno = parser.stream.next().lineno
@@ -30,8 +29,7 @@ class Markdown2Extension(jinja2.ext.Extension):
             body
         ).set_lineno(lineno)
 
-
     def _markdown_support(self, caller):
         return self.environment.markdowner.convert(caller()).strip()
 
-md2ext=Markdown2Extension
+md2ext = Markdown2Extension

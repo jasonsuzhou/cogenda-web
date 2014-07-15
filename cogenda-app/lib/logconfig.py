@@ -6,7 +6,8 @@ import logging
 import logging.handlers
 
 DEFAULT_LOG_LEVEL = logging.DEBUG
-    
+
+
 def init_logging(log_dir, log_file, log_level):
     # get root and readings logger, and remove default handlers -- we set our own
     try:
@@ -25,8 +26,8 @@ def init_logging(log_dir, log_file, log_level):
     file_handler = logging.handlers.RotatingFileHandler(os.path.join(log_dir, log_file), maxBytes=20971520, backupCount=50)
     console_handler = logging.StreamHandler()
     log_formatter = logging.Formatter("%(asctime)s - %(name)-25s - %(levelname)-8s - %(message)s")
-    file_handler.setFormatter(log_formatter)    
+    file_handler.setFormatter(log_formatter)
     console_handler.setFormatter(log_formatter)
     root_log.addHandler(console_handler)
-    root_log.addHandler(file_handler)    
+    root_log.addHandler(file_handler)
     root_log.setLevel(log_level)

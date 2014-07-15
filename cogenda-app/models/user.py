@@ -8,6 +8,7 @@ import hmac
 
 Base = declarative_base()
 
+
 class User(Base):
 
     __tablename__ = 'users'
@@ -45,11 +46,11 @@ class User(Base):
 
     @staticmethod
     def get_by_username(session, username):
-        return session.query(User).filter(User.username==username).first()
+        return session.query(User).filter(User.username == username).first()
 
     @staticmethod
     def get_by_uid(session, uid):
-        return session.query(User).filter(User.id==uid).first()
+        return session.query(User).filter(User.id == uid).first()
 
     @staticmethod
     def update_user(session, user, _user):
@@ -78,7 +79,7 @@ class User(Base):
 
     @staticmethod
     def delete_by_uid(session, uid):
-        session.query(User).filter(User.id==uid).delete()
+        session.query(User).filter(User.id == uid).delete()
         session.commit()
 
     @staticmethod
@@ -86,5 +87,3 @@ class User(Base):
         user.password = hmac.new('cogenda_salt', password).hexdigest()
         session.commit()
         return user
-
-

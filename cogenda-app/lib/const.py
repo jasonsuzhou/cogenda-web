@@ -1,12 +1,17 @@
 #-*- coding:utf-8 -*-
 
-""" 
-Cogenda Common Constants
-refer: http://code.activestate.com/recipes/65207-constants-in-python
-"""
+
 class _const:
-    class ConstError(TypeError): pass  # base exception class
-    class ConstCaseError(ConstError): pass
+    """
+    Cogenda Common Constants
+    refer: http://code.activestate.com/recipes/65207-constants-in-python
+    """
+
+    class ConstError(TypeError):
+        pass  # base exception class
+
+    class ConstCaseError(ConstError):
+        pass
 
     def __setattr__(self, name, value):
         if name in self.__dict__:

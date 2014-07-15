@@ -26,12 +26,10 @@ class AdminController(BaseController):
     def user_mgmt(self):
         return self.render_template('admin/user-mgmt/user-container.html')
 
-
     @route('/admin/resource-mgmt')
     @authenticated
     def resource_mgmt(self):
         return self.render_template('admin/resource-mgmt/resource-container.html')
-
 
     @route('/admin/users')
     @cherrypy.tools.json_out()
@@ -45,7 +43,6 @@ class AdminController(BaseController):
         users_in_json.append(self.init_user_table_title())
         return users_in_json
 
-
     @route('/admin/fetch-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -54,7 +51,6 @@ class AdminController(BaseController):
         user = User.get_by_uid(cherrypy.request.db, uid)
         user_in_json = self.jsonify_model(user)
         return user_in_json
-
 
     def init_user_table_title(self):
         userTableTitle = {}
@@ -66,7 +62,6 @@ class AdminController(BaseController):
         userTableTitle['active'] = _('Active')
         return userTableTitle
 
-
     def init_resource_table_title(self):
         resourceTable = {}
         resourceTable['Resource Name'] = _('Resource Name')
@@ -77,7 +72,6 @@ class AdminController(BaseController):
         resourceTable['Type'] = _('Type')
         resourceTable['Active'] = _('Active')
         return resourceTable
-
 
     @route('/admin/init-common-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -96,7 +90,6 @@ class AdminController(BaseController):
                            'Resource': _('Resource'), 'Resource Owner': _('Resource Owner'), 'Administrator': _('Administrator'),
                            'Yes': _('Yes'), 'No': _('No'), 'Filter String': _('Filter String')})
 
-
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -113,10 +106,9 @@ class AdminController(BaseController):
         oPaginate_sPrevious = _('oPaginate_sPrevious')
         oPaginate_sNext = _('oPaginate_sNext')
         oPaginate_sLast = _('oPaginate_sLast')
-        return json.dumps({'sProcessing': sProcessing,'sShowRows':sShowRows,'sZeroRecords':sZeroRecords,'sInfo':sInfo,'sInfoEmpty':sInfoEmpty,
-                           'sInfoFiltered':sInfoFiltered,'sInfoPostFix':sInfoPostFix,'sSearch':sSearch,'oPaginate_sFirst':oPaginate_sFirst,
-                           'oPaginate_sPrevious':oPaginate_sPrevious,'oPaginate_sNext':oPaginate_sNext,'oPaginate_sLast':oPaginate_sLast})
-
+        return json.dumps({'sProcessing': sProcessing, 'sShowRows': sShowRows, 'sZeroRecords': sZeroRecords, 'sInfo': sInfo, 'sInfoEmpty': sInfoEmpty,
+                           'sInfoFiltered': sInfoFiltered, 'sInfoPostFix': sInfoPostFix, 'sSearch': sSearch, 'oPaginate_sFirst': oPaginate_sFirst,
+                           'oPaginate_sPrevious': oPaginate_sPrevious, 'oPaginate_sNext': oPaginate_sNext, 'oPaginate_sLast': oPaginate_sLast})
 
     @route('/admin/create-user')
     @cherrypy.tools.json_out()
@@ -134,21 +126,19 @@ class AdminController(BaseController):
             return username_checking
         salt = self.settings.cogenda_app.cogenda_salt
         user = User(
-                json_user['username'], 
-                hmac.new(salt, json_user['password']).hexdigest(),
-                json_user['company'],
-                json_user['email'],
-                json_user['mobile'],
-                json_user['role'],
-                json_user['resource'],
-                json_user['notes'],
-                json_user['active'])
+            json_user['username'],
+            hmac.new(salt, json_user['password']).hexdigest(),
+            json_user['company'],
+            json_user['email'],
+            json_user['mobile'],
+            json_user['role'],
+            json_user['resource'],
+            json_user['notes'],
+            json_user['active'])
         user.created_date = datetime.now()
         cherrypy.request.db.add(user)
         return self.jsonify_model(user)
 
-
-    
     @route('/admin/update-user')
     @cherrypy.tools.json_out()
     @authenticated
@@ -171,19 +161,18 @@ class AdminController(BaseController):
 
         # Assemble user
         user = User(
-                json_user['username'],
-                hmac.new(salt, json_user['password']).hexdigest(),
-                json_user['company'],
-                json_user['email'],
-                json_user['mobile'],
-                json_user['role'],
-                json_user['resource'],
-                json_user['notes'],
-                json_user['active'])
+            json_user['username'],
+            hmac.new(salt, json_user['password']).hexdigest(),
+            json_user['company'],
+            json_user['email'],
+            json_user['mobile'],
+            json_user['role'],
+            json_user['resource'],
+            json_user['notes'],
+            json_user['active'])
         user.updated_date = datetime.now()
         user = User.update_user(cherrypy.request.db, origin_user, user)
         return self.jsonify_model(user)
-
 
     @route('/admin/delete-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -195,7 +184,6 @@ class AdminController(BaseController):
         for id in ids:
             count.append(User.delete_by_uid(cherrypy.request.db, id))
         return count
-
 
     @route('/admin/resources')
     @cherrypy.tools.json_out()
@@ -215,12 +203,11 @@ class AdminController(BaseController):
             if i != len(resources_in_json) - 1:
                 next_resource = resources_in_json[i + 1]
                 if resource['name'] == next_resource['name']:
-                    resource['id'] = '%s:%s' %(resource['id'], next_resource['id'])
-                    resource['vendor'] = self.convert_vendor_name(resource['vendor']) + "/" + self.convert_vendor_name(next_resource['vendor'])
+                    resource['id'] = '%s:%s' % (resource['id'], next_resource['id'])
+                    resource['vendor'] = '%s%s%s' % (self.convert_vendor_name(resource['vendor']), '/', self.convert_vendor_name(next_resource['vendor']))
                     resources_in_json.remove(next_resource)
         resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
-
 
     @route('/admin/update-resource')
     @cherrypy.tools.json_out()
@@ -245,7 +232,6 @@ class AdminController(BaseController):
             resources_in_json.append(self.jsonify_model(resource))
         return resources_in_json
 
-
     @route('/admin/fetch-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -262,7 +248,6 @@ class AdminController(BaseController):
             resources_in_json.append(self.jsonify_model(resource))
         return resources_in_json
 
-
     @route('/admin/reset-password')
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
@@ -273,10 +258,10 @@ class AdminController(BaseController):
         name = json_request['username']
         receiver = json_request['email']
         sender = self.settings.mailer.smtp_user
-        chars = '%s%s' %(string.letters, string.digits)
+        chars = '%s%s' % (string.letters, string.digits)
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
         #TODO: Email template!!!
-        msg = 'Your password has been reset to: '+ gen_pwd + '.'
+        msg = 'Your password has been reset to: ' + gen_pwd + '.'
         log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:
             self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
@@ -288,7 +273,6 @@ class AdminController(BaseController):
             log.error('Reset password operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': _('Reset password failure')})
         return json.dumps({'is_success': True, 'msg': _('Reset password successfully')})
-
 
     def jsonify_model(self, model):
         """
@@ -309,13 +293,11 @@ class AdminController(BaseController):
                 json[col_name] = col_val
         return json
 
-
     def check_username(self, username):
         log.debug('[Cogenda-web] - Check username:%s' % username)
         user = User.get_by_username(cherrypy.request.db, username)
         if user:
-            return  _('The username is existing')
-
+            return _('The username is existing')
 
     def convert_vendor_name(self, vendor):
         if vendor == const.VENDOR_TYPE_OOS:

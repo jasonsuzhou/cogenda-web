@@ -3,10 +3,8 @@
 from lib.server import Server
 from lib.fs import *
 import sys
-from os.path import join, dirname, abspath, exists, split
+from os.path import dirname, abspath
 import cherrypy
-import hashlib
-import os
 from lib.controller import BaseController
 
 from controllers.web import *

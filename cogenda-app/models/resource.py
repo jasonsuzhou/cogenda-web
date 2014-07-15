@@ -7,6 +7,7 @@ from datetime import datetime
 
 Base = declarative_base()
 
+
 class Resource(Base):
 
     __tablename__ = 'Resources'
@@ -35,19 +36,19 @@ class Resource(Base):
 
     @staticmethod
     def list_active_resources(session):
-        return session.query(Resource).filter(Resource.active==True).order_by(Resource.name.desc(), Resource.id.desc()).all()
+        return session.query(Resource).filter(Resource.active == True).order_by(Resource.name.desc(), Resource.id.desc()).all()
 
     @staticmethod
     def list_resource_by_vendor(session, vendor):
-        return session.query(Resource).filter(Resource.vendor==vendor).all()
+        return session.query(Resource).filter(Resource.vendor == vendor).all()
 
     @staticmethod
     def list_resource_by_type(session, type):
-        return session.query(Resource).filter(Resource.type==type, Resource.active==True).all()
+        return session.query(Resource).filter(Resource.type == type, Resource.active == True).all()
 
     @staticmethod
     def get_by_rid(session, rid):
-        return session.query(Resource).filter(Resource.id==rid).first()
+        return session.query(Resource).filter(Resource.id == rid).first()
 
     @staticmethod
     def get_by_rids(session, rids):
@@ -55,8 +56,7 @@ class Resource(Base):
 
     @staticmethod
     def get_resource_by_name_vendor(session, name, vendor):
-        return session.query(Resource).filter(Resource.name==name, Resource.vendor==vendor).first()
-    
+        return session.query(Resource).filter(Resource.name == name, Resource.vendor == vendor).first()
 
     @staticmethod
     def update_resource(session, resource, desc, type, active):
@@ -69,8 +69,7 @@ class Resource(Base):
         session.commit()
         return resource
 
-
     @staticmethod
     def delete_resource_by_name_vendor(session, name, vendor):
-        session.query(Resource).filter(Resource.name==name, Resource.vendor==vendor).delete()
+        session.query(Resource).filter(Resource.name == name, Resource.vendor == vendor).delete()
         session.commit()

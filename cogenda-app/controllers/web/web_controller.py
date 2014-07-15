@@ -1,11 +1,9 @@
 #-*- coding:utf-8 -*-
 
 from lib.controller import BaseController, route, authenticated
-from datetime import datetime
 from models import User, Resource
 import cherrypy
 from lib.i18ntool import ugettext as _
-from datetime import datetime
 from fuzzywuzzy import fuzz
 from urlparse import urlparse
 import os
@@ -25,29 +23,27 @@ class WebController(BaseController):
     This WebController is used to provide api for frontend page
     """
 
-    LAST_ARTICLE_FLAG='index'
+    LAST_ARTICLE_FLAG = 'index'
 
     @route('/')
     def index(self):
         content = self.render_template('web/article/index.md')
         news = self.render_template('web/news/index.md')
         nav_infos = self._retrieve_nav_info()
-        return self.render_template('web/index.html', 
+        return self.render_template('web/index.html',
                 nav_infos=nav_infos,
-                content=content, 
-                news=news, 
+                content=content,
+                news=news,
                 sidebar=self._retrieve_random_sidebar())
-
 
     @route('/article/:article_name')
     def serve_article(self, article_name):
         nav_infos = self._retrieve_nav_info()
-        return self.render_template('web/index.html', 
+        return self.render_template('web/index.html',
                 nav_infos=nav_infos,
-                content=self._retrieve_optimized_article(article_name), 
-                news=self.render_template('web/news/index.md'), 
+                content=self._retrieve_optimized_article(article_name),
+                news=self.render_template('web/news/index.md'),
                 sidebar=self._retrieve_random_sidebar())
-
 
     @route('/resources')
     @cherrypy.tools.json_out()
@@ -56,7 +52,6 @@ class WebController(BaseController):
         all_resources = Resource.list_active_resources(cherrypy.request.db)
         return self.filter_resources_by_vendor(all_resources)
 
-
     @route('/private-resources')
     @cherrypy.tools.json_out()
     def load_private_resource(self):
@@ -64,11 +59,10 @@ class WebController(BaseController):
         private_resources = Resource.list_resource_by_type(cherrypy.request.db, const.RESOURCE_TYPE_PRIVATE)
         return self.filter_resources_by_vendor(private_resources)
 
-
     @route('/check-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     def check_resource(self, rid):
-        log.debug("[Cogenda-web] - Check restricted resource: %s." %rid)
+        log.debug("[Cogenda-web] - Check restricted resource: %s." % rid)
         try:
             resource = Resource.get_by_rid(cherrypy.request.db, rid)
         except DBAPIError, err:
@@ -79,27 +73,24 @@ class WebController(BaseController):
         if resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES or resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER or resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user is None:
                 return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
-        return json.dumps({'auth_status': True, 'link': '%s%s' %('/download/', rid)})
-
+        return json.dumps({'auth_status': True, 'link': '%s%s' % ('/download/', rid)})
 
     @route('/news/:news_name')
     def serve_news(self, news_name):
         pass
 
-
     @route('/switch/:locale')
     @cherrypy.tools.json_out(content_type='application/json')
     def switch_locale(self, locale):
         cherrypy.tools.I18nTool.set_custom_language(locale)
-        cherrypy.tools.I18nTool.default=locale
+        cherrypy.tools.I18nTool.default = locale
         cherrypy.session['_lang_'] = locale
-        refer = cherrypy.request.headers.get('Referer','/')
+        refer = cherrypy.request.headers.get('Referer', '/')
         path = urlparse(refer).path
-        if path.startswith('/article'): 
+        if path.startswith('/article'):
             article_name = path.replace('/article/', '')
-            self.LAST_ARTICLE_FLAG = article_name 
-        return json.dumps({'is_success': True, 'uri':self.LAST_ARTICLE_FLAG})
-
+            self.LAST_ARTICLE_FLAG = article_name
+        return json.dumps({'is_success': True, 'uri': self.LAST_ARTICLE_FLAG})
 
     @route('/web/init-common-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -111,7 +102,7 @@ class WebController(BaseController):
             username = self.user[0]
         else:
             username = ''
-        return json.dumps({'username' : username, 'myprofile':_('My Profile'), 'signout': _('Sign Out'),
+        return json.dumps({'username': username, 'myprofile': _('My Profile'), 'signout': _('Sign Out'),
                            'Two passwords are not the same': two_passwords_not_same,
                            'Password is changed successfully': password_changed_successfully,
                            'Encounter error in server': encounter_error_in_server})
@@ -140,8 +131,7 @@ class WebController(BaseController):
         cd = 'attachment; filename="%s"' % resource.name
         cherrypy.response.headers["Content-Disposition"] = cd
         resource_url_partial = resource.url.replace('http://', '').replace('https://', '')
-        cherrypy.response.headers['X-Accel-Redirect'] = '/resource/%s' %(resource_url_partial)
-
+        cherrypy.response.headers['X-Accel-Redirect'] = '/resource/%s' % (resource_url_partial)
 
     @route('/user/request-an-account')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -152,24 +142,22 @@ class WebController(BaseController):
         name = json_request['username']
         sender = json_request['email']
         message = json_request['notes']
-        log.debug("[Cogenda-web] - Request an account: %s,%s,%s" %(name, sender, message))
+        log.debug("[Cogenda-web] - Request an account: %s,%s,%s" % (name, sender, message))
         try:
             self.send_mail('mail/req_account_tpl.html', name, 'Support', self.settings.mailer.smtp_user, 'kkiiiu@gmail.com', message)
         except Exception as err:
             log.error('Send mail operation error %s' % err)
-            return json.dumps({'is_success': False, 'msg': 'Request mail send failure with error: %s' %err})
+            return json.dumps({'is_success': False, 'msg': 'Request mail send failure with error: %s' % err})
         return json.dumps({'is_success': True, 'msg': _('Request mail send successfully')})
-
 
     @route('/user/user-profile/:username')
     @cherrypy.tools.json_out()
     @authenticated
     def fetch_user_profile(self, username):
-        log.debug("[Cogenda-web] - Fetch user profile: %s" %username)
+        log.debug("[Cogenda-web] - Fetch user profile: %s" % username)
         user = User.get_by_username(cherrypy.request.db, username)
         user_in_json = self.jsonify_model(user)
         return user_in_json
-
 
     @route('/user/change-password')
     @cherrypy.tools.json_out()
@@ -178,11 +166,10 @@ class WebController(BaseController):
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         json_user = json.loads(rawbody)
-        log.debug("[Cogenda-web] - Change user password: %s" %json_user['username'])
+        log.debug("[Cogenda-web] - Change user password: %s" % json_user['username'])
         origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
         user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'])
         return self.jsonify_model(user)
-
 
     def _retrieve_nav_info(self):
         site_navs = self.settings.web.site_navs
@@ -191,47 +178,42 @@ class WebController(BaseController):
         for idx, nav_name in enumerate(site_navs.split('|')):
             link = '/'
             if nav_name.lower().strip() != 'home':
-               link = "%sarticle/%s" %(link, nav_name.lower().strip())
+                link = "%sarticle/%s" % (link, nav_name.lower().strip())
             caption = _(nav_name)
             sub_nav_caption = sub_nav_captions[idx]
-            subnav_content = self.render_template('web/subnav/subnav-%s.md' %(nav_name.lower()), sub_nav_caption=sub_nav_caption)
+            subnav_content = self.render_template('web/subnav/subnav-%s.md' % (nav_name.lower()), sub_nav_caption=sub_nav_caption)
             nav = (link, caption, subnav_content)
             nav_infos.append(nav)
         return nav_infos
 
-
     def _retrieve_random_sidebar(self):
         sidebar_files = self.context.sidebar_files.values()
         sidebar_choice = random.choice(sidebar_files)
-        return self.render_template('web/sidebar/%s' %(sidebar_choice))
-
+        return self.render_template('web/sidebar/%s' % (sidebar_choice))
 
     def _retrieve_optimized_article(self, article_name):
         choice = self._optimize_assets(self.context.article_files, article_name)
-        best_choice = 'web/article/%s' %(choice)
+        best_choice = 'web/article/%s' % (choice)
         return self.render_template(best_choice)
-
 
     def _retrieve_optimized_news(self, news_name):
         choice = self._optimize_assets(self.context.news_files, news_name)
-        best_choice = 'web/news/%s' %(choice)
+        best_choice = 'web/news/%s' % (choice)
         return self.render_template(best_choice)
-
 
     def _optimize_assets(self, asset_files, asset_name):
         best_choice = 'index.md'
         best_ratio = None
         for (key, val) in asset_files.items():
-           asset = os.path.splitext(val)[0]
-           ratio = fuzz.ratio(asset_name, asset)
-           if not best_ratio:
-               best_ratio = ratio
-               best_choice = val
-           if best_ratio < ratio:
-               best_ratio = ratio
-               best_choice = val
+            asset = os.path.splitext(val)[0]
+            ratio = fuzz.ratio(asset_name, asset)
+            if not best_ratio:
+                best_ratio = ratio
+                best_choice = val
+            if best_ratio < ratio:
+                best_ratio = ratio
+                best_choice = val
         return best_choice
-
 
     def jsonify_model(self, model):
         """
@@ -248,29 +230,27 @@ class WebController(BaseController):
                 json[col_name] = col_val
         return json
 
-
     def auth_private_resource(self, resource, resources_in_json):
         """
         Authenticate private resource for login user
         """
-        restricted_res = '%s%s%s' %(',', self.user[3], ",")
-        log.debug('[Cogenda-web] - User:%s, own resource:%s' %(self.user[0], restricted_res))
-        log.debug('[Cogenda-web] - User requires resource:%s' %resource.id)
+        restricted_res = '%s%s%s' % (',', self.user[3], ",")
+        log.debug('[Cogenda-web] - User:%s, own resource:%s' % (self.user[0], restricted_res))
+        log.debug('[Cogenda-web] - User requires resource:%s' % resource.id)
         # Resource
         if self.user[2] == const.USER_TYPE_RESOURCE:
             return
         # Resource Owner
         elif self.user[2] == const.USER_TYPE_RESOURCE_OWNER:
-            p1 = '%s%s%s' %(',', str(resource.id), ",")
-            p2 = '%s%s%s' %(':', str(resource.id), ",")
-            p3 = '%s%s%s' %(',', str(resource.id), ":")
+            p1 = '%s%s%s' % (',', str(resource.id), ",")
+            p2 = '%s%s%s' % (':', str(resource.id), ",")
+            p3 = '%s%s%s' % (',', str(resource.id), ":")
             if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
                 return
             resources_in_json.append(self.jsonify_model(resource))
         # Administrator
         elif self.user[2] == const.USER_TYPE_ADMINISTRATOR:
             resources_in_json.append(self.jsonify_model(resource))
-
 
     def gen_vendor(self):
         """
@@ -282,13 +262,12 @@ class WebController(BaseController):
         country_code = None
         if match:
             country_code = match.country
-        log.info('[Cogenda-web] - Web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' %(forwarded_ip, remote_ip, country_code))
+        log.info('[Cogenda-web] - Web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' % (forwarded_ip, remote_ip, country_code))
         vendor = const.VENDOR_TYPE_S3
         if country_code and country_code == 'CN':
             vendor = const.VENDOR_TYPE_OOS
         log.info('[Cogenda-web] - load resource from vendor %s' % vendor)
         return vendor
-
 
     def filter_resources_by_vendor(self, all_resources):
         """

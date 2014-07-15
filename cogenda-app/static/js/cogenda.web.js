@@ -20,7 +20,7 @@ $(document).ready(function() {
     /******************************
      * Setting parsley locale
      *****************************/
-    locale = $('#locale').val();
+    var locale = $('#locale').val();
     if (locale.indexOf('zh') >=0) {
         locale = 'zh_cn';
     }
@@ -87,12 +87,12 @@ $(document).ready(function() {
                 $('#user-profile-container').show();
 
                 // If @ download page
-                if(self.location.href.indexOf('article/downloads') > 0) {
+                if(window.location.href.indexOf('article/downloads') > 0) {
                     if($('#r_id').val() !== null && $('#r_id').val().trim().length > 0) {
                         window.location = "/download/"+ $('#r_id').val();
                     }
                     setTimeout(function() {
-                        self.location = "/article/downloads";
+                        window.location = "/article/downloads";
                     }, 500);
                 }
             });
@@ -187,7 +187,7 @@ $(document).ready(function() {
     });
 
     // Load download page
-    if(self.location.href.indexOf('article/downloads') > 0) {
+    if(window.location.href.indexOf('article/downloads') > 0) {
         $.ajax({
             type: 'GET',
             async: false,
@@ -234,7 +234,7 @@ $(document).ready(function() {
             if (typeof(result.auth_status) === 'undefined') {
                 pop_msg('download-msg', result.msg, MSG_ERROR);
             } else if (result.auth_status) {
-                self.location = result.link;
+                window.location = result.link;
             } else {
                 pop_msg('user-login-msg', result.msg, MSG_ALERT);
                 $('#loginModal').modal('show');
@@ -247,7 +247,7 @@ function pop_msg(msg_label, msg, type) {
     // type = 0 - Error, 1 - Alert, 2 - Success
     var label_classes = "";
     var container_classes = "";
-    if(type == 0) {
+    if(type === 0) {
         container_classes = 'alert alert-danger';
         label_classes = 'fa fa-times-circle sign';
     } else if(type === 1) {
@@ -318,9 +318,9 @@ var MSG_ALERT = 1;
 var MSG_SUCCESS = 2;
 
 // Resource type
-var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1'
-var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2'
-var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3'
-var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4'
-var RESOURCE_TYPE_ALLUSER_INSTALLER = '5'
-var RESOURCE_TYPE_PRIVATE = '6'
+var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1';
+var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2';
+var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3';
+var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4';
+var RESOURCE_TYPE_ALLUSER_INSTALLER = '5';
+var RESOURCE_TYPE_PRIVATE = '6';

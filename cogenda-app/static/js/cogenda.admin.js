@@ -7,7 +7,7 @@ $(document).ready(function() {
     /******************************
      * Setting parsley locale
      *****************************/
-    locale = $('#locale').val();
+    var locale = $('#locale').val();
     if (locale.indexOf('zh') >=0) {
         locale = 'zh_cn';
     }
@@ -32,7 +32,7 @@ $(document).ready(function() {
                 loading.appendTo(parent);
                 loading.fadeIn(0);
                 var $clink = li.children[0];
-                self.location.href = $clink;
+                window.location.href = $clink;
                 $('ul.cl-vnavigation li.active').removeClass('active');
                 $(li).addClass('active');
             });
@@ -126,7 +126,7 @@ function ready_navigation_menu() {
     $('ul.cl-vnavigation li').each(function(index, li) {
         var sub_menus = $(li).find('ul');
         var $clink = li.children[0];
-        if ($clink.href == String(window.location)) {
+        if ($clink.href === String(window.location)) {
             $(this).addClass('active');
         }
     });
@@ -689,7 +689,7 @@ function reset_password() {
         email: email
     };
 
-    var reset_password = $.ajax({
+    var reset_password_request = $.ajax({
         dataType: 'json',
         contentType: "application/json",
         url: '/admin/reset-password',
@@ -697,7 +697,7 @@ function reset_password() {
         type: 'POST'
     });
 
-    reset_password.done(function (resp) {
+    reset_password_request.done(function (resp) {
         var result = JSON.parse(resp);
         if (result.is_success) {
             pop_msg('user-modal-msg', result.msg, MSG_SUCCESS);
@@ -757,7 +757,7 @@ function ready_common_searchable_multi_select() {
             });
 
             that.qs2 = $selectionSearch.quicksearch(selectionSearchString).on('keydown', function(e) {
-                if (e.which == 40) {
+                if (e.which === 40) {
                     that.$selectionUl.focus();
                     return false;
                 }
@@ -840,10 +840,10 @@ function ready_common_datatable(url, fnDatatableCallback) {
  * Get table columns via the url
  */
 function get_table_columns(tableTitle, url) {
-    if('/admin/users' == url) {
+    if('/admin/users' === url) {
        return get_user_table_columns(tableTitle);
     }
-    if('/admin/resources' == url) {
+    if('/admin/resources' === url) {
         return get_resource_table_columns(tableTitle);
     }
 }
@@ -939,28 +939,28 @@ function process_user_result(result) {
 
 function get_resource_type(_type) {
     var resource_type = 'Private';
-    if(_type == RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
+    if(_type === RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
         resource_type = 'Public - Publications';
-    else if(_type == RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
+    else if(_type === RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
         resource_type = 'Public - Documentation';
-    else if(_type == RESOURCE_TYPE_PUBLIC_EXAMPLES)
+    else if(_type === RESOURCE_TYPE_PUBLIC_EXAMPLES)
         resource_type = 'Public - Examples';
-    else if(_type == RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES)
+    else if(_type === RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES)
         resource_type = 'AllUser - Software Packages';
-    else if(_type == RESOURCE_TYPE_ALLUSER_INSTALLER)
+    else if(_type === RESOURCE_TYPE_ALLUSER_INSTALLER)
         resource_type = 'AllUser - Installer';
-    else if(_type == RESOURCE_TYPE_PRIVATE)
+    else if(_type === RESOURCE_TYPE_PRIVATE)
         resource_type = 'Private';
     return resource_type;
 }
 
 function get_role_name(role_id) {
     var role_name = commonLanguge['Resource'];
-    if(role_id == USER_TYPE_RESOURCE)
+    if(role_id === USER_TYPE_RESOURCE)
         role_name = commonLanguge['Resource'];
-    else if(role_id == USER_TYPE_RESOURCE_OWNER)
+    else if(role_id === USER_TYPE_RESOURCE_OWNER)
         role_name = commonLanguge['Resource Owner'];
-    else if(role_id == USER_TYPE_ADMINISTRATOR)
+    else if(role_id === USER_TYPE_ADMINISTRATOR)
         role_name = commonLanguge['Administrator'];
     return role_name;
 }
@@ -989,7 +989,7 @@ function pop_msg(msg_label, msg, type) {
     // type = 0 - Error, 1 - Alert, 2 - Success
     var label_classes = "";
     var container_classes = "";
-    if(type == MSG_ERROR) {
+    if(type === MSG_ERROR) {
         container_classes = 'alert alert-danger';
         label_classes = 'fa fa-times-circle sign';
     } else if(type === MSG_ALERT) {
@@ -1006,11 +1006,11 @@ function pop_msg(msg_label, msg, type) {
 
 function convert_vendor_name(vendor) {
     if(vendor === VENDOR_TYPE_OOS)
-        return VENDOR_OOS_DISPLAY_NAME
+        return VENDOR_OOS_DISPLAY_NAME;
     else if(vendor === VENDOR_TYPE_S3)
-        return VENDOR_S3_DISPLAY_NAME
+        return VENDOR_S3_DISPLAY_NAME;
     else
-        return vendor
+        return vendor;
 }
 
 
@@ -1026,22 +1026,22 @@ var MSG_ALERT = 1;
 var MSG_SUCCESS = 2;
 
 // Resource type
-var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1'
-var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2'
-var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3'
-var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4'
-var RESOURCE_TYPE_ALLUSER_INSTALLER = '5'
-var RESOURCE_TYPE_PRIVATE = '6'
+var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1';
+var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2';
+var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3';
+var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4';
+var RESOURCE_TYPE_ALLUSER_INSTALLER = '5';
+var RESOURCE_TYPE_PRIVATE = '6';
 
 // User type
-var USER_TYPE_RESOURCE = '1'
-var USER_TYPE_RESOURCE_OWNER = '2'
-var USER_TYPE_ADMINISTRATOR = '3'
+var USER_TYPE_RESOURCE = '1';
+var USER_TYPE_RESOURCE_OWNER = '2';
+var USER_TYPE_ADMINISTRATOR = '3';
 
 // Vendor type
-var VENDOR_TYPE_OOS = 'oos'
-var VENDOR_TYPE_S3 = 's3'
+var VENDOR_TYPE_OOS = 'oos';
+var VENDOR_TYPE_S3 = 's3';
 
 // Vendor display name
-var VENDOR_OOS_DISPLAY_NAME = 'AliYun'
-var VENDOR_S3_DISPLAY_NAME = 'AWS S3'
+var VENDOR_OOS_DISPLAY_NAME = 'AliYun';
+var VENDOR_S3_DISPLAY_NAME = 'AWS S3';
