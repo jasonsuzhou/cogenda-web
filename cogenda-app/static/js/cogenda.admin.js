@@ -1,65 +1,41 @@
-/**
- * Document ready
- *
- */
-$(document).ready(function() {
+//***************************************************************
+//
+//                    Constant variables
+//
+//***************************************************************
 
-    /******************************
-     * Setting parsley locale
-     *****************************/
-    var locale = $('#locale').val();
-    if (locale.indexOf('zh') >=0) {
-        locale = 'zh_cn';
-    }
-    if (locale.indexOf('en') >=0) {
-        locale = 'en';
-    }
-    window.ParsleyValidator.setLocale(locale);
+// Message type
+var MSG_ERROR = 0;
+var MSG_ALERT = 1;
+var MSG_SUCCESS = 2;
 
-    var url = window.location.pathname;
-    if(url === "/admin/login") {
-        ready_login_page();
-    } else {
-        // Handle menu click event.
-        $('ul.cl-vnavigation li').each(function(index, li) {
-            $(li).click(function(e) {
-                var sub_menus = $(li).find('ul');
-                if (sub_menus.length > 0) {
-                    return;
-                }
-                var parent = $('#main-content');
-                var loading = $('<div id="loading" class="loading"><i class="fa fa-spinner"></i></div>');
-                loading.appendTo(parent);
-                loading.fadeIn(0);
-                var $clink = li.children[0];
-                window.location.href = $clink;
-                $('ul.cl-vnavigation li.active').removeClass('active');
-                $(li).addClass('active');
-            });
-        });
-        ready_optimized_page(url);
-    }
-});
+// Resource type
+var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1';
+var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2';
+var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3';
+var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4';
+var RESOURCE_TYPE_ALLUSER_INSTALLER = '5';
+var RESOURCE_TYPE_PRIVATE = '6';
 
-/**
- * Document ready for optimized pages.
- *
- */
-function ready_optimized_page(uri) {
+// User type
+var USER_TYPE_RESOURCE = '1';
+var USER_TYPE_RESOURCE_OWNER = '2';
+var USER_TYPE_ADMINISTRATOR = '3';
 
-    ready_navigation_menu();
+// Vendor type
+var VENDOR_TYPE_OOS = 'oos';
+var VENDOR_TYPE_S3 = 's3';
 
-    ready_common_i18n_info();
+// Vendor display name
+var VENDOR_OOS_DISPLAY_NAME = 'AliYun';
+var VENDOR_S3_DISPLAY_NAME = 'AWS S3';
 
-    switch (uri) {
-    case "/admin/user-mgmt":
-        ready_user_mgmt();
-        break;
-    case "/admin/resource-mgmt":
-        ready_resource_mgmt();
-        break;
-    }
-}
+
+//***************************************************************
+//
+//              COMMON JAVASCRIPT METHODS
+//
+//***************************************************************
 
 var commonLanguge;
 
@@ -75,6 +51,299 @@ function ready_common_i18n_info() {
     });
 }
 
+function remove_selected_rows(local_table) {
+    var selected_rows = local_table.$('tr.row_selected');
+    selected_rows.each(function(index, row) {
+        local_table.fnDeleteRow(row);
+    });
+}
+
+function pop_msg(msg_label, msg, type) {
+    // type = 0 - Error, 1 - Alert, 2 - Success
+    var label_classes = "";
+    var container_classes = "";
+    if(type === MSG_ERROR) {
+        container_classes = 'alert alert-danger';
+        label_classes = 'fa fa-times-circle sign';
+    } else if(type === MSG_ALERT) {
+        container_classes = 'alert alert-warning';
+        label_classes = 'fa fa-warning sign';
+    } else if(type === MSG_SUCCESS) {
+        container_classes = 'alert alert-success';
+        label_classes = 'fa fa-check sign';
+    }
+    $('#'+msg_label).text(msg);
+    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
+    $('#'+msg_label+'-container').attr('class', container_classes).show();
+}
+
+function convert_vendor_name(vendor) {
+    if(vendor === VENDOR_TYPE_OOS)
+        return VENDOR_OOS_DISPLAY_NAME;
+    else if(vendor === VENDOR_TYPE_S3)
+        return VENDOR_S3_DISPLAY_NAME;
+    else
+        return vendor;
+}
+
+function get_resource_type(_type) {
+    var resource_type = 'Private';
+    if(_type === RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
+        resource_type = 'Public - Publications';
+    else if(_type === RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
+        resource_type = 'Public - Documentation';
+    else if(_type === RESOURCE_TYPE_PUBLIC_EXAMPLES)
+        resource_type = 'Public - Examples';
+    else if(_type === RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES)
+        resource_type = 'AllUser - Software Packages';
+    else if(_type === RESOURCE_TYPE_ALLUSER_INSTALLER)
+        resource_type = 'AllUser - Installer';
+    else if(_type === RESOURCE_TYPE_PRIVATE)
+        resource_type = 'Private';
+    return resource_type;
+}
+
+function get_role_name(role_id) {
+    var role_name = commonLanguge['Resource'];
+    if(role_id === USER_TYPE_RESOURCE)
+        role_name = commonLanguge['Resource'];
+    else if(role_id === USER_TYPE_RESOURCE_OWNER)
+        role_name = commonLanguge['Resource Owner'];
+    else if(role_id === USER_TYPE_ADMINISTRATOR)
+        role_name = commonLanguge['Administrator'];
+    return role_name;
+}
+
+function get_user_status(active) {
+    var status = commonLanguge['No'];
+    if(active)
+        status = commonLanguge['Yes'];
+    return status;
+}
+
+function get_user_table_columns(userTableTitle) {
+    var columns = [
+        {
+          "sTitle": "ID",
+          "mData": "id",
+          "bVisible": false
+        },
+        {
+          "sTitle": userTableTitle['username'],
+          "mData": "username"
+        },
+        {
+          "sTitle": userTableTitle['company'],
+          "mData": "company"
+        },
+        {
+          "sTitle": userTableTitle['email'],
+          "mData": "email"
+        },
+        {
+          "sTitle": userTableTitle['mobile'],
+          "mData": "mobile"
+        },
+        {
+          "sTitle": userTableTitle['role'],
+          "mData": "role"
+        },
+        {
+          "sTitle": userTableTitle['active'],
+          "mData": "active"
+        }
+        ];
+        return columns;
+}
+
+function get_resource_table_columns(resourceTableTitle) {
+    var columns = [
+        {
+          "sTitle": "ID",
+          "mData": "id",
+          "bVisible": false
+        },
+        {
+          "sTitle": resourceTableTitle['Resource Name'],
+          "mData": "name"
+        },
+        {
+          "sTitle": resourceTableTitle['Description'],
+          "mData": "description"
+        },
+        {
+          "sTitle": resourceTableTitle['Vendor'],
+          "mData": "vendor"
+        },
+        {
+          "sTitle": resourceTableTitle['Uploaded Date'],
+          "mData": "uploaded_date"
+        },
+        {
+          "sTitle": resourceTableTitle['Type'],
+          "mData": "type"
+        },
+        {
+          "sTitle": resourceTableTitle['Active'],
+          "mData": "active"
+        }
+    ];
+    return columns;
+}
+
+/**
+ * Process user attributes' values to displaying values
+ */
+function process_user_result(result) {
+    result.splice(result.length-1,result.length);
+    for(var i = 0; i < result.length; i++) {
+        result[i].active = get_user_status(result[i].active);
+        if(result[i].role) result[i].role = get_role_name(result[i].role);
+        if(result[i].type) result[i].type = get_resource_type(result[i].type);
+    }
+    return result;
+}
+
+
+//***************************************************************
+//
+//              COMMON UI COMPONENTS
+//
+//***************************************************************
+/**
+ * Get table columns via the url
+ */
+function get_table_columns(tableTitle, url) {
+    if('/admin/users' === url) {
+       return get_user_table_columns(tableTitle);
+    }
+    if('/admin/resources' === url) {
+        return get_resource_table_columns(tableTitle);
+    }
+}
+
+/**
+ * Common ready for select2.
+ *
+ */
+function ready_common_select2() {
+    /*Select2*/
+    $(".select2").select2({
+        width: '100%'
+    });
+}
+
+/**
+ * Common ready for switch.
+ *
+ */
+function ready_common_switch() {
+    /*Switch*/
+    $('.switch').bootstrapSwitch();
+}
+
+/**
+ * Common ready for searchable multi select.
+ *
+ */
+function ready_common_searchable_multi_select() {
+    /*Multi-Select Search*/
+    $('.searchable').multiSelect({
+        selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder="+ commonLanguge['Filter String'] +">",
+        selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder="+ commonLanguge['Filter String'] +">",
+        afterInit: function(ms) {
+            var that = this,
+                $selectableSearch = that.$selectableUl.prev(),
+                $selectionSearch = that.$selectionUl.prev(),
+                selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
+                selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
+
+            that.qs1 = $selectableSearch.quicksearch(selectableSearchString).on('keydown', function(e) {
+                if (e.which === 40) {
+                    that.$selectableUl.focus();
+                    return false;
+                }
+            });
+
+            that.qs2 = $selectionSearch.quicksearch(selectionSearchString).on('keydown', function(e) {
+                if (e.which === 40) {
+                    that.$selectionUl.focus();
+                    return false;
+                }
+            });
+        },
+        afterSelect: function() {
+            this.qs1.cache();
+            this.qs2.cache();
+        },
+        afterDeselect: function() {
+            this.qs1.cache();
+            this.qs2.cache();
+        }
+    });
+}
+
+/**
+ * Common ready for tables.
+ *
+ */
+function ready_common_datatable(url, fnDatatableCallback) {
+    $.ajax({
+        "dataType": 'json',
+        "type": "GET",
+        "url": url,
+        "success": function(result) {
+            var datatable_id = "mgmt-datatable";
+
+            var datatable_div = datatable_id + '-container';
+            $("#" + datatable_div).html('<table class="table table-bordered" id="' + datatable_id + '"></table>');
+            datatable_id = "#" + datatable_id;
+
+            /* Init the table with dynamic ajax loader.*/
+            var tableLanguage;
+            $.ajax({
+                type: 'GET',
+                async: false,
+                dataType: 'json',
+                url:'/admin/init-table-language',
+                success: function(data) {
+                    tableLanguage = $.parseJSON(data);
+                }
+            });
+            var tableColumns = result[result.length-1];
+            var columns = get_table_columns(tableColumns,url);
+            var datatable = $(datatable_id).dataTable({
+                "aaData": process_user_result(result),
+                "aoColumns": columns,
+                "oLanguage": {
+                    "sLengthMenu" : " "+tableLanguage['sShowRows']+" ",
+                    "sZeroRecords" : tableLanguage['sZeroRecords'],
+                    "sInfo" : tableLanguage['sInfo'],
+                    "sInfoEmpty" : tableLanguage['sInfoEmpty'],
+                    "sInfoFiltered" : tableLanguage['sInfoFiltered'],
+                    "oPaginate": {
+                        "sFirst" : tableLanguage['oPaginate_sFirst'],
+                        "sPrevious" : tableLanguage['oPaginate_sPrevious'],
+                        "sNext" : tableLanguage['oPaginate_sNext'],
+                        "sLast" : tableLanguage['oPaginate_sLast']
+                    }
+                }
+            });
+
+            // Add/remove class to a row when clicked on
+            $(datatable_id).on('click', 'tbody tr', function(e) {
+                $(this).toggleClass('row_selected');
+            });
+
+            // Search input style
+            $('.dataTables_filter input').addClass('form-control').attr('placeholder', tableLanguage['sSearch']);
+            $('.dataTables_length select').addClass('form-control');
+
+            // Callback method for datatable
+            fnDatatableCallback(datatable);
+        }
+    });
+}
 
 function ready_login_page() {
     $('#login').on('click', function(event) {
@@ -84,7 +353,7 @@ function ready_login_page() {
             var password = $('#password').val().trim();
             var client = $('#client').val().trim();
 
-            credentials = {
+            var credentials = {
                 username: username,
                 password: password,
                 client: client
@@ -133,82 +402,112 @@ function ready_navigation_menu() {
 }
 
 /**
- * Document ready js for user management page.
+ * Render active switch component
  *
  */
-function ready_user_mgmt() {
-    // Read select2
-    ready_common_select2();
-    render_role_select(USER_TYPE_RESOURCE);
-
-    // Ready multi-select
-    ready_common_searchable_multi_select();
-
-    // Ready switch
-    ready_common_switch();
-
-    // Role > Resource Owner > Resource select
-    $('#role').change(function() {
-        render_resource_select($(this).children('option:selected').val());
-    });
-
-    // Render User datatable
-    render_user_datatable();
+function render_active_switch(is_active) {
+    var _switch = $('.switch-animate');
+    if(typeof(is_active) !== 'undefined') {
+        if(is_active) {
+            _switch.removeClass('switch-off');
+            _switch.addClass('switch-on');
+        } else {
+            _switch.removeClass('switch-on');
+            _switch.addClass('switch-off');
+        }
+    } else {
+        _switch.removeClass('switch-off');
+        _switch.addClass('switch-on');
+    }
 }
 
 /**
- * Render user datatable
+ * Render role select component
  *
  */
-function render_user_datatable() {
-    // Ready common datatable.
-    ready_common_datatable("/admin/users", function(datatable) {
-        off_user_click_event();
+function render_role_select(selectedRole) {
+    $('#role').select2("val", selectedRole);
+}
 
-        // Call Add modal
-        $("#add").on('click', function(e) {
-            reset_user_create_modal();
-            $('#user-new-modal').modal('show');
-            $('#user-msg-container').hide();
-            $('#user-modal-msg-container').hide();
-        });
+/**
+ * Convert resource string ids to array
+ *
+ */
+function convert_resource(resource_str) {
+    if(resource_str === "")
+        return [];
+    else {
+        return resource_str.split(",");
+    }
+}
 
-        // Edit by click edit link & row double click
-        $("#edit").on('click', function(e) {
-            if (e) e.preventDefault();
-            edit_user();
-        });
-        datatable.on("dblclick", "tr", function(e) {
-            if (e) e.preventDefault();
-            edit_user(this);
-        });
-
-        // Delete users
-        $("#delete").on('click', function(e) {
-            if (e) e.preventDefault();
-            delete_user();
-        });
-
-        // Create new user
-        $("#save").on('click', function(e) {
-            if (e) e.preventDefault();
-            if ($('#new-modal').parsley().validate()) {
-                save_user();
+/**
+ * Render resource select component
+ *
+ */
+function render_resource_select(selectedRole, selectedResources) {
+    if(selectedRole === USER_TYPE_RESOURCE_OWNER || selectedRole === 'Resource Owner') { // 'Resource Owner'
+        // Populate resource select
+        var resource_list = $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": "/admin/resources",
+            "success": function(result) {
+                // console.log(result);
+                $('#resource').multiSelect('refresh');
+                var k = 0;
+                for (var i = 0; i < result.length - 1; i++) {
+                    if(result[i].type === '6')
+                        $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: k++ });
+                }
+                $('#resource').multiSelect('deselect_all');
+                if (typeof(selectedResources) !== 'undefined') {
+                    $('#resource').multiSelect('select', selectedResources);
+                }
+                $('#resource-container').show();
             }
         });
 
-        // Reset password
-        $("#reset-password").on('click', function (e) {
-            if (e) e.preventDefault();
-            reset_password();
-        });
+        resource_list.done(function(result) {
 
-        // Save as new user
-        $("#save-as").on('click', function(e) {
-            if (e) e.preventDefault();
-            save_as_user();
         });
-    });
+    } else {
+        $('#resource-container').hide();
+    }
+}
+
+/**
+ * Reset msg & components of user create modal
+ *
+ */
+function reset_user_create_modal() {
+    // Reset parsley
+    $('#new-modal').parsley().reset();
+
+    // Reset title/button
+    $('#title').text(commonLanguge['Create User']);
+
+    // Reset values here
+    $('#uid').val("");
+    $('#name').val("");
+    $('#password').val("");
+    $('#company').val("");
+    $('#email').val("");
+    $('#mobile').val("");
+    $('#notes').val("");
+
+    // Reset password
+    $('#password').show();
+    $('#reset-password-container').hide();
+
+    // Active switch
+    render_active_switch();
+
+    // Role select
+    render_role_select(USER_TYPE_RESOURCE);
+
+    // Resource select
+    render_resource_select();
 }
 
 function off_user_click_event() {
@@ -243,7 +542,7 @@ function delete_user() {
     var selectedRows = selectedTrs.length;
     var selectedRowIDs = "";
     if (selectedRows > 0) {
-        for(i = 0; i < selectedRows; i++) {
+        for(var i = 0; i < selectedRows; i++) {
             var position = datatable.fnGetPosition(selectedTrs[i]);
             var selectedRowID = datatable.fnGetData(position)['id'];
             if(current_username === datatable.fnGetData(position)['username']) {
@@ -305,6 +604,23 @@ function save_as_user(row) {
     }
 }
 
+function prepare_edit_user_modal() {
+
+    // Reset parsley
+    $('#new-modal').parsley().reset();
+
+    // Reset title/button
+    $('#title').text(commonLanguge['Modify User']);
+    $('#save').text(commonLanguge['Save']);
+
+    // Reset password
+    $('#password').hide();
+    $('#reset-password-container').show();
+
+    $('#user-new-modal').modal('show');
+    $('#user-msg-container').hide();
+    $('#user-modal-msg-container').hide();
+}
 
 /**
  * Edit user
@@ -350,24 +666,6 @@ function edit_user(row) {
     } else {
         pop_msg('user-msg', commonLanguge['Selected more than one user'], MSG_ALERT);  // Alert
     }
-}
-
-function prepare_edit_user_modal() {
-
-    // Reset parsley
-    $('#new-modal').parsley().reset();
-
-    // Reset title/button
-    $('#title').text(commonLanguge['Modify User']);
-    $('#save').text(commonLanguge['Save']);
-
-    // Reset password
-    $('#password').hide();
-    $('#reset-password-container').show();
-
-    $('#user-new-modal').modal('show');
-    $('#user-msg-container').hide();
-    $('#user-modal-msg-container').hide();
 }
 
 /**
@@ -448,184 +746,123 @@ function save_user() {
 }
 
 /**
- * Reset msg & components of user create modal
+ * Reset password
  *
  */
-function reset_user_create_modal() {
-    // Reset parsley
-    $('#new-modal').parsley().reset();
+function reset_password() {
+    $('#processing').show();
+    var username = $('#name').val().trim();
+    var email = $('#email').val().trim();
 
-    // Reset title/button
-    $('#title').text(commonLanguge['Create User']);
+    var user_info = {
+        username: username,
+        email: email
+    };
 
-    // Reset values here
-    $('#uid').val("");
-    $('#name').val("");
-    $('#password').val("");
-    $('#company').val("");
-    $('#email').val("");
-    $('#mobile').val("");
-    $('#notes').val("");
+    var reset_password_request = $.ajax({
+        dataType: 'json',
+        contentType: "application/json",
+        url: '/admin/reset-password',
+        data: JSON.stringify(user_info),
+        type: 'POST'
+    });
 
-    // Reset password
-    $('#password').show();
-    $('#reset-password-container').hide();
-
-    // Active switch
-    render_active_switch();
-
-    // Role select
-    render_role_select(USER_TYPE_RESOURCE);
-
-    // Resource select
-    render_resource_select();
-}
-
-/**
- * Render active switch component
- *
- */
-function render_active_switch(is_active) {
-    var _switch = $('.switch-animate');
-    if(typeof(is_active) !== 'undefined') {
-        if(is_active) {
-            _switch.removeClass('switch-off');
-            _switch.addClass('switch-on');
+    reset_password_request.done(function (resp) {
+        var result = JSON.parse(resp);
+        if (result.is_success) {
+            pop_msg('user-modal-msg', result.msg, MSG_SUCCESS);
         } else {
-            _switch.removeClass('switch-on');
-            _switch.addClass('switch-off');
+            pop_msg('user-modal-msg', result.msg, MSG_ALERT);
         }
-    } else {
-        _switch.removeClass('switch-off');
-        _switch.addClass('switch-on');
-    }
+        $('#processing').hide();
+    });
 }
 
 /**
- * Render role select component
+ * Render user datatable
  *
  */
-function render_role_select(selectedRole) {
-    $('#role').select2("val", selectedRole);
-}
+function render_user_datatable() {
+    // Ready common datatable.
+    ready_common_datatable("/admin/users", function(datatable) {
+        off_user_click_event();
 
-/**
- * Convert resource string ids to array
- *
- */
-function convert_resource(resource_str) {
-    if(resource_str === "")
-        return [];
-    else {
-        return resource_str.split(",");
-    }
-}
+        // Call Add modal
+        $("#add").on('click', function(e) {
+            reset_user_create_modal();
+            $('#user-new-modal').modal('show');
+            $('#user-msg-container').hide();
+            $('#user-modal-msg-container').hide();
+        });
 
-/**
- * Render resource select component
- *
- */
-function render_resource_select(selectedRole, selectedResources) {
-    if(selectedRole === USER_TYPE_RESOURCE_OWNER || selectedRole === 'Resource Owner') { // 'Resource Owner'
-        // Populate resource select
-        var resource_list = $.ajax({
-            "dataType": 'json',
-            "type": "GET",
-            "url": "/admin/resources",
-            "success": function(result) {
-                // console.log(result);
-                $('#resource').multiSelect('refresh');
-                var k = 0;
-                for (var i = 0; i < result.length - 1; i++) {
-                    if(result[i].type === '6')
-                        $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: k++ });
-                }
-                $('#resource').multiSelect('deselect_all');
-                if (typeof(selectedResources) !== 'undefined') {
-                    $('#resource').multiSelect('select', selectedResources);
-                }
-                $('#resource-container').show();
+        // Edit by click edit link & row double click
+        $("#edit").on('click', function(e) {
+            if (e) e.preventDefault();
+            edit_user();
+        });
+        datatable.on("dblclick", "tr", function(e) {
+            if (e) e.preventDefault();
+            edit_user(this);
+        });
+
+        // Delete users
+        $("#delete").on('click', function(e) {
+            if (e) e.preventDefault();
+            delete_user();
+        });
+
+        // Create new user
+        $("#save").on('click', function(e) {
+            if (e) e.preventDefault();
+            if ($('#new-modal').parsley().validate()) {
+                save_user();
             }
         });
 
-        resource_list.done(function(result) {
-
+        // Reset password
+        $("#reset-password").on('click', function (e) {
+            if (e) e.preventDefault();
+            reset_password();
         });
-    } else {
-        $('#resource-container').hide();
-    }
+
+        // Save as new user
+        $("#save-as").on('click', function(e) {
+            if (e) e.preventDefault();
+            save_as_user();
+        });
+    });
 }
 
 /**
- * Document ready js for resource management page.
+ * Document ready js for user management page.
  *
  */
-function ready_resource_mgmt() {
+function ready_user_mgmt() {
     // Read select2
     ready_common_select2();
+    render_role_select(USER_TYPE_RESOURCE);
+
+    // Ready multi-select
+    ready_common_searchable_multi_select();
+
     // Ready switch
     ready_common_switch();
 
-    render_resource_datatable();
+    // Role > Resource Owner > Resource select
+    $('#role').change(function() {
+        render_resource_select($(this).children('option:selected').val());
+    });
+
+    // Render User datatable
+    render_user_datatable();
 }
 
 /**
- * Render resource datatable
+ * Render resource type select component
  *
  */
-function render_resource_datatable() {
-    // Ready common datatable.
-    ready_common_datatable("/admin/resources", function(datatable) {
-        // Edit by click row double click
-        datatable.on("dblclick", "tr", function(e) {
-            if (e) e.preventDefault();
-            edit_resource(this);
-        });
-
-        $("#update").off('click');
-
-        // Update resource
-        $("#update").on('click', function(e) {
-            if (e) e.preventDefault();
-            update_resource();
-        });
-    });
-}
-
-/**
- * Update resource type and active
- *
- */
-function update_resource() {
-    // Prepare resource data from UI
-    var rid = $('#rid').val().trim();
-    var r_desc = $('#r_desc').val().trim();
-    var r_type = $('#r_type').val().trim();
-
-    // Assemble resource
-    var resource = {
-        id: rid,
-        desc: r_desc,
-        type: r_type,
-        active: ($('.switch-on') && $('.switch-on').length > 0) ? 1 : 0
-    };
-
-    // Update resource
-    $.ajax({
-        dataType: 'json',
-        data: JSON.stringify(resource),
-        contentType: "application/json",
-        type: "POST",
-        url: '/admin/update-resource',
-        success: function(result) {
-            if(result.length > 0 && result[0].id) {
-                render_resource_datatable();
-                $('#resource-status-modal').modal('hide');
-            } else {
-                pop_msg('resource-msg', result, MSG_ERROR); // Error
-            }
-        }
-    });
+function render_resource_type_select(type) {
+    $('#r_type').select2("val", type);
 }
 
 /**
@@ -668,380 +905,137 @@ function edit_resource(row) {
 }
 
 /**
- * Render resource type select component
+ * Update resource type and active
  *
  */
-function render_resource_type_select(type) {
-    $('#r_type').select2("val", type);
-}
+function update_resource() {
+    // Prepare resource data from UI
+    var rid = $('#rid').val().trim();
+    var r_desc = $('#r_desc').val().trim();
+    var r_type = $('#r_type').val().trim();
 
-/**
- * Reset password
- *
- */
-function reset_password() {
-    $('#processing').show();
-    var username = $('#name').val().trim();
-    var email = $('#email').val().trim();
-
-    var user_info = {
-        username: username,
-        email: email
+    // Assemble resource
+    var resource = {
+        id: rid,
+        desc: r_desc,
+        type: r_type,
+        active: ($('.switch-on') && $('.switch-on').length > 0) ? 1 : 0
     };
 
-    var reset_password_request = $.ajax({
-        dataType: 'json',
-        contentType: "application/json",
-        url: '/admin/reset-password',
-        data: JSON.stringify(user_info),
-        type: 'POST'
-    });
-
-    reset_password_request.done(function (resp) {
-        var result = JSON.parse(resp);
-        if (result.is_success) {
-            pop_msg('user-modal-msg', result.msg, MSG_SUCCESS);
-        } else {
-            pop_msg('user-modal-msg', result.msg, MSG_ALERT);
-        }
-        $('#processing').hide();
-    });
-}
-
-//***************************************************************
-//
-//              COMMON UI COMPONENTS
-//
-//***************************************************************
-/**
- * Common ready for select2.
- *
- */
-function ready_common_select2() {
-    /*Select2*/
-    $(".select2").select2({
-        width: '100%'
-    });
-}
-
-/**
- * Common ready for switch.
- *
- */
-function ready_common_switch() {
-    /*Switch*/
-    $('.switch').bootstrapSwitch();
-}
-
-/**
- * Common ready for searchable multi select.
- *
- */
-function ready_common_searchable_multi_select() {
-    /*Multi-Select Search*/
-    $('.searchable').multiSelect({
-        selectableHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder="+ commonLanguge['Filter String'] +">",
-        selectionHeader: "<input type='text' class='form-control search-input' autocomplete='off' placeholder="+ commonLanguge['Filter String'] +">",
-        afterInit: function(ms) {
-            var that = this,
-                $selectableSearch = that.$selectableUl.prev(),
-                $selectionSearch = that.$selectionUl.prev(),
-                selectableSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selectable:not(.ms-selected)',
-                selectionSearchString = '#' + that.$container.attr('id') + ' .ms-elem-selection.ms-selected';
-
-            that.qs1 = $selectableSearch.quicksearch(selectableSearchString).on('keydown', function(e) {
-                if (e.which === 40) {
-                    that.$selectableUl.focus();
-                    return false;
-                }
-            });
-
-            that.qs2 = $selectionSearch.quicksearch(selectionSearchString).on('keydown', function(e) {
-                if (e.which === 40) {
-                    that.$selectionUl.focus();
-                    return false;
-                }
-            });
-        },
-        afterSelect: function() {
-            this.qs1.cache();
-            this.qs2.cache();
-        },
-        afterDeselect: function() {
-            this.qs1.cache();
-            this.qs2.cache();
-        }
-    });
-}
-
-/**
- * Common ready for tables.
- *
- */
-function ready_common_datatable(url, fnDatatableCallback) {
+    // Update resource
     $.ajax({
-        "dataType": 'json',
-        "type": "GET",
-        "url": url,
-        "success": function(result) {
-            datatable_id = "mgmt-datatable";
-
-            var datatable_div = datatable_id + '-container';
-            $("#" + datatable_div).html('<table class="table table-bordered" id="' + datatable_id + '"></table>');
-            var datatable_id = "#" + datatable_id;
-
-            /* Init the table with dynamic ajax loader.*/
-            var tableLanguage;
-            $.ajax({
-                type: 'GET',
-                async: false,
-                dataType: 'json',
-                url:'/admin/init-table-language',
-                success: function(data) {
-                    tableLanguage = $.parseJSON(data);
-                }
-            });
-            var tableColumns = result[result.length-1];
-            var columns = get_table_columns(tableColumns,url);
-            var datatable = $(datatable_id).dataTable({
-                "aaData": process_user_result(result),
-                "aoColumns": columns,
-                "oLanguage": {
-                    "sLengthMenu" : " "+tableLanguage['sShowRows']+" ",
-                    "sZeroRecords" : tableLanguage['sZeroRecords'],
-                    "sInfo" : tableLanguage['sInfo'],
-                    "sInfoEmpty" : tableLanguage['sInfoEmpty'],
-                    "sInfoFiltered" : tableLanguage['sInfoFiltered'],
-                    "oPaginate": {
-                        "sFirst" : tableLanguage['oPaginate_sFirst'],
-                        "sPrevious" : tableLanguage['oPaginate_sPrevious'],
-                        "sNext" : tableLanguage['oPaginate_sNext'],
-                        "sLast" : tableLanguage['oPaginate_sLast']
-                    }
-                }
-            });
-
-            // Add/remove class to a row when clicked on
-            $(datatable_id).on('click', 'tbody tr', function(e) {
-                $(this).toggleClass('row_selected');
-            });
-
-            // Search input style
-            $('.dataTables_filter input').addClass('form-control').attr('placeholder', tableLanguage['sSearch']);
-            $('.dataTables_length select').addClass('form-control');
-
-            // Callback method for datatable
-            fnDatatableCallback(datatable);
+        dataType: 'json',
+        data: JSON.stringify(resource),
+        contentType: "application/json",
+        type: "POST",
+        url: '/admin/update-resource',
+        success: function(result) {
+            if(result.length > 0 && result[0].id) {
+                render_resource_datatable();
+                $('#resource-status-modal').modal('hide');
+            } else {
+                pop_msg('resource-msg', result, MSG_ERROR); // Error
+            }
         }
     });
 }
 
 /**
- * Get table columns via the url
+ * Render resource datatable
+ *
  */
-function get_table_columns(tableTitle, url) {
-    if('/admin/users' === url) {
-       return get_user_table_columns(tableTitle);
-    }
-    if('/admin/resources' === url) {
-        return get_resource_table_columns(tableTitle);
-    }
-}
+function render_resource_datatable() {
+    // Ready common datatable.
+    ready_common_datatable("/admin/resources", function(datatable) {
+        // Edit by click row double click
+        datatable.on("dblclick", "tr", function(e) {
+            if (e) e.preventDefault();
+            edit_resource(this);
+        });
 
-function get_user_table_columns(userTableTitle) {
-    var columns = [
-        {
-          "sTitle": "ID",
-          "mData": "id",
-          "bVisible": false
-        },
-        {
-          "sTitle": userTableTitle['username'],
-          "mData": "username"
-        },
-        {
-          "sTitle": userTableTitle['company'],
-          "mData": "company"
-        },
-        {
-          "sTitle": userTableTitle['email'],
-          "mData": "email"
-        },
-        {
-          "sTitle": userTableTitle['mobile'],
-          "mData": "mobile"
-        },
-        {
-          "sTitle": userTableTitle['role'],
-          "mData": "role"
-        },
-        {
-          "sTitle": userTableTitle['active'],
-          "mData": "active"
-        }
-        ];
-        return columns;
-}
+        $("#update").off('click');
 
-function get_resource_table_columns(resourceTableTitle) {
-    var columns = [
-        {
-          "sTitle": "ID",
-          "mData": "id",
-          "bVisible": false
-        },
-        {
-          "sTitle": resourceTableTitle['Resource Name'],
-          "mData": "name"
-        },
-        {
-          "sTitle": resourceTableTitle['Description'],
-          "mData": "description"
-        },
-        {
-          "sTitle": resourceTableTitle['Vendor'],
-          "mData": "vendor"
-        },
-        /*
-        {
-          "sTitle": resourceTableTitle['URL'],
-          "mData": "url",
-          "sWidth": "30%"
-        },*/
-        {
-          "sTitle": resourceTableTitle['Uploaded Date'],
-          "mData": "uploaded_date"
-        },
-        {
-          "sTitle": resourceTableTitle['Type'],
-          "mData": "type"
-        },
-        {
-          "sTitle": resourceTableTitle['Active'],
-          "mData": "active"
-        }
-    ];
-    return columns;
-}
-
-/**
- * Process user attributes' values to displaying values
- */
-function process_user_result(result) {
-    result.splice(result.length-1,result.length);
-    for(var i = 0; i < result.length; i++) {
-        result[i].active = get_user_status(result[i].active);
-        if(result[i].role) result[i].role = get_role_name(result[i].role);
-        if(result[i].type) result[i].type = get_resource_type(result[i].type);
-    }
-    return result;
-}
-
-function get_resource_type(_type) {
-    var resource_type = 'Private';
-    if(_type === RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
-        resource_type = 'Public - Publications';
-    else if(_type === RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
-        resource_type = 'Public - Documentation';
-    else if(_type === RESOURCE_TYPE_PUBLIC_EXAMPLES)
-        resource_type = 'Public - Examples';
-    else if(_type === RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES)
-        resource_type = 'AllUser - Software Packages';
-    else if(_type === RESOURCE_TYPE_ALLUSER_INSTALLER)
-        resource_type = 'AllUser - Installer';
-    else if(_type === RESOURCE_TYPE_PRIVATE)
-        resource_type = 'Private';
-    return resource_type;
-}
-
-function get_role_name(role_id) {
-    var role_name = commonLanguge['Resource'];
-    if(role_id === USER_TYPE_RESOURCE)
-        role_name = commonLanguge['Resource'];
-    else if(role_id === USER_TYPE_RESOURCE_OWNER)
-        role_name = commonLanguge['Resource Owner'];
-    else if(role_id === USER_TYPE_ADMINISTRATOR)
-        role_name = commonLanguge['Administrator'];
-    return role_name;
-}
-
-function get_user_status(active) {
-    var status = commonLanguge['No'];
-    if(active)
-        status = commonLanguge['Yes'];
-    return status;
-}
-
-//***************************************************************
-//
-//              COMMON JAVASCRIPT METHODS
-//
-//***************************************************************
-
-function remove_selected_rows(local_table) {
-    var selected_rows = local_table.$('tr.row_selected');
-    selected_rows.each(function(index, row) {
-        local_table.fnDeleteRow(row);
+        // Update resource
+        $("#update").on('click', function(e) {
+            if (e) e.preventDefault();
+            update_resource();
+        });
     });
 }
 
-function pop_msg(msg_label, msg, type) {
-    // type = 0 - Error, 1 - Alert, 2 - Success
-    var label_classes = "";
-    var container_classes = "";
-    if(type === MSG_ERROR) {
-        container_classes = 'alert alert-danger';
-        label_classes = 'fa fa-times-circle sign';
-    } else if(type === MSG_ALERT) {
-        container_classes = 'alert alert-warning';
-        label_classes = 'fa fa-warning sign';
-    } else if(type === MSG_SUCCESS) {
-        container_classes = 'alert alert-success';
-        label_classes = 'fa fa-check sign';
+/**
+ * Document ready js for resource management page.
+ *
+ */
+function ready_resource_mgmt() {
+    // Read select2
+    ready_common_select2();
+    // Ready switch
+    ready_common_switch();
+
+    render_resource_datatable();
+}
+
+/**
+ * Document ready for optimized pages.
+ *
+ */
+function ready_optimized_page(uri) {
+
+    ready_navigation_menu();
+
+    ready_common_i18n_info();
+
+    switch (uri) {
+    case "/admin/user-mgmt":
+        ready_user_mgmt();
+        break;
+    case "/admin/resource-mgmt":
+        ready_resource_mgmt();
+        break;
     }
-    $('#'+msg_label).text(msg);
-    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
-    $('#'+msg_label+'-container').attr('class', container_classes).show();
 }
 
-function convert_vendor_name(vendor) {
-    if(vendor === VENDOR_TYPE_OOS)
-        return VENDOR_OOS_DISPLAY_NAME;
-    else if(vendor === VENDOR_TYPE_S3)
-        return VENDOR_S3_DISPLAY_NAME;
-    else
-        return vendor;
-}
+/**
+ *
+ * Document ready
+ *
+ */
+$(document).ready(function() {
 
+    /******************************
+     * Setting parsley locale
+     *****************************/
+    var locale = $('#locale').val();
+    if (locale.indexOf('zh') >=0) {
+        locale = 'zh_cn';
+    }
+    if (locale.indexOf('en') >=0) {
+        locale = 'en';
+    }
+    window.ParsleyValidator.setLocale(locale);
 
-//***************************************************************
-//
-//                    Constant variables
-//
-//***************************************************************
-
-// Message type
-var MSG_ERROR = 0;
-var MSG_ALERT = 1;
-var MSG_SUCCESS = 2;
-
-// Resource type
-var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1';
-var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2';
-var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3';
-var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4';
-var RESOURCE_TYPE_ALLUSER_INSTALLER = '5';
-var RESOURCE_TYPE_PRIVATE = '6';
-
-// User type
-var USER_TYPE_RESOURCE = '1';
-var USER_TYPE_RESOURCE_OWNER = '2';
-var USER_TYPE_ADMINISTRATOR = '3';
-
-// Vendor type
-var VENDOR_TYPE_OOS = 'oos';
-var VENDOR_TYPE_S3 = 's3';
-
-// Vendor display name
-var VENDOR_OOS_DISPLAY_NAME = 'AliYun';
-var VENDOR_S3_DISPLAY_NAME = 'AWS S3';
+    var url = window.location.pathname;
+    if(url === "/admin/login") {
+        ready_login_page();
+    } else {
+        // Handle menu click event.
+        $('ul.cl-vnavigation li').each(function(index, li) {
+            $(li).click(function(e) {
+                var sub_menus = $(li).find('ul');
+                if (sub_menus.length > 0) {
+                    return;
+                }
+                var parent = $('#main-content');
+                var loading = $('<div id="loading" class="loading"><i class="fa fa-spinner"></i></div>');
+                loading.appendTo(parent);
+                loading.fadeIn(0);
+                var $clink = li.children[0];
+                window.location.href = $clink;
+                $('ul.cl-vnavigation li.active').removeClass('active');
+                $(li).addClass('active');
+            });
+        });
+        ready_optimized_page(url);
+    }
+});
