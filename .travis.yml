@@ -21,8 +21,13 @@ script:
 #- cd GeoIP-1.6.1 && ./configure
 #- make 
 #- sudo make install
-- echo 'Ready to optimize assets files.'
-#- cd /home/travis/build/cogenda/cogenda-web
+- echo 'Ready to static code verification.'
+- cd /home/travis/build/cogenda/cogenda-web
+- ./setenv.sh
+- source venv/bin/activate
+- make web
+- make pylint 
+- make jslint
 #- make web-setup
 #- make web
 #- echo 'Ready to sync with AWS S3 and AliYun OSS.'

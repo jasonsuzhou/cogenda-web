@@ -77,7 +77,7 @@
 - Static Code Check
 
     ```
-    $ make lint
+    $ make pylint
     ```
     > Warning / Error codes: http://flake8.readthedocs.org/en/latest/warnings.html#error-codes
 
