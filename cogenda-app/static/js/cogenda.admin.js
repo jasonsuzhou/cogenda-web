@@ -252,13 +252,12 @@ function delete_user() {
             }
             selectedRowIDs = selectedRowIDs + selectedRowID + ',';
         }
-        console.log(selectedRowIDs.substring(0, selectedRowIDs.length - 1));
+        // console.log(selectedRowIDs.substring(0, selectedRowIDs.length - 1));
         $.ajax({
             "dataType": 'json',
             "type": "DELETE",
             "url": '/admin/delete-user/' + selectedRowIDs.substring(0, selectedRowIDs.length - 1),
             "success": function(result) {
-                //console.log(">>>>>>>>>>>>delete" + selectedRowIDs + "successfully");
                 pop_msg('user-msg', commonLanguge['Remove user successful'], MSG_SUCCESS); // Success
             }
         });
@@ -648,23 +647,18 @@ function edit_resource(row) {
         if(result.length === 1) {
             $('#rid').val(result[0].id);
             $('#r_vendor_2').text('');
-            $('#r_url_2').hide();
-            $('#r_url_2').attr('href', '');
-            $('#r_url_2').attr('title', '');
+            $('#r_url_2').attr('href', '').attr('title', '').hide();
         } else if(result.length === 2) {
             $('#rid').val(result[0].id + ":" + result[1].id);
             $('#r_vendor_2').text(convert_vendor_name(result[1].vendor));
-            $('#r_url_2').show();
-            $('#r_url_2').attr('href', result[1].url);
-            $('#r_url_2').attr('title', result[1].url);
+            $('#r_url_2').attr('href', result[1].url).attr('title', result[1].url).show();
         }
 
         $('#r_desc').val(result[0].description);
         $('#r_name').text(result[0].name);
         $('#r_vendor_1').text(convert_vendor_name(result[0].vendor));
 
-        $('#r_url_1').attr('href', result[0].url);
-        $('#r_url_1').attr('title', result[0].url);
+        $('#r_url_1').attr('href', result[0].url).attr('title', result[0].url);
 
         render_resource_type_select(result[0].type);
         render_active_switch(result[0].active);
@@ -1005,10 +999,9 @@ function pop_msg(msg_label, msg, type) {
         container_classes = 'alert alert-success';
         label_classes = 'fa fa-check sign';
     }
-    $('#'+msg_label+'-container').attr('class', container_classes);
-    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
     $('#'+msg_label).text(msg);
-    $('#'+msg_label+'-container').show();
+    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
+    $('#'+msg_label+'-container').attr('class', container_classes).show();
 }
 
 function convert_vendor_name(vendor) {

@@ -50,8 +50,7 @@ $(document).ready(function() {
 
     $("#login").on('click', function (event) {
         if (event) event.preventDefault();
-        $('#loginModal').parsley().reset();
-        $('#loginModal').modal('show');
+        $('#loginModal').modal('show').parsley().reset();
         $('#user-login-msg-container').hide();
     });
 
@@ -108,8 +107,7 @@ $(document).ready(function() {
         $('#email').val('');
         $('#notes').val('');
         $('#loginModal').modal('hide');
-        $('#requestAccountModal').parsley().reset();
-        $('#requestAccountModal').modal('show');
+        $('#requestAccountModal').modal('show').parsley().reset();
         $('#request-account-msg-container').hide();
     });
 
@@ -259,10 +257,9 @@ function pop_msg(msg_label, msg, type) {
         container_classes = 'alert alert-success';
         label_classes = 'fa fa-check sign';
     }
-    $('#'+msg_label+'-container').attr('class', container_classes);
-    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
     $('#'+msg_label).text(msg);
-    $('#'+msg_label+'-container').show();
+    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
+    $('#'+msg_label+'-container').attr('class', container_classes).show();
 }
 
 function switch_locale(locale) {
@@ -287,8 +284,7 @@ function show_profile_menu(userName, myProfile, signOut) {
         if (event) event.preventDefault();
         $('#password1').val('');
         $('#password2').val('');
-        $('#userProfileModal').parsley().reset();
-        $('#userProfileModal').modal('show');
+        $('#userProfileModal').modal('show').parsley().reset();
         $('#change-password-msg-container').hide();
 
         var username = $('#login-username').text();
