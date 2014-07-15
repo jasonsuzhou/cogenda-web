@@ -10,6 +10,11 @@ from lib import const
 import logging
 log = logging.getLogger(__name__)
 
+"""
+TODO: 
+    - Add code comments 
+"""
+
 class AuthController(BaseController):
 
     @route('/admin/login')

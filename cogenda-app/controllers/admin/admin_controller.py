@@ -15,6 +15,11 @@ from lib import const
 import logging
 log = logging.getLogger(__name__)
 
+"""
+TODO: 
+    - Add code comments 
+"""
+
 class AdminController(BaseController):
 
     @route('/admin/user-mgmt')
@@ -51,6 +56,7 @@ class AdminController(BaseController):
         user_in_json = self.jsonify_model(user)
         return user_in_json
 
+
     def init_user_table_title(self):
         userTableTitle = {}
         userTableTitle['username'] = _('User Name')
@@ -60,6 +66,7 @@ class AdminController(BaseController):
         userTableTitle['role'] = _('Role')
         userTableTitle['active'] = _('Active')
         return userTableTitle
+
 
     def init_resource_table_title(self):
         resourceTable = {}
@@ -71,6 +78,7 @@ class AdminController(BaseController):
         resourceTable['Type'] = _('Type')
         resourceTable['Active'] = _('Active')
         return resourceTable
+
 
     @route('/admin/init-common-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -88,6 +96,7 @@ class AdminController(BaseController):
                            'Remove user successful': remove_user_successful, 'You cannot delete yourself': you_cannot_delete_yourself,
                            'Resource': _('Resource'), 'Resource Owner': _('Resource Owner'), 'Administrator': _('Administrator'),
                            'Yes': _('Yes'), 'No': _('No'), 'Filter String': _('Filter String')})
+
 
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -140,6 +149,7 @@ class AdminController(BaseController):
         return self.jsonify_model(user)
 
 
+    
     @route('/admin/update-user')
     @cherrypy.tools.json_out()
     @authenticated
@@ -206,6 +216,7 @@ class AdminController(BaseController):
             if i != len(resources_in_json) - 1:
                 next_resource = resources_in_json[i + 1]
                 if resource['name'] == next_resource['name']:
+                    #TODO: replace `+` with placeholder to concat string.
                     resource['id'] = resource['id'] + ":" + next_resource['id']
                     resource['vendor'] = self.convert_vendor_name(resource['vendor']) + "/" + self.convert_vendor_name(next_resource['vendor'])
                     resources_in_json.remove(next_resource)
@@ -264,11 +275,13 @@ class AdminController(BaseController):
         name = json_request['username']
         receiver = json_request['email']
         sender = self.settings.mailer.smtp_user
+        #TODO: replace `+` with placeholder to concat string.
         chars = string.letters + string.digits
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
         msg = 'Your password has been reset to: '+ gen_pwd + '.'
         log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:
+            #TODO: i18n 
             self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
 
             # Update user password here...
@@ -288,6 +301,7 @@ class AdminController(BaseController):
         for col in columns:
             col_name = col.name
             col_val = getattr(model, col_name)
+            #TODO: extract method for following logic and refactor code with switch statement.
             if col_name == 'created_date' or col_name == 'updated_date':
                 continue
             elif col_name == 'uploaded_date':
@@ -302,10 +316,12 @@ class AdminController(BaseController):
     def check_username(self, username):
         log.debug('[Cogenda-web] - Check username:%s' % username)
         user = User.get_by_username(cherrypy.request.db, username)
+        #TODO: refactor to `if user` 
         if not (user is None):
             return  _('The username is existing')
 
 
+    #TODO: use switch statement will be more readable.
     def convert_vendor_name(self, vendor):
         if vendor == const.VENDOR_TYPE_OOS:
             return const.VENDOR_OOS_DISPLAY_NAME

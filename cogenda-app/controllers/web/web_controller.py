@@ -18,6 +18,11 @@ from lib import const
 
 log = logging.getLogger(__name__)
 
+"""
+TODO: 
+    - Add code comments 
+"""
+
 class WebController(BaseController):
 
     LAST_ARTICLE_FLAG='index'
@@ -74,8 +79,10 @@ class WebController(BaseController):
         if resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES or resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER or resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user is None:
                 return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
+            #TODO: else statement is not necessary
             else:
                 return json.dumps({'auth_status': True, 'link': '/download/'+rid})
+        #TODO: replace `+` with placeholder to concat string.
         return json.dumps({'auth_status': True, 'link': '/download/'+rid})
 
 
@@ -128,6 +135,7 @@ class WebController(BaseController):
             return self.index()
         # 6-Private
         resources_in_json = []
+        #TODO: Refactor embeded  `if` condition
         if resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user:
                 self.auth_private_resource(resource, resources_in_json)
@@ -198,6 +206,7 @@ class WebController(BaseController):
             nav_infos.append(nav)
         return nav_infos
 
+
     def _retrieve_random_sidebar(self):
         sidebar_files = self.context.sidebar_files.values()
         sidebar_choice = random.choice(sidebar_files)
@@ -245,7 +254,9 @@ class WebController(BaseController):
                 json[col_name] = col_val
         return json
 
+
     def auth_private_resource(self, resource, resources_in_json):
+        #TODO: replace `+` with placeholder to concat string.
         restricted_res = "," + self.user[3] + ","
         log.debug('[Cogenda-web] - User:%s, own resource:%s' %(self.user[0], restricted_res))
         log.debug('[Cogenda-web] - User requires resource:%s' %resource.id)
@@ -259,11 +270,13 @@ class WebController(BaseController):
             p3 = "," + str(resource.id) + ":"
             if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
                 return
+            # TODO: else is not needed.
             else:
                 resources_in_json.append(self.jsonify_model(resource))
         # Administrator
         elif self.user[2] == const.USER_TYPE_ADMINISTRATOR:
             resources_in_json.append(self.jsonify_model(resource))
+
 
     def gen_vendor(self):
         remote_ip = cherrypy.request.remote.ip
@@ -279,6 +292,8 @@ class WebController(BaseController):
         log.info('[Cogenda-web] - load resource from vendor %s' % vendor)
         return vendor
 
+
+    """ TODO: Add comments """
     def filter_resources_by_vendor(self, all_resources):
         vendar = self.gen_vendor()
         resources_in_json = []
