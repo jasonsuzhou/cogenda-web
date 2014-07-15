@@ -111,3 +111,6 @@ encrypt-key-mac:
 
 lint:
 	@flake8 cogenda-app
+
+jslint:
+	@grunt jslint

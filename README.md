@@ -80,3 +80,8 @@
     $ make lint
     ```
     > Warning / Error codes: http://flake8.readthedocs.org/en/latest/warnings.html#error-codes
+
+    ```
+    $ make jslint
+    ```
+    > Check js code
