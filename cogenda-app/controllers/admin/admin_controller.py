@@ -273,7 +273,7 @@ class AdminController(BaseController):
         name = json_request['username']
         receiver = json_request['email']
         sender = self.settings.mailer.smtp_user
-        chars = '%s:%s' %(string.letters, string.digits)
+        chars = '%s%s' %(string.letters, string.digits)
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
         #TODO: Email template!!!
         msg = 'Your password has been reset to: '+ gen_pwd + '.'

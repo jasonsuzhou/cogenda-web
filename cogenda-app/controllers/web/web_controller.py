@@ -79,7 +79,7 @@ class WebController(BaseController):
         if resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES or resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER or resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user is None:
                 return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
-        return json.dumps({'auth_status': True, 'link': '%s:%s' %('/download/', rid)})
+        return json.dumps({'auth_status': True, 'link': '%s%s' %('/download/', rid)})
 
 
     @route('/news/:news_name')
