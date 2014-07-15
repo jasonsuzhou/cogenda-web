@@ -108,3 +108,6 @@ encrypt-key:
 
 encrypt-key-mac:
 	@./bin/travis_encrypt_key_mac.sh 
+
+lint:
+	@flake8 cogenda-app

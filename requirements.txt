@@ -12,3 +12,6 @@ python-geoip-geolite2
 
 # Auto deploy tool
 fabric
+
+# Check python
+flake8
