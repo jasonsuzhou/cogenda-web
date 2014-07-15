@@ -39,6 +39,27 @@ module.exports = function(grunt) {
         clean: {
             dist: ['cogenda-app/static/css/cogenda.min.css', 'cogenda-app/static/js/cogenda.min.js']
         },
+        jshint: {
+            options: {
+                //jshintrc: '.jshintrc'
+                browser: true,
+                curly: false,
+                eqeqeq: true,
+                immed: true,
+                latedef: true,
+                newcap: true,
+                noarg: true,
+                sub: true,
+                undef: true,
+                boss: true,
+                eqnull: true,
+                node: true,
+                strict: false,
+                es5: false,
+                globals: { $: true}
+            },
+            all: ['cogenda-app/static/js/cogenda.admin.js', 'cogenda-app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
+        },
         wiredep: {
             web: {
                 src: [
@@ -85,12 +106,14 @@ module.exports = function(grunt) {
     // Load tasks
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-svgmin');
     grunt.loadNpmTasks('grunt-wiredep');
 
     // Register tasks
+    grunt.registerTask('jslint', ['jshint']);
     grunt.registerTask('build', ['clean', 'recess', 'uglify', 'imagemin']);
     grunt.registerTask('inject', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };
