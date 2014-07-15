@@ -8,7 +8,6 @@ from lib.i18ntool import ugettext as _
 from datetime import datetime
 from fuzzywuzzy import fuzz
 from urlparse import urlparse
-import logging 
 import os
 import random
 import json
@@ -16,14 +15,15 @@ from geoip import geolite2
 from sqlalchemy.exc import DBAPIError
 from lib import const
 
+# Load logger
+import logging
 log = logging.getLogger(__name__)
 
-"""
-TODO: 
-    - Add code comments 
-"""
 
 class WebController(BaseController):
+    """
+    This WebController is used to provide api for frontend page
+    """
 
     LAST_ARTICLE_FLAG='index'
 
@@ -79,11 +79,7 @@ class WebController(BaseController):
         if resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES or resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER or resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user is None:
                 return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
-            #TODO: else statement is not necessary
-            else:
-                return json.dumps({'auth_status': True, 'link': '/download/'+rid})
-        #TODO: replace `+` with placeholder to concat string.
-        return json.dumps({'auth_status': True, 'link': '/download/'+rid})
+        return json.dumps({'auth_status': True, 'link': '%s:%s' %('/download/', rid)})
 
 
     @route('/news/:news_name')
@@ -131,18 +127,15 @@ class WebController(BaseController):
         if resource is None:
             return self.index()
         # 4,5-Installer, 6-Private
-        if self.user is None and resource.type in (const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES, const.RESOURCE_TYPE_ALLUSER_INSTALLER, const.RESOURCE_TYPE_PRIVATE):
-            return self.index()
-        # 6-Private
-        resources_in_json = []
-        #TODO: Refactor embeded  `if` condition
-        if resource.type == const.RESOURCE_TYPE_PRIVATE:
-            if self.user:
+        if resource.type in (const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES, const.RESOURCE_TYPE_ALLUSER_INSTALLER, const.RESOURCE_TYPE_PRIVATE):
+            if self.user is None:
+                return self.index()
+            elif resource.type == const.RESOURCE_TYPE_PRIVATE:
+                # 6-Private
+                resources_in_json = []
                 self.auth_private_resource(resource, resources_in_json)
                 if len(resources_in_json) == 0:
                     return self.index()
-            else:
-                return self.index()
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
         cd = 'attachment; filename="%s"' % resource.name
         cherrypy.response.headers["Content-Disposition"] = cd
@@ -241,7 +234,8 @@ class WebController(BaseController):
 
 
     def jsonify_model(self, model):
-        """ Returns a JSON representation of an SQLAlchemy-backed object.
+        """
+        Returns a JSON representation of an SQLAlchemy-backed object.
         """
         json = {}
         columns = model._sa_class_manager.mapper.mapped_table.columns
@@ -256,8 +250,10 @@ class WebController(BaseController):
 
 
     def auth_private_resource(self, resource, resources_in_json):
-        #TODO: replace `+` with placeholder to concat string.
-        restricted_res = "," + self.user[3] + ","
+        """
+        Authenticate private resource for login user
+        """
+        restricted_res = '%s%s%s' %(',', self.user[3], ",")
         log.debug('[Cogenda-web] - User:%s, own resource:%s' %(self.user[0], restricted_res))
         log.debug('[Cogenda-web] - User requires resource:%s' %resource.id)
         # Resource
@@ -265,20 +261,21 @@ class WebController(BaseController):
             return
         # Resource Owner
         elif self.user[2] == const.USER_TYPE_RESOURCE_OWNER:
-            p1 = "," + str(resource.id) + ","
-            p2 = ":" + str(resource.id) + ","
-            p3 = "," + str(resource.id) + ":"
+            p1 = '%s%s%s' %(',', str(resource.id), ",")
+            p2 = '%s%s%s' %(':', str(resource.id), ",")
+            p3 = '%s%s%s' %(',', str(resource.id), ":")
             if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
                 return
-            # TODO: else is not needed.
-            else:
-                resources_in_json.append(self.jsonify_model(resource))
+            resources_in_json.append(self.jsonify_model(resource))
         # Administrator
         elif self.user[2] == const.USER_TYPE_ADMINISTRATOR:
             resources_in_json.append(self.jsonify_model(resource))
 
 
     def gen_vendor(self):
+        """
+        Generate vendor according ip address
+        """
         remote_ip = cherrypy.request.remote.ip
         forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
         match = geolite2.lookup(forwarded_ip or remote_ip)
@@ -293,9 +290,11 @@ class WebController(BaseController):
         return vendor
 
 
-    """ TODO: Add comments """
     def filter_resources_by_vendor(self, all_resources):
-        vendar = self.gen_vendor()
+        """
+        According vendor to filter distinct resource
+        """
+        vendor = self.gen_vendor()
         resources_in_json = []
         for i in range(len(all_resources)):
             if i == len(all_resources):
@@ -304,7 +303,7 @@ class WebController(BaseController):
             if i != len(all_resources) - 1:
                 next_resource = all_resources[i + 1]
                 if resource.name == next_resource.name:
-                    if resource.vendor != vendar:
+                    if resource.vendor != vendor:
                         _resource = next_resource
                         all_resources.remove(resource)
                     else:

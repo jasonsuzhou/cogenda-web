@@ -7,15 +7,15 @@ from lib.i18ntool import ugettext as _
 import json
 from lib import const
 
+# Load logger
 import logging
 log = logging.getLogger(__name__)
 
-"""
-TODO: 
-    - Add code comments 
-"""
 
 class AuthController(BaseController):
+    """
+    This AuthController is used to provide api for authentication
+    """
 
     @route('/admin/login')
     def index(self):

@@ -1,6 +1,5 @@
 #-*- coding:utf-8 -*-
 
-
 from lib.controller import BaseController, route, authenticated
 from datetime import datetime
 from models import User, Resource
@@ -12,15 +11,15 @@ import string
 from random import choice
 from lib import const
 
+# Load logger
 import logging
 log = logging.getLogger(__name__)
 
-"""
-TODO: 
-    - Add code comments 
-"""
 
 class AdminController(BaseController):
+    """
+    This AdminController is used to provide api for admin management
+    """
 
     @route('/admin/user-mgmt')
     @authenticated
@@ -216,8 +215,7 @@ class AdminController(BaseController):
             if i != len(resources_in_json) - 1:
                 next_resource = resources_in_json[i + 1]
                 if resource['name'] == next_resource['name']:
-                    #TODO: replace `+` with placeholder to concat string.
-                    resource['id'] = resource['id'] + ":" + next_resource['id']
+                    resource['id'] = '%s:%s' %(resource['id'], next_resource['id'])
                     resource['vendor'] = self.convert_vendor_name(resource['vendor']) + "/" + self.convert_vendor_name(next_resource['vendor'])
                     resources_in_json.remove(next_resource)
         resources_in_json.append(self.init_resource_table_title())
@@ -275,13 +273,12 @@ class AdminController(BaseController):
         name = json_request['username']
         receiver = json_request['email']
         sender = self.settings.mailer.smtp_user
-        #TODO: replace `+` with placeholder to concat string.
-        chars = string.letters + string.digits
+        chars = '%s:%s' %(string.letters, string.digits)
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
+        #TODO: Email template!!!
         msg = 'Your password has been reset to: '+ gen_pwd + '.'
         log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:
-            #TODO: i18n 
             self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
 
             # Update user password here...
@@ -294,14 +291,14 @@ class AdminController(BaseController):
 
 
     def jsonify_model(self, model):
-        """ Returns a JSON representation of an SQLAlchemy-backed object.
+        """
+        Returns a JSON representation of an SQLAlchemy-backed object.
         """
         json = {}
         columns = model._sa_class_manager.mapper.mapped_table.columns
         for col in columns:
             col_name = col.name
             col_val = getattr(model, col_name)
-            #TODO: extract method for following logic and refactor code with switch statement.
             if col_name == 'created_date' or col_name == 'updated_date':
                 continue
             elif col_name == 'uploaded_date':
@@ -316,12 +313,10 @@ class AdminController(BaseController):
     def check_username(self, username):
         log.debug('[Cogenda-web] - Check username:%s' % username)
         user = User.get_by_username(cherrypy.request.db, username)
-        #TODO: refactor to `if user` 
-        if not (user is None):
+        if user:
             return  _('The username is existing')
 
 
-    #TODO: use switch statement will be more readable.
     def convert_vendor_name(self, vendor):
         if vendor == const.VENDOR_TYPE_OOS:
             return const.VENDOR_OOS_DISPLAY_NAME

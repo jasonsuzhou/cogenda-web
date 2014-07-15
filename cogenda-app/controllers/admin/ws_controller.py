@@ -6,7 +6,8 @@ import json
 from models import Resource
 from sqlalchemy.exc import DBAPIError
 
-import logging 
+# Load logger
+import logging
 log = logging.getLogger(__name__)
 
 
