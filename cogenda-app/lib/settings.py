@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from os.path import abspath, join, exists
 from ConfigParser import ConfigParser, NoSectionError, NoOptionError
@@ -46,4 +46,3 @@ class SettingsSection(object):
             return None
         except NoOptionError:
             return None
-

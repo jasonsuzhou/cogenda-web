@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from lib.server import Server
-from lib.fs import *
+from lib.fs import locate
 import sys
 from os.path import dirname, abspath
 import cherrypy

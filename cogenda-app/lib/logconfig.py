@@ -17,12 +17,12 @@ def init_logging(log_dir, log_file, log_level):
     except:
         print 'Failed to create log directory: %s' % log_dir
         sys.exit(2)
-    
+
     root_log = logging.getLogger()
     if root_log.handlers:
         for handler in root_log.handlers:
             root_log.removeHandler(handler)
-    
+
     file_handler = logging.handlers.RotatingFileHandler(os.path.join(log_dir, log_file), maxBytes=20971520, backupCount=50)
     console_handler = logging.StreamHandler()
     log_formatter = logging.Formatter("%(asctime)s - %(name)-25s - %(levelname)-8s - %(message)s")

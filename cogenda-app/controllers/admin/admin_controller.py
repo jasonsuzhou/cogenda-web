@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from lib.controller import BaseController, route, authenticated
 from datetime import datetime
@@ -260,7 +260,7 @@ class AdminController(BaseController):
         sender = self.settings.mailer.smtp_user
         chars = '%s%s' % (string.letters, string.digits)
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
-        #TODO: Email template!!!
+        # TODO: Email template!!!
         msg = 'Your password has been reset to: ' + gen_pwd + '.'
         log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:

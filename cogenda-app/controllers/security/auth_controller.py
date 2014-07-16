@@ -1,4 +1,4 @@
-# Controller to provide login and logout actions
+# -*- coding:utf-8 -*-
 from lib.controller import BaseController, route
 import cherrypy
 import hmac
@@ -11,6 +11,7 @@ from lib import const
 import logging
 log = logging.getLogger(__name__)
 
+""" Controller to provide login and logout actions """
 
 class AuthController(BaseController):
     """

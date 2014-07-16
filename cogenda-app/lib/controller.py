@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 import os
 import cherrypy
@@ -15,10 +14,10 @@ from md2_extension import Markdown2Extension
 from urlparse import urlparse
 
 # Load logger
-import logging 
+import logging
 log = logging.getLogger(__name__)
 
-#Initialize of I18nTool
+# Initialize of I18nTool
 cherrypy.tools.I18nTool = I18nTool(os.path.abspath(__file__))
 
 __CONTROLLERS__ = []
@@ -45,7 +44,7 @@ def authenticated(func):
         instance = arguments[0]
         user = instance.user
         current_url = urlparse(cherrypy.url()).path
-        secured_urls = instance.settings.cogenda_app.secured_urls.split('|') 
+        secured_urls = instance.settings.cogenda_app.secured_urls.split('|')
 
         if user:
             if user[1] == 'web' and current_url not in secured_urls:
@@ -61,7 +60,7 @@ def authenticated(func):
 class MetaController(type):
     def __init__(cls, name, bases, attrs):
         if 'BaseController' in globals() and \
-                        issubclass(cls, globals()['BaseController']):
+                issubclass(cls, globals()['BaseController']):
             __CONTROLLERS__.append(cls)
             __CONTROLLERSDICT__[name] = cls
             cls.__routes__ = []
@@ -129,7 +128,11 @@ class BaseController(object):
     def register_routes(self, dispatcher):
         for route in self.__routes__:
             route_name = "%s_%s" % (self.name, route[0])
-            log.debug('[Cogenda-web] - route name >> [%s] router >> [%s] controller >> [%s] action >> [%s]' %(route_name, route[1]["route"], self, route[1]["method"]))
+            log.debug('[Cogenda-web] - route name >> [%s] router >> [%s] controller >> [%s] action >> [%s]' % (
+                route_name,
+                route[1]["route"],
+                self,
+                route[1]["method"]))
             dispatcher.connect(route_name, route[1]["route"], controller=self, action=route[1]["method"])
 
     def render_template(self, template_file, **kw):
@@ -145,7 +148,7 @@ class BaseController(object):
         translations = Translations.load(mo_dir, locale, app_name)
         env = Environment(loader=PackageLoader(app_name, 'templates'), extensions=[Markdown2Extension, 'jinja2.ext.i18n'])
         env.install_gettext_translations(translations)
-        cherrypy.tools.jinja2env = env 
+        cherrypy.tools.jinja2env = env
         template = cherrypy.tools.jinja2env.get_template(template_file)
         return template.render(locale=locale, user=self.user, settings=self.settings, **kw)
 
@@ -168,5 +171,9 @@ class BaseController(object):
         message.Subject = subject
         message.Html = body
         message.Body = "This is body."
-        sender = Mailer(self.settings.mailer.smtp_server, self.settings.mailer.as_int('smtp_port'), False, self.settings.mailer.smtp_user, os.environ.get('SMTP_PASSWORD', None))
+        sender = Mailer(self.settings.mailer.smtp_server,
+                        self.settings.mailer.as_int('smtp_port'),
+                        False,
+                        self.settings.mailer.smtp_user,
+                        os.environ.get('SMTP_PASSWORD', None))
         sender.send(message)

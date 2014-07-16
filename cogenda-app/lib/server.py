@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 import os
 from os.path import join, abspath
@@ -8,7 +8,6 @@ from cherrypy.process.plugins import Daemonizer, PIDFile
 
 from controller import BaseController
 from context import Context
-from cherrypy.process.plugins import PIDFile
 
 from saplugin import SAEnginePlugin
 from satool import SATool
@@ -38,52 +37,47 @@ class Server(object):
         sets = self.context.settings
 
         return {
-                #'server.socket_host': sets.cogenda_app.host,
-                #'server.socket_port': sets.cogenda_app.as_int('port'),
-                #'server.thread_pool': sets.cogenda_app.as_int('threads'),
-                'tools.proxy.on': True,
-                'request.base': sets.cogenda_app.baseurl,
-                'tools.encode.on': True,
-                'tools.encode.encoding': 'utf-8',
-                'tools.decode.on': True,
-                'tools.trailing_slash.on': True,
-                'log.screen': sets.cogenda_app.as_bool('verbose'),
-                'tools.sessions.on': True,
-                'tools.sessions.storage_type': 'ram',
-                'tools.sessions.timeout': 3600,
-                'tools.I18nTool.on': True,
-                'tools.I18nTool.default': sets.cogenda_app.default_locale,
-                'tools.I18nTool.mo_dir': os.path.join(os.path.abspath(os.curdir), sets.cogenda_app.app_name, 'i18n'),
-                'tools.I18nTool.domain': sets.cogenda_app.app_name,
-                }
+            'tools.proxy.on': True,
+            'request.base': sets.cogenda_app.baseurl,
+            'tools.encode.on': True,
+            'tools.encode.encoding': 'utf-8',
+            'tools.decode.on': True,
+            'tools.trailing_slash.on': True,
+            'log.screen': sets.cogenda_app.as_bool('verbose'),
+            'tools.sessions.on': True,
+            'tools.sessions.storage_type': 'ram',
+            'tools.sessions.timeout': 3600,
+            'tools.I18nTool.on': True,
+            'tools.I18nTool.default': sets.cogenda_app.default_locale,
+            'tools.I18nTool.mo_dir': os.path.join(os.path.abspath(os.curdir), sets.cogenda_app.app_name, 'i18n'),
+            'tools.I18nTool.domain': sets.cogenda_app.app_name,
+        }
 
     def get_mounts(self, dispatcher):
         static_dir = os.path.join(self.root_dir, 'static')
 
-        conf = {
-                '/': {
-                    'tools.staticdir.root': static_dir,
-                    'request.dispatch': dispatcher,
-                    'tools.db.on': True
-                     },
-                '/media': {
-                    'tools.gzip.on': True,
-                    'tools.staticdir.on': True,
-                    'tools.staticdir.dir': 'media'},
-                '/static': {
-                    'tools.gzip.on': True,
-                    'tools.staticdir.on': True,
-                    'tools.staticdir.dir': ''},
-                '/static/css': {
-                    'tools.gzip.mime_types': ['text/css'],
-                    'tools.staticdir.dir': 'css'},
-                '/static/js': {
-                    'tools.gzip.mime_types': ['application/javascript'],
-                    'tools.staticdir.dir': 'js'},
-                '/static/img': {'tools.staticdir.dir': 'images'},
-                '/static/fonts': {'tools.staticdir.dir': 'fonts'}
-                }
-        return conf
+        return {
+            '/': {
+                'tools.staticdir.root': static_dir,
+                'request.dispatch': dispatcher,
+                'tools.db.on': True},
+            '/media': {
+                'tools.gzip.on': True,
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': 'media'},
+            '/static': {
+                'tools.gzip.on': True,
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': ''},
+            '/static/css': {
+                'tools.gzip.mime_types': ['text/css'],
+                'tools.staticdir.dir': 'css'},
+            '/static/js': {
+                'tools.gzip.mime_types': ['application/javascript'],
+                'tools.staticdir.dir': 'js'},
+            '/static/img': {'tools.staticdir.dir': 'images'},
+            '/static/fonts': {'tools.staticdir.dir': 'fonts'}
+        }
 
     def get_dispatcher(self, dispatcher):
         route_name = "healthcheck"
@@ -91,7 +85,7 @@ class Server(object):
         controller.server = self
         dispatcher.connect(route_name, "/healthcheck", controller=controller, action=route_name)
 
-        #dispatcher = routes_dispatcher
+        # dispatcher = routes_dispatcher
         return dispatcher
 
     def run_server(self, dispatcher, non_block=False):
@@ -127,7 +121,6 @@ class Server(object):
         article_dir = os.path.join(self.root_dir, 'templates/web/article')
         sidebar_dir = os.path.join(self.root_dir, 'templates/web/sidebar')
         news_dir = os.path.join(self.root_dir, 'templates/web/news')
-        geodat_path = os.path.join(self.root_dir, 'GeoIP.dat')
         self.context.load_article_files(article_dir)
         self.context.load_sidebar_files(sidebar_dir)
         self.context.load_news_files(news_dir)

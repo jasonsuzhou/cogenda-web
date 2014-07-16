@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from lib.controller import BaseController, route, authenticated
 from models import User, Resource
@@ -30,20 +30,22 @@ class WebController(BaseController):
         content = self.render_template('web/article/index.md')
         news = self.render_template('web/news/index.md')
         nav_infos = self._retrieve_nav_info()
-        return self.render_template('web/index.html',
-                nav_infos=nav_infos,
-                content=content,
-                news=news,
-                sidebar=self._retrieve_random_sidebar())
+        return self.render_template(
+            'web/index.html',
+            nav_infos=nav_infos,
+            content=content,
+            news=news,
+            sidebar=self._retrieve_random_sidebar())
 
     @route('/article/:article_name')
     def serve_article(self, article_name):
         nav_infos = self._retrieve_nav_info()
-        return self.render_template('web/index.html',
-                nav_infos=nav_infos,
-                content=self._retrieve_optimized_article(article_name),
-                news=self.render_template('web/news/index.md'),
-                sidebar=self._retrieve_random_sidebar())
+        return self.render_template(
+            'web/index.html',
+            nav_infos=nav_infos,
+            content=self._retrieve_optimized_article(article_name),
+            news=self.render_template('web/news/index.md'),
+            sidebar=self._retrieve_random_sidebar())
 
     @route('/resources')
     @cherrypy.tools.json_out()
@@ -70,7 +72,9 @@ class WebController(BaseController):
             return json.dumps({'msg': _('Encounter error in server')})
 
         # 4-AllUser - Software Packages, 5-AllUser - Installer, 6-Private
-        if resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES or resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER or resource.type == const.RESOURCE_TYPE_PRIVATE:
+        if resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES or \
+                resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER or \
+                resource.type == const.RESOURCE_TYPE_PRIVATE:
             if self.user is None:
                 return json.dumps({'auth_status': False, 'msg': _('This kind resource requires your login')})
         return json.dumps({'auth_status': True, 'link': '%s%s' % ('/download/', rid)})

@@ -28,6 +28,7 @@ node_modules
 data/
 venv/
 cover/
+logs/
 
 .externalToolBuilders
 .settings
