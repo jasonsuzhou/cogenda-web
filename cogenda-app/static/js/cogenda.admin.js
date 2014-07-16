@@ -427,22 +427,15 @@ function render_role_select(selectedRole) {
     $('#role').select2("val", selectedRole);
 }
 
-/**
- * Convert resource string ids to array
- *
- */
+// Convert resource string ids to array
 function convert_resource(resource_str) {
-    if(resource_str === "")
+    if(!resource_str || 0 === resource_str.length){
         return [];
-    else {
-        return resource_str.split(",");
     }
+    return resource_str.split(",");
 }
 
-/**
- * Render resource select component
- *
- */
+// Render resource select component
 function render_resource_select(selectedRole, selectedResources) {
     if(selectedRole === USER_TYPE_RESOURCE_OWNER || selectedRole === 'Resource Owner') { // 'Resource Owner'
         // Populate resource select
@@ -467,17 +460,14 @@ function render_resource_select(selectedRole, selectedResources) {
         });
 
         resource_list.done(function(result) {
-
+            //TODO: Really needed?
         });
     } else {
         $('#resource-container').hide();
     }
 }
 
-/**
- * Reset msg & components of user create modal
- *
- */
+// Reset msg & components for user create modal
 function reset_user_create_modal() {
     // Reset parsley
     $('#new-modal').parsley().reset();
@@ -743,10 +733,7 @@ function save_user() {
     }
 }
 
-/**
- * Reset password
- *
- */
+// Reset password
 function reset_password() {
     $('#processing').show();
     var username = $('#name').val().trim();
@@ -970,7 +957,7 @@ function ready_resource_mgmt() {
     ready_common_select2();
     // Ready switch
     ready_common_switch();
-
+    // Ready resource datatable
     render_resource_datatable();
 }
 
@@ -996,7 +983,7 @@ function ready_optimized_page(uri) {
 
 /**
  *
- * Document ready
+ * Main document ready
  *
  */
 $(document).ready(function() {

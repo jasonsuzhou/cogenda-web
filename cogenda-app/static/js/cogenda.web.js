@@ -235,9 +235,12 @@ $(document).ready(function() {
                 var result = JSON.parse(resp);
                 if (result.is_success) {
                     pop_msg('request-account-msg', result.msg, MSG_SUCCESS);
+
+                    // Auto refresh download page every 2s.
                     setTimeout(function() {
                         $('#requestAccountModal').modal('hide');
                     }, 2000);
+
                     $('#request-account-btn').off('click');
                 } else {
                     pop_msg('request-account-msg', result.msg, MSG_ALERT);
