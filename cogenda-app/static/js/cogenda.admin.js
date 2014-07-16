@@ -3,7 +3,7 @@
 //                    Constant variables
 //
 //***************************************************************
-
+"use strict";
 // Message type
 var MSG_ERROR = 0;
 var MSG_ALERT = 1;

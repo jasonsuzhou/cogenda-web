@@ -59,13 +59,10 @@ class Resource(Base):
         return session.query(Resource).filter(Resource.name == name, Resource.vendor == vendor).first()
 
     @staticmethod
-    def update_resource(session, resource, desc, type, active):
-        if resource.description != desc:
-            resource.description = desc
-        if resource.type != type:
-            resource.type = type
-        if resource.active != active:
-            resource.active = active
+    def update_resource(session, resource, json_resource):
+        resource.description = json_resource['desc']
+        resource.type = json_resource['type']
+        resource.active = json_resource['active']
         session.commit()
         return resource
 

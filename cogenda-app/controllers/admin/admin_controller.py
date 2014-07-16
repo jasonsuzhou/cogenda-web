@@ -191,7 +191,7 @@ class AdminController(BaseController):
                 next_resource = resources_in_json[i + 1]
                 if resource['name'] == next_resource['name']:
                     resource['id'] = '%s:%s' % (resource['id'], next_resource['id'])
-                    resource['vendor'] = '%s%s%s' % (self.convert_vendor_name(resource['vendor']), '/', self.convert_vendor_name(next_resource['vendor']))
+                    resource['vendor'] = '%s/%s' % (self.convert_vendor_name(resource['vendor']), self.convert_vendor_name(next_resource['vendor']))
                     resources_in_json.remove(next_resource)
         resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
@@ -215,7 +215,7 @@ class AdminController(BaseController):
         # Get resources by ids
         all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
         for resource in all_resources:
-            resource = Resource.update_resource(cherrypy.request.db, resource, json_resource['desc'], json_resource['type'], json_resource['active'])
+            resource = Resource.update_resource(cherrypy.request.db, resource, json_resource)
             resources_in_json.append(self.jsonify_model(resource))
         return resources_in_json
 

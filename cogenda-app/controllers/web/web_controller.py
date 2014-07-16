@@ -102,14 +102,16 @@ class WebController(BaseController):
         two_passwords_not_same = _('Two passwords are not the same')
         password_changed_successfully = _('Password is changed successfully')
         encounter_error_in_server = _('Encounter error in server')
+        username = ''
         if self.user:
             username = self.user[0]
-        else:
-            username = ''
-        return json.dumps({'username': username, 'myprofile': _('My Profile'), 'signout': _('Sign Out'),
-                           'Two passwords are not the same': two_passwords_not_same,
-                           'Password is changed successfully': password_changed_successfully,
-                           'Encounter error in server': encounter_error_in_server})
+        return json.dumps({
+            'username': username,
+            'myprofile': _('My Profile'),
+            'signout': _('Sign Out'),
+            'Two passwords are not the same': two_passwords_not_same,
+            'Password is changed successfully': password_changed_successfully,
+            'Encounter error in server': encounter_error_in_server})
 
     @route('/download/:resource_id')
     def serve_downloads(self, resource_id):

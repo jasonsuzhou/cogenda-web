@@ -54,7 +54,7 @@ module.exports = function(grunt) {
                 boss: true,
                 eqnull: true,
                 node: true,
-                strict: false,
+                strict: true,
                 es5: false,
                 globals: { $: true}
             },
