@@ -39,6 +39,7 @@ def route(route, name=None, priority=50):
         return func, conf
     return dec
 
+
 def authenticated(func):
     def actual(*arguments, **kw):
         instance = arguments[0]
@@ -47,6 +48,7 @@ def authenticated(func):
         secured_urls = instance.settings.cogenda_app.secured_urls.split('|')
 
         if user:
+            # TODO: replace to constants
             if user[1] == 'web' and current_url not in secured_urls:
                 return func(*arguments, **kw)
             if user[2] == '3':
@@ -56,6 +58,7 @@ def authenticated(func):
     actual.__name__ = func.__name__
     actual.__doc__ = func.__doc__
     return actual
+
 
 class MetaController(type):
     def __init__(cls, name, bases, attrs):
@@ -79,6 +82,7 @@ class MetaController(type):
                 cls.__routes__.append(conf)
 
         super(MetaController, cls).__init__(name, bases, attrs)
+
 
 class BaseController(object):
     __metaclass__ = MetaController
@@ -159,7 +163,7 @@ class BaseController(object):
         healthcheck_text = self.settings.cogenda_app.healthcheck_text
         return healthcheck_text or "WORKING"
 
-    def make_auth_token(self, request, message):
+    def make_auth_token(self, message):
         """Generate auth token """
         shared_secret = os.environ.get('COGENDA_SHARED_SECRET', 'cogenda-ws-secret')
         auth_token = base64.b64encode(hmac.new(shared_secret, message, digestmod=hashlib.sha256).digest())

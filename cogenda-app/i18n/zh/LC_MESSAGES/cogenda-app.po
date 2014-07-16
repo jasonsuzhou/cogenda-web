@@ -119,12 +119,12 @@ msgstr "您不能删除您自己！"
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:57
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:65
 msgid "Resource"
-msgstr "资源管理员"
+msgstr "普通用户"
 
 #: cogenda-app/controllers/admin/admin_controller.py:89
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:58
 msgid "Resource Owner"
-msgstr "资源拥有者"
+msgstr "高级用户"
 
 #: cogenda-app/controllers/admin/admin_controller.py:89
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:59
@@ -219,7 +219,7 @@ msgstr "用户ID或者密码非法！"
 #: cogenda-app/controllers/security/auth_controller.py:25
 #: cogenda-app/controllers/security/auth_controller.py:74
 msgid "You have insufficient privileges"
-msgstr "你没有足够的权限！"
+msgstr "您没有足够的权限！"
 
 #: cogenda-app/controllers/security/auth_controller.py:72
 msgid "This user is inactive"

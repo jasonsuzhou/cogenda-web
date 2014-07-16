@@ -290,7 +290,7 @@ function ready_common_searchable_multi_select() {
 }
 
 // Common ready for data tables.
-function ready_common_datatable(url, fnDatatableCallback) {
+function ready_common_datatable(url, orderIndex, fnDatatableCallback) {
     $.ajax({
         "dataType": 'json',
         "type": "GET",
@@ -318,6 +318,7 @@ function ready_common_datatable(url, fnDatatableCallback) {
             var datatable = $(datatable_id).dataTable({
                 "aaData": process_user_result(result),
                 "aoColumns": columns,
+                "aaSorting": [[orderIndex, "desc"]],
                 "oLanguage": {
                     "sLengthMenu" : " "+tableLanguage['sShowRows']+" ",
                     "sZeroRecords" : tableLanguage['sZeroRecords'],
@@ -764,7 +765,7 @@ function reset_password() {
  */
 function render_user_datatable() {
     // Ready common datatable.
-    ready_common_datatable("/admin/users", function(datatable) {
+    ready_common_datatable("/admin/users", 0, function(datatable) {
         off_user_click_event();
 
         // Call Add modal
@@ -926,7 +927,7 @@ function update_resource() {
  */
 function render_resource_datatable() {
     // Ready common datatable.
-    ready_common_datatable("/admin/resources", function(datatable) {
+    ready_common_datatable("/admin/resources", 4, function(datatable) {
         // Edit by click row double click
         datatable.on("dblclick", "tr", function(e) {
             if (e) e.preventDefault();

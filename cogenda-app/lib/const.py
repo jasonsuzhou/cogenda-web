@@ -2,7 +2,8 @@
 
 """ Cogenda Common Constants """
 
-class _const:
+
+class Const:
     """
     Cogenda Common Constants
     refer: http://code.activestate.com/recipes/65207-constants-in-python
@@ -49,4 +50,4 @@ class _const:
 #######################################################################
 # Replace module entry in sys.modules[__name__] with instance of _const
 import sys
-_ref, sys.modules[__name__] = sys.modules[__name__], _const()
+_ref, sys.modules[__name__] = sys.modules[__name__], Const()

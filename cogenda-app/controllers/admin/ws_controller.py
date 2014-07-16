@@ -74,7 +74,7 @@ class WSController(BaseController):
     def _verify_auth_token(self, message):
         """ Verify auth token """
         client_auth_token = cherrypy.request.headers['Authorization']
-        auth_token = self.make_auth_token(cherrypy.request, message)
+        auth_token = self.make_auth_token(message)
         if not client_auth_token and client_auth_token != auth_token:
             return False
         return True

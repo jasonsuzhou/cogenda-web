@@ -84,7 +84,7 @@ class AdminController(BaseController):
         select_more_than_one_user = _('Selected more than one user')
         remove_user_successful = _('Remove user successful')
         you_cannot_delete_yourself = _('You cannot delete yourself')
-        return json.dumps({'Create user': create_user, 'Modify User': modify_user, 'Save': save,
+        return json.dumps({'Create User': create_user, 'Modify User': modify_user, 'Save': save,
                            'Select one user': select_one_user, 'Selected more than one user': select_more_than_one_user,
                            'Remove user successful': remove_user_successful, 'You cannot delete yourself': you_cannot_delete_yourself,
                            'Resource': _('Resource'), 'Resource Owner': _('Resource Owner'), 'Administrator': _('Administrator'),
@@ -248,10 +248,13 @@ class AdminController(BaseController):
         chars = '%s%s' % (string.letters, string.digits)
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
         # TODO: Email template!!!
-        msg = 'Your password has been reset to: ' + gen_pwd + '.'
+        msg = 'This email confirms that your password has been changed. ' \
+              'To log on to the site, use the following password: ' + gen_pwd + '.' \
+              'If you have any questions or encounter any problem logging in, pl. contact administrator.'
         log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:
-            self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team', name, sender, receiver, msg, 'Reset password')
+            self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team',
+                           name, sender, receiver, msg, 'Your password has been reset!')
 
             # Update user password here...
             origin_user = User.get_by_username(cherrypy.request.db, name)
