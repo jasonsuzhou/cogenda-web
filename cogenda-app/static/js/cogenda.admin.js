@@ -102,6 +102,9 @@ function get_resource_type(_type) {
         case RESOURCE_TYPE_PUBLIC_DOCUMENTATION:
             resource_type = 'Public - Documentation';
             break;
+        case RESOURCE_TYPE_PUBLIC_EXAMPLES:
+            resource_type = 'Public - Examples';
+            break;
         case RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES:
             resource_type = 'AllUser - Software Packages';
             break;
@@ -345,7 +348,7 @@ function ready_common_datatable(url, fnDatatableCallback) {
     });
 }
 
-// Reday for login page.
+// Ready for login page.
 function ready_login_page() {
     $('#login').on('click', function(event) {
         if (event) event.preventDefault();
@@ -376,10 +379,6 @@ function ready_login_page() {
                     return;
                 }
                 window.location = result.refer;
-            });
-
-            authenticate.fail(function(resp, status) {
-                //TODO: display error msg on ui.
             });
         } else {
             console.log('Client side validate error.');
@@ -457,10 +456,6 @@ function render_resource_select(selectedRole, selectedResources) {
                 }
                 $('#resource-container').show();
             }
-        });
-
-        resource_list.done(function(result) {
-            //TODO: Really needed?
         });
     } else {
         $('#resource-container').hide();
