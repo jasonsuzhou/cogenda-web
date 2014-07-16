@@ -158,20 +158,7 @@ class AdminController(BaseController):
             if not (username_checking is None):
                 return username_checking
         salt = self.settings.cogenda_app.cogenda_salt
-
-        # Assemble user
-        user = User(
-            json_user['username'],
-            hmac.new(salt, json_user['password']).hexdigest(),
-            json_user['company'],
-            json_user['email'],
-            json_user['mobile'],
-            json_user['role'],
-            json_user['resource'],
-            json_user['notes'],
-            json_user['active'])
-        user.updated_date = datetime.now()
-        user = User.update_user(cherrypy.request.db, origin_user, user)
+        user = User.update_user(cherrypy.request.db, origin_user, json_user, salt)
         return self.jsonify_model(user)
 
     @route('/admin/delete-user/:uid')
@@ -268,7 +255,9 @@ class AdminController(BaseController):
 
             # Update user password here...
             origin_user = User.get_by_username(cherrypy.request.db, name)
-            User.update_user_password(cherrypy.request.db, origin_user, gen_pwd)
+
+            salt = self.settings.cogenda_app.cogenda_salt
+            User.update_user_password(cherrypy.request.db, origin_user, gen_pwd, salt)
         except Exception as err:
             log.error('Reset password operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': _('Reset password failure')})
