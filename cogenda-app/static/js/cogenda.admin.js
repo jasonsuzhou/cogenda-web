@@ -1,8 +1,8 @@
-//***************************************************************
-//
-//                    Constant variables
-//
-//***************************************************************
+/***************************************************************
+ *
+ *                    CONSTANT VARIABLES
+ *
+ ***************************************************************/
 "use strict";
 // Message type
 var MSG_ERROR = 0;
@@ -23,7 +23,7 @@ var USER_TYPE_RESOURCE_OWNER = '2';
 var USER_TYPE_ADMINISTRATOR = '3';
 
 // Vendor type
-var VENDOR_TYPE_OOS = 'oos';
+var VENDOR_TYPE_OOS = 'oss';
 var VENDOR_TYPE_S3 = 's3';
 
 // Vendor display name
@@ -31,11 +31,11 @@ var VENDOR_OOS_DISPLAY_NAME = 'AliYun';
 var VENDOR_S3_DISPLAY_NAME = 'AWS S3';
 
 
-//***************************************************************
-//
-//              COMMON JAVASCRIPT METHODS
-//
-//***************************************************************
+/****************************************************************
+ *
+ *                COMMON JAVASCRIPT METHODS
+ *
+ * **************************************************************/
 
 var commonLanguge;
 
@@ -58,25 +58,31 @@ function remove_selected_rows(local_table) {
     });
 }
 
+// Render pop-up message.
 function pop_msg(msg_label, msg, type) {
     // type = 0 - Error, 1 - Alert, 2 - Success
     var label_classes = "";
     var container_classes = "";
-    if(type === MSG_ERROR) {
-        container_classes = 'alert alert-danger';
-        label_classes = 'fa fa-times-circle sign';
-    } else if(type === MSG_ALERT) {
-        container_classes = 'alert alert-warning';
-        label_classes = 'fa fa-warning sign';
-    } else if(type === MSG_SUCCESS) {
-        container_classes = 'alert alert-success';
-        label_classes = 'fa fa-check sign';
+    switch(type) {
+        case MSG_ERROR:
+            container_classes = 'alert alert-danger';
+            label_classes = 'fa fa-times-circle sign';
+            break;
+        case MSG_ALERT:
+            container_classes = 'alert alert-warning';
+            label_classes = 'fa fa-warning sign';
+            break;
+        case MSG_SUCCESS:
+            container_classes = 'alert alert-success';
+            label_classes = 'fa fa-check sign';
+            break;
     }
     $('#'+msg_label).text(msg);
     $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
     $('#'+msg_label+'-container').attr('class', container_classes).show();
 }
 
+// Mapping vendor display name.
 function convert_vendor_name(vendor) {
     if(vendor === VENDOR_TYPE_OOS)
         return VENDOR_OOS_DISPLAY_NAME;
@@ -86,23 +92,30 @@ function convert_vendor_name(vendor) {
         return vendor;
 }
 
+// Retrieve resource display type.
 function get_resource_type(_type) {
     var resource_type = 'Private';
-    if(_type === RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
-        resource_type = 'Public - Publications';
-    else if(_type === RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
-        resource_type = 'Public - Documentation';
-    else if(_type === RESOURCE_TYPE_PUBLIC_EXAMPLES)
-        resource_type = 'Public - Examples';
-    else if(_type === RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES)
-        resource_type = 'AllUser - Software Packages';
-    else if(_type === RESOURCE_TYPE_ALLUSER_INSTALLER)
-        resource_type = 'AllUser - Installer';
-    else if(_type === RESOURCE_TYPE_PRIVATE)
-        resource_type = 'Private';
+    switch(_type) {
+        case RESOURCE_TYPE_PUBLIC_PUBLICATIONS:
+            resource_type = 'Public - Publications';
+            break;
+        case RESOURCE_TYPE_PUBLIC_DOCUMENTATION:
+            resource_type = 'Public - Documentation';
+            break;
+        case RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES:
+            resource_type = 'AllUser - Software Packages';
+            break;
+        case RESOURCE_TYPE_ALLUSER_INSTALLER:
+            resource_type = 'AllUser - Installer';
+            break;
+        case RESOURCE_TYPE_PRIVATE:
+            resource_type = 'Private';
+            break;
+    }
     return resource_type;
 }
 
+// Retrieve role i18n display name.
 function get_role_name(role_id) {
     var role_name = commonLanguge['Resource'];
     if(role_id === USER_TYPE_RESOURCE)
@@ -114,6 +127,8 @@ function get_role_name(role_id) {
     return role_name;
 }
 
+
+// Retrieve user i18n status.
 function get_user_status(active) {
     var status = commonLanguge['No'];
     if(active)
@@ -121,6 +136,7 @@ function get_user_status(active) {
     return status;
 }
 
+// Retrieve user table i18n columns.
 function get_user_table_columns(userTableTitle) {
     var columns = [
         {
@@ -156,6 +172,7 @@ function get_user_table_columns(userTableTitle) {
         return columns;
 }
 
+// Retrieve resource table i18n columns.
 function get_resource_table_columns(resourceTableTitle) {
     var columns = [
         {
@@ -191,9 +208,7 @@ function get_resource_table_columns(resourceTableTitle) {
     return columns;
 }
 
-/**
- * Process user attributes' values to displaying values
- */
+// Process user attributes' values to displaying values
 function process_user_result(result) {
     result.splice(result.length-1,result.length);
     for(var i = 0; i < result.length; i++) {
@@ -205,14 +220,13 @@ function process_user_result(result) {
 }
 
 
-//***************************************************************
-//
-//              COMMON UI COMPONENTS
-//
-//***************************************************************
-/**
- * Get table columns via the url
- */
+/***************************************************************
+ *
+ *                 COMMON UI COMPONENTS
+ *
+ ***************************************************************/
+
+// Retrieve data table columns via the url
 function get_table_columns(tableTitle, url) {
     if('/admin/users' === url) {
        return get_user_table_columns(tableTitle);
@@ -222,30 +236,19 @@ function get_table_columns(tableTitle, url) {
     }
 }
 
-/**
- * Common ready for select2.
- *
- */
+// Common ready for select2.
 function ready_common_select2() {
-    /*Select2*/
     $(".select2").select2({
         width: '100%'
     });
 }
 
-/**
- * Common ready for switch.
- *
- */
+// Common ready for switch.
 function ready_common_switch() {
-    /*Switch*/
     $('.switch').bootstrapSwitch();
 }
 
-/**
- * Common ready for searchable multi select.
- *
- */
+// Common ready for searchable multi select.
 function ready_common_searchable_multi_select() {
     /*Multi-Select Search*/
     $('.searchable').multiSelect({
@@ -283,10 +286,7 @@ function ready_common_searchable_multi_select() {
     });
 }
 
-/**
- * Common ready for tables.
- *
- */
+// Common ready for data tables.
 function ready_common_datatable(url, fnDatatableCallback) {
     $.ajax({
         "dataType": 'json',
@@ -345,6 +345,7 @@ function ready_common_datatable(url, fnDatatableCallback) {
     });
 }
 
+// Reday for login page.
 function ready_login_page() {
     $('#login').on('click', function(event) {
         if (event) event.preventDefault();
@@ -386,10 +387,7 @@ function ready_login_page() {
     });
 }
 
-/**
- * Document ready for navigation menu.
- *
- */
+// Document ready for navigation menu.
 function ready_navigation_menu() {
     // Handle menu click event.
     $('ul.cl-vnavigation li').each(function(index, li) {

@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+""" Cogenda Common Constants """
 
 class _const:
     """

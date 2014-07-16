@@ -1,8 +1,8 @@
-//***************************************************************
-//
-//                    Constant variables
-//
-//***************************************************************
+/***************************************************************
+ *
+ *                   CONSTANT VARIABLES
+ *
+ ***************************************************************/
 
 "use strict";
 // Message type
@@ -19,13 +19,13 @@ var RESOURCE_TYPE_ALLUSER_INSTALLER = '5';
 var RESOURCE_TYPE_PRIVATE = '6';
 
 
-//***************************************************************
-//
-//                  COMMON JAVASCRIPT METHODS
-//
-//***************************************************************
+/***************************************************************
+ *
+ *                 COMMON JAVASCRIPT METHODS
+ *
+ ***************************************************************/
 
-// Switch language
+// Switch locale
 function switch_locale(locale) {
     $.ajax({
         type: 'GET',
@@ -71,19 +71,23 @@ function show_profile_menu(userName, myProfile, signOut) {
 }
 
 // Message display
+// Type = 0 - Error, 1 - Alert, 2 - Success
 function pop_msg(msg_label, msg, type) {
-    // type = 0 - Error, 1 - Alert, 2 - Success
     var label_classes = "";
     var container_classes = "";
-    if(type === 0) {
-        container_classes = 'alert alert-danger';
-        label_classes = 'fa fa-times-circle sign';
-    } else if(type === 1) {
-        container_classes = 'alert alert-warning';
-        label_classes = 'fa fa-warning sign';
-    } else if(type === 2) {
-        container_classes = 'alert alert-success';
-        label_classes = 'fa fa-check sign';
+    switch(type) {
+        case MSG_ERROR:
+            container_classes = 'alert alert-danger';
+            label_classes = 'fa fa-times-circle sign';
+            break;
+        case MSG_ALERT:
+            container_classes = 'alert alert-warning';
+            label_classes = 'fa fa-warning sign';
+            break;
+        case MSG_SUCCESS:
+            container_classes = 'alert alert-success';
+            label_classes = 'fa fa-check sign';
+            break;
     }
     $('#'+msg_label).text(msg);
     $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
@@ -91,11 +95,7 @@ function pop_msg(msg_label, msg, type) {
 }
 
 
-/**
- *
- * Document ready
- *
- */
+// Document ready
 $(document).ready(function() {
 
     var commonLanguge;
