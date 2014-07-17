@@ -43,11 +43,13 @@ class Const:
     USER_TYPE_RESOURCE_OWNER = '2'
     USER_TYPE_ADMINISTRATOR = '3'
 
-    # Client type
+    # Security
     CLIENT_TYPE_WEB = 'web'
     CLIENT_TYPE_ADMIN = 'admin'
+    PROTECTED_RESOURCES = ['/admin/user-mgmt', '/admin/resources']
 
-#######################################################################
-# Replace module entry in sys.modules[__name__] with instance of _const
+""" 
+Replace module entry in sys.modules[__name__] with instance of _const 
+"""
 import sys
 _ref, sys.modules[__name__] = sys.modules[__name__], Const()

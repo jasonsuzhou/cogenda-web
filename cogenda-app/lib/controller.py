@@ -12,6 +12,7 @@ import base64
 from mailer import Mailer, Message
 from md2_extension import Markdown2Extension
 from urlparse import urlparse
+from lib import const
 
 # Load logger
 import logging
@@ -45,11 +46,10 @@ def authenticated(func):
         instance = arguments[0]
         user = instance.user
         current_url = urlparse(cherrypy.url()).path
-        secured_urls = instance.settings.cogenda_app.secured_urls.split('|')
+        secured_urls = const.PROTECTED_RESOURCES
 
         if user:
-            # TODO: replace to constants
-            if user[1] == 'web' and current_url not in secured_urls:
+            if user[1] == const.CLIENT_TYPE_WEB and current_url not in secured_urls:
                 return func(*arguments, **kw)
             if user[2] == '3':
                 return func(*arguments, **kw)
