@@ -39,8 +39,8 @@
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">{{_('Company')}}</label>
-                            <input id="company" placeholder="{{_('Company')}}" class="form-control" data-parsley-length="[0, 200]"
-                                    data-parsley-trigger="change" data-parsley-errors-container="#password-error">
+                            <input id="company" placeholder="{{_('Company')}}" class="form-control" data-parsley-length="[0, 400]"
+                                    data-parsley-trigger="change" data-parsley-errors-container="#company-error">
                             <div id="company-error"></div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                         <div class="col-sm-6 col-md-6">
                             <label class="control-label">{{_('Mobile')}}</label>
                             <input id="mobile" placeholder="{{_('Mobile')}}" class="form-control" data-parsley-type="digits"
-                                    parsley-trigger="change" parsley-error-container="#mobile-error">
+                                    data-parsley-length="[6, 15]" parsley-trigger="change" parsley-error-container="#mobile-error">
                             <div id="mobile-error"></div>
                         </div>
                         <div class="col-sm-6 col-md-6">
@@ -86,7 +86,9 @@
                     <div class="form-group row">
                         <div class="col-md-12">
                             <label class="control-label">{{_('Notes')}}</label>
-                            <textarea id="notes" class="form-control" placeholder="{{_('Notes')}}"></textarea>
+                            <textarea id="notes" class="form-control" placeholder="{{_('Notes')}}" data-parsley-length="[0, 4000]"
+                                      parsley-trigger="change" parsley-error-container="#mobile-error"></textarea>
+                            <div id="notes-error"></div>
                             <input type="hidden" id="uid">
                         </div>
                     </div>

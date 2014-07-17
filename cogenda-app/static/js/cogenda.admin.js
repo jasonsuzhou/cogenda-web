@@ -939,7 +939,9 @@ function render_resource_datatable() {
         // Update resource
         $("#update").on('click', function(e) {
             if (e) e.preventDefault();
-            update_resource();
+            if ($('#status-modal').parsley().validate()) {
+                update_resource();
+            }
         });
     });
 }
