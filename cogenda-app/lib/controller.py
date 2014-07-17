@@ -89,6 +89,8 @@ class BaseController(object):
     __routes__ = None
 
     def __init__(self, server=None):
+        cherrypy.config.update({'error_page.404': self.error_page_404})
+        cherrypy.config.update({'error_page.500': self.error_page_500})
         self.server = server
 
     def log(self, message):
@@ -181,3 +183,11 @@ class BaseController(object):
                         self.settings.mailer.smtp_user,
                         os.environ.get('SMTP_PASSWORD', None))
         sender.send(message)
+
+    # TODO:
+    def error_page_404(self, status, message, traceback, version):
+        return self.render_template('404.html')
+
+    # TODO:
+    def error_page_500(self, status, message, traceback, version):
+        return self.render_template('500.html')

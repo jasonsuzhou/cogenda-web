@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css"  href="/static/js/mediaelement/mediaelementplayer.css" />
         <!-- -->
     </head>
-    <body>
+    <body id="main-body" style="opacity:0">
         <div id="background">
             {% include "web/layout/layout-header.html"%}
             {% include "web/layout/layout-nav.html"%}
@@ -88,5 +88,11 @@
         <script type="text/javascript" src="/static/js/mediaelement/mediaelement-and-player.min.js"></script>
         <!-- -->
         <input type="hidden" name="language" id="locale" value="{{ locale }}" />
+        <script type="text/javascript">
+            // display page after all loaded.
+            $(function(){
+                $("#main-body").css({opacity:1});
+            });
+        </script>
     </body>
 <html>
