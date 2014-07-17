@@ -51,7 +51,7 @@ def authenticated(func):
         if user:
             if user[1] == const.CLIENT_TYPE_WEB and current_url not in secured_urls:
                 return func(*arguments, **kw)
-            if user[2] == '3':
+            if user[2] == const.USER_TYPE_ADMINISTRATOR:
                 return func(*arguments, **kw)
         raise cherrypy.HTTPRedirect('/admin/login')
 
