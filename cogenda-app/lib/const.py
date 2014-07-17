@@ -23,7 +23,7 @@ class Const:
         self.__dict__[name] = value
 
     # Vendor type
-    VENDOR_TYPE_OOS = 'oos'
+    VENDOR_TYPE_OOS = 'oss'
     VENDOR_TYPE_S3 = 's3'
 
     # Vendor display name
@@ -48,8 +48,8 @@ class Const:
     CLIENT_TYPE_ADMIN = 'admin'
     PROTECTED_RESOURCES = ['/admin/user-mgmt', '/admin/resources']
 
-""" 
-Replace module entry in sys.modules[__name__] with instance of _const 
+"""
+Replace module entry in sys.modules[__name__] with instance of Const
 """
 import sys
 _ref, sys.modules[__name__] = sys.modules[__name__], Const()

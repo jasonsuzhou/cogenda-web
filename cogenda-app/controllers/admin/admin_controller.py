@@ -193,6 +193,8 @@ class AdminController(BaseController):
                     resource['id'] = '%s:%s' % (resource['id'], next_resource['id'])
                     resource['vendor'] = '%s/%s' % (self.convert_vendor_name(resource['vendor']), self.convert_vendor_name(next_resource['vendor']))
                     resources_in_json.remove(next_resource)
+                else:
+                    resource['vendor'] = self.convert_vendor_name(resource['vendor'])
         resources_in_json.append(self.init_resource_table_title())
         return resources_in_json
 
@@ -248,8 +250,8 @@ class AdminController(BaseController):
         chars = '%s%s' % (string.letters, string.digits)
         gen_pwd = ''.join(choice(chars) for _ in xrange(8))
         # TODO: Email template!!!
-        msg = 'This email confirms that your password has been changed. ' \
-              'To log on to the site, use the following password: ' + gen_pwd + '.' \
+        msg = 'This email confirms that your password has been changed. <br/><br/>' \
+              'To log on to the site, use the following password: ' + gen_pwd + '.  <br/><br/>' \
               'If you have any questions or encounter any problem logging in, pl. contact administrator.'
         log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:

@@ -7,9 +7,10 @@ meta = MetaData()
 resources = Table(
         'resources', meta,
         Column('id', Integer, nullable=False, primary_key=True),
-        Column('name', String(400), nullable=False,),
+        Column('name', String(400), nullable=False),
+        Column('description', String(400), nullable=False),
         Column('type', String(1), nullable=False),
-        Column('vendor', String(20), nullable=False),
+        Column('vendor', String(3), nullable=False),
         Column('url', String(1000), nullable=False),
         Column('uploaded_date', DateTime, default=datetime.now),
         Column('active', Boolean, default=True),
