@@ -1234,73 +1234,65 @@ label {
     color: #9F5FCD;
 }
 
+/*Validation*/
+.parsley-error {
+    border-color: #c00 !important;
+}
+
 input.parsley-success,
 select.parsley-success,
 textarea.parsley-success {
-    color: #468847;
-    background-color: #DFF0D8;
-    border: 1px solid #D6E9C6;
+  color: #468847;
+  background-color: #DFF0D8;
+  border: 1px solid #D6E9C6;
 }
 
 input.parsley-error,
 select.parsley-error,
 textarea.parsley-error {
-    color: #B94A48;
-    background-color: #F2DEDE;
-    border: 1px solid #EED3D7;
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border: 1px solid #EED3D7;
 }
 
 .parsley-errors-list {
-    margin: 8px 0 3px 0;
-    padding: 0;
-    list-style-type: disc;
-    font-size: 0.9em;
-    line-height: 0.9em;
-    opacity: 0;
-    -moz-opacity: 0;
-    -webkit-opacity: 0;
-    
-    transition: all .3s ease-in;
-    -o-transition: all .3s ease-in;
-    -ms-transition: all .3s ease-in;
-    -moz-transition: all .3s ease-in;
-    -webkit-transition: all .3s ease-in;
+  margin: 4px 0 3px 0;
+  padding: 0;
+  list-style-type: disc;
+  font-size: 0.9em;
+  line-height: 0.9em;
+  opacity: 0;
+  -moz-opacity: 0;
+  -webkit-opacity: 0;
+
+  transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  -ms-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
 }
 
 .parsley-errors-list li {
+    list-style: none;
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
-    color: #555;
+    color: #cc0000;
     line-height: 1.428571429;
     text-align: left;
     display: list-item;
 }
 
 .parsley-errors-list.filled {
-    -webkit-margin-before: 1em;
-    -webkit-margin-after: 1em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
-    -webkit-padding-start: 40px;
-    opacity: 1;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 40px;
+  opacity: 1;
 }
 
 .dropdown-toggle {
     height: 64px;
-}
-
-/*Validation*/
-.parsley-error-list {
-    margin-top: 4px;
-    padding: 0;
-}
-.parsley-error-list li {
-    padding: 0;
-    list-style: none;
-    color: #cc0000;
-}
-.parsley-error {
-    border-color: #c00 !important;
 }
 
 .bx-wrapper {

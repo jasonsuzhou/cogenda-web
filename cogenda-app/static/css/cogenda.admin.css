@@ -1683,6 +1683,10 @@ h1:first-child {
   font-size: 12px;
 }
 
+/*Validation*/
+.parsley-error {
+    border-color: #c00 !important;
+}
 
 input.parsley-success,
 select.parsley-success,
@@ -1701,7 +1705,7 @@ textarea.parsley-error {
 }
 
 .parsley-errors-list {
-  margin: 2px 0 3px 0;
+  margin: 4px 0 3px 0;
   padding: 0;
   list-style-type: disc;
   font-size: 0.9em;
@@ -1718,9 +1722,10 @@ textarea.parsley-error {
 }
 
 .parsley-errors-list li {
+    list-style: none;
     font-family: 'Open Sans', sans-serif;
     font-size: 12px;
-    color: #555;
+    color: #cc0000;
     line-height: 1.428571429;
     text-align: left;
     display: list-item;
@@ -1737,20 +1742,6 @@ textarea.parsley-error {
 
 .dropdown-toggle {
     height: 64px;
-}
-
-/*Validation*/
-.parsley-error-list {
-    margin-top: 4px;
-    padding: 0;
-}
-.parsley-error-list li {
-    padding: 0;
-    list-style: none;
-    color: #cc0000;
-}
-.parsley-error {
-    border-color: #c00 !important;
 }
 
 /* Alert style */
