@@ -23,8 +23,8 @@ In this tutorial, you will learn how to do device-circuit mixed-mode simulation 
 <video width="600" height="400" poster="poster.jpg" controls="controls" preload="none">
     <!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 -->
     <source src="/static/media/vtcad/demo3.flv" />
-    <object width="600" height="400" type="application/x-shockwave-flash" data="/static/js/mediaelement/flashmediaelement.swf">
-        <param name="movie" value="/static/js/mediaelement/flashmediaelement.swf" />
+    <object width="600" height="400" type="application/x-shockwave-flash" data="/static/bower_components/mediaelement/build/flashmediaelement.swf">
+        <param name="movie" value="/static/bower_components/mediaelement/build/flashmediaelement.swf" />
         <param name="flashvars" value="controls=true&file=/static/media/vtcad/demo3.flv" />
     </object>
 </video>

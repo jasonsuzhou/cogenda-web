@@ -110,7 +110,7 @@ encrypt-key-mac:
 #  				    Code Inspect & Utility                         #
 ####################################################################
 pylint:
-	@flake8 cogenda-app
+	@flake8 cogenda-app fabfile.py
 
 jslint:
 	@grunt jslint
@@ -120,4 +120,3 @@ clean-pyc:
 	@find cogenda-app -name '*.pyo'|xargs rm -f 
 	@find cogenda-app -name '*.DS_Store'|xargs rm -f 
 	@find cogenda-app -name '~'|xargs rm -f
-
