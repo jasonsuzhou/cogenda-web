@@ -184,10 +184,11 @@ class BaseController(object):
                         os.environ.get('SMTP_PASSWORD', None))
         sender.send(message)
 
-    # TODO:
     def error_page_404(self, status, message, traceback, version):
+        log.error('404 Not Found -> %s' % (message))
         return self.render_template('404.html')
 
-    # TODO:
     def error_page_500(self, status, message, traceback, version):
+        log.error('500 Server Error Message -> %s' % (message))
+        log.error('500 Stacktrace-> %s' % (traceback))
         return self.render_template('500.html')

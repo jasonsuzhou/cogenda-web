@@ -13,7 +13,11 @@ log = logging.getLogger(__name__)
 
 class WSController(BaseController):
 
-    """ Webservice API for Cloud Sync service"""
+    """
+    Webservice API for Cloud Sync service
+    - Cloud Sync service will Create/Update/Destroy resources automatically.
+    - Use HMAC to do webservice authtentication.
+    """
 
     @route('/api/modify-resource')
     @cherrypy.tools.json_out()

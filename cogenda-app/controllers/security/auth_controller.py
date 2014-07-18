@@ -44,7 +44,7 @@ class AuthController(BaseController):
         refer = cherrypy.request.headers.get('Referer', '/admin/user-mgmt')
         if refer.endswith('/admin/login'):
             refer = '/admin/user-mgmt'
-        error_msg = self.check_credentials(username, password, client)
+        error_msg = self._check_credentials(username, password, client)
         if error_msg:
             resp = {'auth_success': False, 'msg': error_msg}
             log.debug('[Cogenda-web] - Auth failed msg: %s,%s,%s' % (username, password, error_msg))
@@ -63,9 +63,9 @@ class AuthController(BaseController):
         self.logoff()
         self.redirect('/')
 
-    def check_credentials(self, username, password, client):
+    def _check_credentials(self, username, password, client):
+        """Verify credentials for username and password."""
         user = User.get_by_username(cherrypy.request.db, username)
-        """Verifies credentials for username and password."""
         salt = self.settings.cogenda_app.cogenda_salt
         if user is None or user.password != hmac.new(salt, password).hexdigest():
             return _('Invalid user ID or password')
