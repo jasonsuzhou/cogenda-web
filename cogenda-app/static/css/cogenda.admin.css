@@ -1979,3 +1979,38 @@ textarea.parsley-error {
 table.table-bordered.dataTable tr.row_selected td {
     background-color: #E6F1F6;
 }
+
+/*---------------------------------------------------
+ * 404 & 500 Page Style
+ * ------------------------------------------------*/
+.page-error {
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.page-error .description {
+    color: #FFF;
+    font-size: 40px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+.page-error h3 {
+    display: block;
+    font-size: 1.17em;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+
+.page-error .number {
+    color: #FFF;
+    font-size: 168px;
+    font-family: Arial;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+}
+
+.text-center {
+    text-align: center;
+}

@@ -3,23 +3,24 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Page Not Found</title>
+        <meta name="description" content="Cogenda website">
+        <meta name="author" content="cogenda-dev-team">
+        <title> | EDA/TCAD/DFM | Cogenda.com</title>
+        {% if settings.cogenda_app.env == 'dev' %}
+            <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.css" />
+        {% elif settings.cogenda_app.env == 'prod' %}
+            <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.min.css" />
+        {% endif %}
     </head>
 
     <body class="texture">
-
         <div id="cl-wrapper" class="error-container">
             <div class="page-error">
                 <h1 class="number text-center">404</h1>
                 <h2 class="description text-center">Sorry, but this page doesn't exists!</h2>
-                <h3 class="text-center">Would you like to go <a href="index-2.html">home</a>?</h3>
+                <h3 class="text-center">Would you like to go <a href="/">Home</a>?</h3>
             </div>
-            <div class="text-center out-links">    Copyright &copy; 2010 Cogenda 
-                <a href="#">Terms of Use</a> | <a href="#">Privacy</a> | <a href="contact@cogenda.com">Contact</a> | 苏ICP备11043021
-            </div>
-
+            {% include "admin/layout/layout-footer.html"%}
         </div>
     </body>
 </html>
