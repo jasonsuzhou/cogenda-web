@@ -43,7 +43,7 @@ var VENDOR_S3_DISPLAY_NAME = 'AWS S3';
 function init_progress(){
     NProgress.start();
     NProgress.set(0.4);
-    var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
+    var nprogress_interval = setInterval(function() { NProgress.inc(); }, 200);
     return nprogress_interval;
 }
 
