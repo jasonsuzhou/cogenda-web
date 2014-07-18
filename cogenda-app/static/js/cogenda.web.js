@@ -6,11 +6,6 @@
 
 "use strict";
 
-// Start nprogress
-NProgress.start();
-NProgress.set(0.4);
-var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
-
 // Message type
 var MSG_ERROR = 0;
 var MSG_ALERT = 1;
@@ -30,6 +25,21 @@ var RESOURCE_TYPE_PRIVATE = '6';
  *                 COMMON JAVASCRIPT METHODS
  *
  ***************************************************************/
+
+// Init nprogress
+function init_progress(){
+    NProgress.start();
+    NProgress.set(0.4);
+    var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
+    return nprogress_interval;
+}
+
+function destroy_progress(interval_id) {
+    clearInterval(interval_id);
+    NProgress.done();
+}
+
+var nprogress_interval = init_progress();
 
 // Switch locale
 function switch_locale(locale) {
@@ -347,8 +357,14 @@ $(document).ready(function() {
             }
         });
     });
+});
 
-    // End nprogress
-    NProgress.done();
-    clearInterval(nprogress_interval);
+// Trigger finish when page fully loaded
+$(window).load(function(){
+    destroy_progress(nprogress_interval);
+});
+
+// Trigger bar when exiting the page
+$(window).unload(function(){
+    NProgress.start();
 });

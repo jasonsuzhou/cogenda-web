@@ -5,10 +5,6 @@
  ***************************************************************/
 "use strict";
 
-// Start nprogress
-NProgress.start();
-NProgress.set(0.4);
-var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
 
 
 // Message type
@@ -43,6 +39,20 @@ var VENDOR_S3_DISPLAY_NAME = 'AWS S3';
  *                COMMON JAVASCRIPT METHODS
  *
  * **************************************************************/
+// Init nprogress
+function init_progress(){
+    NProgress.start();
+    NProgress.set(0.4);
+    var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
+    return nprogress_interval;
+}
+
+function destroy_progress(interval_id) {
+    clearInterval(interval_id);
+    NProgress.done();
+}
+
+var nprogress_interval = init_progress();
 
 var commonLanguge;
 
@@ -1030,8 +1040,14 @@ $(document).ready(function() {
         });
         ready_optimized_page(url);
     }
+});
 
-    // End nprogress
-    NProgress.done();
-    clearInterval(nprogress_interval);
+// Trigger finish when page fully loaded
+$(window).load(function(){
+    destroy_progress(nprogress_interval);
+});
+
+// Trigger bar when exiting the page
+$(window).unload(function(){
+    NProgress.start();
 });
