@@ -255,7 +255,7 @@ class AdminController(BaseController):
               'If you have any questions or encounter any problem logging in, pl. contact administrator.'
         log.debug('[Cogenda-web] - Reset password for user:%s' % name)
         try:
-            self.send_mail('mail/req_account_tpl.html', 'Cogenda Support Team',
+            self.send_mail('mail/mail_tpl.html', 'Cogenda Support Team',
                            name, sender, receiver, msg, 'Your password has been reset!')
 
             # Update user password here...
