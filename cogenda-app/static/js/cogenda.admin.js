@@ -759,6 +759,7 @@ function reset_password() {
     });
 }
 
+
 /**
  * Render user datatable
  *
@@ -979,6 +980,11 @@ function ready_optimized_page(uri) {
     }
 }
 
+
+NProgress.start();
+NProgress.set(0.4);
+var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
+
 /**
  *
  * Main document ready
@@ -1021,4 +1027,7 @@ $(document).ready(function() {
         });
         ready_optimized_page(url);
     }
+
+    NProgress.done();
+    clearInterval(nprogress_interval);
 });

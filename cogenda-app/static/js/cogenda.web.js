@@ -94,6 +94,9 @@ function pop_msg(msg_label, msg, type) {
     $('#'+msg_label+'-container').attr('class', container_classes).show();
 }
 
+NProgress.start();
+NProgress.set(0.4);
+var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
 
 // Document ready
 $(document).ready(function() {
@@ -341,4 +344,7 @@ $(document).ready(function() {
             }
         });
     });
+
+    NProgress.done();
+    clearInterval(nprogress_interval);
 });

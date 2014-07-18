@@ -30,6 +30,7 @@
         "multiselect": "~0.9.10",
         "parsleyjs": "~2.0.0",
         "select2": "~3.4.5",
+        "nprogress": "0.1.6",
         "bootstrap-switch": "~1.8.0",
         "datatables-bootstrap3": "0.1"
     },
