@@ -25,7 +25,6 @@ def main(settings_file):
     except KeyboardInterrupt:
         server.stop()
 
-
 def register_routes(server):
     """ Register router dispatchers """
     dispatcher = cherrypy.dispatch.RoutesDispatcher()
@@ -36,7 +35,6 @@ def register_routes(server):
 
 def usage():
     print("usage: python cogenda-app/cogendap-app.py <settings_file>")
-
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:

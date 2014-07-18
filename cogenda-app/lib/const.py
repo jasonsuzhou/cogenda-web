@@ -2,7 +2,6 @@
 
 """ Cogenda Common Constants """
 
-
 class Const:
     """
     Cogenda Common Constants
@@ -47,6 +46,27 @@ class Const:
     CLIENT_TYPE_WEB = 'web'
     CLIENT_TYPE_ADMIN = 'admin'
     PROTECTED_RESOURCES = ['/admin/user-mgmt', '/admin/resources']
+
+    # Navigation Menu Items
+    SITE_MENU_ITEMS = [
+        'Home',
+        'Products',
+        'Applications',
+        'Licensing',
+        'Downloads',
+        'Corporate',
+        'Contact'
+    ]
+    # TODO: i18n
+    SITE_SUB_MENU_CAPTIONS = [
+        'home sub nav caption',
+        'products sub nav caption',
+        'Applications sub nav caption',
+        'Licensing sub nav caption',
+        'Downloads subnav caption',
+        'Corporate sub nav caption',
+        'Contact sub nav caption'
+    ]
 
 """
 Replace module entry in sys.modules[__name__] with instance of Const

@@ -4,14 +4,19 @@
     "authors": [
         "cogenda-dev-team"
         ],
-    "main":["cogenda-app/static/css/admin.min.css", "cogenda-app/static/css/web.min.css", "cogenda-app/static/js/cogenda.admin.min.js", "cogenda-app/static/js/cogenda.web.min.js"],
+    "main":[
+        "cogenda-app/static/css/admin.min.css",
+        "cogenda-app/static/css/web.min.css",
+        "cogenda-app/static/js/cogenda.admin.min.js",
+        "cogenda-app/static/js/cogenda.web.min.js"
+        ],
     "description": "Cogenda website",
     "ignore": [
         "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
         ],
     "dependencies": {
         "font-awesome": "~4.0.3",

@@ -178,10 +178,10 @@ class WebController(BaseController):
         return self.jsonify_model(user)
 
     def _retrieve_nav_info(self):
-        site_navs = self.settings.web.site_navs
-        sub_nav_captions = self.settings.web.sub_nav_captions.split('|')
+        site_navs = const.SITE_MENU_ITEMS
+        sub_nav_captions = const.SITE_SUB_MENU_CAPTIONS
         nav_infos = []
-        for idx, nav_name in enumerate(site_navs.split('|')):
+        for idx, nav_name in enumerate(site_navs):
             link = '/'
             if nav_name.lower().strip() != 'home':
                 link = "%sarticle/%s" % (link, nav_name.lower().strip())
