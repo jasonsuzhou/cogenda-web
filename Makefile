@@ -1,7 +1,6 @@
 # Makefile for cogenda web application
 
 .PHONY: help
-
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo ""
@@ -18,6 +17,8 @@ help:
 	@echo "  deploy            to deploy application to production evironment."
 	@echo "  encrypt-key       to encrypt sensitive data & private keys in travis ci."
 	@echo "  encrypt-key-mac   to encrypt sensitive data & private keys in travis ci on Mac OSX."
+	@echo "  pylint            to inspect python code defects."
+	@echo "  jslint            to inspect javascript code defects."
 	@echo "  clean-pyc         to clean project *.pyc files."
 	@echo ""
 
@@ -80,11 +81,6 @@ babel-update:
 babel-compile:
 	@python setup.py compile_catalog -D ${babel_domain} -d ${babel_i18n}
 
-clean-pyc:
-	@find cogenda-app -name '*.pyc'|xargs rm -f
-	@find cogenda-app -name '*.pyo'|xargs rm -f 
-	@find cogenda-app -name '*.DS_Store'|xargs rm -f 
-	@find cogenda-app -name '~'|xargs rm -f
 
 ####################################################################
 #  				     Web Assets Management                         #
@@ -109,8 +105,19 @@ encrypt-key:
 encrypt-key-mac:
 	@./bin/travis_encrypt_key_mac.sh 
 
+
+####################################################################
+#  				    Code Inspect & Utility                         #
+####################################################################
 pylint:
 	@flake8 cogenda-app
 
 jslint:
 	@grunt jslint
+
+clean-pyc:
+	@find cogenda-app -name '*.pyc'|xargs rm -f
+	@find cogenda-app -name '*.pyo'|xargs rm -f 
+	@find cogenda-app -name '*.DS_Store'|xargs rm -f 
+	@find cogenda-app -name '~'|xargs rm -f
+
