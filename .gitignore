@@ -34,3 +34,9 @@ logs/
 .settings
 
 cogenda-app/static/bower_components/
+
+cogenda.web.min.css
+cogenda.admin.min.css
+cogenda.web.min.js
+cogenda.admin.min.js
+
