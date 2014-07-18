@@ -153,8 +153,8 @@ class WebController(BaseController):
             self.send_mail('mail/mail_tpl.html', name, 'Support', self.settings.mailer.smtp_user, 'kkiiiu@gmail.com', message)
         except Exception as err:
             log.error('Send mail operation error %s' % err)
-            return json.dumps({'is_success': False, 'msg': 'Request mail send failure with error: %s' % err})
-        return json.dumps({'is_success': True, 'msg': _('Request mail send successfully')})
+            return json.dumps({'is_success': False, 'msg': _('RequestMailSendFailure')})
+        return json.dumps({'is_success': True, 'msg': _('RequestMailSendSuccessfully')})
 
     @route('/user/user-profile/:username')
     @cherrypy.tools.json_out()
