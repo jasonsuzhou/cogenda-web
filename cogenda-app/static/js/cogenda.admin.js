@@ -4,6 +4,13 @@
  *
  ***************************************************************/
 "use strict";
+
+// Start nprogress
+NProgress.start();
+NProgress.set(0.4);
+var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
+
+
 // Message type
 var MSG_ERROR = 0;
 var MSG_ALERT = 1;
@@ -981,10 +988,6 @@ function ready_optimized_page(uri) {
 }
 
 
-NProgress.start();
-NProgress.set(0.4);
-var nprogress_interval = setInterval(function() { NProgress.inc(); }, 1000);
-
 /**
  *
  * Main document ready
@@ -1028,6 +1031,7 @@ $(document).ready(function() {
         ready_optimized_page(url);
     }
 
+    // End nprogress
     NProgress.done();
     clearInterval(nprogress_interval);
 });
