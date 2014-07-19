@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cogenda-web 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 09:21+0800\n"
+"POT-Creation-Date: 2014-07-19 10:11+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -342,7 +342,30 @@ msgid "Create"
 msgstr ""
 
 #: cogenda-app/templates/web/article/index.md:39
-msgid "Welcome"
+msgid "company summary"
+msgstr ""
+
+#: cogenda-app/templates/web/article/index.md:41
+msgid "company profile"
+msgstr ""
+
+#: cogenda-app/templates/web/article/index.md:42
+msgid "index_company_summary"
+msgstr ""
+
+#: cogenda-app/templates/web/article/index.md:51
+msgid "product detail"
+msgstr ""
+
+#: cogenda-app/templates/web/article/index.md:53
+msgid "index_product_detail"
+msgstr ""
+
+#: cogenda-app/templates/web/article/index.md:66
+#: cogenda-app/templates/web/article/index.md:80
+#: cogenda-app/templates/web/article/index.md:99
+#: cogenda-app/templates/web/article/index.md:112
+msgid "Get more information"
 msgstr ""
 
 #: cogenda-app/templates/web/layout/layout-header.html:4
