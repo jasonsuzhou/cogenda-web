@@ -327,4 +327,4 @@ class WebController(BaseController):
             'Corporate sub nav caption',
             'Contact sub nav caption'
         ]
-        return SITE_MENU_ITEMS, SITE_SUB_MENU_CAPTIONS 
+        return SITE_MENU_ITEMS, SITE_SUB_MENU_CAPTIONS

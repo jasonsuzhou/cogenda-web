@@ -1,8 +1,6 @@
 # -*- coding:utf-8 -*-
 
 """ Cogenda Common Constants """
-from i18ntool import ugettext_lazy as _
-
 
 class Const:
     """
