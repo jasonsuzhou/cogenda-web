@@ -23,11 +23,11 @@ class AuthController(BaseController):
         return self.render_template('admin/security/login-user.html')
 
     @route('/security/authenticate')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out(content_type='application/json')
     def authenticate(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_user = json.loads(rawbody)
+        json_payload = cherrypy.request.json
+        json_user = json_payload['json']
         username = json_user['username']
         password = json_user['password']
         client = json_user['client']

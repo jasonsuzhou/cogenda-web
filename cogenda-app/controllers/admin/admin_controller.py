@@ -96,9 +96,6 @@ class AdminController(BaseController):
     def create_user(self):
         json_payload = cherrypy.request.json
         json_user = json_payload['json']
-        # cl = cherrypy.request.headers['Content-Length']
-        # rawbody = cherrypy.request.body.read(int(cl))
-        # json_user = json.loads(rawbody)
         log.debug('[Cogenda-web] - Create user:%s' % json_user['username'])
 
         # Check username
@@ -127,9 +124,6 @@ class AdminController(BaseController):
     def update_user(self):
         json_payload = cherrypy.request.json
         json_user = json_payload['json']
-        # cl = cherrypy.request.headers['Content-Length']
-        # rawbody = cherrypy.request.body.read(int(cl))
-        # json_user = json.loads(rawbody)
         log.debug('[Cogenda-web] - Update user:%s' % json_user['username'])
 
         # Get original user by id
@@ -182,12 +176,12 @@ class AdminController(BaseController):
         return resources_in_json
 
     @route('/admin/update-resource')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     @authenticated
     def update_resource(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_resource = json.loads(rawbody)
+        json_payload = cherrypy.request.json
+        json_resource = json_payload['json']
 
         log.debug('[Cogenda-web] - Update resource:%s' % json_resource['id'])
 
@@ -221,12 +215,12 @@ class AdminController(BaseController):
         return resources_in_json
 
     @route('/admin/reset-password')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out(content_type='application/json')
     @authenticated
     def reset_password(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_request = json.loads(rawbody)
+        json_payload = cherrypy.request.json
+        json_request = json_payload['json']
         name = json_request['username']
         receiver = json_request['email']
         sender = self.settings.mailer.smtp_user

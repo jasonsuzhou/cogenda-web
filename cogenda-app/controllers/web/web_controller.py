@@ -140,11 +140,11 @@ class WebController(BaseController):
         cherrypy.response.headers['X-Accel-Redirect'] = '/resource/%s' % (resource_url_partial)
 
     @route('/user/request-an-account')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out(content_type='application/json')
     def request_an_account(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_request = json.loads(rawbody)
+        json_payload = cherrypy.request.json
+        json_request = json_payload['json']
         name = json_request['username']
         sender = json_request['email']
         message = 'This mail is going to request an account, below is the note: <br/><br/> %s' % json_request['notes']
@@ -166,15 +166,16 @@ class WebController(BaseController):
         return user_in_json
 
     @route('/user/change-password')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     @authenticated
     def change_password(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_user = json.loads(rawbody)
+        json_payload = cherrypy.request.json
+        json_user = json_payload['json']
         log.debug("[Cogenda-web] - Change user password: %s" % json_user['username'])
         origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
-        user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'])
+        salt = self.settings.cogenda_app.cogenda_salt
+        user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'], salt)
         return self._jsonify_model(user)
 
     def _retrieve_nav_info(self):

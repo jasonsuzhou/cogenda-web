@@ -174,11 +174,11 @@ $(document).ready(function() {
             var password = $('#password').val().trim();
             var client = $('#client').val().trim();
 
-            var credentials = {
+            var credentials = {json: {
                 username: username,
                 password: password,
                 client: client
-            };
+            }};
 
             var authenticate = $.ajax({
                 dataType: 'json',
@@ -233,11 +233,11 @@ $(document).ready(function() {
             var email = $('#email').val().trim();
             var notes = $('#notes').val().trim();
 
-            var account_request = {
+            var account_request = {json: {
                 username: username,
                 email: email,
                 notes: notes
-            };
+            }};
 
             var send_request = $.ajax({
                 dataType: 'json',
@@ -280,10 +280,10 @@ $(document).ready(function() {
                 return;
             }
 
-            var user_pwd = {
+            var user_pwd = {json: {
                 username: username,
                 password: password1
-            };
+            }};
 
             $.ajax({
                 dataType: 'json',

@@ -375,11 +375,11 @@ function ready_login_page() {
             var password = $('#password').val().trim();
             var client = $('#client').val().trim();
 
-            var credentials = {
+            var credentials = {json: {
                 username: username,
                 password: password,
                 client: client
-            };
+            }};
 
             var authenticate = $.ajax({
                 dataType: 'json',
@@ -752,10 +752,10 @@ function reset_password() {
     var username = $('#name').val().trim();
     var email = $('#email').val().trim();
 
-    var user_info = {
+    var user_info = {json: {
         username: username,
         email: email
-    };
+    }};
 
     var reset_password_request = $.ajax({
         dataType: 'json',
@@ -914,12 +914,12 @@ function update_resource() {
     var r_type = $('#r_type').val().trim();
 
     // Assemble resource
-    var resource = {
+    var resource = {json: {
         id: rid,
         desc: r_desc,
         type: r_type,
         active: ($('.switch-on') && $('.switch-on').length > 0) ? 1 : 0
-    };
+    }};
 
     // Update resource
     $.ajax({
