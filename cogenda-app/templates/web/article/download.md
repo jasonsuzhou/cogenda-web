@@ -17,7 +17,11 @@ Downloads
 
 <br />
 
-<div id="private-area" style="display: none;">
+{% if privates %}
+    <div id="private-area" style="display: block;">
+{% else %}
+    <div id="private-area" style="display: none;">
+{% endif %}
 
 {% markdown2 %}
 
@@ -30,6 +34,12 @@ Downloads
         <td width="300"></td>
         <td></td>
     </tr>
+    {% for res in privates%}
+        <tr>
+            <td >{{ res['description'] }}</td>
+            <td ><a style="cursor: pointer;" class="resource-class">{{ res['name'] }}<input type="hidden" value={{ res['id'] }}></a></td>
+        </tr>
+    {% endfor %}
 </table>
 <br /><br />
 </div>
@@ -41,6 +51,12 @@ Downloads
         <td width="300"></td>
         <td></td>
     </tr>
+    {% for res in publications%}
+        <tr>
+            <td >{{ res['description'] }}</td>
+            <td ><a style="cursor: pointer;" class="resource-class">{{ res['name'] }}<input type="hidden" value={{ res['id'] }}></a></td>
+        </tr>
+    {% endfor %}
 </table>
 
 <br />
@@ -49,10 +65,22 @@ Downloads
 ##### *[Release Notes](./Release-Notes-VisualTCAD#174-14)* | *[System Requirements](./System-Requirements)*
 ##### Installers (Standard Edition)
 <table id="installers" width="580" border="0">
-  <tr>
-    <td width="300"></td>
-    <td> </td>
-  </tr>
+    <tr>
+        <td width="300"></td>
+        <td> </td>
+    </tr>
+    {% for res in installers%}
+        <tr>
+            <td >{{ res['description'] }}</td>
+            <td ><a style="cursor: pointer;" class="resource-class">{{ res['name'] }}<input type="hidden" value={{ res['id'] }}></a></td>
+        </tr>
+    {% endfor %}
+    {% for res in software_packages%}
+        <tr>
+            <td >{{ res['description'] }}</td>
+            <td ><a style="cursor: pointer;" class="resource-class">{{ res['name'] }}<input type="hidden" value={{ res['id'] }}></a></td>
+        </tr>
+    {% endfor %}
 </table>
 <br />
 
@@ -86,20 +114,32 @@ If you need to evaluate any of the "on-request" editions, [Contact us](mailto:sa
 #### Documentation
 
 <table id="documentations" width="580" border="0">
-  <tr>
-    <td width="300"></td>
-    <td> </td>
-  </tr>
+    <tr>
+        <td width="300"></td>
+        <td> </td>
+    </tr>
+    {% for res in documentations%}
+        <tr>
+            <td >{{ res['description'] }}</td>
+            <td ><a style="cursor: pointer;" class="resource-class">{{ res['name'] }}<input type="hidden" value={{ res['id'] }}></a></td>
+        </tr>
+    {% endfor %}
 </table> 
 <br />
 
 #### Brochures
 
 <table id="brochures" width="580" border="0">
-  <tr>
-    <td width="300"></td>
-    <td> </td>
-  </tr>
+    <tr>
+        <td width="300"></td>
+        <td> </td>
+    </tr>
+    {% for res in examples%}
+        <tr>
+            <td >{{ res['description'] }}</td>
+            <td ><a style="cursor: pointer;" class="resource-class">{{ res['name'] }}<input type="hidden" value={{ res['id'] }}></a></td>
+        </tr>
+    {% endfor %}
 </table>
 <br />
 

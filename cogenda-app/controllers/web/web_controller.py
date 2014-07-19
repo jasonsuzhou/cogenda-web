@@ -47,20 +47,6 @@ class WebController(BaseController):
             news=self.render_template('web/news/index.md'),
             sidebar=self._retrieve_random_sidebar())
 
-    @route('/resources')
-    @cherrypy.tools.json_out()
-    def load_resource(self):
-        log.debug("[Cogenda-web] - Fetch all resources.")
-        all_resources = Resource.list_active_resources(cherrypy.request.db)
-        return self._filter_resources_by_vendor(all_resources)
-
-    @route('/private-resources')
-    @cherrypy.tools.json_out()
-    def load_private_resource(self):
-        log.debug("[Cogenda-web] - Fetch private resources.")
-        private_resources = Resource.list_resource_by_type(cherrypy.request.db, const.RESOURCE_TYPE_PRIVATE)
-        return self._filter_resources_by_vendor(private_resources)
-
     @route('/check-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
     def check_resource(self, rid):
@@ -200,6 +186,17 @@ class WebController(BaseController):
     def _retrieve_optimized_article(self, article_name):
         choice = self._optimize_assets(self.context.article_files, article_name)
         best_choice = 'web/article/%s' % (choice)
+        # For download page
+        if 'download' in choice:
+            resource_dist = self._fetch_resources()
+            return self.render_template(
+                best_choice,
+                publications=resource_dist[const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS],
+                documentations=resource_dist[const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION],
+                examples=resource_dist[const.RESOURCE_TYPE_PUBLIC_EXAMPLES],
+                installers=resource_dist[const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES],
+                software_packages=resource_dist[const.RESOURCE_TYPE_ALLUSER_INSTALLER],
+                privates=resource_dist[const.RESOURCE_TYPE_PRIVATE])
         return self.render_template(best_choice)
 
     def _retrieve_optimized_news(self, news_name):
@@ -226,7 +223,13 @@ class WebController(BaseController):
         According vendor to filter distinct resource
         """
         vendor = self._gen_vendor()
-        resources_in_json = []
+        resource_dist = {}
+        public_exp_resources_in_json = []
+        public_doc_resources_in_json = []
+        public_pub_resources_in_json = []
+        alluser_ins_resources_in_json = []
+        alluser_pac_resources_in_json = []
+        private_resources_in_json = []
         for i in range(len(all_resources)):
             if i == len(all_resources):
                 break
@@ -243,13 +246,28 @@ class WebController(BaseController):
             # 6-Private
             if _resource.type == const.RESOURCE_TYPE_PRIVATE:
                 if self.user:
-                    self._auth_private_resource(_resource, resources_in_json)
+                    self._auth_private_resource(_resource, private_resources_in_json)
                 else:
                     continue
             # Other type resource: 1, 2, 3, 4, 5
-            else:
-                resources_in_json.append(self._jsonify_model(_resource))
-        return resources_in_json
+            elif _resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER:
+                alluser_ins_resources_in_json.append(self._jsonify_model(_resource))
+            elif _resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES:
+                alluser_pac_resources_in_json.append(self._jsonify_model(_resource))
+            elif _resource.type == const.RESOURCE_TYPE_PUBLIC_EXAMPLES:
+                public_exp_resources_in_json.append(self._jsonify_model(_resource))
+            elif _resource.type == const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION:
+                public_doc_resources_in_json.append(self._jsonify_model(_resource))
+            elif _resource.type == const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS:
+                public_pub_resources_in_json.append(self._jsonify_model(_resource))
+        # Popular resources to resource dist
+        resource_dist[const.RESOURCE_TYPE_PRIVATE] = private_resources_in_json
+        resource_dist[const.RESOURCE_TYPE_ALLUSER_INSTALLER] = alluser_ins_resources_in_json
+        resource_dist[const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES] = alluser_pac_resources_in_json
+        resource_dist[const.RESOURCE_TYPE_PUBLIC_EXAMPLES] = public_exp_resources_in_json
+        resource_dist[const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION] = public_doc_resources_in_json
+        resource_dist[const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS] = public_pub_resources_in_json
+        return resource_dist
 
     def _gen_vendor(self):
         """
@@ -328,3 +346,8 @@ class WebController(BaseController):
             'Contact sub nav caption'
         ]
         return SITE_MENU_ITEMS, SITE_SUB_MENU_CAPTIONS
+
+    def _fetch_resources(self):
+        log.debug("[Cogenda-web] - Fetch all resources.")
+        all_resources = Resource.list_active_resources(cherrypy.request.db)
+        return self._filter_resources_by_vendor(all_resources)

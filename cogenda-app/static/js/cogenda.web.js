@@ -302,6 +302,7 @@ $(document).ready(function() {
         }
     });
 
+    /*
     // Load download page
     if(window.location.href.indexOf('article/downloads') > 0) {
         $.ajax({
@@ -330,33 +331,35 @@ $(document).ready(function() {
                 }
             }
         });
+    }*/
+
+    if(window.location.href.indexOf('article/downloads') > 0) {
+        $('.resource-class').on('click', function (event) {
+            if (event) event.preventDefault();
+
+            $('#download-msg-container').hide();
+
+            var r_id = event.target.children[0].value;
+            $('#r_id').val(r_id);
+            var checkResource = $.ajax({
+                "dataType": 'json',
+                "type": "GET",
+                "url": "/check-resource/" + r_id
+            });
+
+            checkResource.done(function (resp) {
+                var result = JSON.parse(resp);
+                if (typeof(result.auth_status) === 'undefined') {
+                    pop_msg('download-msg', result.msg, MSG_ERROR);
+                } else if (result.auth_status) {
+                    window.location = result.link;
+                } else {
+                    pop_msg('user-login-msg', result.msg, MSG_ALERT);
+                    $('#loginModal').modal('show');
+                }
+            });
+        });
     }
-
-    $('.resource-class').on('click', function (event) {
-        if (event) event.preventDefault();
-
-        $('#download-msg-container').hide();
-
-        var r_id = event.target.children[0].value;
-        $('#r_id').val(r_id);
-        var checkResource = $.ajax({
-            "dataType": 'json',
-            "type": "GET",
-            "url": "/check-resource/" + r_id
-        });
-
-        checkResource.done(function (resp) {
-            var result = JSON.parse(resp);
-            if (typeof(result.auth_status) === 'undefined') {
-                pop_msg('download-msg', result.msg, MSG_ERROR);
-            } else if (result.auth_status) {
-                window.location = result.link;
-            } else {
-                pop_msg('user-login-msg', result.msg, MSG_ALERT);
-                $('#loginModal').modal('show');
-            }
-        });
-    });
 });
 
 // Trigger finish when page fully loaded
