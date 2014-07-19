@@ -49,27 +49,6 @@ class Const:
     CLIENT_TYPE_ADMIN = 'admin'
     PROTECTED_RESOURCES = ['/admin/user-mgmt', '/admin/resources']
 
-    # Navigation Menu Items
-    SITE_MENU_ITEMS = [
-        (_('Home'), 'home'),
-        (_('Products'), 'products'),
-        (_('Applications'), 'applications'),
-        (_('Licensing'), 'licensing'),
-        (_('Downloads'), 'downloads'),
-        (_('Corporate'), 'corporate'),
-        (_('Contact'), 'contact')
-    ]
-    # TODO: i18n
-    SITE_SUB_MENU_CAPTIONS = [
-        'Home sub nav caption',
-        'Products sub nav caption',
-        'Applications sub nav caption',
-        'Licensing sub nav caption',
-        'Downloads sub nav caption',
-        'Corporate sub nav caption',
-        'Contact sub nav caption'
-    ]
-
 """
 Replace module entry in sys.modules[__name__] with instance of Const
 """

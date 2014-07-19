@@ -178,10 +178,10 @@ class WebController(BaseController):
         return self._jsonify_model(user)
 
     def _retrieve_nav_info(self):
-        site_navs = const.SITE_MENU_ITEMS
-        sub_nav_captions = const.SITE_SUB_MENU_CAPTIONS
+        site_navs, sub_nav_captions = self._retrieve_menu_info()
         nav_infos = []
         for idx, (nav_name, nav_key) in enumerate(site_navs):
+            print nav_name.encode('utf-8')
             link = '/'
             nav_key = nav_key.lower().strip()
             if nav_key != 'home':
@@ -304,3 +304,27 @@ class WebController(BaseController):
             else:
                 json[col_name] = col_val
         return json
+
+    def _retrieve_menu_info(self):
+        """
+            Make navigation menu items and sub menu items.
+        """
+        SITE_MENU_ITEMS = [
+            (_('Home'), 'home'),
+            (_('Products'), 'products'),
+            (_('Applications'), 'applications'),
+            (_('Licensing'), 'licensing'),
+            (_('Downloads'), 'downloads'),
+            (_('Corporate'), 'corporate'),
+            (_('Contact'), 'contact')
+        ]
+        SITE_SUB_MENU_CAPTIONS = [
+            'Home sub nav caption',
+            'Products sub nav caption',
+            'Applications sub nav caption',
+            'Licensing sub nav caption',
+            'Downloads sub nav caption',
+            'Corporate sub nav caption',
+            'Contact sub nav caption'
+        ]
+        return SITE_MENU_ITEMS, SITE_SUB_MENU_CAPTIONS 
