@@ -90,13 +90,15 @@ class AdminController(BaseController):
                            'oPaginate_sPrevious': oPaginate_sPrevious, 'oPaginate_sNext': oPaginate_sNext, 'oPaginate_sLast': oPaginate_sLast})
 
     @route('/admin/create-user')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     @authenticated
     def create_user(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_user = json.loads(rawbody)
-
+        json_payload = cherrypy.request.json
+        json_user = json_payload['json']
+        # cl = cherrypy.request.headers['Content-Length']
+        # rawbody = cherrypy.request.body.read(int(cl))
+        # json_user = json.loads(rawbody)
         log.debug('[Cogenda-web] - Create user:%s' % json_user['username'])
 
         # Check username
@@ -119,13 +121,15 @@ class AdminController(BaseController):
         return self._jsonify_model(user)
 
     @route('/admin/update-user')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     @authenticated
     def update_user(self):
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        json_user = json.loads(rawbody)
-
+        json_payload = cherrypy.request.json
+        json_user = json_payload['json']
+        # cl = cherrypy.request.headers['Content-Length']
+        # rawbody = cherrypy.request.body.read(int(cl))
+        # json_user = json.loads(rawbody)
         log.debug('[Cogenda-web] - Update user:%s' % json_user['username'])
 
         # Get original user by id

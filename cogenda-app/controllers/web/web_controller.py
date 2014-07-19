@@ -181,7 +181,6 @@ class WebController(BaseController):
         site_navs, sub_nav_captions = self._retrieve_menu_info()
         nav_infos = []
         for idx, (nav_name, nav_key) in enumerate(site_navs):
-            print nav_name.encode('utf-8')
             link = '/'
             nav_key = nav_key.lower().strip()
             if nav_key != 'home':
