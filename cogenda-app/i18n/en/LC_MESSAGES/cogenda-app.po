@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 15:55+0800\n"
+"POT-Creation-Date: 2014-07-19 19:00+0800\n"
 "PO-Revision-Date: 2014-06-06 08:30+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -251,31 +251,31 @@ msgstr "Request mail send successfully!"
 msgid "RequestMailSendSuccessfully"
 msgstr "Request mail send successfully!"
 
-#: cogenda-app/lib/const.py:54
+#: cogenda-app/controllers/web/web_controller.py:313
 msgid "Home"
 msgstr ""
 
-#: cogenda-app/lib/const.py:55
+#: cogenda-app/controllers/web/web_controller.py:314
 msgid "Products"
 msgstr "Products"
 
-#: cogenda-app/lib/const.py:56
+#: cogenda-app/controllers/web/web_controller.py:315
 msgid "Applications"
 msgstr "Applications"
 
-#: cogenda-app/lib/const.py:57
+#: cogenda-app/controllers/web/web_controller.py:316
 msgid "Licensing"
 msgstr "Licensing"
 
-#: cogenda-app/lib/const.py:58
+#: cogenda-app/controllers/web/web_controller.py:317
 msgid "Downloads"
 msgstr "Downloads"
 
-#: cogenda-app/lib/const.py:59
+#: cogenda-app/controllers/web/web_controller.py:318
 msgid "Corporate"
 msgstr "Corporate"
 
-#: cogenda-app/lib/const.py:60
+#: cogenda-app/controllers/web/web_controller.py:319
 msgid "Contact"
 msgstr "Contact Us"
 
@@ -422,27 +422,24 @@ msgstr "Change Your Password"
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-msgid "Status"
-msgstr "Status"
+#~ msgid "Status"
+#~ msgstr "Status"
 
-msgid "Public"
-msgstr "Public"
+#~ msgid "Public"
+#~ msgstr "Public"
 
-msgid "Restricted"
-msgstr "Restricted"
+#~ msgid "Restricted"
+#~ msgstr "Restricted"
 
-msgid "ResetPasswordSuccessfully"
-msgstr "Reset password successfully!"
+#~ msgid "ResetPasswordSuccessfully"
+#~ msgstr "Reset password successfully!"
 
-msgid "UserAuthenticatedSuccessfully"
-msgstr "User authenticated successfully!"
+#~ msgid "UserAuthenticatedSuccessfully"
+#~ msgstr "User authenticated successfully!"
 
-msgid "PasswordResetFailure"
-msgstr "Reset password failure!"
+#~ msgid "PasswordResetSuccessfully"
+#~ msgstr "Password is changed successfully!"
 
-msgid "PasswordResetSuccessfully"
-msgstr "Password is changed successfully!"
-
-msgid "AResetPasswordSuccessfully"
-msgstr "Password is changed successfully!"
+#~ msgid "AResetPasswordSuccessfully"
+#~ msgstr "Password is changed successfully!"
 

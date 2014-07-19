@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cogenda-web 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 15:55+0800\n"
+"POT-Creation-Date: 2014-07-19 19:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,31 +252,31 @@ msgstr ""
 msgid "RequestMailSendSuccessfully"
 msgstr ""
 
-#: cogenda-app/lib/const.py:54
+#: cogenda-app/controllers/web/web_controller.py:313
 msgid "Home"
 msgstr ""
 
-#: cogenda-app/lib/const.py:55
+#: cogenda-app/controllers/web/web_controller.py:314
 msgid "Products"
 msgstr ""
 
-#: cogenda-app/lib/const.py:56
+#: cogenda-app/controllers/web/web_controller.py:315
 msgid "Applications"
 msgstr ""
 
-#: cogenda-app/lib/const.py:57
+#: cogenda-app/controllers/web/web_controller.py:316
 msgid "Licensing"
 msgstr ""
 
-#: cogenda-app/lib/const.py:58
+#: cogenda-app/controllers/web/web_controller.py:317
 msgid "Downloads"
 msgstr ""
 
-#: cogenda-app/lib/const.py:59
+#: cogenda-app/controllers/web/web_controller.py:318
 msgid "Corporate"
 msgstr ""
 
-#: cogenda-app/lib/const.py:60
+#: cogenda-app/controllers/web/web_controller.py:319
 msgid "Contact"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 15:55+0800\n"
+"POT-Creation-Date: 2014-07-19 19:00+0800\n"
 "PO-Revision-Date: 2014-06-06 11:56+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -251,31 +251,31 @@ msgstr "账户申请邮件发送失败！"
 msgid "RequestMailSendSuccessfully"
 msgstr "账户申请邮件发送成功！"
 
-#: cogenda-app/lib/const.py:54
+#: cogenda-app/controllers/web/web_controller.py:313
 msgid "Home"
 msgstr "首页"
 
-#: cogenda-app/lib/const.py:55
+#: cogenda-app/controllers/web/web_controller.py:314
 msgid "Products"
 msgstr "产品展示"
 
-#: cogenda-app/lib/const.py:56
+#: cogenda-app/controllers/web/web_controller.py:315
 msgid "Applications"
 msgstr "应用案例"
 
-#: cogenda-app/lib/const.py:57
+#: cogenda-app/controllers/web/web_controller.py:316
 msgid "Licensing"
 msgstr "购买"
 
-#: cogenda-app/lib/const.py:58
+#: cogenda-app/controllers/web/web_controller.py:317
 msgid "Downloads"
 msgstr "下载中心"
 
-#: cogenda-app/lib/const.py:59
+#: cogenda-app/controllers/web/web_controller.py:318
 msgid "Corporate"
 msgstr "企业"
 
-#: cogenda-app/lib/const.py:60
+#: cogenda-app/controllers/web/web_controller.py:319
 msgid "Contact"
 msgstr "联系我们"
 
@@ -422,27 +422,24 @@ msgstr "修改您的密码"
 msgid "Confirm Password"
 msgstr "确认密码"
 
-msgid "Status"
-msgstr "状态"
+#~ msgid "Status"
+#~ msgstr "状态"
 
-msgid "Public"
-msgstr "公开的"
+#~ msgid "Public"
+#~ msgstr "公开的"
 
-msgid "Restricted"
-msgstr "受限的"
+#~ msgid "Restricted"
+#~ msgstr "受限的"
 
-msgid "ResetPasswordSuccessfully"
-msgstr "重置密码成功！"
+#~ msgid "ResetPasswordSuccessfully"
+#~ msgstr "重置密码成功！"
 
-msgid "UserAuthenticatedSuccessfully"
-msgstr "用户认证成功！"
+#~ msgid "UserAuthenticatedSuccessfully"
+#~ msgstr "用户认证成功！"
 
-msgid "PasswordResetFailure"
-msgstr "重置密码失败！"
+#~ msgid "PasswordResetSuccessfully"
+#~ msgstr "密码修改成功！"
 
-msgid "PasswordResetSuccessfully"
-msgstr "密码修改成功！"
-
-msgid "AResetPasswordSuccessfully"
-msgstr "密码修改成功！"
+#~ msgid "AResetPasswordSuccessfully"
+#~ msgstr "密码修改成功！"
 
