@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cogenda website">
+    <meta name="author" content="cogenda-dev-team">
+    <title> | EDA/TCAD/DFM | Cogenda.com</title>
+    {% if settings.cogenda_app.env == 'dev' %}
+        <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.css" />
+    {% elif settings.cogenda_app.env == 'prod' %}
+        <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.min.css" />
+    {% endif %}
+</head>
+
+<body class="texture">
+
+<div id="cl-wrapper" class="error-container">
+	<div class="page-error">
+		<h1 class="number text-center">500</h1>
+		<h2 class="description text-center">Don't worry, there is a little turbulence!</h2>
+		<h3 class="text-center"> We're trying to fix it, please try again later.</h3>
+	</div>
+    {% include "admin/layout/layout-footer.html"%}
+</div>
+</body>
+</html>

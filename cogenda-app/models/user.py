@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -7,6 +7,7 @@ from datetime import datetime
 import hmac
 
 Base = declarative_base()
+
 
 class User(Base):
 
@@ -45,33 +46,27 @@ class User(Base):
 
     @staticmethod
     def get_by_username(session, username):
-        return session.query(User).filter(User.username==username, User.active==True).first()
+        return session.query(User).filter(User.username == username).first()
 
     @staticmethod
     def get_by_uid(session, uid):
-        return session.query(User).filter(User.id==uid).first()
+        return session.query(User).filter(User.id == uid).first()
 
     @staticmethod
-    def update_user(session, user, _user):
-        if user.username != _user.username:
-            user.username = _user.username
-        #user.password = _user.hmac.new('cogenda_salt', _user.password).hexdigest()
-        if user.company != _user.company:
-            user.company = _user.company
-        if user.email != _user.email:
-            user.email = _user.email
-        if user.mobile != _user.mobile:
-            user.mobile = _user.mobile
-        if user.role != _user.role:
-            user.role = _user.role
-        if user.resource != _user.resource:
-            user.resource = _user.resource
-        if user.notes != _user.notes:
-            user.notes = _user.notes
-        if user.active != _user.active:
-            user.active = _user.active
+    def update_user(session, origin_user, json_user, salt):
+        # build user model
+        origin_user.username = json_user['username']
+        origin_user.passoword = hmac.new(salt, json_user['password']).hexdigest()
+        origin_user.company = json_user['company']
+        origin_user.email = json_user['email']
+        origin_user.mobile = json_user['mobile']
+        origin_user.role = json_user['role']
+        origin_user.resource = json_user['resource']
+        origin_user.notes = json_user['notes']
+        origin_user.active = json_user['active']
+        origin_user.updated_date = datetime.now()
         session.commit()
-        return user
+        return origin_user
 
     @staticmethod
     def list(session):
@@ -79,13 +74,11 @@ class User(Base):
 
     @staticmethod
     def delete_by_uid(session, uid):
-        session.query(User).filter(User.id==uid).delete()
+        session.query(User).filter(User.id == uid).delete()
         session.commit()
 
     @staticmethod
-    def update_user_password(session, user, password):
-        user.password = hmac.new('cogenda_salt', password).hexdigest()
+    def update_user_password(session, user, password, salt):
+        user.password = hmac.new(salt, password).hexdigest()
         session.commit()
         return user
-
-

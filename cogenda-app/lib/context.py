@@ -1,14 +1,8 @@
-#-*- coding:utf-8 -*-
-
-
-import inspect
-import sys
-from os.path import join, dirname, splitext, split, exists
-
-import cherrypy
+# -*- coding:utf-8 -*-
 
 from settings import Settings
-from fs import locate, is_file
+from fs import locate
+
 
 class Context(object):
     def __init__(self, root_dir):

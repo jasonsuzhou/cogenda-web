@@ -70,6 +70,18 @@
 - Web assets optimizing
 
     ```
-    make web
+    $ make web
     ```
     > Optimize web static files.
+
+- Static Code Check
+
+    ```
+    $ make pylint
+    ```
+    > Warning / Error codes: http://flake8.readthedocs.org/en/latest/warnings.html#error-codes
+
+    ```
+    $ make jslint
+    ```
+    > Check js code

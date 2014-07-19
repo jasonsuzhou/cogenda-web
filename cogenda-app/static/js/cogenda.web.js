@@ -1,4 +1,117 @@
+/***************************************************************
+ *
+ *                   CONSTANT VARIABLES
+ *
+ ***************************************************************/
 
+"use strict";
+
+// Message type
+var MSG_ERROR = 0;
+var MSG_ALERT = 1;
+var MSG_SUCCESS = 2;
+
+// Resource type
+var RESOURCE_TYPE_PUBLIC_PUBLICATIONS = '1';
+var RESOURCE_TYPE_PUBLIC_DOCUMENTATION = '2';
+var RESOURCE_TYPE_PUBLIC_EXAMPLES = '3';
+var RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES = '4';
+var RESOURCE_TYPE_ALLUSER_INSTALLER = '5';
+var RESOURCE_TYPE_PRIVATE = '6';
+
+
+/***************************************************************
+ *
+ *                 COMMON JAVASCRIPT METHODS
+ *
+ ***************************************************************/
+
+// Init nprogress
+function init_progress(){
+    NProgress.start();
+    NProgress.set(0.4);
+    var nprogress_interval = setInterval(function() { NProgress.inc(); }, 200);
+    return nprogress_interval;
+}
+
+function destroy_progress(interval_id) {
+    clearInterval(interval_id);
+    NProgress.done();
+}
+
+var nprogress_interval = init_progress();
+
+// Switch locale
+function switch_locale(locale) {
+    $.ajax({
+        type: 'GET',
+        async: false,
+        dataType: 'json',
+        url:'/switch/' + locale,
+        success: function(resp) {
+            var result = JSON.parse(resp);
+            if (result.is_success) {
+                window.location = '/article/'+result.uri;
+            }
+        }
+    });
+}
+
+// Show user profile menu
+function show_profile_menu(userName, myProfile, signOut) {
+    $('#user-profile-container').append('<a id="login-username" href="#"><span>'+userName+'</span></a><ul><li><a href="/web/logout">'+signOut+'</a></li><li><a id="my-profile">'+myProfile+'</a></li></ul>');
+
+    $("#my-profile").on('click', function (event) {
+        if (event) event.preventDefault();
+        $('#password1').val('');
+        $('#password2').val('');
+        $('#userProfileModal').modal('show').parsley().reset();
+        $('#change-password-msg-container').hide();
+
+        var username = $('#login-username').text();
+
+        var fetchUserProfile = $.ajax({
+            "dataType": 'json',
+            "type": "GET",
+            "url": "/user/user-profile/" + username
+        });
+
+        fetchUserProfile.done(function (result) {
+            //$('#uid').val(result.id);
+            $('#u_name').text(result.username);
+            $('#u_company').text(result.company);
+            $('#u_email').text(result.email);
+            $('#u_mobile').text(result.mobile);
+        });
+    });
+}
+
+// Message display
+// Type = 0 - Error, 1 - Alert, 2 - Success
+function pop_msg(msg_label, msg, type) {
+    var label_classes = "";
+    var container_classes = "";
+    switch(type) {
+        case MSG_ERROR:
+            container_classes = 'alert alert-danger';
+            label_classes = 'fa fa-times-circle sign';
+            break;
+        case MSG_ALERT:
+            container_classes = 'alert alert-warning';
+            label_classes = 'fa fa-warning sign';
+            break;
+        case MSG_SUCCESS:
+            container_classes = 'alert alert-success';
+            label_classes = 'fa fa-check sign';
+            break;
+    }
+    $('#'+msg_label).text(msg);
+    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
+    $('#'+msg_label+'-container').attr('class', container_classes).show();
+}
+
+
+// Document ready
 $(document).ready(function() {
 
     var commonLanguge;
@@ -20,7 +133,7 @@ $(document).ready(function() {
     /******************************
      * Setting parsley locale
      *****************************/
-    locale = $('#locale').val();
+    var locale = $('#locale').val();
     if (locale.indexOf('zh') >=0) {
         locale = 'zh_cn';
     }
@@ -50,8 +163,7 @@ $(document).ready(function() {
 
     $("#login").on('click', function (event) {
         if (event) event.preventDefault();
-        $('#loginModal').parsley().reset();
-        $('#loginModal').modal('show');
+        $('#loginModal').modal('show').parsley().reset();
         $('#user-login-msg-container').hide();
     });
 
@@ -79,7 +191,7 @@ $(document).ready(function() {
             authenticate.done(function (resp) {
                 var result = JSON.parse(resp);
                 if (!result.auth_success) {
-                    pop_msg('user-login-msg', result.msg, 0);
+                    pop_msg('user-login-msg', result.msg, MSG_ERROR);
                     return;
                 }
                 $('#loginModal').modal('hide');
@@ -88,8 +200,13 @@ $(document).ready(function() {
                 $('#user-profile-container').show();
 
                 // If @ download page
-                if(self.location.href.indexOf('article/downloads') > 0) {
-                    self.location = "/article/downloads";
+                if(window.location.href.indexOf('article/downloads') > 0) {
+                    if($('#r_id').val() !== null && $('#r_id').val().trim().length > 0) {
+                        window.location = "/download/"+ $('#r_id').val();
+                    }
+                    setTimeout(function() {
+                        window.location = "/article/downloads";
+                    }, 500);
                 }
             });
         } else {
@@ -103,8 +220,7 @@ $(document).ready(function() {
         $('#email').val('');
         $('#notes').val('');
         $('#loginModal').modal('hide');
-        $('#requestAccountModal').parsley().reset();
-        $('#requestAccountModal').modal('show');
+        $('#requestAccountModal').modal('show').parsley().reset();
         $('#request-account-msg-container').hide();
     });
 
@@ -134,13 +250,16 @@ $(document).ready(function() {
             send_request.done(function (resp) {
                 var result = JSON.parse(resp);
                 if (result.is_success) {
-                    pop_msg('request-account-msg', result.msg, 2);
+                    pop_msg('request-account-msg', result.msg, MSG_SUCCESS);
+
+                    // Auto refresh download page every 2s.
                     setTimeout(function() {
                         $('#requestAccountModal').modal('hide');
                     }, 2000);
+
                     $('#request-account-btn').off('click');
                 } else {
-                    pop_msg('request-account-msg', result.msg, 1);
+                    pop_msg('request-account-msg', result.msg, MSG_ALERT);
                 }
                 $("#request-account-btn").attr('class', 'btn btn-primary btn-check');
             });
@@ -157,7 +276,7 @@ $(document).ready(function() {
             var password2 = $('#password2').val().trim();
 
             if (password1 !== password2) {
-                pop_msg('change-password-msg', commonLanguge['Two passwords are not the same'], 1);
+                pop_msg('change-password-msg', commonLanguge['Two passwords are not the same'], MSG_ALERT);
                 return;
             }
 
@@ -174,9 +293,9 @@ $(document).ready(function() {
                 url: '/user/change-password',
                 success: function (result) {
                     if (result.id) {
-                        pop_msg('change-password-msg', commonLanguge['Password is changed successfully'], 2);
+                        pop_msg('change-password-msg', commonLanguge['Password is changed successfully'], MSG_SUCCESS);
                     } else {
-                        pop_msg('change-password-msg', commonLanguge['Encounter error in server'], 0);
+                        pop_msg('change-password-msg', commonLanguge['Encounter error in server'], MSG_ERROR);
                     }
                 }
             });
@@ -184,7 +303,7 @@ $(document).ready(function() {
     });
 
     // Load download page
-    if(self.location.href.indexOf('article/downloads') > 0) {
+    if(window.location.href.indexOf('article/downloads') > 0) {
         $.ajax({
             type: 'GET',
             async: false,
@@ -192,16 +311,19 @@ $(document).ready(function() {
             url:'/resources',
             success: function(data) {
                 for(var i = 0; i < data.length; i++) {
-                    var tr = "<tr><td >" + data[i].description + "</td><td ><a style=\"cursor: pointer;\" class=\"resource-class\">" + data[i].name + "<input type=\"hidden\" value=\"" + data[i].id + "\"></a></td></tr>";
-                    if(data[i].type === '1')
+                    var desc = data[i].description;
+                    if(desc === null || desc.length === 0)
+                        desc = data[i].name;
+                    var tr = "<tr><td >" + desc + "</td><td ><a style=\"cursor: pointer;\" class=\"resource-class\">" + data[i].name + "<input type=\"hidden\" value=\"" + data[i].id + "\"></a></td></tr>";
+                    if(data[i].type === RESOURCE_TYPE_PUBLIC_PUBLICATIONS)
                         $('#documentations tr:last').after(tr);
-                    if(data[i].type === '2')
+                    if(data[i].type === RESOURCE_TYPE_PUBLIC_DOCUMENTATION)
                         $('#publications tr:last').after(tr);
-                    if(data[i].type === '3')
+                    if(data[i].type === RESOURCE_TYPE_PUBLIC_EXAMPLES)
                         $('#brochures tr:last').after(tr);
-                    if(data[i].type === '4' || data[i].type === '5')
+                    if(data[i].type === RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES || data[i].type === RESOURCE_TYPE_ALLUSER_INSTALLER)
                         $('#installers tr:last').after(tr);
-                    if(data[i].type === '6') {
+                    if(data[i].type === RESOURCE_TYPE_PRIVATE) {
                         $('#private tr:last').after(tr);
                         $('#private-area').show();
                     }
@@ -216,6 +338,7 @@ $(document).ready(function() {
         $('#download-msg-container').hide();
 
         var r_id = event.target.children[0].value;
+        $('#r_id').val(r_id);
         var checkResource = $.ajax({
             "dataType": 'json',
             "type": "GET",
@@ -225,77 +348,23 @@ $(document).ready(function() {
         checkResource.done(function (resp) {
             var result = JSON.parse(resp);
             if (typeof(result.auth_status) === 'undefined') {
-                pop_msg('download-msg', result.msg, 0);
+                pop_msg('download-msg', result.msg, MSG_ERROR);
             } else if (result.auth_status) {
-                self.location = result.link;
+                window.location = result.link;
             } else {
-                pop_msg('user-login-msg', result.msg, 1);
+                pop_msg('user-login-msg', result.msg, MSG_ALERT);
                 $('#loginModal').modal('show');
             }
         });
     });
 });
 
-function pop_msg(msg_label, msg, type) {
-    // type = 0 - Error, 1 - Alert, 2 - Success
-    var label_classes = "";
-    var container_classes = "";
-    if(type == 0) {
-        container_classes = 'alert alert-danger';
-        label_classes = 'fa fa-times-circle sign';
-    } else if(type === 1) {
-        container_classes = 'alert alert-warning';
-        label_classes = 'fa fa-warning sign';
-    } else if(type === 2) {
-        container_classes = 'alert alert-success';
-        label_classes = 'fa fa-check sign';
-    }
-    $('#'+msg_label+'-container').attr('class', container_classes);
-    $('#'+msg_label+'-container' + ' i').attr('class', label_classes);
-    $('#'+msg_label).text(msg);
-    $('#'+msg_label+'-container').show();
-}
+// Trigger finish when page fully loaded
+$(window).load(function(){
+    destroy_progress(nprogress_interval);
+});
 
-function switch_locale(locale) {
-    $.ajax({
-        type: 'GET',
-        async: false,
-        dataType: 'json',
-        url:'/switch/' + locale,
-        success: function(resp) {
-            var result = JSON.parse(resp);
-            if (result.is_success) {
-                window.location = '/article/'+result.uri;
-            }
-        }
-    });
-}
-
-function show_profile_menu(userName, myProfile, signOut) {
-    $('#user-profile-container').append('<a id="login-username" href="#"><span>'+userName+'</span></a><ul><li><a href="/web/logout">'+signOut+'</a></li><li><a id="my-profile">'+myProfile+'</a></li></ul>');
-
-    $("#my-profile").on('click', function (event) {
-        if (event) event.preventDefault();
-        $('#password1').val('');
-        $('#password2').val('');
-        $('#userProfileModal').parsley().reset();
-        $('#userProfileModal').modal('show');
-        $('#change-password-msg-container').hide();
-
-        var username = $('#login-username').text();
-
-        var fetchUserProfile = $.ajax({
-            "dataType": 'json',
-            "type": "GET",
-            "url": "/user/user-profile/" + username
-        });
-
-        fetchUserProfile.done(function (result) {
-            //$('#uid').val(result.id);
-            $('#u_name').text(result.username);
-            $('#u_company').text(result.company);
-            $('#u_email').text(result.email);
-            $('#u_mobile').text(result.mobile);
-        });
-    });
-}
+// Trigger bar when exiting the page
+$(window).unload(function(){
+    NProgress.start();
+});

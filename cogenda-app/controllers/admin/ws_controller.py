@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from lib.controller import BaseController, route
 import cherrypy
@@ -6,20 +6,24 @@ import json
 from models import Resource
 from sqlalchemy.exc import DBAPIError
 
-import logging 
+# Load logger
+import logging
 log = logging.getLogger(__name__)
 
 
 class WSController(BaseController):
 
-    """ Webservice API for Cloud Sync service"""
+    """
+    Webservice API for Cloud Sync service
+    - Cloud Sync service will Create/Update/Destroy resources automatically.
+    - Use HMAC to do webservice authtentication.
+    """
 
     @route('/api/modify-resource')
     @cherrypy.tools.json_out()
     def modify_resource(self):
-        """ API for remote cloud sync service to create ro update resource"""
-
-        """ Create or update resources """ 
+        """ API for remote cloud sync service to create ro update resource """
+        """ Create or update resources """
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
         if not self._verify_auth_token(cherrypy.request, rawbody):
@@ -49,7 +53,6 @@ class WSController(BaseController):
             return json.dumps({'success': False, 'msg': 'Sync resource failed!'})
         return json.dumps({'success': True, 'msg': 'Sync resource success!'})
 
-
     @route('/api/destroy-resource')
     @cherrypy.tools.json_out()
     def destory_resource(self):
@@ -57,7 +60,7 @@ class WSController(BaseController):
 
         cl = cherrypy.request.headers['Content-Length']
         rawbody = cherrypy.request.body.read(int(cl))
-        if not self._verify_auth_token(cherrypy.request,rawbody):
+        if not self._verify_auth_token(cherrypy.request, rawbody):
             return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
 
         payload = json.loads(rawbody)
@@ -68,14 +71,14 @@ class WSController(BaseController):
         try:
             Resource.delete_resource_by_name_vendor(cherrypy.request.db, filename, vendor)
         except DBAPIError, err:
+            log.error('Database operation error %s' % err)
             return json.dumps({'success': False, 'msg': 'Destory resource failed!'})
         return json.dumps({'success': True, 'msg': 'Destroy resource success!'})
 
-
-    def _verify_auth_token(self, request, message):
+    def _verify_auth_token(self, message):
         """ Verify auth token """
         client_auth_token = cherrypy.request.headers['Authorization']
-        auth_token = self.make_auth_token(cherrypy.request, message)
+        auth_token = self.make_auth_token(message)
         if not client_auth_token and client_auth_token != auth_token:
             return False
         return True

@@ -1,7 +1,8 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 from os.path import abspath, join, exists
 from ConfigParser import ConfigParser, NoSectionError, NoOptionError
+
 
 class Settings(object):
     def __init__(self, root_dir):
@@ -21,6 +22,7 @@ class Settings(object):
             raise RuntimeError("You can't use any settings before loading a config file. Please use the load method.")
 
         return SettingsSection(self, name, self.config)
+
 
 class SettingsSection(object):
     def __init__(self, settings, name, config):
@@ -44,4 +46,3 @@ class SettingsSection(object):
             return None
         except NoOptionError:
             return None
-

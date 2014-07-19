@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 Cogenda web application auto deployment tool.
@@ -18,16 +18,16 @@ from contextlib import contextmanager as _contextmanager
 
 # Internal variables
 APP_PATH = "/home/tim/apps"
-COGENDA_HOME = "%s/cogenda-web" %(APP_PATH)
-COGENDA_REPO="https://github.com/cogenda/cogenda-web.git"
-COGENDA_DB="%s/migration/cogenda-app.db" %(COGENDA_HOME)
-DEPLOY_USER="tim"
-DEPLOY_HOST="85.159.208.213"
+COGENDA_HOME = "%s/cogenda-web" % (APP_PATH)
+COGENDA_REPO = "https://github.com/cogenda/cogenda-web.git"
+COGENDA_DB = "%s/migration/cogenda-app.db" % (COGENDA_HOME)
+DEPLOY_USER = "tim"
+DEPLOY_HOST = "85.159.208.213"
 TRAVIS_SSH_KEY = "~/.ssh/id_rsa"
-PID_FILE="/tmp/cogenda-app.pid"
-ENV_ACTIVATE="source venv/bin/activate"
-NGINX_CLOUD_CONF="nginx.cloud.conf"
-NGINX_LOCAL_CONF="nginx.local.conf"
+PID_FILE = "/tmp/cogenda-app.pid"
+ENV_ACTIVATE = "source venv/bin/activate"
+NGINX_CLOUD_CONF = "nginx.cloud.conf"
+NGINX_LOCAL_CONF = "nginx.local.conf"
 
 @_contextmanager
 def virtualenv():
@@ -35,15 +35,13 @@ def virtualenv():
         with prefix(ENV_ACTIVATE):
             yield
 
-            
 def prepare():
     """Prepare to login to production server."""
-    env.host_string = DEPLOY_HOST 
+    env.host_string = DEPLOY_HOST
     env.user = DEPLOY_USER
     env.key_filename = TRAVIS_SSH_KEY
     env.port = 22
     print(red("Login Cogenda production server succeed!"))
-
 
 def install_app():
     """
@@ -54,7 +52,7 @@ def install_app():
     - install dependency js libs
     """
     if not exists(APP_PATH):
-        run("mkdir -p %s" %(APP_PATH))
+        run("mkdir -p %s" % (APP_PATH))
 
     if exists(COGENDA_HOME):
         with cd(COGENDA_HOME):
@@ -62,12 +60,11 @@ def install_app():
             run("git pull -f origin master")
     else:
         with cd(APP_PATH):
-            run("git clone %s" %(COGENDA_REPO))
+            run("git clone %s" % (COGENDA_REPO))
     with cd(COGENDA_HOME):
         run("make web")
         run("./setenv.sh")
     print(red("Auto install cogenda app succeed!"))
-
 
 def migrate_db():
     with virtualenv():
@@ -78,22 +75,20 @@ def migrate_db():
                 run("make db-setup")
     print(red("Auto db migration succeed!"))
 
-
 def restart_app():
     with virtualenv():
         run("ps -ef | grep 'cogenda-app' | grep -v 'grep' | awk '{print $2}' | xargs kill -9")
         with cd(COGENDA_HOME):
             run("make run-prod")
     print(red("Restart Cogenda App succeed!"))
-    
 
 def restart_nginx():
     """Configure Nginx service"""
-    nginx_conf_path = "%s/etc/%s" %(COGENDA_HOME, NGINX_CLOUD_CONF)
+    nginx_conf_path = "%s/etc/%s" % (COGENDA_HOME, NGINX_CLOUD_CONF)
     path_nginx = "/etc/nginx/sites-available/"
     print(green("Configure Nginx web server"))
     with cd(path_nginx):
-        run("sudo cp -f %s ./default" %(nginx_conf_path))
+        run("sudo cp -f %s ./default" % (nginx_conf_path))
     run("sudo service nginx force-reload")
     run("sudo service nginx restart")
     run("sudo service nginx status")

@@ -1,12 +1,10 @@
 # -*- coding:utf-8 -*-
 
 from lib.server import Server
-from lib.fs import *
+from lib.fs import locate
 import sys
-from os.path import join, dirname, abspath, exists, split
+from os.path import dirname, abspath
 import cherrypy
-import hashlib
-import os
 from lib.controller import BaseController
 
 from controllers.web import *
@@ -27,7 +25,6 @@ def main(settings_file):
     except KeyboardInterrupt:
         server.stop()
 
-
 def register_routes(server):
     """ Register router dispatchers """
     dispatcher = cherrypy.dispatch.RoutesDispatcher()
@@ -38,7 +35,6 @@ def register_routes(server):
 
 def usage():
     print("usage: python cogenda-app/cogendap-app.py <settings_file>")
-
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
