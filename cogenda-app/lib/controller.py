@@ -12,7 +12,7 @@ import base64
 from mailer import Mailer, Message
 from md2_extension import Markdown2Extension
 from urlparse import urlparse
-from lib import const
+import const
 
 # Load logger
 import logging

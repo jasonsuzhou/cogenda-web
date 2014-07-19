@@ -2,6 +2,7 @@
 
 """ Cogenda Common Constants """
 
+
 class Const:
     """
     Cogenda Common Constants
@@ -59,11 +60,11 @@ class Const:
     ]
     # TODO: i18n
     SITE_SUB_MENU_CAPTIONS = [
-        'home sub nav caption',
-        'products sub nav caption',
+        'Home sub nav caption',
+        'Products sub nav caption',
         'Applications sub nav caption',
         'Licensing sub nav caption',
-        'Downloads subnav caption',
+        'Downloads sub nav caption',
         'Corporate sub nav caption',
         'Contact sub nav caption'
     ]

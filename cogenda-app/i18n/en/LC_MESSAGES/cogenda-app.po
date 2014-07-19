@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-14 15:21+0800\n"
+"POT-Creation-Date: 2014-07-19 09:21+0800\n"
 "PO-Revision-Date: 2014-06-06 08:30+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: cogenda-app/controllers/admin/admin_controller.py:56
+#: cogenda-app/controllers/admin/admin_controller.py:57
 #: cogenda-app/templates/admin/security/login-user.html:29
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
@@ -26,224 +26,224 @@ msgstr ""
 msgid "User Name"
 msgstr "User Name"
 
-#: cogenda-app/controllers/admin/admin_controller.py:57
+#: cogenda-app/controllers/admin/admin_controller.py:58
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:41
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:42
 #: cogenda-app/templates/web/user/user-profile.html:31
 msgid "Company"
 msgstr "Company"
 
-#: cogenda-app/controllers/admin/admin_controller.py:58
+#: cogenda-app/controllers/admin/admin_controller.py:59
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:35
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:36
 msgid "E-mail"
 msgstr "E-mail"
 
-#: cogenda-app/controllers/admin/admin_controller.py:59
+#: cogenda-app/controllers/admin/admin_controller.py:60
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:49
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:50
 #: cogenda-app/templates/web/user/user-profile.html:37
 msgid "Mobile"
 msgstr "Mobile"
 
-#: cogenda-app/controllers/admin/admin_controller.py:60
+#: cogenda-app/controllers/admin/admin_controller.py:61
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:55
 msgid "Role"
 msgstr "Role"
 
-#: cogenda-app/controllers/admin/admin_controller.py:61
-#: cogenda-app/controllers/admin/admin_controller.py:72
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:54
+#: cogenda-app/controllers/admin/admin_controller.py:62
+#: cogenda-app/controllers/admin/admin_controller.py:73
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:56
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:74
 msgid "Active"
 msgstr "Active"
 
-#: cogenda-app/controllers/admin/admin_controller.py:66
+#: cogenda-app/controllers/admin/admin_controller.py:67
 msgid "Resource Name"
 msgstr "Resource Name"
 
-#: cogenda-app/controllers/admin/admin_controller.py:67
+#: cogenda-app/controllers/admin/admin_controller.py:68
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:24
 msgid "Description"
 msgstr "Description"
 
-#: cogenda-app/controllers/admin/admin_controller.py:68
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:28
+#: cogenda-app/controllers/admin/admin_controller.py:69
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:30
 msgid "Vendor"
 msgstr "Vendor"
 
-#: cogenda-app/controllers/admin/admin_controller.py:69
+#: cogenda-app/controllers/admin/admin_controller.py:70
 msgid "URL"
 msgstr "URL"
 
-#: cogenda-app/controllers/admin/admin_controller.py:70
+#: cogenda-app/controllers/admin/admin_controller.py:71
 msgid "Uploaded Date"
 msgstr "Uploaded Date"
 
-#: cogenda-app/controllers/admin/admin_controller.py:71
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:41
+#: cogenda-app/controllers/admin/admin_controller.py:72
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:43
 msgid "Type"
 msgstr "Type"
 
-#: cogenda-app/controllers/admin/admin_controller.py:79
+#: cogenda-app/controllers/admin/admin_controller.py:80
 msgid "Modify User"
 msgstr "Modify User"
 
-#: cogenda-app/controllers/admin/admin_controller.py:80
+#: cogenda-app/controllers/admin/admin_controller.py:81
 msgid "Save"
 msgstr "Save"
 
-#: cogenda-app/controllers/admin/admin_controller.py:81
+#: cogenda-app/controllers/admin/admin_controller.py:82
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:6
 msgid "Create User"
 msgstr "Create User"
 
-#: cogenda-app/controllers/admin/admin_controller.py:82
+#: cogenda-app/controllers/admin/admin_controller.py:83
 msgid "Select one user"
 msgstr "Select one user!"
 
-#: cogenda-app/controllers/admin/admin_controller.py:83
+#: cogenda-app/controllers/admin/admin_controller.py:84
 msgid "Selected more than one user"
 msgstr "Selected more than one user!"
 
-#: cogenda-app/controllers/admin/admin_controller.py:84
+#: cogenda-app/controllers/admin/admin_controller.py:85
 msgid "Remove user successful"
 msgstr "Remove user successfully!"
 
-#: cogenda-app/controllers/admin/admin_controller.py:85
+#: cogenda-app/controllers/admin/admin_controller.py:86
 msgid "You cannot delete yourself"
 msgstr "You cannot delete yourself!"
 
-#: cogenda-app/controllers/admin/admin_controller.py:89
+#: cogenda-app/controllers/admin/admin_controller.py:90
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:57
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:65
 msgid "Resource"
 msgstr "Resource"
 
-#: cogenda-app/controllers/admin/admin_controller.py:89
+#: cogenda-app/controllers/admin/admin_controller.py:90
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:58
 msgid "Resource Owner"
 msgstr "Resource Owner"
 
-#: cogenda-app/controllers/admin/admin_controller.py:89
+#: cogenda-app/controllers/admin/admin_controller.py:90
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:59
 msgid "Administrator"
 msgstr "Administrator"
 
-#: cogenda-app/controllers/admin/admin_controller.py:90
+#: cogenda-app/controllers/admin/admin_controller.py:91
 msgid "Yes"
 msgstr "Yes"
 
-#: cogenda-app/controllers/admin/admin_controller.py:90
+#: cogenda-app/controllers/admin/admin_controller.py:91
 msgid "No"
 msgstr "No"
 
-#: cogenda-app/controllers/admin/admin_controller.py:90
+#: cogenda-app/controllers/admin/admin_controller.py:91
 msgid "Filter String"
 msgstr "Filter String"
 
-#: cogenda-app/controllers/admin/admin_controller.py:96
+#: cogenda-app/controllers/admin/admin_controller.py:97
 msgid "sProcessing"
 msgstr "Loading data, please wait..."
 
-#: cogenda-app/controllers/admin/admin_controller.py:97
+#: cogenda-app/controllers/admin/admin_controller.py:98
 msgid "ShowRows"
 msgstr "Show _MENU_ Rows"
 
-#: cogenda-app/controllers/admin/admin_controller.py:98
+#: cogenda-app/controllers/admin/admin_controller.py:99
 msgid "sZeroRecords"
 msgstr "No matching records found"
 
-#: cogenda-app/controllers/admin/admin_controller.py:99
+#: cogenda-app/controllers/admin/admin_controller.py:100
 msgid "sInfo"
 msgstr "Showing _START_ to _END_ of _TOTAL_ entries"
 
-#: cogenda-app/controllers/admin/admin_controller.py:100
+#: cogenda-app/controllers/admin/admin_controller.py:101
 msgid "sInfoEmpty"
 msgstr "0 Record"
 
-#: cogenda-app/controllers/admin/admin_controller.py:101
+#: cogenda-app/controllers/admin/admin_controller.py:102
 msgid "sInfoFiltered"
 msgstr "(Total _MAX_ Rows)"
 
-#: cogenda-app/controllers/admin/admin_controller.py:102
+#: cogenda-app/controllers/admin/admin_controller.py:103
 msgid "sInfoPostFix"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:103
+#: cogenda-app/controllers/admin/admin_controller.py:104
 msgid "sSearch"
 msgstr "Search"
 
-#: cogenda-app/controllers/admin/admin_controller.py:104
+#: cogenda-app/controllers/admin/admin_controller.py:105
 msgid "oPaginate_sFirst"
 msgstr "First"
 
-#: cogenda-app/controllers/admin/admin_controller.py:105
+#: cogenda-app/controllers/admin/admin_controller.py:106
 msgid "oPaginate_sPrevious"
 msgstr "Previous"
 
-#: cogenda-app/controllers/admin/admin_controller.py:106
+#: cogenda-app/controllers/admin/admin_controller.py:107
 msgid "oPaginate_sNext"
 msgstr "Next"
 
-#: cogenda-app/controllers/admin/admin_controller.py:107
+#: cogenda-app/controllers/admin/admin_controller.py:108
 msgid "oPaginate_sLast"
 msgstr "Last"
 
-#: cogenda-app/controllers/admin/admin_controller.py:279
+#: cogenda-app/controllers/admin/admin_controller.py:268
 #, fuzzy
-msgid "Reset password failure"
+msgid "ResetPasswordFailure"
 msgstr "Reset password failure!"
 
-#: cogenda-app/controllers/admin/admin_controller.py:280
+#: cogenda-app/controllers/admin/admin_controller.py:269
 #, fuzzy
-msgid "Reset password successfully"
+msgid "ResetPasswordSuccessfully"
 msgstr "Reset password successfully!"
 
-#: cogenda-app/controllers/admin/admin_controller.py:306
+#: cogenda-app/controllers/admin/admin_controller.py:294
 msgid "The username is existing"
 msgstr "The username is existing."
 
-#: cogenda-app/controllers/security/auth_controller.py:23
-#: cogenda-app/controllers/security/auth_controller.py:48
+#: cogenda-app/controllers/security/auth_controller.py:28
+#: cogenda-app/controllers/security/auth_controller.py:52
 #, fuzzy
-msgid "User authenticated successfully"
+msgid "UserAuthenticatedSuccessfully"
 msgstr "User authenticated successfully!"
 
-#: cogenda-app/controllers/security/auth_controller.py:24
-#: cogenda-app/controllers/security/auth_controller.py:70
+#: cogenda-app/controllers/security/auth_controller.py:29
+#: cogenda-app/controllers/security/auth_controller.py:71
 msgid "Invalid user ID or password"
 msgstr "Invalid user ID or password."
 
-#: cogenda-app/controllers/security/auth_controller.py:25
-#: cogenda-app/controllers/security/auth_controller.py:74
+#: cogenda-app/controllers/security/auth_controller.py:30
+#: cogenda-app/controllers/security/auth_controller.py:75
 msgid "You have insufficient privileges"
 msgstr "You have insufficient privileges!"
 
-#: cogenda-app/controllers/security/auth_controller.py:72
+#: cogenda-app/controllers/security/auth_controller.py:73
 msgid "This user is inactive"
 msgstr "Inactive user, pl. contact administrator!"
 
-#: cogenda-app/controllers/web/web_controller.py:71
-#: cogenda-app/controllers/web/web_controller.py:106
+#: cogenda-app/controllers/web/web_controller.py:72
+#: cogenda-app/controllers/web/web_controller.py:104
 #: cogenda-app/controllers/web/web_controller.py:123
 msgid "Encounter error in server"
 msgstr "Encounter error in server, pl. contact administrator."
 
-#: cogenda-app/controllers/web/web_controller.py:76
+#: cogenda-app/controllers/web/web_controller.py:79
 msgid "This kind resource requires your login"
 msgstr "This kind resource requires your login."
 
-#: cogenda-app/controllers/web/web_controller.py:104
+#: cogenda-app/controllers/web/web_controller.py:102
 msgid "Two passwords are not the same"
 msgstr "Two passwords are not the same."
 
-#: cogenda-app/controllers/web/web_controller.py:105
+#: cogenda-app/controllers/web/web_controller.py:103
 msgid "Password is changed successfully"
 msgstr "Password is changed successfully!"
 
-#: cogenda-app/controllers/web/web_controller.py:111
+#: cogenda-app/controllers/web/web_controller.py:110
 #: cogenda-app/templates/web/user/user-profile.html:12
 msgid "My Profile"
 msgstr "My Profile"
@@ -253,9 +253,14 @@ msgstr "My Profile"
 msgid "Sign Out"
 msgstr "Sign Out"
 
-#: cogenda-app/controllers/web/web_controller.py:160
+#: cogenda-app/controllers/web/web_controller.py:156
 #, fuzzy
-msgid "Request mail send successfully"
+msgid "RequestMailSendFailure"
+msgstr "Request mail send successfully!"
+
+#: cogenda-app/controllers/web/web_controller.py:157
+#, fuzzy
+msgid "RequestMailSendSuccessfully"
 msgstr "Request mail send successfully!"
 
 #: cogenda-app/templates/admin/layout/layout.html:26
@@ -281,12 +286,12 @@ msgstr "Update Resource"
 msgid "Name"
 msgstr "Name"
 
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:64
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:66
 msgid "Update"
 msgstr "Update"
 
-#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:65
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:96
+#: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:67
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:98
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -336,7 +341,7 @@ msgstr "Reset Password"
 msgid "Notes"
 msgstr "Notes"
 
-#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:95
+#: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:97
 msgid "Create"
 msgstr "Create"
 
@@ -356,19 +361,19 @@ msgstr "English"
 msgid "Login"
 msgstr "Login"
 
-#: cogenda-app/templates/web/layout/layout.html:47
+#: cogenda-app/templates/web/layout/layout.html:48
 msgid "Contact Us"
 msgstr "Contact Us"
 
-#: cogenda-app/templates/web/layout/layout.html:49
+#: cogenda-app/templates/web/layout/layout.html:50
 msgid "Sales Team"
 msgstr "Sales Team"
 
-#: cogenda-app/templates/web/layout/layout.html:50
+#: cogenda-app/templates/web/layout/layout.html:51
 msgid "Technical Support"
 msgstr "Technical Support"
 
-#: cogenda-app/templates/web/layout/layout.html:51
+#: cogenda-app/templates/web/layout/layout.html:52
 msgid "General Enquiries"
 msgstr "General Enquiries"
 
@@ -401,33 +406,33 @@ msgstr "Change Your Password"
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-msgid "Status"
-msgstr "Status"
+#~ msgid "Status"
+#~ msgstr "Status"
 
-msgid "Public"
-msgstr "Public"
+#~ msgid "Public"
+#~ msgstr "Public"
 
-msgid "Restricted"
-msgstr "Restricted"
+#~ msgid "Restricted"
+#~ msgstr "Restricted"
 
-msgid "Home"
-msgstr "Home"
+#~ msgid "Home"
+#~ msgstr "Home"
 
-msgid "Products"
-msgstr "Products"
+#~ msgid "Products"
+#~ msgstr "Products"
 
-msgid "Applications"
-msgstr "Applications"
+#~ msgid "Applications"
+#~ msgstr "Applications"
 
-msgid "Licensing"
-msgstr "Licensing"
+#~ msgid "Licensing"
+#~ msgstr "Licensing"
 
-msgid "Downloads"
-msgstr "Downloads"
+#~ msgid "Downloads"
+#~ msgstr "Downloads"
 
-msgid "Corporate"
-msgstr "Corporate"
+#~ msgid "Corporate"
+#~ msgstr "Corporate"
 
-msgid "Contact"
-msgstr "Contact"
+#~ msgid "Contact"
+#~ msgstr "Contact"
 
