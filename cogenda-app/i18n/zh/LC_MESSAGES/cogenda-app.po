@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 19:00+0800\n"
+"POT-Creation-Date: 2014-07-19 19:45+0800\n"
 "PO-Revision-Date: 2014-06-06 11:56+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -122,19 +122,19 @@ msgstr "下一页"
 msgid "oPaginate_sLast"
 msgstr "末页"
 
-#: cogenda-app/controllers/admin/admin_controller.py:247
+#: cogenda-app/controllers/admin/admin_controller.py:251
 msgid "PasswordResetFailure"
 msgstr "重置密码失败！"
 
-#: cogenda-app/controllers/admin/admin_controller.py:248
+#: cogenda-app/controllers/admin/admin_controller.py:252
 msgid "PasswordResetWorks"
 msgstr "重置密码成功！"
 
-#: cogenda-app/controllers/admin/admin_controller.py:273
+#: cogenda-app/controllers/admin/admin_controller.py:277
 msgid "The username is existing"
 msgstr "该用户名已存在！"
 
-#: cogenda-app/controllers/admin/admin_controller.py:285
+#: cogenda-app/controllers/admin/admin_controller.py:289
 #: cogenda-app/templates/admin/security/login-user.html:29
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
@@ -143,62 +143,62 @@ msgstr "该用户名已存在！"
 msgid "User Name"
 msgstr "用户名"
 
-#: cogenda-app/controllers/admin/admin_controller.py:286
+#: cogenda-app/controllers/admin/admin_controller.py:290
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:41
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:42
 #: cogenda-app/templates/web/user/user-profile.html:31
 msgid "Company"
 msgstr "公司"
 
-#: cogenda-app/controllers/admin/admin_controller.py:287
+#: cogenda-app/controllers/admin/admin_controller.py:291
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:35
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:36
 msgid "E-mail"
 msgstr "邮箱地址"
 
-#: cogenda-app/controllers/admin/admin_controller.py:288
+#: cogenda-app/controllers/admin/admin_controller.py:292
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:49
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:50
 #: cogenda-app/templates/web/user/user-profile.html:37
 msgid "Mobile"
 msgstr "联系电话"
 
-#: cogenda-app/controllers/admin/admin_controller.py:289
+#: cogenda-app/controllers/admin/admin_controller.py:293
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:55
 msgid "Role"
 msgstr "角色"
 
-#: cogenda-app/controllers/admin/admin_controller.py:290
-#: cogenda-app/controllers/admin/admin_controller.py:301
+#: cogenda-app/controllers/admin/admin_controller.py:294
+#: cogenda-app/controllers/admin/admin_controller.py:305
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:56
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:74
 msgid "Active"
 msgstr "激活"
 
-#: cogenda-app/controllers/admin/admin_controller.py:295
+#: cogenda-app/controllers/admin/admin_controller.py:299
 msgid "Resource Name"
 msgstr "资源名称"
 
-#: cogenda-app/controllers/admin/admin_controller.py:296
+#: cogenda-app/controllers/admin/admin_controller.py:300
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:24
 msgid "Description"
 msgstr "描述"
 
-#: cogenda-app/controllers/admin/admin_controller.py:297
+#: cogenda-app/controllers/admin/admin_controller.py:301
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:30
 msgid "Vendor"
 msgstr "供应商"
 
-#: cogenda-app/controllers/admin/admin_controller.py:298
+#: cogenda-app/controllers/admin/admin_controller.py:302
 msgid "URL"
 msgstr "链接"
 
-#: cogenda-app/controllers/admin/admin_controller.py:299
+#: cogenda-app/controllers/admin/admin_controller.py:303
 msgid "Uploaded Date"
 msgstr "上传时间"
 
-#: cogenda-app/controllers/admin/admin_controller.py:300
+#: cogenda-app/controllers/admin/admin_controller.py:304
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:43
 msgid "Type"
 msgstr "类型"
@@ -251,31 +251,31 @@ msgstr "账户申请邮件发送失败！"
 msgid "RequestMailSendSuccessfully"
 msgstr "账户申请邮件发送成功！"
 
-#: cogenda-app/controllers/web/web_controller.py:313
+#: cogenda-app/controllers/web/web_controller.py:312
 msgid "Home"
 msgstr "首页"
 
-#: cogenda-app/controllers/web/web_controller.py:314
+#: cogenda-app/controllers/web/web_controller.py:313
 msgid "Products"
 msgstr "产品展示"
 
-#: cogenda-app/controllers/web/web_controller.py:315
+#: cogenda-app/controllers/web/web_controller.py:314
 msgid "Applications"
 msgstr "应用案例"
 
-#: cogenda-app/controllers/web/web_controller.py:316
+#: cogenda-app/controllers/web/web_controller.py:315
 msgid "Licensing"
 msgstr "购买"
 
-#: cogenda-app/controllers/web/web_controller.py:317
+#: cogenda-app/controllers/web/web_controller.py:316
 msgid "Downloads"
 msgstr "下载中心"
 
-#: cogenda-app/controllers/web/web_controller.py:318
+#: cogenda-app/controllers/web/web_controller.py:317
 msgid "Corporate"
 msgstr "企业"
 
-#: cogenda-app/controllers/web/web_controller.py:319
+#: cogenda-app/controllers/web/web_controller.py:318
 msgid "Contact"
 msgstr "联系我们"
 

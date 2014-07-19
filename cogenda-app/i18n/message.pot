@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cogenda-web 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 19:00+0800\n"
+"POT-Creation-Date: 2014-07-19 19:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,19 +123,19 @@ msgstr ""
 msgid "oPaginate_sLast"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:247
+#: cogenda-app/controllers/admin/admin_controller.py:251
 msgid "PasswordResetFailure"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:248
+#: cogenda-app/controllers/admin/admin_controller.py:252
 msgid "PasswordResetWorks"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:273
+#: cogenda-app/controllers/admin/admin_controller.py:277
 msgid "The username is existing"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:285
+#: cogenda-app/controllers/admin/admin_controller.py:289
 #: cogenda-app/templates/admin/security/login-user.html:29
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:17
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:18
@@ -144,62 +144,62 @@ msgstr ""
 msgid "User Name"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:286
+#: cogenda-app/controllers/admin/admin_controller.py:290
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:41
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:42
 #: cogenda-app/templates/web/user/user-profile.html:31
 msgid "Company"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:287
+#: cogenda-app/controllers/admin/admin_controller.py:291
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:35
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:36
 msgid "E-mail"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:288
+#: cogenda-app/controllers/admin/admin_controller.py:292
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:49
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:50
 #: cogenda-app/templates/web/user/user-profile.html:37
 msgid "Mobile"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:289
+#: cogenda-app/controllers/admin/admin_controller.py:293
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:55
 msgid "Role"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:290
-#: cogenda-app/controllers/admin/admin_controller.py:301
+#: cogenda-app/controllers/admin/admin_controller.py:294
+#: cogenda-app/controllers/admin/admin_controller.py:305
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:56
 #: cogenda-app/templates/admin/user-mgmt/user-new-modal.html:74
 msgid "Active"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:295
+#: cogenda-app/controllers/admin/admin_controller.py:299
 msgid "Resource Name"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:296
+#: cogenda-app/controllers/admin/admin_controller.py:300
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:22
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:24
 msgid "Description"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:297
+#: cogenda-app/controllers/admin/admin_controller.py:301
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:30
 msgid "Vendor"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:298
+#: cogenda-app/controllers/admin/admin_controller.py:302
 msgid "URL"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:299
+#: cogenda-app/controllers/admin/admin_controller.py:303
 msgid "Uploaded Date"
 msgstr ""
 
-#: cogenda-app/controllers/admin/admin_controller.py:300
+#: cogenda-app/controllers/admin/admin_controller.py:304
 #: cogenda-app/templates/admin/resource-mgmt/resource-status-modal.html:43
 msgid "Type"
 msgstr ""
@@ -252,31 +252,31 @@ msgstr ""
 msgid "RequestMailSendSuccessfully"
 msgstr ""
 
-#: cogenda-app/controllers/web/web_controller.py:313
+#: cogenda-app/controllers/web/web_controller.py:312
 msgid "Home"
 msgstr ""
 
-#: cogenda-app/controllers/web/web_controller.py:314
+#: cogenda-app/controllers/web/web_controller.py:313
 msgid "Products"
 msgstr ""
 
-#: cogenda-app/controllers/web/web_controller.py:315
+#: cogenda-app/controllers/web/web_controller.py:314
 msgid "Applications"
 msgstr ""
 
-#: cogenda-app/controllers/web/web_controller.py:316
+#: cogenda-app/controllers/web/web_controller.py:315
 msgid "Licensing"
 msgstr ""
 
-#: cogenda-app/controllers/web/web_controller.py:317
+#: cogenda-app/controllers/web/web_controller.py:316
 msgid "Downloads"
 msgstr ""
 
-#: cogenda-app/controllers/web/web_controller.py:318
+#: cogenda-app/controllers/web/web_controller.py:317
 msgid "Corporate"
 msgstr ""
 
-#: cogenda-app/controllers/web/web_controller.py:319
+#: cogenda-app/controllers/web/web_controller.py:318
 msgid "Contact"
 msgstr ""
 
