@@ -695,7 +695,7 @@ function save_user() {
     }
 
     // Assemble user
-    var user = {
+    var user = {json: {
         id: uid,
         username: username,
         password: password,
@@ -706,7 +706,7 @@ function save_user() {
         notes: $('#notes').val().trim(),
         resource: resource_ids,
         role: role_id
-    };
+    }};
 
     // Modify user
     if($('#uid').val().trim()) {
