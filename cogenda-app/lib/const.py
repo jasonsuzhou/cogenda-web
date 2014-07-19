@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 """ Cogenda Common Constants """
+from i18ntool import ugettext_lazy as _
 
 
 class Const:
@@ -50,13 +51,13 @@ class Const:
 
     # Navigation Menu Items
     SITE_MENU_ITEMS = [
-        'Home',
-        'Products',
-        'Applications',
-        'Licensing',
-        'Downloads',
-        'Corporate',
-        'Contact'
+        (_('Home'), 'home'),
+        (_('Products'), 'products'),
+        (_('Applications'), 'applications'),
+        (_('Licensing'), 'licensing'),
+        (_('Downloads'), 'downloads'),
+        (_('Corporate'), 'corporate'),
+        (_('Contact'), 'contact')
     ]
     # TODO: i18n
     SITE_SUB_MENU_CAPTIONS = [

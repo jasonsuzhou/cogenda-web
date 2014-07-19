@@ -181,14 +181,14 @@ class WebController(BaseController):
         site_navs = const.SITE_MENU_ITEMS
         sub_nav_captions = const.SITE_SUB_MENU_CAPTIONS
         nav_infos = []
-        for idx, nav_name in enumerate(site_navs):
+        for idx, (nav_name, nav_key) in enumerate(site_navs):
             link = '/'
-            if nav_name.lower().strip() != 'home':
-                link = "%sarticle/%s" % (link, nav_name.lower().strip())
-            caption = _(nav_name)
+            nav_key = nav_key.lower().strip()
+            if nav_key != 'home':
+                link = "%sarticle/%s" % (link, nav_key)
             sub_nav_caption = sub_nav_captions[idx]
-            subnav_content = self.render_template('web/subnav/subnav-%s.md' % (nav_name.lower()), sub_nav_caption=sub_nav_caption)
-            nav = (link, caption, subnav_content)
+            subnav_content = self.render_template('web/subnav/subnav-%s.md' % (nav_key), sub_nav_caption=sub_nav_caption)
+            nav = (link, nav_name, subnav_content)
             nav_infos.append(nav)
         return nav_infos
 
