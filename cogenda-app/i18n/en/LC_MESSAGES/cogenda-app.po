@@ -362,8 +362,43 @@ msgid "Create"
 msgstr "Create"
 
 #: cogenda-app/templates/web/article/index.md:39
-msgid "Welcome"
+msgid "company summary"
 msgstr "Welcome"
+
+#: cogenda-app/templates/web/article/index.md:41
+msgid "company profile"
+msgstr "Get more information"
+
+#: cogenda-app/templates/web/article/index.md:42
+msgid "index_company_summary"
+msgstr ""
+"Cogenda is a vendor of Technology Computer Aided Design (TCAD) software. "
+"Our core expertise is the TCAD simulation of semiconductor fabrication "
+"processes and devices. As well as developing simulation software, Cogenda"
+" provides a wide range of technical services, which includes integration "
+"of TCAD tools in customer's workflow, technical consultation, reference "
+"deck calibrated to process and outsourced TCAD simulation.We provide "
+"custom development service to customers with special TCAD needs. If the "
+"physical models you are looking for do not exist in TCAD simulators yet, "
+"we will implement and calibrate the models for youIf you are building a "
+"TCAD team from a group of novices, we will provide practical and "
+"theoretical training courses in TCAD software and semiconductor device "
+"physics."
+
+#: cogenda-app/templates/web/article/index.md:51
+msgid "product detail"
+msgstr "Get more information"
+
+#: cogenda-app/templates/web/article/index.md:53
+msgid "index_product_detail"
+msgstr "VisualTCAD is the latest graphical user interface for the Genius device simulator. VisualTCAD is designed to suit novice TCAD users and students, and focuses on ease of use. Using TCAD has never been as easy, no more command line or coding is required. Beginners will be able to get started within just a few minutes. On the other hand, it doesn't sacrifice the power of Genius. All the physical models and options are accessible with VisualTCAD.<br/><br/>Visual TCAD combines with the Genius Device Simulator to create a next-generation TCAD solution. Genius is a parallel 2D/3D TCAD device simulator, featuring a wide range of advanced physical models and simulation capabilities. Incorporating the latest parallel computation technology, the Genius Device Simulator is able to handle large problems with 200,000 or more mesh nodes and is capable of speeding up simulation times by a factor of 10 or more. "
+
+#: cogenda-app/templates/web/article/index.md:66
+#: cogenda-app/templates/web/article/index.md:80
+#: cogenda-app/templates/web/article/index.md:99
+#: cogenda-app/templates/web/article/index.md:112
+msgid "Get more information"
+msgstr "Get more information"
 
 #: cogenda-app/templates/web/layout/layout-header.html:4
 msgid "Chinese"
@@ -442,4 +477,10 @@ msgstr "Confirm Password"
 
 #~ msgid "AResetPasswordSuccessfully"
 #~ msgstr "Password is changed successfully!"
+
+#~ msgid "Welcome"
+#~ msgstr "Welcome"
+
+#~ msgid "product detail"
+#~ msgstr ""
 

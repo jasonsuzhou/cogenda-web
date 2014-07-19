@@ -9,6 +9,7 @@ mailer>=0.7
 markdown2>=2.2.1
 fuzzywuzzy>=0.2
 python-geoip-geolite2
+alembic>=0.6
 
 # Auto deploy tool
 fabric

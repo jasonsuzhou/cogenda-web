@@ -362,8 +362,31 @@ msgid "Create"
 msgstr "保存"
 
 #: cogenda-app/templates/web/article/index.md:39
-msgid "Welcome"
-msgstr "欢迎"
+msgid "company summary"
+msgstr "Cogenda 概况"
+
+#: cogenda-app/templates/web/article/index.md:41
+msgid "company profile"
+msgstr "公司简介"
+
+#: cogenda-app/templates/web/article/index.md:42
+msgid "index_company_summary"
+msgstr "Cogenda是业界领先的TCAD软件和技术方案供应商，专注于半导体器件和工艺的数值方针。除开发仿真软件外，我们也提供相关的技术服务，包括TCAD应用流程的集成，技术咨询，参数校准，外包服务，定制开发等。"
+
+#: cogenda-app/templates/web/article/index.md:51
+msgid "product detail"
+msgstr "产品详情"
+
+#: cogenda-app/templates/web/article/index.md:53
+msgid "index_product_detail"
+msgstr "VisualTCAD是Genius器件仿真软件的图形界面。它是为初学者和学生设计的，在设计中强调了易用性。使用TCAD软件从未变得如此简单——复杂的文本命令不再是必须的了，初学者可以在10分钟内上手使用。<br/><br/>另一方面，VisualTCAD保留了Genius的强大功能。所有的物理模型都可以在图形界面中设置。用户也可以用Python脚本控制VisualTCAD自动完成诸项操作，提高工作效率。VisualTCAD，Genius仿真器，及Gds2Mesh三维建模工具的组合，构成了Cogenda的TCAD器件仿真的核心。"
+
+#: cogenda-app/templates/web/article/index.md:66
+#: cogenda-app/templates/web/article/index.md:80
+#: cogenda-app/templates/web/article/index.md:99
+#: cogenda-app/templates/web/article/index.md:112
+msgid "Get more information"
+msgstr "更多信息..."
 
 #: cogenda-app/templates/web/layout/layout-header.html:4
 msgid "Chinese"
@@ -442,4 +465,10 @@ msgstr "确认密码"
 
 #~ msgid "AResetPasswordSuccessfully"
 #~ msgstr "密码修改成功！"
+
+#~ msgid "Welcome"
+#~ msgstr "欢迎"
+
+#~ msgid "product detail"
+#~ msgstr "产品详情"
 

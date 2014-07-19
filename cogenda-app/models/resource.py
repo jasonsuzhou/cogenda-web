@@ -1,12 +1,9 @@
 # -*- coding:utf-8 -*-
 
 
-from sqlalchemy.ext.declarative import declarative_base
+from _base import Base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from datetime import datetime
-
-Base = declarative_base()
-
 
 class Resource(Base):
 
