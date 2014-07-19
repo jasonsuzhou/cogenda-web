@@ -52,14 +52,14 @@ class WebController(BaseController):
     def load_resource(self):
         log.debug("[Cogenda-web] - Fetch all resources.")
         all_resources = Resource.list_active_resources(cherrypy.request.db)
-        return self.filter_resources_by_vendor(all_resources)
+        return self._filter_resources_by_vendor(all_resources)
 
     @route('/private-resources')
     @cherrypy.tools.json_out()
     def load_private_resource(self):
         log.debug("[Cogenda-web] - Fetch private resources.")
         private_resources = Resource.list_resource_by_type(cherrypy.request.db, const.RESOURCE_TYPE_PRIVATE)
-        return self.filter_resources_by_vendor(private_resources)
+        return self._filter_resources_by_vendor(private_resources)
 
     @route('/check-resource/:rid')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -130,7 +130,7 @@ class WebController(BaseController):
             elif resource.type == const.RESOURCE_TYPE_PRIVATE:
                 # 6-Private
                 resources_in_json = []
-                self.auth_private_resource(resource, resources_in_json)
+                self._auth_private_resource(resource, resources_in_json)
                 if len(resources_in_json) == 0:
                     return self.index()
         cherrypy.response.headers["Content-Type"] = "application/octet-stream"
@@ -162,7 +162,7 @@ class WebController(BaseController):
     def fetch_user_profile(self, username):
         log.debug("[Cogenda-web] - Fetch user profile: %s" % username)
         user = User.get_by_username(cherrypy.request.db, username)
-        user_in_json = self.jsonify_model(user)
+        user_in_json = self._jsonify_model(user)
         return user_in_json
 
     @route('/user/change-password')
@@ -175,7 +175,7 @@ class WebController(BaseController):
         log.debug("[Cogenda-web] - Change user password: %s" % json_user['username'])
         origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
         user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'])
-        return self.jsonify_model(user)
+        return self._jsonify_model(user)
 
     def _retrieve_nav_info(self):
         site_navs = const.SITE_MENU_ITEMS
@@ -221,65 +221,11 @@ class WebController(BaseController):
                 best_choice = val
         return best_choice
 
-    def jsonify_model(self, model):
-        """
-        Returns a JSON representation of an SQLAlchemy-backed object.
-        """
-        json = {}
-        columns = model._sa_class_manager.mapper.mapped_table.columns
-        for col in columns:
-            col_name = col.name
-            col_val = getattr(model, col_name)
-            if col_name == 'created_date' or col_name == 'updated_date' or col_name == 'uploaded_date':
-                continue
-            else:
-                json[col_name] = col_val
-        return json
-
-    def auth_private_resource(self, resource, resources_in_json):
-        """
-        Authenticate private resource for login user
-        """
-        restricted_res = '%s%s%s' % (',', self.user[3], ",")
-        log.debug('[Cogenda-web] - User:%s, own resource:%s' % (self.user[0], restricted_res))
-        log.debug('[Cogenda-web] - User requires resource:%s' % resource.id)
-        # Resource
-        if self.user[2] == const.USER_TYPE_RESOURCE:
-            return
-        # Resource Owner
-        elif self.user[2] == const.USER_TYPE_RESOURCE_OWNER:
-            p1 = '%s%s%s' % (',', str(resource.id), ",")
-            p2 = '%s%s%s' % (':', str(resource.id), ",")
-            p3 = '%s%s%s' % (',', str(resource.id), ":")
-            if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
-                return
-            resources_in_json.append(self.jsonify_model(resource))
-        # Administrator
-        elif self.user[2] == const.USER_TYPE_ADMINISTRATOR:
-            resources_in_json.append(self.jsonify_model(resource))
-
-    def gen_vendor(self):
-        """
-        Generate vendor according ip address
-        """
-        remote_ip = cherrypy.request.remote.ip
-        forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
-        match = geolite2.lookup(forwarded_ip or remote_ip)
-        country_code = None
-        if match:
-            country_code = match.country
-        log.info('[Cogenda-web] - Web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' % (forwarded_ip, remote_ip, country_code))
-        vendor = const.VENDOR_TYPE_S3
-        if country_code and country_code == 'CN':
-            vendor = const.VENDOR_TYPE_OOS
-        log.info('[Cogenda-web] - load resource from vendor %s' % vendor)
-        return vendor
-
-    def filter_resources_by_vendor(self, all_resources):
+    def _filter_resources_by_vendor(self, all_resources):
         """
         According vendor to filter distinct resource
         """
-        vendor = self.gen_vendor()
+        vendor = self._gen_vendor()
         resources_in_json = []
         for i in range(len(all_resources)):
             if i == len(all_resources):
@@ -297,10 +243,64 @@ class WebController(BaseController):
             # 6-Private
             if _resource.type == const.RESOURCE_TYPE_PRIVATE:
                 if self.user:
-                    self.auth_private_resource(_resource, resources_in_json)
+                    self._auth_private_resource(_resource, resources_in_json)
                 else:
                     continue
             # Other type resource: 1, 2, 3, 4, 5
             else:
-                resources_in_json.append(self.jsonify_model(_resource))
+                resources_in_json.append(self._jsonify_model(_resource))
         return resources_in_json
+
+    def _gen_vendor(self):
+        """
+        Generate vendor by GeoIP.
+        """
+        remote_ip = cherrypy.request.remote.ip
+        forwarded_ip = cherrypy.request.headers.get("X-Forwarded-For")
+        match = geolite2.lookup(forwarded_ip or remote_ip)
+        country_code = None
+        if match:
+            country_code = match.country
+        log.info('[Cogenda-web] - Web client forwarded_ip >> [%s] remote_ip >> [%s] country_code >> [%s]' % (forwarded_ip, remote_ip, country_code))
+        vendor = const.VENDOR_TYPE_S3
+        if country_code and country_code == 'CN':
+            vendor = const.VENDOR_TYPE_OOS
+        log.info('[Cogenda-web] - load resource from vendor %s' % vendor)
+        return vendor
+
+    def _auth_private_resource(self, resource, resources_in_json):
+        """
+        Authenticate private resource for login user
+        """
+        restricted_res = '%s%s%s' % (',', self.user[3], ",")
+        log.debug('[Cogenda-web] - User:%s, own resource:%s' % (self.user[0], restricted_res))
+        log.debug('[Cogenda-web] - User requires resource:%s' % resource.id)
+        # Resource
+        if self.user[2] == const.USER_TYPE_RESOURCE:
+            return
+        # Resource Owner
+        elif self.user[2] == const.USER_TYPE_RESOURCE_OWNER:
+            p1 = '%s%s%s' % (',', str(resource.id), ",")
+            p2 = '%s%s%s' % (':', str(resource.id), ",")
+            p3 = '%s%s%s' % (',', str(resource.id), ":")
+            if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
+                return
+            resources_in_json.append(self._jsonify_model(resource))
+        # Administrator
+        elif self.user[2] == const.USER_TYPE_ADMINISTRATOR:
+            resources_in_json.append(self._jsonify_model(resource))
+
+    def _jsonify_model(self, model):
+        """
+        Returns a JSON representation of an SQLAlchemy-backed object.
+        """
+        json = {}
+        columns = model._sa_class_manager.mapper.mapped_table.columns
+        for col in columns:
+            col_name = col.name
+            col_val = getattr(model, col_name)
+            if col_name == 'created_date' or col_name == 'updated_date' or col_name == 'uploaded_date':
+                continue
+            else:
+                json[col_name] = col_val
+        return json
