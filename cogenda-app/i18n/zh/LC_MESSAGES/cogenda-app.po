@@ -422,27 +422,27 @@ msgstr "修改您的密码"
 msgid "Confirm Password"
 msgstr "确认密码"
 
-#~ msgid "Status"
-#~ msgstr "状态"
+msgid "Status"
+msgstr "状态"
 
-#~ msgid "Public"
-#~ msgstr "公开的"
+msgid "Public"
+msgstr "公开的"
 
-#~ msgid "Restricted"
-#~ msgstr "受限的"
+msgid "Restricted"
+msgstr "受限的"
 
-#~ msgid "ResetPasswordSuccessfully"
-#~ msgstr "重置密码成功！"
+msgid "ResetPasswordSuccessfully"
+msgstr "重置密码成功！"
 
-#~ msgid "UserAuthenticatedSuccessfully"
-#~ msgstr "用户认证成功！"
+msgid "UserAuthenticatedSuccessfully"
+msgstr "用户认证成功！"
 
-#~ msgid "PasswordResetFailure"
-#~ msgstr "重置密码失败！"
+msgid "PasswordResetFailure"
+msgstr "重置密码失败！"
 
-#~ msgid "PasswordResetSuccessfully"
-#~ msgstr "密码修改成功！"
+msgid "PasswordResetSuccessfully"
+msgstr "密码修改成功！"
 
-#~ msgid "AResetPasswordSuccessfully"
-#~ msgstr "密码修改成功！"
+msgid "AResetPasswordSuccessfully"
+msgstr "密码修改成功！"
 
