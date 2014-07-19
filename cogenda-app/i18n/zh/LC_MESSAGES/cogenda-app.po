@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 14:32+0800\n"
+"POT-Creation-Date: 2014-07-19 15:55+0800\n"
 "PO-Revision-Date: 2014-06-06 11:56+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -123,13 +123,11 @@ msgid "oPaginate_sLast"
 msgstr "末页"
 
 #: cogenda-app/controllers/admin/admin_controller.py:247
-#, fuzzy
-msgid "ResetPasswordFailure"
+msgid "PasswordResetFailure"
 msgstr "重置密码失败！"
 
 #: cogenda-app/controllers/admin/admin_controller.py:248
-#, fuzzy
-msgid "ResetPasswordSuccessfully"
+msgid "PasswordResetWorks"
 msgstr "重置密码成功！"
 
 #: cogenda-app/controllers/admin/admin_controller.py:273
@@ -205,25 +203,17 @@ msgstr "上传时间"
 msgid "Type"
 msgstr "类型"
 
-#: cogenda-app/controllers/security/auth_controller.py:28
-#: cogenda-app/controllers/security/auth_controller.py:52
-#, fuzzy
-msgid "UserAuthenticatedSuccessfully"
-msgstr "用户认证成功！"
-
-#: cogenda-app/controllers/security/auth_controller.py:29
-#: cogenda-app/controllers/security/auth_controller.py:71
+#: cogenda-app/controllers/security/auth_controller.py:61
 msgid "Invalid user ID or password"
 msgstr "用户ID或者密码非法！"
 
-#: cogenda-app/controllers/security/auth_controller.py:30
-#: cogenda-app/controllers/security/auth_controller.py:75
-msgid "You have insufficient privileges"
-msgstr "您没有足够的权限！"
-
-#: cogenda-app/controllers/security/auth_controller.py:73
+#: cogenda-app/controllers/security/auth_controller.py:63
 msgid "This user is inactive"
 msgstr "非活动用户，请联系管理员！"
+
+#: cogenda-app/controllers/security/auth_controller.py:65
+msgid "You have insufficient privileges"
+msgstr "您没有足够的权限！"
 
 #: cogenda-app/controllers/web/web_controller.py:72
 #: cogenda-app/controllers/web/web_controller.py:104
@@ -255,7 +245,7 @@ msgstr "注销"
 
 #: cogenda-app/controllers/web/web_controller.py:156
 msgid "RequestMailSendFailure"
-msgstr "账户申请邮件发送成功！"
+msgstr "账户申请邮件发送失败！"
 
 #: cogenda-app/controllers/web/web_controller.py:157
 msgid "RequestMailSendSuccessfully"
@@ -440,3 +430,19 @@ msgstr "确认密码"
 
 #~ msgid "Restricted"
 #~ msgstr "受限的"
+
+#~ msgid "ResetPasswordSuccessfully"
+#~ msgstr "重置密码成功！"
+
+#~ msgid "UserAuthenticatedSuccessfully"
+#~ msgstr "用户认证成功！"
+
+#~ msgid "PasswordResetFailure"
+#~ msgstr "重置密码失败！"
+
+#~ msgid "PasswordResetSuccessfully"
+#~ msgstr "密码修改成功！"
+
+#~ msgid "AResetPasswordSuccessfully"
+#~ msgstr "密码修改成功！"
+

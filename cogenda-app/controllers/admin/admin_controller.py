@@ -244,8 +244,8 @@ class AdminController(BaseController):
             User.update_user_password(cherrypy.request.db, origin_user, gen_pwd, salt)
         except Exception as err:
             log.error('Reset password operation error %s' % err)
-            return json.dumps({'is_success': False, 'msg': _('ResetPasswordFailure')})
-        return json.dumps({'is_success': True, 'msg': _('ResetPasswordSuccessfully')})
+            return json.dumps({'is_success': False, 'msg': _('PasswordResetFailure')})
+        return json.dumps({'is_success': True, 'msg': _('PasswordResetWorks')})
 
     def _jsonify_model(self, model):
         """

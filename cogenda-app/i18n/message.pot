@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cogenda-web 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 14:32+0800\n"
+"POT-Creation-Date: 2014-07-19 15:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -124,11 +124,11 @@ msgid "oPaginate_sLast"
 msgstr ""
 
 #: cogenda-app/controllers/admin/admin_controller.py:247
-msgid "ResetPasswordFailure"
+msgid "PasswordResetFailure"
 msgstr ""
 
 #: cogenda-app/controllers/admin/admin_controller.py:248
-msgid "ResetPasswordSuccessfully"
+msgid "PasswordResetWorks"
 msgstr ""
 
 #: cogenda-app/controllers/admin/admin_controller.py:273
@@ -204,23 +204,16 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: cogenda-app/controllers/security/auth_controller.py:28
-#: cogenda-app/controllers/security/auth_controller.py:52
-msgid "UserAuthenticatedSuccessfully"
-msgstr ""
-
-#: cogenda-app/controllers/security/auth_controller.py:29
-#: cogenda-app/controllers/security/auth_controller.py:71
+#: cogenda-app/controllers/security/auth_controller.py:61
 msgid "Invalid user ID or password"
 msgstr ""
 
-#: cogenda-app/controllers/security/auth_controller.py:30
-#: cogenda-app/controllers/security/auth_controller.py:75
-msgid "You have insufficient privileges"
+#: cogenda-app/controllers/security/auth_controller.py:63
+msgid "This user is inactive"
 msgstr ""
 
-#: cogenda-app/controllers/security/auth_controller.py:73
-msgid "This user is inactive"
+#: cogenda-app/controllers/security/auth_controller.py:65
+msgid "You have insufficient privileges"
 msgstr ""
 
 #: cogenda-app/controllers/web/web_controller.py:72

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-19 14:32+0800\n"
+"POT-Creation-Date: 2014-07-19 15:55+0800\n"
 "PO-Revision-Date: 2014-06-06 08:30+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -123,13 +123,11 @@ msgid "oPaginate_sLast"
 msgstr "Last"
 
 #: cogenda-app/controllers/admin/admin_controller.py:247
-#, fuzzy
-msgid "ResetPasswordFailure"
+msgid "PasswordResetFailure"
 msgstr "Reset password failure!"
 
 #: cogenda-app/controllers/admin/admin_controller.py:248
-#, fuzzy
-msgid "ResetPasswordSuccessfully"
+msgid "PasswordResetWorks"
 msgstr "Reset password successfully!"
 
 #: cogenda-app/controllers/admin/admin_controller.py:273
@@ -205,25 +203,17 @@ msgstr "Uploaded Date"
 msgid "Type"
 msgstr "Type"
 
-#: cogenda-app/controllers/security/auth_controller.py:28
-#: cogenda-app/controllers/security/auth_controller.py:52
-#, fuzzy
-msgid "UserAuthenticatedSuccessfully"
-msgstr "User authenticated successfully!"
-
-#: cogenda-app/controllers/security/auth_controller.py:29
-#: cogenda-app/controllers/security/auth_controller.py:71
+#: cogenda-app/controllers/security/auth_controller.py:61
 msgid "Invalid user ID or password"
 msgstr "Invalid user ID or password."
 
-#: cogenda-app/controllers/security/auth_controller.py:30
-#: cogenda-app/controllers/security/auth_controller.py:75
-msgid "You have insufficient privileges"
-msgstr "You have insufficient privileges!"
-
-#: cogenda-app/controllers/security/auth_controller.py:73
+#: cogenda-app/controllers/security/auth_controller.py:63
 msgid "This user is inactive"
 msgstr "Inactive user, pl. contact administrator!"
+
+#: cogenda-app/controllers/security/auth_controller.py:65
+msgid "You have insufficient privileges"
+msgstr "You have insufficient privileges!"
 
 #: cogenda-app/controllers/web/web_controller.py:72
 #: cogenda-app/controllers/web/web_controller.py:104
@@ -441,4 +431,18 @@ msgstr "Confirm Password"
 #~ msgid "Restricted"
 #~ msgstr "Restricted"
 
+#~ msgid "ResetPasswordSuccessfully"
+#~ msgstr "Reset password successfully!"
+
+#~ msgid "UserAuthenticatedSuccessfully"
+#~ msgstr "User authenticated successfully!"
+
+#~ msgid "PasswordResetFailure"
+#~ msgstr "Reset password failure!"
+
+#~ msgid "PasswordResetSuccessfully"
+#~ msgstr "Password is changed successfully!"
+
+#~ msgid "AResetPasswordSuccessfully"
+#~ msgstr "Password is changed successfully!"
 

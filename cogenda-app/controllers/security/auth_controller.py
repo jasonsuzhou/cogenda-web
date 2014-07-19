@@ -22,16 +22,6 @@ class AuthController(BaseController):
     def index(self):
         return self.render_template('admin/security/login-user.html')
 
-    @route('/security/init-common-language')
-    @cherrypy.tools.json_out(content_type='application/json')
-    def init_common_language(self):
-        user_authenticated_successfully = _('UserAuthenticatedSuccessfully')
-        invalid_userid_or_password = _('Invalid user ID or password')
-        you_have_insufficient_privileges = _('You have insufficient privileges')
-        return json.dumps({'User authenticated successfully': user_authenticated_successfully,
-                           'Invalid user ID or password': invalid_userid_or_password,
-                           'You have insufficient privileges': you_have_insufficient_privileges})
-
     @route('/security/authenticate')
     @cherrypy.tools.json_out(content_type='application/json')
     def authenticate(self):
@@ -49,7 +39,7 @@ class AuthController(BaseController):
             resp = {'auth_success': False, 'msg': error_msg}
             log.debug('[Cogenda-web] - Auth failed msg: %s,%s,%s' % (username, password, error_msg))
         else:
-            resp = {'auth_success': True, 'msg': _('UserAuthenticatedSuccessfully'), 'refer': refer}
+            resp = {'auth_success': True, 'refer': refer}
             log.debug('[Cogenda-web] - User %s login successfully.' % username)
         return json.dumps(resp)
 
