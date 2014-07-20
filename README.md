@@ -23,7 +23,7 @@
 - Start Web Server
 
     ```
-    $ make db-init (optional: If migration/cogenda-app.db not create yet)
+    $ make alembic-init (optional: If alembic/cogenda-app.db not create yet)
     $ make run
     ```
     > Open url http://localhost:8088
