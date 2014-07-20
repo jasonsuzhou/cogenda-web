@@ -33,13 +33,17 @@ var VENDOR_TYPE_S3 = 's3';
 var VENDOR_OOS_DISPLAY_NAME = 'AliYun';
 var VENDOR_S3_DISPLAY_NAME = 'AWS S3';
 
-
-/****************************************************************
+/*****************************************************************
  *
- *                COMMON JAVASCRIPT METHODS
+ *                      NProgress
  *
- * **************************************************************/
+ *****************************************************************/
 // Init nprogress
+$(function() {
+    $(document).on('ajaxStart', function() { NProgress.start(); });
+    $(document).on('ajaxStop',  function() { NProgress.done();  });
+});
+
 function init_progress(){
     NProgress.start();
     NProgress.set(0.4);
@@ -51,6 +55,13 @@ function destroy_progress(interval_id) {
     clearInterval(interval_id);
     NProgress.done();
 }
+
+/****************************************************************
+ *
+ *                COMMON JAVASCRIPT METHODS
+ *
+ * **************************************************************/
+
 
 var nprogress_interval = init_progress();
 

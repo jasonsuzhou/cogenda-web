@@ -28,6 +28,9 @@ var RESOURCE_TYPE_PRIVATE = '6';
 
 // Init nprogress
 function init_progress(){
+    NProgress.configure({
+        showSpinner: false
+    });
     NProgress.start();
     NProgress.set(0.4);
     var nprogress_interval = setInterval(function() { NProgress.inc(); }, 200);
