@@ -1368,15 +1368,14 @@ ul.bxslider {
 
 .button.small{
   padding: 4px 12px;
-  background-color: black;
+  background-color: #444;
   line-height: 13px;
 }
 
 .button-group{
   font-size: 0; /* Inline block elements gap - fix */
   margin: 0;
-  padding: 0;
-  padding: 7px;
+  padding: 2px 7px;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border-radius: 7px;
@@ -1393,6 +1392,7 @@ ul.bxslider {
   border-radius: 0;
 }
 
+/*
 .button-group .button:active{
   -moz-box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset, 5px 0 5px -3px rgba(0, 0, 0, .2) inset, -5px 0 5px -3px rgba(0, 0, 0, .2) inset;
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset, 5px 0 5px -3px rgba(0, 0, 0, .2) inset, -5px 0 5px -3px rgba(0, 0, 0, .2) inset;
@@ -1422,4 +1422,4 @@ ul.bxslider {
   -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset, 5px 0 5px -3px rgba(0, 0, 0, .2) inset;
   box-shadow: 0 0 1px rgba(0, 0, 0, .2) inset, 5px 0 5px -3px rgba(0, 0, 0, .2) inset;
 }
-
+*/

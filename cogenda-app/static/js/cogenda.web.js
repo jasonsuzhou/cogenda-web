@@ -62,7 +62,7 @@ function switch_locale(locale) {
 
 // Show user profile menu
 function show_profile_menu(userName, myProfile, signOut) {
-    $('#user-profile-container').append('<a class="small button fa fa-user" id="login-username" href="#"><span>'+userName+'</span></a><ul><li><a class="small button" href="/web/logout">'+signOut+'</a></li><li><a class="small button" id="my-profile">'+myProfile+'</a></li></ul>');
+    $('#user-profile-container').append('<a class="small button fa fa-user" id="login-username" href="#"><span style="padding:4px;">'+userName+'</span></a><ul><li><a class="small button" href="/web/logout">'+signOut+'</a></li><li><a class="small button" id="my-profile">'+myProfile+'</a></li></ul>');
 
     $("#my-profile").on('click', function (event) {
         if (event) event.preventDefault();
