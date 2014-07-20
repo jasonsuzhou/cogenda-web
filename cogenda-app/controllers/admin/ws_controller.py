@@ -62,7 +62,6 @@ class WSController(BaseController):
         if not self._verify_auth_token(json.dumps(json_payload)):
             return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
 
-        #payload = json.loads(rawbody)
         payload = json_payload['json']
         filename = payload['filename']
         vendor = payload['server']

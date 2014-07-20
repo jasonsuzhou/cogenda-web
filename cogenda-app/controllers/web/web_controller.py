@@ -221,9 +221,9 @@ class WebController(BaseController):
     def _filter_resources_by_vendor(self, all_resources):
         """
         According vendor to filter distinct resource
+        TODO: need refactor too complex.
         """
         vendor = self._gen_vendor()
-        resource_dist = {}
         public_exp_resources_in_json = []
         public_doc_resources_in_json = []
         public_pub_resources_in_json = []
@@ -245,10 +245,9 @@ class WebController(BaseController):
             # Processing picked resource
             # 6-Private
             if _resource.type == const.RESOURCE_TYPE_PRIVATE:
-                if self.user:
-                    self._auth_private_resource(_resource, private_resources_in_json)
-                else:
+                if not self.user:
                     continue
+                self._auth_private_resource(_resource, private_resources_in_json)
             # Other type resource: 1, 2, 3, 4, 5
             elif _resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER:
                 alluser_ins_resources_in_json.append(self._jsonify_model(_resource))
@@ -261,13 +260,14 @@ class WebController(BaseController):
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS:
                 public_pub_resources_in_json.append(self._jsonify_model(_resource))
         # Popular resources to resource dist
-        resource_dist[const.RESOURCE_TYPE_PRIVATE] = private_resources_in_json
-        resource_dist[const.RESOURCE_TYPE_ALLUSER_INSTALLER] = alluser_ins_resources_in_json
-        resource_dist[const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES] = alluser_pac_resources_in_json
-        resource_dist[const.RESOURCE_TYPE_PUBLIC_EXAMPLES] = public_exp_resources_in_json
-        resource_dist[const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION] = public_doc_resources_in_json
-        resource_dist[const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS] = public_pub_resources_in_json
-        return resource_dist
+        resource_dict = {}
+        resource_dict[const.RESOURCE_TYPE_PRIVATE] = private_resources_in_json
+        resource_dict[const.RESOURCE_TYPE_ALLUSER_INSTALLER] = alluser_ins_resources_in_json
+        resource_dict[const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES] = alluser_pac_resources_in_json
+        resource_dict[const.RESOURCE_TYPE_PUBLIC_EXAMPLES] = public_exp_resources_in_json
+        resource_dict[const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION] = public_doc_resources_in_json
+        resource_dict[const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS] = public_pub_resources_in_json
+        return resource_dict
 
     def _gen_vendor(self):
         """

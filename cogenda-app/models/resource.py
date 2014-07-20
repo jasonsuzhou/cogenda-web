@@ -2,7 +2,9 @@
 
 
 from _base import Base
+import sqlalchemy
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy.orm import aliased
 from datetime import datetime
 
 class Resource(Base):
@@ -26,6 +28,21 @@ class Resource(Base):
         self.url = url
         self.uploaded_date = uploaded_date
         self.active = active
+
+    @staticmethod
+    def fetch_grouped__resources(session):
+        """
+        API for grouped resources by resource name, result will be an tuple contained array. like following:
+        (<models.resource.Resource object at 0x11134e050>, None) // only one vendor -> e.g. aws
+        (<models.resource.Resource object at 0x11134e110>, <models.resource.Resource object at 0x11134e190>) //exists both oss & aws 
+        (<models.resource.Resource object at 0x11134e210>, <models.resource.Resource object at 0x11134e290>) //exists both oss & aws
+        (<models.resource.Resource object at 0x11134e310>, None) // only one vendor -> e.g. oss
+        """
+        ParentResource = aliased(Resource, name='parent_resource')
+        records = session.query(Resource, ParentResource).outerjoin(ParentResource, sqlalchemy.and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor)).group_by(Resource.name).all()
+        for res in records:
+            print res
+        return records
 
     @staticmethod
     def list(session):

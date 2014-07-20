@@ -153,6 +153,9 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     @authenticated
     def resource_mgmt_data(self):
+        """
+        TODO: Refactor code with Resource.fetch_grouped__resources API.
+        """
         log.debug('[Cogenda-web] - Fetch all resources.')
         all_resources = Resource.list(cherrypy.request.db)
         resources_in_json = []
