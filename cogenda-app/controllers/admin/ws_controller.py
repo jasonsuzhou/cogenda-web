@@ -20,16 +20,16 @@ class WSController(BaseController):
     """
 
     @route('/api/modify-resource')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def modify_resource(self):
         """ API for remote cloud sync service to create ro update resource """
         """ Create or update resources """
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        if not self._verify_auth_token(cherrypy.request, rawbody):
+        json_payload = cherrypy.request.json
+        if not self._verify_auth_token(json.dumps(json_payload)):
             return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
 
-        payload = json.loads(rawbody)
+        payload = json_payload['json']
         name = payload['filename']
         vendor = payload['server']
         url = payload['url']
@@ -54,16 +54,16 @@ class WSController(BaseController):
         return json.dumps({'success': True, 'msg': 'Sync resource success!'})
 
     @route('/api/destroy-resource')
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def destory_resource(self):
         """ API for cloud sync service to destroy resource """
-
-        cl = cherrypy.request.headers['Content-Length']
-        rawbody = cherrypy.request.body.read(int(cl))
-        if not self._verify_auth_token(cherrypy.request, rawbody):
+        json_payload = cherrypy.request.json
+        if not self._verify_auth_token(json.dumps(json_payload)):
             return json.dumps({'success': False, 'msg': 'User operation not authorized!'})
 
-        payload = json.loads(rawbody)
+        #payload = json.loads(rawbody)
+        payload = json_payload['json']
         filename = payload['filename']
         vendor = payload['server']
         if not filename or not vendor:
