@@ -120,3 +120,30 @@ clean-pyc:
 	@find cogenda-app -name '*.pyo'|xargs rm -f 
 	@find cogenda-app -name '*.DS_Store'|xargs rm -f 
 	@find cogenda-app -name '~'|xargs rm -f
+
+####################################################################
+#  				    alembic migration tool                         #
+####################################################################
+alembic-init:
+	@alembic revision --autogenerate
+	@alembic downgrade base
+	@alembic upgrade head
+	@sqlite3 ${cogenda_db} < ${cogenda_fixture}
+
+alembic-revision:
+	@alembic revision --autogenerate
+
+alembic-upgrade:
+	@alembic upgrade +1
+
+alembic-downgrade:
+	@alembic downgrade -1
+
+alembic-init-data:
+	@sqlite3 ${cogenda_db} < ${cogenda_fixture}
+
+alembic-upgrade-off:
+	@alembic upgrade ${version} --sql > alembic/offline/migration.sql
+
+alembic-downgrade-off:
+	@alembic downgrade ${version} --sql > alembic/offline/migration.sql
