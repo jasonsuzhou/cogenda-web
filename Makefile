@@ -5,12 +5,11 @@ help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo ""
 	@echo "  run               to run web server on local env"
-	@echo "  db-init           to initial SQLite databse file by schema"
-	@echo "  db-migrate        to sync and migrate database schema."
-	@echo "  db-version        to verify database schema version."
-	@echo "  db-schema         to generate database schema change set."
-	@echo "  db-script         to generate SQL schema changes."
-	@echo "  db-fixture        to load application initial data into SQLite3."
+	@echo "  alembic-init      to initial SQLite databse file by schema"
+	@echo "  alembic-upgrade   to sync and migrate database schema."
+	@echo "  alembic-version   to verify database schema version."
+	@echo "  alembic-revision  to generate SQL schema changes."
+	@echo "  alembic-fixture   to load application initial data into SQLite3."
 	@echo "  babel-extract     to extract i18n messages from *.py and template files."
 	@echo "  babel-update      to update i18n messages from message.pot *.po files."
 	@echo "  babel-compile     to update i18n messages from *.po file to *.mo files."
@@ -35,32 +34,6 @@ run:
 
 run-prod:
 	@python ${root_dir}/cogenda-app.py ${settings_prod}
-
-####################################################################
-#  				     SQLite Management                             #
-####################################################################
-# SQLite2 variables
-cogenda_fixture=migration/fixture.sql
-cogenda_db=migration/cogenda-app.db
-
-.PHONY: db-setup
-db-setup: db-init db-fixture
-
-db-init:
-	@python migration/manage.py version_control sqlite:///migration/cogenda-app.db migration
-	@python manage.py upgrade
-
-db-migrate:
-	@python manage.py upgrade
-
-db-version:
-	@python manage.py version
-
-db-script:
-	@python manage.py script $(ACTION)
-
-db-fixture:
-	@sqlite3 ${cogenda_db} < ${cogenda_fixture}
 
 ####################################################################
 #  				     Babel I18n Management                         #
@@ -122,11 +95,13 @@ clean-pyc:
 	@find cogenda-app -name '~'|xargs rm -f
 
 ####################################################################
-#  				    alembic migration tool                         #
+#  				     SQLite Management                             #
 ####################################################################
+# SQLite3 variables
+cogenda_fixture=alembic/fixture.sql
+cogenda_db=alembic/cogenda-app.db
+
 alembic-init:
-	@alembic revision --autogenerate
-	@alembic downgrade base
 	@alembic upgrade head
 	@sqlite3 ${cogenda_db} < ${cogenda_fixture}
 
@@ -134,12 +109,15 @@ alembic-revision:
 	@alembic revision --autogenerate
 
 alembic-upgrade:
-	@alembic upgrade +1
+	@alembic upgrade head
+
+alembic-version:
+	@alembic current
 
 alembic-downgrade:
-	@alembic downgrade -1
+	@alembic downgrade base
 
-alembic-init-data:
+alembic-fixture:
 	@sqlite3 ${cogenda_db} < ${cogenda_fixture}
 
 alembic-upgrade-off:

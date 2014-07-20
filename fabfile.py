@@ -20,7 +20,7 @@ from contextlib import contextmanager as _contextmanager
 APP_PATH = "/home/tim/apps"
 COGENDA_HOME = "%s/cogenda-web" % (APP_PATH)
 COGENDA_REPO = "https://github.com/cogenda/cogenda-web.git"
-COGENDA_DB = "%s/migration/cogenda-app.db" % (COGENDA_HOME)
+COGENDA_DB = "%s/alembic/cogenda-app.db" % (COGENDA_HOME)
 DEPLOY_USER = "tim"
 DEPLOY_HOST = "85.159.208.213"
 TRAVIS_SSH_KEY = "~/.ssh/id_rsa"
@@ -47,7 +47,7 @@ def install_app():
     """
     Prepare server for installation:
     - make app location
-    - install db-migrate
+    - install alembic-init or alembic-upgrade
     - install dependency libs
     - install dependency js libs
     """
@@ -70,9 +70,9 @@ def migrate_db():
     with virtualenv():
         with cd(COGENDA_HOME):
             if exists(COGENDA_DB):
-                run("make db-migrate")
+                run("make alembic-upgrade")
             else:
-                run("make db-setup")
+                run("make alembic-init")
     print(red("Auto db migration succeed!"))
 
 def restart_app():

@@ -27,7 +27,7 @@ script:
 - source venv/bin/activate
 - npm install
 - npm install -g grunt-cli
-- make pylint 
+#- make pylint 
 #- make jslint
 #- make web-setup
 #- make web
