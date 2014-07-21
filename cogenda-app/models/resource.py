@@ -34,12 +34,18 @@ class Resource(Base):
         """
         API for grouped resources by resource name, result will be an tuple contained array. like following:
         (<models.resource.Resource object at 0x11134e050>, None) // only one vendor -> e.g. aws
-        (<models.resource.Resource object at 0x11134e110>, <models.resource.Resource object at 0x11134e190>) //exists both oss & aws 
+        (<models.resource.Resource object at 0x11134e110>, <models.resource.Resource object at 0x11134e190>) //exists both oss & aws
         (<models.resource.Resource object at 0x11134e210>, <models.resource.Resource object at 0x11134e290>) //exists both oss & aws
         (<models.resource.Resource object at 0x11134e310>, None) // only one vendor -> e.g. oss
         """
         ParentResource = aliased(Resource, name='parent_resource')
-        records = session.query(Resource, ParentResource).outerjoin(ParentResource, and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor)).group_by(Resource.name).all()
+        records = session.query(Resource, ParentResource).outerjoin(
+            ParentResource,
+            and_(
+                Resource.name == ParentResource.name,
+                Resource.vendor != ParentResource.vendor
+            )
+        ).group_by(Resource.name).all()
         return records
 
     @staticmethod
@@ -47,12 +53,19 @@ class Resource(Base):
         """
         API for grouped active resources by resource name, result will be an tuple contained array. like following:
         (<models.resource.Resource object at 0x11134e050>, None) // only one vendor -> e.g. aws
-        (<models.resource.Resource object at 0x11134e110>, <models.resource.Resource object at 0x11134e190>) //exists both oss & aws 
+        (<models.resource.Resource object at 0x11134e110>, <models.resource.Resource object at 0x11134e190>) //exists both oss & aws
         (<models.resource.Resource object at 0x11134e210>, <models.resource.Resource object at 0x11134e290>) //exists both oss & aws
         (<models.resource.Resource object at 0x11134e310>, None) // only one vendor -> e.g. oss
         """
         ParentResource = aliased(Resource, name='parent_resource')
-        records = session.query(Resource, ParentResource).outerjoin(ParentResource, and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor, Resource.active == True, ParentResource.active == True)).group_by(Resource.name).all()
+        records = session.query(Resource, ParentResource).outerjoin(
+            ParentResource,
+            and_(
+                Resource.name == ParentResource.name,
+                Resource.vendor != ParentResource.vendor,
+                Resource.active == True,
+                ParentResource.active == True)
+        ).group_by(Resource.name).all()
         return records
 
     @staticmethod

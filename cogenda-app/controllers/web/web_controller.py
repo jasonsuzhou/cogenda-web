@@ -188,7 +188,13 @@ class WebController(BaseController):
         best_choice = 'web/article/%s' % (choice)
         # For download page
         if 'download' in choice:
-            (private_resources, alluser_ins_resources, alluser_pac_resources, public_exp_resources, public_doc_resources, public_pub_resources) = self._fetch_resources()
+            (
+                private_resources,
+                alluser_ins_resources,
+                alluser_pac_resources,
+                public_exp_resources,
+                public_doc_resources,
+                public_pub_resources) = self._fetch_resources()
             return self.render_template(
                 best_choice,
                 publications=public_pub_resources,
@@ -220,7 +226,7 @@ class WebController(BaseController):
 
     def _filter_resources_by_vendor(self, grouped_resources):
         """
-        According vendor to filter distinct resource
+        According vendor to filter out each type of resources
         """
         vendor = self._gen_vendor()
         public_exp_resources = []
@@ -231,8 +237,8 @@ class WebController(BaseController):
         private_resources = []
 
         for tupled_resource in grouped_resources:
-            this_resource = tupled_resource[0] 
-            that_resource = tupled_resource[1] 
+            this_resource = tupled_resource[0]
+            that_resource = tupled_resource[1]
             _resource = this_resource
             if that_resource and that_resource.vendor == vendor:
                 _resource = that_resource
@@ -252,7 +258,6 @@ class WebController(BaseController):
                 public_doc_resources.append(self._jsonify_model(_resource))
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS:
                 public_pub_resources.append(self._jsonify_model(_resource))
-
         return private_resources, alluser_ins_resources, alluser_pac_resources, public_exp_resources, public_doc_resources, public_pub_resources
 
     def _gen_vendor(self):

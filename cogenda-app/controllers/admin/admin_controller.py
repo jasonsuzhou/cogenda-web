@@ -159,13 +159,13 @@ class AdminController(BaseController):
         log.debug('[Cogenda-web] - Fetch all resources.')
         resources = []
         grouped_resources = Resource.fetch_grouped_resources(cherrypy.request.db)
-        for tupled_resource in grouped_resources: 
-            this_resource = tupled_resource[0] 
+        for tupled_resource in grouped_resources:
+            this_resource = tupled_resource[0]
             that_resource = tupled_resource[1]
             resource = self._jsonify_model(this_resource)
             if that_resource:
                 resource['id'] = '%s:%s' % (this_resource.id, that_resource.id)
-                resource['vendor'] = '%s/%s' %(self._convert_vendor_name(this_resource.vendor), self._convert_vendor_name(that_resource.vendor))
+                resource['vendor'] = '%s/%s' % (self._convert_vendor_name(this_resource.vendor), self._convert_vendor_name(that_resource.vendor))
             else:
                 resource['id'] = this_resource.id
                 resource['vendor'] = self._convert_vendor_name(this_resource.vendor)
