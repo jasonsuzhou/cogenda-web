@@ -1386,7 +1386,7 @@ ul.bxslider {
 }
 
 .button-group .button{
-  font-size: 13px; /* Set the font size, different from inherited 0 */
+  font-size: 12px; /* Set the font size, different from inherited 0 */
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
