@@ -67,13 +67,12 @@ class Server(object):
                 'tools.staticdir.dir': 'media'},
             '/static': {
                 'tools.gzip.on': True,
+                'tools.gzip.mime_types': ['text/*'],
                 'tools.staticdir.on': True,
                 'tools.staticdir.dir': ''},
             '/static/css': {
-                'tools.gzip.mime_types': ['text/css'],
                 'tools.staticdir.dir': 'css'},
             '/static/js': {
-                'tools.gzip.mime_types': ['application/javascript'],
                 'tools.staticdir.dir': 'js'},
             '/static/img': {'tools.staticdir.dir': 'images'},
             '/static/fonts': {'tools.staticdir.dir': 'fonts'}

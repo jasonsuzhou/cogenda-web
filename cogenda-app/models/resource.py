@@ -2,7 +2,7 @@
 
 
 from _base import Base
-import sqlalchemy
+from sqlalchemy import and_
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import aliased
 from datetime import datetime
@@ -30,7 +30,7 @@ class Resource(Base):
         self.active = active
 
     @staticmethod
-    def fetch_grouped__resources(session):
+    def fetch_grouped_resources(session):
         """
         API for grouped resources by resource name, result will be an tuple contained array. like following:
         (<models.resource.Resource object at 0x11134e050>, None) // only one vendor -> e.g. aws
@@ -39,7 +39,22 @@ class Resource(Base):
         (<models.resource.Resource object at 0x11134e310>, None) // only one vendor -> e.g. oss
         """
         ParentResource = aliased(Resource, name='parent_resource')
-        records = session.query(Resource, ParentResource).outerjoin(ParentResource, sqlalchemy.and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor)).group_by(Resource.name).all()
+        records = session.query(Resource, ParentResource).outerjoin(ParentResource, and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor)).group_by(Resource.name).all()
+        for res in records:
+            print res
+        return records
+
+    @staticmethod
+    def fetch_grouped_active_resources(session):
+        """
+        API for grouped active resources by resource name, result will be an tuple contained array. like following:
+        (<models.resource.Resource object at 0x11134e050>, None) // only one vendor -> e.g. aws
+        (<models.resource.Resource object at 0x11134e110>, <models.resource.Resource object at 0x11134e190>) //exists both oss & aws 
+        (<models.resource.Resource object at 0x11134e210>, <models.resource.Resource object at 0x11134e290>) //exists both oss & aws
+        (<models.resource.Resource object at 0x11134e310>, None) // only one vendor -> e.g. oss
+        """
+        ParentResource = aliased(Resource, name='parent_resource')
+        records = session.query(Resource, ParentResource).outerjoin(ParentResource, and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor, Resource.active == True, ParentResource.active == True)).group_by(Resource.name).all()
         for res in records:
             print res
         return records
