@@ -63,9 +63,8 @@ class Resource(Base):
             and_(
                 Resource.name == ParentResource.name,
                 Resource.vendor != ParentResource.vendor,
-                Resource.active == True,
-                ParentResource.active == True)
-        ).group_by(Resource.name).all()
+                Resource.active == ParentResource.active)
+        ).filter(Resource.active == True).group_by(Resource.name).all()
         return records
 
     @staticmethod

@@ -5,7 +5,9 @@
  ***************************************************************/
 "use strict";
 
-
+// Object type
+var OBJ_USER = 'USER';
+var OBJ_RESOURCE = 'RESOURCE';
 
 // Message type
 var MSG_ERROR = 0;
@@ -239,13 +241,18 @@ function get_resource_table_columns(resourceTableTitle) {
     return columns;
 }
 
-// Process user attributes' values to displaying values
-function process_user_result(result) {
-    result.splice(result.length-1,result.length);
+// Process object attributes' values to displaying values
+function process_object_result(obj_type, result) {
+    result.splice(result.length - 1,result.length);
     for(var i = 0; i < result.length; i++) {
+        // Common attributes
         result[i].active = get_user_status(result[i].active);
-        if(result[i].role) result[i].role = get_role_name(result[i].role);
-        if(result[i].type) result[i].type = get_resource_type(result[i].type);
+        // Convert object User
+        if(obj_type === OBJ_USER)
+            result[i].role = get_role_name(result[i].role);
+        // Convert object Resource
+        if(obj_type === OBJ_RESOURCE)
+            result[i].type = get_resource_type(result[i].type);
     }
     return result;
 }
@@ -318,7 +325,7 @@ function ready_common_searchable_multi_select() {
 }
 
 // Common ready for data tables.
-function ready_common_datatable(url, orderIndex, fnDatatableCallback) {
+function ready_common_datatable(obj_type, url, orderIndex, fnDatatableCallback) {
     $.ajax({
         "dataType": 'json',
         "type": "GET",
@@ -341,10 +348,10 @@ function ready_common_datatable(url, orderIndex, fnDatatableCallback) {
                     tableLanguage = $.parseJSON(data);
                 }
             });
-            var tableColumns = result[result.length-1];
-            var columns = get_table_columns(tableColumns,url);
+            var tableColumns = result[result.length - 1];
+            var columns = get_table_columns(tableColumns, url);
             var datatable = $(datatable_id).dataTable({
-                "aaData": process_user_result(result),
+                "aaData": process_object_result(obj_type, result),
                 "aoColumns": columns,
                 "aaSorting": [[orderIndex, "desc"]],
                 "oLanguage": {
@@ -467,7 +474,7 @@ function convert_resource(resource_str) {
 function render_resource_select(selectedRole, selectedResources) {
     if(selectedRole === USER_TYPE_RESOURCE_OWNER || selectedRole === 'Resource Owner') { // 'Resource Owner'
         // Populate resource select
-        var resource_list = $.ajax({
+        $.ajax({
             "dataType": 'json',
             "type": "GET",
             "url": "/admin/resources",
@@ -476,7 +483,7 @@ function render_resource_select(selectedRole, selectedResources) {
                 $('#resource').multiSelect('refresh');
                 var k = 0;
                 for (var i = 0; i < result.length - 1; i++) {
-                    if(result[i].type === '6')
+                    if(result[i].type === RESOURCE_TYPE_PRIVATE)
                         $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: k++ });
                 }
                 $('#resource').multiSelect('deselect_all');
@@ -794,7 +801,7 @@ function reset_password() {
  */
 function render_user_datatable() {
     // Ready common datatable.
-    ready_common_datatable("/admin/users", 0, function(datatable) {
+    ready_common_datatable(OBJ_USER, "/admin/users", 0, function(datatable) {
         off_user_click_event();
 
         // Call Add modal
@@ -956,7 +963,8 @@ function update_resource() {
  */
 function render_resource_datatable() {
     // Ready common datatable.
-    ready_common_datatable("/admin/resources", 4, function(datatable) {
+    // Parameter 4 is for sorting index
+    ready_common_datatable(OBJ_RESOURCE, "/admin/resources", 4, function(datatable) {
         // Edit by click row double click
         datatable.on("dblclick", "tr", function(e) {
             if (e) e.preventDefault();
