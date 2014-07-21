@@ -188,15 +188,15 @@ class WebController(BaseController):
         best_choice = 'web/article/%s' % (choice)
         # For download page
         if 'download' in choice:
-            resource_dist = self._fetch_resources()
+            (private_resources, alluser_ins_resources, alluser_pac_resources, public_exp_resources, public_doc_resources, public_pub_resources) = self._fetch_resources()
             return self.render_template(
                 best_choice,
-                publications=resource_dist[const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS],
-                documentations=resource_dist[const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION],
-                examples=resource_dist[const.RESOURCE_TYPE_PUBLIC_EXAMPLES],
-                installers=resource_dist[const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES],
-                software_packages=resource_dist[const.RESOURCE_TYPE_ALLUSER_INSTALLER],
-                privates=resource_dist[const.RESOURCE_TYPE_PRIVATE])
+                publications=public_pub_resources,
+                documentations=public_doc_resources,
+                examples=public_exp_resources,
+                installers=alluser_ins_resources,
+                software_packages=alluser_pac_resources,
+                privates=private_resources)
         return self.render_template(best_choice)
 
     def _retrieve_optimized_news(self, news_name):
@@ -218,56 +218,42 @@ class WebController(BaseController):
                 best_choice = val
         return best_choice
 
-    def _filter_resources_by_vendor(self, all_resources):
+    def _filter_resources_by_vendor(self, grouped_resources):
         """
         According vendor to filter distinct resource
-        TODO: need refactor too complex.
         """
         vendor = self._gen_vendor()
-        public_exp_resources_in_json = []
-        public_doc_resources_in_json = []
-        public_pub_resources_in_json = []
-        alluser_ins_resources_in_json = []
-        alluser_pac_resources_in_json = []
-        private_resources_in_json = []
-        for i in range(len(all_resources)):
-            if i == len(all_resources):
-                break
-            _resource = resource = all_resources[i]
-            if i != len(all_resources) - 1:
-                next_resource = all_resources[i + 1]
-                if resource.name == next_resource.name:
-                    if resource.vendor != vendor:
-                        _resource = next_resource
-                        all_resources.remove(resource)
-                    else:
-                        all_resources.remove(next_resource)
+        public_exp_resources = []
+        public_doc_resources = []
+        public_pub_resources = []
+        alluser_ins_resources = []
+        alluser_pac_resources = []
+        private_resources = []
+
+        for tupled_resource in grouped_resources:
+            this_resource = tupled_resource[0] 
+            that_resource = tupled_resource[1] 
+            _resource = this_resource
+            if that_resource and that_resource.vendor == vendor:
+                _resource = that_resource
+
             # Processing picked resource
             # 6-Private
-            if _resource.type == const.RESOURCE_TYPE_PRIVATE:
-                if not self.user:
-                    continue
-                self._auth_private_resource(_resource, private_resources_in_json)
+            if _resource.type == const.RESOURCE_TYPE_PRIVATE and self.user:
+                self._auth_private_resource(_resource, private_resources)
             # Other type resource: 1, 2, 3, 4, 5
             elif _resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER:
-                alluser_ins_resources_in_json.append(self._jsonify_model(_resource))
+                alluser_ins_resources.append(self._jsonify_model(_resource))
             elif _resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES:
-                alluser_pac_resources_in_json.append(self._jsonify_model(_resource))
+                alluser_pac_resources.append(self._jsonify_model(_resource))
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_EXAMPLES:
-                public_exp_resources_in_json.append(self._jsonify_model(_resource))
+                public_exp_resources.append(self._jsonify_model(_resource))
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION:
-                public_doc_resources_in_json.append(self._jsonify_model(_resource))
+                public_doc_resources.append(self._jsonify_model(_resource))
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS:
-                public_pub_resources_in_json.append(self._jsonify_model(_resource))
-        # Popular resources to resource dist
-        resource_dict = {}
-        resource_dict[const.RESOURCE_TYPE_PRIVATE] = private_resources_in_json
-        resource_dict[const.RESOURCE_TYPE_ALLUSER_INSTALLER] = alluser_ins_resources_in_json
-        resource_dict[const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES] = alluser_pac_resources_in_json
-        resource_dict[const.RESOURCE_TYPE_PUBLIC_EXAMPLES] = public_exp_resources_in_json
-        resource_dict[const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION] = public_doc_resources_in_json
-        resource_dict[const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS] = public_pub_resources_in_json
-        return resource_dict
+                public_pub_resources.append(self._jsonify_model(_resource))
+
+        return private_resources, alluser_ins_resources, alluser_pac_resources, public_exp_resources, public_doc_resources, public_pub_resources
 
     def _gen_vendor(self):
         """
@@ -349,5 +335,5 @@ class WebController(BaseController):
 
     def _fetch_resources(self):
         log.debug("[Cogenda-web] - Fetch all resources.")
-        all_resources = Resource.list_active_resources(cherrypy.request.db)
-        return self._filter_resources_by_vendor(all_resources)
+        resources = Resource.fetch_grouped_active_resources(cherrypy.request.db)
+        return self._filter_resources_by_vendor(resources)

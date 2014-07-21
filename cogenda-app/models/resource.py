@@ -40,8 +40,6 @@ class Resource(Base):
         """
         ParentResource = aliased(Resource, name='parent_resource')
         records = session.query(Resource, ParentResource).outerjoin(ParentResource, and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor)).group_by(Resource.name).all()
-        for res in records:
-            print res
         return records
 
     @staticmethod
@@ -55,8 +53,6 @@ class Resource(Base):
         """
         ParentResource = aliased(Resource, name='parent_resource')
         records = session.query(Resource, ParentResource).outerjoin(ParentResource, and_(Resource.name == ParentResource.name, Resource.vendor !=ParentResource.vendor, Resource.active == True, ParentResource.active == True)).group_by(Resource.name).all()
-        for res in records:
-            print res
         return records
 
     @staticmethod

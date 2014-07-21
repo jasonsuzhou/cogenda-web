@@ -157,26 +157,21 @@ class AdminController(BaseController):
         TODO: Refactor code with Resource.fetch_grouped__resources API.
         """
         log.debug('[Cogenda-web] - Fetch all resources.')
-        all_resources = Resource.list(cherrypy.request.db)
-        resources_in_json = []
-
-        for resource in all_resources:
-            resources_in_json.append(self._jsonify_model(resource))
-
-        for i in range(len(resources_in_json)):
-            if i == len(resources_in_json):
-                break
-            resource = resources_in_json[i]
-            if i != len(resources_in_json) - 1:
-                next_resource = resources_in_json[i + 1]
-                if resource['name'] == next_resource['name']:
-                    resource['id'] = '%s:%s' % (resource['id'], next_resource['id'])
-                    resource['vendor'] = '%s/%s' % (self._convert_vendor_name(resource['vendor']), self._convert_vendor_name(next_resource['vendor']))
-                    resources_in_json.remove(next_resource)
-                else:
-                    resource['vendor'] = self._convert_vendor_name(resource['vendor'])
-        resources_in_json.append(self._init_resource_table_title())
-        return resources_in_json
+        resources = []
+        grouped_resources = Resource.fetch_grouped_resources(cherrypy.request.db)
+        for tupled_resource in grouped_resources: 
+            this_resource = tupled_resource[0] 
+            that_resource = tupled_resource[1]
+            resource = self._jsonify_model(this_resource)
+            if that_resource:
+                resource['id'] = '%s:%s' % (this_resource.id, that_resource.id)
+                resource['vendor'] = '%s/%s' %(self._convert_vendor_name(this_resource.vendor), self._convert_vendor_name(that_resource.vendor))
+            else:
+                resource['id'] = this_resource.id
+                resource['vendor'] = self._convert_vendor_name(this_resource.vendor)
+            resources.append(resource)
+        resources.append(self._init_resource_table_title())
+        return resources
 
     @route('/admin/update-resource')
     @cherrypy.tools.json_in()
