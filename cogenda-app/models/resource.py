@@ -32,7 +32,7 @@ class Resource(Base):
     @property
     def jsonify(self):
         return {
-            'id': str(self.id),        
+            'id': str(self.id),
             'name': self.name,
             'description': self.description,
             'type': self.type,

@@ -45,7 +45,6 @@ class User(Base):
             if col_name != 'created_date' and col_name != 'updated_date':
                 jsonified_user[col_name] = getattr(self, col_name)
         return jsonified_user
-    
 
     @staticmethod
     def is_active(self):
