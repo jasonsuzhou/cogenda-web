@@ -33,7 +33,7 @@ logs/
 .externalToolBuilders
 .settings
 
-cogenda-app/static/bower_components/
+cogenda_app/static/bower_components/
 
 cogenda.web.min.css
 cogenda.admin.min.css

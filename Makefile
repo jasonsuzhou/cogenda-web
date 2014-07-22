@@ -25,23 +25,23 @@ help:
 #  				     CherryPy Server Management                    #
 ####################################################################
 # Internal variables.
-root_dir=cogenda-app
+root_dir=cogenda_app
 settings_prod=cogenda-prod.ini
 settings_dev=cogenda-dev.ini
 
 run:
-	@python ${root_dir}/cogenda-app.py ${settings_dev}
+	@python ${root_dir}/cogenda_app.py ${settings_dev}
 
 run-prod:
-	@python ${root_dir}/cogenda-app.py ${settings_prod}
+	@python ${root_dir}/cogenda_app.py ${settings_prod}
 
 ####################################################################
 #  				     Babel I18n Management                         #
 ####################################################################
 # Babel variables
-babel_dict_loc=./cogenda-app/i18n/message.pot
-babel_domain=cogenda-app
-babel_i18n=./cogenda-app/i18n
+babel_dict_loc=./cogenda_app/i18n/message.pot
+babel_domain=cogenda_app
+babel_i18n=./cogenda_app/i18n
 
 babel-extract:
 	@python setup.py extract_messages -o ${babel_dict_loc}
@@ -83,16 +83,16 @@ encrypt-key-mac:
 #  				    Code Inspect & Utility                         #
 ####################################################################
 pylint:
-	@flake8 cogenda-app fabfile.py
+	@flake8 cogenda_app fabfile.py
 
 jslint:
 	@grunt jslint
 
 clean-pyc:
-	@find cogenda-app -name '*.pyc'|xargs rm -f
-	@find cogenda-app -name '*.pyo'|xargs rm -f 
-	@find cogenda-app -name '*.DS_Store'|xargs rm -f 
-	@find cogenda-app -name '~'|xargs rm -f
+	@find cogenda_app -name '*.pyc'|xargs rm -f
+	@find cogenda_app -name '*.pyo'|xargs rm -f 
+	@find cogenda_app -name '*.DS_Store'|xargs rm -f 
+	@find cogenda_app -name '~'|xargs rm -f
 
 BENCHMARK_TARGET= http://localhost:8088
 benchmark:
@@ -103,7 +103,7 @@ benchmark:
 ####################################################################
 # SQLite3 variables
 cogenda_fixture=alembic/fixture.sql
-cogenda_db=alembic/cogenda-app.db
+cogenda_db=alembic/cogenda_app.db
 
 alembic-init:
 	@alembic upgrade head

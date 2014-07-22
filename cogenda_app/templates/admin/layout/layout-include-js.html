@@ -14,9 +14,9 @@
 <!--
 <script type="text/javascript" src="/static/js/jquery.niftymodals/js/jquery.modalEffects.js"></script>
 
-{% if settings.cogenda_app.env == 'dev' %}
+{% if not settings.cogenda_app.env %}
     <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
-{% elif settings.cogenda_app.env == 'prod' %}
+{% elif settings.cogenda_app.env == 'production' %}
     <script type="text/javascript" src="/static/js/cogenda.admin.min.js"></script>
 {% endif %}
 -->

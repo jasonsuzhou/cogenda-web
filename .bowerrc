@@ -1,4 +1,4 @@
 {
-   "directory": "cogenda-app/static/bower_components",
+   "directory": "cogenda_app/static/bower_components",
     "json": "bower.json"
 }

@@ -20,11 +20,11 @@ from contextlib import contextmanager as _contextmanager
 APP_PATH = "/home/tim/apps"
 COGENDA_HOME = "%s/cogenda-web" % (APP_PATH)
 COGENDA_REPO = "https://github.com/cogenda/cogenda-web.git"
-COGENDA_DB = "%s/alembic/cogenda-app.db" % (COGENDA_HOME)
+COGENDA_DB = "%s/alembic/cogenda_app.db" % (COGENDA_HOME)
 DEPLOY_USER = "tim"
 DEPLOY_HOST = "85.159.208.213"
 TRAVIS_SSH_KEY = "~/.ssh/id_rsa"
-PID_FILE = "/tmp/cogenda-app.pid"
+PID_FILE = "/tmp/cogenda_app.pid"
 ENV_ACTIVATE = "source venv/bin/activate"
 NGINX_CLOUD_CONF = "nginx.cloud.conf"
 NGINX_LOCAL_CONF = "nginx.local.conf"
@@ -77,7 +77,7 @@ def migrate_db():
 
 def restart_app():
     with virtualenv():
-        run("ps -ef | grep 'cogenda-app' | grep -v 'grep' | awk '{print $2}' | xargs kill -9")
+        run("ps -ef | grep 'cogenda_app' | grep -v 'grep' | awk '{print $2}' | xargs kill -9")
         with cd(COGENDA_HOME):
             run("make run-prod")
     print(red("Restart Cogenda App succeed!"))

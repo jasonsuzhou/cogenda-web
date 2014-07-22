@@ -18,9 +18,9 @@
         <script src="/static/bower_components/parsleyjs/dist/parsley.min.js"></script>
         <script src="/static/bower_components/parsleyjs/src/i18n/zh_cn.js"></script>
 
-        {% if settings.cogenda_app.env == 'dev' %}
+        {% if not settings.cogenda_app.env %}
             <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
-        {% elif settings.cogenda_app.env == 'prod' %}
+        {% elif settings.cogenda_app.env == 'production' %}
             <script type="text/javascript" src="/static/js/cogenda.admin.min.js"></script>
         {% endif %}-->
 

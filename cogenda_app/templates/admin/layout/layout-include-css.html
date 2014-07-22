@@ -8,9 +8,9 @@
 
 <link rel="stylesheet" type="text/css" href="/static/js/jquery.niftymodals/css/component.css" />
 
-{% if settings.cogenda_app.env == 'dev' %}
+{% if not settings.cogenda_app.env %}
     <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.css" />
-{% elif settings.cogenda_app.env == 'prod' %}
+{% elif settings.cogenda_app.env == 'production' %}
     <link rel="stylesheet" type="text/css" href="/static/css/cogenda.admin.min.css" />
 {% endif %}
 -->

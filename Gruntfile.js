@@ -9,16 +9,16 @@ module.exports = function(grunt) {
                     compress: true
                 },
                 files: {
-                    'cogenda-app/static/css/cogenda.admin.min.css': ['cogenda-app/static/css/cogenda.admin.css'],
-                    'cogenda-app/static/css/cogenda.web.min.css': ['cogenda-app/static/css/cogenda.web.css']
+                    'cogenda_app/static/css/cogenda.admin.min.css': ['cogenda_app/static/css/cogenda.admin.css'],
+                    'cogenda_app/static/css/cogenda.web.min.css': ['cogenda_app/static/css/cogenda.web.css']
                 }
             }
         },
         uglify: {
             dist: {
                 files: {
-                    'cogenda-app/static/js/cogenda.admin.min.js': ['cogenda-app/static/js/cogenda.admin.js'],
-                    'cogenda-app/static/js/cogenda.web.min.js': ['cogenda-app/static/js/cogenda.web.js']
+                    'cogenda_app/static/js/cogenda.admin.min.js': ['cogenda_app/static/js/cogenda.admin.js'],
+                    'cogenda_app/static/js/cogenda.web.min.js': ['cogenda_app/static/js/cogenda.web.js']
                 }
             }
         },
@@ -30,14 +30,14 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'cogenda-app/static/images/',
+                    cwd: 'cogenda_app/static/images/',
                     src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: 'cogenda-app/static/images/'
+                    dest: 'cogenda_app/static/images/'
                 }]
             }
         },
         clean: {
-            dist: ['cogenda-app/static/css/cogenda.min.css', 'cogenda-app/static/js/cogenda.min.js']
+            dist: ['cogenda_app/static/css/cogenda.min.css', 'cogenda_app/static/js/cogenda.min.js']
         },
         jshint: {
             options: {
@@ -58,12 +58,12 @@ module.exports = function(grunt) {
                 es5: false,
                 globals: { $: true}
             },
-            all: ['cogenda-app/static/js/cogenda.admin.js', 'cogenda-app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
+            all: ['cogenda_app/static/js/cogenda.admin.js', 'cogenda_app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
         },
         wiredep: {
             web: {
                 src: [
-                    'cogenda-app/templates/web/layout/layout.html',
+                    'cogenda_app/templates/web/layout/layout.html',
                 ],
                 cwd: '',
                 includeSelf: false,
@@ -76,8 +76,8 @@ module.exports = function(grunt) {
             },
             admin: {
                 src: [
-                    'cogenda-app/templates/admin/layout/layout-include-js.html',
-                    'cogenda-app/templates/admin/layout/layout-include-css.html',
+                    'cogenda_app/templates/admin/layout/layout-include-js.html',
+                    'cogenda_app/templates/admin/layout/layout-include-css.html',
                 ],
                 cwd: '',
                 dependencies: true,
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
             },
             auth: {
                 src: [
-                    'cogenda-app/templates/admin/security/security-container.html',
+                    'cogenda_app/templates/admin/security/security-container.html',
                 ],
                 cwd: '',
                 dependencies: true,

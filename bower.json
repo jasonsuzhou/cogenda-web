@@ -5,10 +5,10 @@
         "cogenda-dev-team"
         ],
     "main":[
-        "cogenda-app/static/css/admin.min.css",
-        "cogenda-app/static/css/web.min.css",
-        "cogenda-app/static/js/cogenda.admin.min.js",
-        "cogenda-app/static/js/cogenda.web.min.js"
+        "cogenda_app/static/css/admin.min.css",
+        "cogenda_app/static/css/web.min.css",
+        "cogenda_app/static/js/cogenda.admin.min.js",
+        "cogenda_app/static/js/cogenda.web.min.js"
         ],
     "description": "Cogenda website",
     "ignore": [

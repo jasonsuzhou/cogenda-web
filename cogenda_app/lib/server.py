@@ -89,6 +89,11 @@ class Server(object):
 
     def run_server(self, dispatcher, non_block=False):
         cherrypy.config.update(self.get_server_settings())
+        env = self.context.settings.cogenda_app.env
+        if env:
+            cherrypy.config.update({'environment': env})
+
+        cherrypy.config.update(self.get_server_settings())
         dispatcher = self.get_dispatcher(dispatcher)
         mounts = self.get_mounts(dispatcher)
         self.app = cherrypy.tree.mount(None, config=mounts)
@@ -142,6 +147,7 @@ class Server(object):
         if self.context.settings.cogenda_app.pid_file:
             PIDFile(cherrypy.engine, self.context.settings.cogenda_app.pid_file).subscribe()
 
+        non_block = self.context.settings.cogenda_app.as_bool('non_block')
         self.run_server(dispatcher, non_block)
         self.status = ServerStatus.Started
 
