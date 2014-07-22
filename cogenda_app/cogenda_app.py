@@ -25,9 +25,6 @@ class CogendaApp(Server):
         except KeyboardInterrupt:
             self.stop()
 
-    def shutdown(self):
-        self.stop()
-
     def _retrieve_root_dir(self, settings_file):
         init_files = locate(settings_file).keys()
         if not init_files:
@@ -43,9 +40,6 @@ class CogendaApp(Server):
             controller.register_routes(dispatcher)
         return dispatcher
 
-
-def usage():
-    print("usage: python cogenda_app/cogenda_app.py <settings_file>")
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:

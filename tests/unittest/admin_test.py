@@ -14,6 +14,7 @@ setup_module = setUpModule
 
 def tearDownModule():
     cherrypy.engine.exit()
+    cherrypy.server.httpserver = None
 teardown_module = tearDownModule
 
 class AdminModuleTest(BaseCherryPyTestCase):
