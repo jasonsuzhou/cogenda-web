@@ -62,11 +62,18 @@ class AdminController(BaseController):
         select_more_than_one_user = _('Selected more than one user')
         remove_user_successful = _('Remove user successful')
         you_cannot_delete_yourself = _('You cannot delete yourself')
-        return json.dumps({'Create User': create_user, 'Modify User': modify_user, 'Save': save,
-                           'Select one user': select_one_user, 'Selected more than one user': select_more_than_one_user,
-                           'Remove user successful': remove_user_successful, 'You cannot delete yourself': you_cannot_delete_yourself,
-                           'Resource': _('Resource'), 'Resource Owner': _('Resource Owner'), 'Administrator': _('Administrator'),
-                           'Yes': _('Yes'), 'No': _('No'), 'Filter String': _('Filter String')})
+        return json.dumps({'Save': save,
+                           'Create User': create_user,
+                           'Modify User': modify_user,
+                           'Yes': _('Yes'), 'No': _('No'),
+                           'Resource': _('Resource'),
+                           'Resource Owner': _('Resource Owner'),
+                           'Administrator': _('Administrator'),
+                           'Filter String': _('Filter String'),
+                           'Select one user': select_one_user,
+                           'Selected more than one user': select_more_than_one_user,
+                           'Remove user successful': remove_user_successful,
+                           'You cannot delete yourself': you_cannot_delete_yourself})
 
     @route('/admin/init-table-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -84,9 +91,18 @@ class AdminController(BaseController):
         oPaginate_sPrevious = _('oPaginate_sPrevious')
         oPaginate_sNext = _('oPaginate_sNext')
         oPaginate_sLast = _('oPaginate_sLast')
-        return json.dumps({'sProcessing': sProcessing, 'sShowRows': sShowRows, 'sZeroRecords': sZeroRecords, 'sInfo': sInfo, 'sInfoEmpty': sInfoEmpty,
-                           'sInfoFiltered': sInfoFiltered, 'sInfoPostFix': sInfoPostFix, 'sSearch': sSearch, 'oPaginate_sFirst': oPaginate_sFirst,
-                           'oPaginate_sPrevious': oPaginate_sPrevious, 'oPaginate_sNext': oPaginate_sNext, 'oPaginate_sLast': oPaginate_sLast})
+        return json.dumps({'sProcessing': sProcessing,
+                           'sShowRows': sShowRows,
+                           'sZeroRecords': sZeroRecords,
+                           'sInfo': sInfo,
+                           'sInfoEmpty': sInfoEmpty,
+                           'sInfoFiltered': sInfoFiltered,
+                           'sInfoPostFix': sInfoPostFix,
+                           'sSearch': sSearch,
+                           'oPaginate_sFirst': oPaginate_sFirst,
+                           'oPaginate_sPrevious': oPaginate_sPrevious,
+                           'oPaginate_sNext': oPaginate_sNext,
+                           'oPaginate_sLast': oPaginate_sLast})
 
     @route('/admin/create-user')
     @cherrypy.tools.json_in()
@@ -152,9 +168,6 @@ class AdminController(BaseController):
     @cherrypy.tools.json_out()
     @authenticated
     def resource_mgmt_data(self):
-        """
-        TODO: Refactor code with Resource.fetch_grouped__resources API.
-        """
         log.debug('[Cogenda-web] - Fetch all resources.')
         resources = []
         grouped_resources = Resource.fetch_grouped_resources(cherrypy.request.db)
@@ -164,12 +177,35 @@ class AdminController(BaseController):
             resource = this_resource.jsonify
             if that_resource:
                 resource['id'] = '%s:%s' % (this_resource.id, that_resource.id)
-                resource['vendor'] = '%s/%s' % (self._convert_vendor_name(this_resource.vendor), self._convert_vendor_name(that_resource.vendor))
+                resource['vendor'] = '%s/%s' % (self._convert_vendor_name(this_resource.vendor),
+                                                self._convert_vendor_name(that_resource.vendor))
             else:
                 resource['id'] = this_resource.id
                 resource['vendor'] = self._convert_vendor_name(this_resource.vendor)
             resources.append(resource)
+        # Append table titles
         resources.append(self._init_resource_table_title())
+        return resources
+
+    @route('/admin/private-resources')
+    @cherrypy.tools.json_out()
+    @authenticated
+    def fetch_private_resources(self):
+        log.debug('[Cogenda-web] - Fetch all private resources.')
+        resources = []
+        grouped_resources = Resource.fetch_grouped_private_resources(cherrypy.request.db)
+        for tupled_resource in grouped_resources:
+            this_resource = tupled_resource[0]
+            that_resource = tupled_resource[1]
+            resource = this_resource.jsonify
+            if that_resource:
+                resource['id'] = '%s:%s' % (this_resource.id, that_resource.id)
+                resource['vendor'] = '%s/%s' % (self._convert_vendor_name(this_resource.vendor),
+                                                self._convert_vendor_name(that_resource.vendor))
+            else:
+                resource['id'] = this_resource.id
+                resource['vendor'] = self._convert_vendor_name(this_resource.vendor)
+            resources.append(resource)
         return resources
 
     @route('/admin/update-resource')

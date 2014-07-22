@@ -477,14 +477,13 @@ function render_resource_select(selectedRole, selectedResources) {
         $.ajax({
             "dataType": 'json',
             "type": "GET",
-            "url": "/admin/resources",
+            "url": "/admin/private-resources",
             "success": function(result) {
                 // console.log(result);
                 $('#resource').multiSelect('refresh');
                 var k = 0;
-                for (var i = 0; i < result.length - 1; i++) {
-                    if(result[i].type === RESOURCE_TYPE_PRIVATE)
-                        $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: k++ });
+                for (var i = 0; i < result.length; i++) {
+                    $('#resource').multiSelect('addOption', {value: result[i].id, text: result[i].name + "[" + result[i].vendor + "]", index: k++ });
                 }
                 $('#resource').multiSelect('deselect_all');
                 if (typeof(selectedResources) !== 'undefined') {
