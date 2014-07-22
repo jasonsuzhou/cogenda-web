@@ -12,7 +12,7 @@ from controllers.admin import *
 from controllers.security import *
 
 class CogendaApp(Server):
-    
+
     def __init__(self, settings_file):
         root_dir = self._retrieve_root_dir(settings_file)
         self.settings_file = settings_file

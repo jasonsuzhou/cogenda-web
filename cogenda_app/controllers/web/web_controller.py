@@ -223,12 +223,12 @@ class WebController(BaseController):
                 best_choice = val
         return best_choice
 
-    def _fetch_resources(self, grouped_resources):
+    def _fetch_resources(self):
         """
         According vendor to filter out each type of resources
         """
         log.debug("[Cogenda-web] - Fetch all resources.")
-        resources = Resource.fetch_grouped_active_resources(cherrypy.request.db)
+        grouped_resources = Resource.fetch_grouped_active_resources(cherrypy.request.db)
         vendor = self._gen_vendor()
         public_exp_resources = []
         public_doc_resources = []
