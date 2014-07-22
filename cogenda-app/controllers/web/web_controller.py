@@ -148,8 +148,7 @@ class WebController(BaseController):
     def fetch_user_profile(self, username):
         log.debug("[Cogenda-web] - Fetch user profile: %s" % username)
         user = User.get_by_username(cherrypy.request.db, username)
-        user_in_json = self._jsonify_model(user)
-        return user_in_json
+        return user.jsonify
 
     @route('/user/change-password')
     @cherrypy.tools.json_in()
@@ -162,7 +161,7 @@ class WebController(BaseController):
         origin_user = User.get_by_username(cherrypy.request.db, json_user['username'])
         salt = self.settings.cogenda_app.cogenda_salt
         user = User.update_user_password(cherrypy.request.db, origin_user, json_user['password'], salt)
-        return self._jsonify_model(user)
+        return user.jsonify
 
     def _retrieve_nav_info(self):
         site_navs, sub_nav_captions = self._retrieve_menu_info()
@@ -249,15 +248,15 @@ class WebController(BaseController):
                 self._auth_private_resource(_resource, private_resources)
             # Other type resource: 1, 2, 3, 4, 5
             elif _resource.type == const.RESOURCE_TYPE_ALLUSER_INSTALLER:
-                alluser_ins_resources.append(self._jsonify_model(_resource))
+                alluser_ins_resources.append(_resource.jsonify)
             elif _resource.type == const.RESOURCE_TYPE_ALLUSER_SOFTWARE_PACKAGES:
-                alluser_pac_resources.append(self._jsonify_model(_resource))
+                alluser_pac_resources.append(_resource.jsonify)
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_EXAMPLES:
-                public_exp_resources.append(self._jsonify_model(_resource))
+                public_exp_resources.append(_resource.jsonify)
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_DOCUMENTATION:
-                public_doc_resources.append(self._jsonify_model(_resource))
+                public_doc_resources.append(_resource.jsonify)
             elif _resource.type == const.RESOURCE_TYPE_PUBLIC_PUBLICATIONS:
-                public_pub_resources.append(self._jsonify_model(_resource))
+                public_pub_resources.append(_resource.jsonify)
         return private_resources, alluser_ins_resources, alluser_pac_resources, public_exp_resources, public_doc_resources, public_pub_resources
 
     def _gen_vendor(self):
@@ -294,25 +293,10 @@ class WebController(BaseController):
             p3 = '%s%s%s' % (',', str(resource.id), ":")
             if not(p1 in restricted_res) and not(p2 in restricted_res) and not(p3 in restricted_res):
                 return
-            resources_in_json.append(self._jsonify_model(resource))
+            resources_in_json.append(resource.jsonify)
         # Administrator
         elif self.user[2] == const.USER_TYPE_ADMINISTRATOR:
-            resources_in_json.append(self._jsonify_model(resource))
-
-    def _jsonify_model(self, model):
-        """
-        Returns a JSON representation of an SQLAlchemy-backed object.
-        """
-        json = {}
-        columns = model._sa_class_manager.mapper.mapped_table.columns
-        for col in columns:
-            col_name = col.name
-            col_val = getattr(model, col_name)
-            if col_name == 'created_date' or col_name == 'updated_date' or col_name == 'uploaded_date':
-                continue
-            else:
-                json[col_name] = col_val
-        return json
+            resources_in_json.append(resource.jsonify)
 
     def _retrieve_menu_info(self):
         """

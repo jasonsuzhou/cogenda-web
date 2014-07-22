@@ -39,7 +39,7 @@ class AdminController(BaseController):
         all_users = User.list(cherrypy.request.db)
         users_in_json = []
         for user in all_users:
-            users_in_json.append(self._jsonify_model(user))
+            users_in_json.append(user.jsonify)
         users_in_json.append(self._init_user_table_title())
         return users_in_json
 
@@ -49,8 +49,7 @@ class AdminController(BaseController):
     def get_user_by_id(self, uid):
         log.debug('[Cogenda-web] - Fetch user:%s' % uid)
         user = User.get_by_uid(cherrypy.request.db, uid)
-        user_in_json = self._jsonify_model(user)
-        return user_in_json
+        return user.jsonify
 
     @route('/admin/init-common-language')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -115,7 +114,7 @@ class AdminController(BaseController):
             json_user['active'])
         user.created_date = datetime.now()
         cherrypy.request.db.add(user)
-        return self._jsonify_model(user)
+        return user.jsonify
 
     @route('/admin/update-user')
     @cherrypy.tools.json_in()
@@ -136,7 +135,7 @@ class AdminController(BaseController):
                 return username_checking
         salt = self.settings.cogenda_app.cogenda_salt
         user = User.update_user(cherrypy.request.db, origin_user, json_user, salt)
-        return self._jsonify_model(user)
+        return user.jsonify
 
     @route('/admin/delete-user/:uid')
     @cherrypy.tools.json_out(content_type='application/json')
@@ -162,7 +161,7 @@ class AdminController(BaseController):
         for tupled_resource in grouped_resources:
             this_resource = tupled_resource[0]
             that_resource = tupled_resource[1]
-            resource = self._jsonify_model(this_resource)
+            resource = this_resource.jsonify
             if that_resource:
                 resource['id'] = '%s:%s' % (this_resource.id, that_resource.id)
                 resource['vendor'] = '%s/%s' % (self._convert_vendor_name(this_resource.vendor), self._convert_vendor_name(that_resource.vendor))
@@ -193,7 +192,7 @@ class AdminController(BaseController):
         all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
         for resource in all_resources:
             resource = Resource.update_resource(cherrypy.request.db, resource, json_resource)
-            resources_in_json.append(self._jsonify_model(resource))
+            resources_in_json.append(resource.jsonify)
         return resources_in_json
 
     @route('/admin/fetch-resource/:rid')
@@ -209,7 +208,7 @@ class AdminController(BaseController):
             ids.append(rid)
         all_resources = Resource.get_by_rids(cherrypy.request.db, ids)
         for resource in all_resources:
-            resources_in_json.append(self._jsonify_model(resource))
+            resources_in_json.append(resource.jsonify)
         return resources_in_json
 
     @route('/admin/reset-password')
@@ -242,25 +241,6 @@ class AdminController(BaseController):
             log.error('Reset password operation error %s' % err)
             return json.dumps({'is_success': False, 'msg': _('PasswordResetFailure')})
         return json.dumps({'is_success': True, 'msg': _('PasswordResetWorks')})
-
-    def _jsonify_model(self, model):
-        """
-        Returns a JSON representation of an SQLAlchemy-backed object.
-        """
-        json = {}
-        columns = model._sa_class_manager.mapper.mapped_table.columns
-        for col in columns:
-            col_name = col.name
-            col_val = getattr(model, col_name)
-            if col_name == 'created_date' or col_name == 'updated_date':
-                continue
-            elif col_name == 'uploaded_date':
-                json[col_name] = datetime.strftime(col_val, '%Y-%m-%d %H:%M:%S')
-            elif col_name == 'id':
-                json[col_name] = str(col_val)
-            else:
-                json[col_name] = col_val
-        return json
 
     def _check_username(self, username):
         log.debug('[Cogenda-web] - Check username:%s' % username)

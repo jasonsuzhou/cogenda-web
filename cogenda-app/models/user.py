@@ -36,6 +36,17 @@ class User(Base):
     def __str__(self):
         return self.username
 
+    @property
+    def jsonify(self):
+        columns = self._sa_class_manager.mapper.mapped_table.columns
+        jsonified_user = {}
+        for col in columns:
+            col_name = col.name
+            if col_name != 'created_date' and col_name != 'updated_date':
+                jsonified_user[col_name] = getattr(self, col_name)
+        return jsonified_user
+    
+
     @staticmethod
     def is_active(self):
         return self.active

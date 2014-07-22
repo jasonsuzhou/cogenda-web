@@ -29,6 +29,19 @@ class Resource(Base):
         self.uploaded_date = uploaded_date
         self.active = active
 
+    @property
+    def jsonify(self):
+        return {
+            'id': str(self.id),        
+            'name': self.name,
+            'description': self.description,
+            'type': self.type,
+            'vendor': self.vendor,
+            'url': self.url,
+            'uploaded_date': datetime.strftime(self.uploaded_date, '%Y-%m-%d %H:%M:%S'),
+            'active': self.active
+        }
+
     @staticmethod
     def fetch_grouped_resources(session):
         """
