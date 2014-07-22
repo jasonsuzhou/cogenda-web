@@ -155,6 +155,6 @@ class Server(object):
         self.status = ServerStatus.Stopping
         cherrypy.engine.exit()
         cherrypy.server.httpserver = None
-        self.server.stop()
+        # self.server.stop()
         self.app_path = None
         self.status = ServerStatus.Stopped

@@ -5,6 +5,9 @@ import unittest
 import urllib
 
 import cherrypy
+import sys
+sys.path.append('cogenda_app')
+from cogenda_app import CogendaApp
 
 # Not strictly speaking mandatory but just makes sense
 cherrypy.config.update({'environment': "test_suite"})
@@ -21,6 +24,7 @@ remote = cherrypy.lib.httputil.Host('127.0.0.1', 50001, "")
 __all__ = ['BaseCherryPyTestCase']
 
 class BaseCherryPyTestCase(unittest.TestCase):
+
 
     def request(self, path='/', method='GET', app_path='', scheme='http',
                 proto='HTTP/1.1', data=None, headers=None, **kwargs):
