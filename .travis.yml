@@ -27,9 +27,12 @@ script:
 - source venv/bin/activate
 - npm install
 - npm install -g grunt-cli
-- make pylint 
-- make test
+- make pylint
 #- make jslint
+- echo 'Ready to run tests.'
+- make alembic-init
+- make test
+
 #- make web-setup
 #- make web
 #- echo 'Ready to sync with AWS S3 and AliYun OSS.'
