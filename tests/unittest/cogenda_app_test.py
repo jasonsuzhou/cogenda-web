@@ -27,9 +27,8 @@ class WSControllerTest(BaseCherryPyTestCase):
         """
         response = self.request('/api/modify-resource', method='POST', data=self.payload_modify, headers=self.headers_modify) 
         self.assertEqual(response.output_status, '200 OK')
-        json_body = json.loads(response.body[0])
-        print json_body
-        #self.assertEqual(json_body[0], True)
+        result = self.jsonify_response_body(response)
+        self.assertTrue(result['success'], True)
 
     def test_destroy_resource_api(self):
         self._prepare_destroy_resource()
@@ -38,8 +37,8 @@ class WSControllerTest(BaseCherryPyTestCase):
         """
         response = self.request('/api/destroy-resource', method='POST', data=self.payload_destroy, headers=self.headers_destroy) 
         self.assertEqual(response.output_status, '200 OK')
-        json_body = json.loads(response.body[0])
-        print json_body
+        result = self.jsonify_response_body(response)
+        self.assertTrue(result['success'], True)
 
     def _prepare_modify_resource(self):
         self.payload_modify = json.dumps({'json': {
@@ -92,4 +91,6 @@ class AuthControllerTest(BaseCherryPyTestCase):
         self.assertEqual(response.output_status, '200 OK')
 
 if __name__ == '__main__':
-    unittest.main()
+    #suite = unittest.TestLoader().loadTestsFromTestCase([WSControllerTest,AuthControllerTest])
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    unittest.main(verbosity=2, failfast=True)

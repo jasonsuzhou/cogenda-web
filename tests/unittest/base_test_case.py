@@ -8,6 +8,8 @@ import cherrypy
 import sys
 sys.path.append('cogenda_app')
 from cogenda_app import CogendaApp
+import json
+import unicodedata
 
 # Not strictly speaking mandatory but just makes sense
 cherrypy.config.update({'environment': "test_suite"})
@@ -107,3 +109,10 @@ class BaseCherryPyTestCase(unittest.TestCase):
         # collapse the response into a bytestring
         response.collapse_body()
         return response
+
+    def jsonify_response_body(self, response):
+        body = response.body[0]
+        json_body = json.loads(body,'UTF-8')
+        result = unicodedata.normalize('NFKD',json_body).encode('ascii','ignore')
+        result = json.loads(result)
+        return result;
