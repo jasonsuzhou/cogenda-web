@@ -68,6 +68,7 @@ class AdminControllerTest(BaseCherryPyTestCase):
     ADMIN CONTROLLER TEST CASES 
     TODO: 
     """
+    @unittest.skip("unimplemented skipping")
     def test_admin_user_mgmt(self):
         pass
 
@@ -77,6 +78,7 @@ class WebControllerTest(BaseCherryPyTestCase):
     WEB CONTROLLER TEST CASES
     TODO:
     """
+    @unittest.skip("unimplemented skipping")
     def test_web_login(self):
         pass
 
@@ -90,7 +92,12 @@ class AuthControllerTest(BaseCherryPyTestCase):
         response = self.request('/admin/login')
         self.assertEqual(response.output_status, '200 OK')
 
+def suite():
+    suite_ws_controller = unittest.TestLoader().loadTestsFromTestCase(WSControllerTest)
+    suite_auth_controller = unittest.TestLoader().loadTestsFromTestCase(AuthControllerTest)
+    suite_admin_controller = unittest.TestLoader().loadTestsFromTestCase(AdminControllerTest)
+    suite_web_controller = unittest.TestLoader().loadTestsFromTestCase(AdminControllerTest)
+    return unittest.TestSuite([suite_ws_controller, suite_auth_controller, suite_admin_controller, suite_web_controller])
+
 if __name__ == '__main__':
-    #suite = unittest.TestLoader().loadTestsFromTestCase([WSControllerTest,AuthControllerTest])
-    #unittest.TextTestRunner(verbosity=2).run(suite)
     unittest.main(verbosity=2, failfast=True)
