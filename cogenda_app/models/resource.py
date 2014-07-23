@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
 
 
-from _base import Base
+from ._base import Base
 from sqlalchemy import and_
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.orm import aliased
 from datetime import datetime
-from lib import const
+from ..lib import const
 
 
 class Resource(Base):

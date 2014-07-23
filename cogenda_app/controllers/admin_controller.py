@@ -3,10 +3,10 @@
 import cherrypy
 import json, hmac, string
 from datetime import datetime
-from models import User, Resource
+from ..models import User, Resource
 from random import choice
-from lib.i18ntool import ugettext as _
-from lib import const, BaseController, route, authenticated
+from ..lib import ugettext as _
+from ..lib import const, BaseController, route, authenticated
 
 # Load logger
 import logging

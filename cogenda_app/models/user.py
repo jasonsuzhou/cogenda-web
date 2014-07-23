@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from _base import Base
+from ._base import Base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from datetime import datetime
 import hmac

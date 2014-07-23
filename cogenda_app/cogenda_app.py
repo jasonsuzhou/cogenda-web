@@ -1,16 +1,16 @@
 # -*- coding:utf-8 -*-
 
-from lib.server import Server
-from lib.fs import locate
+from .lib import Server
+from .lib.fs import locate
 import sys
 from os.path import dirname, abspath
 import cherrypy
-from lib import BaseController
+from .lib import BaseController
 
-from controllers.admin_controller import *
-from controllers.auth_controller import *
-from controllers.web_controller import *
-from controllers.ws_controller import *
+from .controllers.admin_controller import *
+from .controllers.auth_controller import *
+from .controllers.web_controller import *
+from .controllers.ws_controller import *
 
 class CogendaApp(Server):
 

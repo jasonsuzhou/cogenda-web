@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
-from lib import BaseController, route
+from ..lib import BaseController, route
 import cherrypy
 import hmac
-from models import User
-from lib.i18ntool import ugettext as _
+from ..models import User
+from ..lib import ugettext as _
 import json
-from lib import const
+from ..lib import const
 
 # Load logger
 import logging

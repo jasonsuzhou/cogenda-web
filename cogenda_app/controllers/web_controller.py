@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 
 import cherrypy
-from lib import const, BaseController, route, authenticated, ugettext as _
+from ..lib import const, BaseController, route, authenticated, ugettext as _
 from fuzzywuzzy import fuzz
 from urlparse import urlparse
 import os, random, json
-from models import User, Resource
+from ..models import User, Resource
 from geoip import geolite2
 from sqlalchemy.exc import DBAPIError
 

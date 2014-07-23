@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from lib import BaseController, route
+from ..lib import BaseController, route
 import cherrypy, json
-from models import Resource
+from ..models import Resource
 from sqlalchemy.exc import DBAPIError
 
 # Load logger
