@@ -1,0 +1,9 @@
+recursive-include cogenda_app/templates *.*
+recursive-include cogenda_app/i18n *.*
+recursive-include cogenda_app/static *.*
+recursive-include etc *.*
+recursive-include alembic *.*
+include cogenda_app/*.ini
+include alembic.ini
+include Makefile
+include requirements.txt

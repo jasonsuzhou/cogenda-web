@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from lib.controller import BaseController, route
+from lib import BaseController, route
 import cherrypy
 import hmac
 from models import User

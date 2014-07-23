@@ -29,6 +29,8 @@ data/
 venv/
 cover/
 logs/
+dist/
+build/
 
 .externalToolBuilders
 .settings

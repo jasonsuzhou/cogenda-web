@@ -5,11 +5,12 @@ from lib.fs import locate
 import sys
 from os.path import dirname, abspath
 import cherrypy
-from lib.controller import *
+from lib import BaseController
 
-from controllers.web import *
-from controllers.admin import *
-from controllers.security import *
+from controllers.admin_controller import *
+from controllers.auth_controller import *
+from controllers.web_controller import *
+from controllers.ws_controller import *
 
 class CogendaApp(Server):
 
@@ -46,5 +47,4 @@ if __name__ == '__main__':
         cogendaApp = CogendaApp(sys.argv[1])
         cogendaApp.bootstrap()
     else:
-        usage()
         sys.exit(2)

@@ -35,7 +35,7 @@ except ImportError:
 
 
 install_requires = [
-    'cherrypy'
+    'cherrypy',
     'Jinja2',
     'SQLalchemy',
     'sqlalchemy-migrate',

@@ -1,15 +1,12 @@
 # -*- coding:utf-8 -*-
 
-from lib.controller import BaseController, route, authenticated
+import cherrypy
+import json, hmac, string
 from datetime import datetime
 from models import User, Resource
-import cherrypy
-from lib.i18ntool import ugettext as _
-import json
-import hmac
-import string
 from random import choice
-from lib import const
+from lib.i18ntool import ugettext as _
+from lib import const, BaseController, route, authenticated
 
 # Load logger
 import logging
