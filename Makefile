@@ -30,10 +30,10 @@ settings_prod=cogenda-prod.ini
 settings_dev=cogenda-dev.ini
 
 run:
-	@python ${root_dir}/cogenda_app.py ${settings_dev}
+	@python -m cogenda_app.cogenda_app ${settings_dev}
 
 run-prod:
-	@python ${root_dir}/cogenda_app.py ${settings_prod}
+	@python cogenda_app.cogenda_app ${settings_prod}
 
 ####################################################################
 #  				     Babel I18n Management                         #
