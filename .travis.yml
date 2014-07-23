@@ -28,6 +28,7 @@ script:
 - npm install
 - npm install -g grunt-cli
 - make pylint 
+- make test
 #- make jslint
 #- make web-setup
 #- make web

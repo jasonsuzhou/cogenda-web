@@ -2,35 +2,24 @@
 
 import unittest
 from base_test_case import BaseCherryPyTestCase
-import os
-import json
-import hmac
-import base64
-import hashlib
-import sys
+import os, json, hmac, base64, hashlib, sys
 sys.path.append('cogenda_app')
 from cogenda_app import CogendaApp
+import cherrypy
 
-#def setUpModule():
-#    self.cogendaApp = CogendaApp('cogenda-test.ini')
-#    self.cogendaApp.bootstrap() 
-#setup_module = setUpModule
+def setUpModule():
+    cogendaApp = CogendaApp('cogenda-test.ini')
+    cogendaApp.bootstrap() 
 
-#def tearDownModule():
-#    cogendaApp.stop()
-#teardown_module = tearDownModule
+def tearDownModule():
+    cherrypy.engine.exit()
+    cherrypy.server.httpserver = None
 
 class WSControllerTest(BaseCherryPyTestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.cogendaApp = CogendaApp('cogenda-test.ini')
-        cls.cogendaApp.bootstrap() 
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.cogendaApp.stop()
-
+    """
+    WS CONTROLLER TEST CASES
+    """
     def test_modify_resource_api(self):
         self._prepare_modify_resource()
         """ 
@@ -73,6 +62,34 @@ class WSControllerTest(BaseCherryPyTestCase):
         shared_secret = os.environ.get('COGENDA_SHARED_SECRET', 'cogenda-ws-secret')
         auth_token = base64.b64encode(hmac.new(shared_secret, message, digestmod=hashlib.sha256).digest())
         return auth_token 
+
+class AdminControllerTest(BaseCherryPyTestCase):
+
+    """
+    ADMIN CONTROLLER TEST CASES 
+    TODO: 
+    """
+    def test_admin_user_mgmt(self):
+        pass
+
+class WebControllerTest(BaseCherryPyTestCase):
+    
+    """
+    WEB CONTROLLER TEST CASES
+    TODO:
+    """
+    def test_web_login(self):
+        pass
+
+class AuthControllerTest(BaseCherryPyTestCase):
+
+    """
+    AUTH CONTROLLER TEST CASES
+    TODO:
+    """
+    def test_admin_login(self):
+        response = self.request('/admin/login')
+        self.assertEqual(response.output_status, '200 OK')
 
 if __name__ == '__main__':
     unittest.main()

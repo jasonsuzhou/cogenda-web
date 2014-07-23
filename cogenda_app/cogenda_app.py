@@ -5,7 +5,7 @@ from lib.fs import locate
 import sys
 from os.path import dirname, abspath
 import cherrypy
-from lib.controller import BaseController
+from lib.controller import *
 
 from controllers.web import *
 from controllers.admin import *

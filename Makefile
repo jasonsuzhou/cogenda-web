@@ -94,9 +94,15 @@ clean-pyc:
 	@find cogenda_app -name '*.DS_Store'|xargs rm -f 
 	@find cogenda_app -name '~'|xargs rm -f
 
+####################################################################
+#  				    Run Tests                                      #
+####################################################################
 BENCHMARK_TARGET= http://localhost:8088
 benchmark:
 	@siege -c100 -d1 -r100 ${BENCHMARK_TARGET}
+
+test:
+	@python tests/unittest/cogenda_app_test.py
 
 ####################################################################
 #  				     SQLite Management                             #

@@ -85,3 +85,9 @@
     $ make jslint
     ```
     > Check js code
+
+- Testing Your Code
+
+    ```
+    $ make test
+    ```
