@@ -70,7 +70,7 @@ web:
 #  				     Production Server Deployment                  #
 ####################################################################
 deploy_dist:
-	@fab tarball upload clean
+	@fab prepare tarball upload clean
 
 deploy:
 	@fab prepare install_app migrate_db restart_app restart_nginx
