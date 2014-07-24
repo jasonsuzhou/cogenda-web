@@ -24,7 +24,7 @@ cherrypy.tools.I18nTool = I18nTool(os.path.abspath(__file__))
 __CONTROLLERS__ = []
 __CONTROLLERSDICT__ = {}
 
-# ninja_templates (nt)'s globals
+# Jninja_templates (nt)'s globals
 nt_dir = os.path.join(os.getcwd(), os.path.dirname(__file__), 'cogenda_app')
 nt_root = os.path.dirname(os.path.dirname(nt_dir))
 nt_loader = FileSystemLoader(os.path.join(nt_root, 'templates'))

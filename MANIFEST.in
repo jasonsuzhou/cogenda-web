@@ -7,3 +7,16 @@ include cogenda_app/*.ini
 include alembic.ini
 include Makefile
 include requirements.txt
+include setenv.sh
+
+
+# exclude all bytecode
+global-exclude *.pyo
+global-exclude *.pyc
+
+# exclude all db files
+global-exclude *.db
+
+# exclude all git metadata
+global-exclude .gitignore*
+global-exclude .git/*
