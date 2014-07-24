@@ -2,6 +2,7 @@
 module.exports = function(grunt) {
 
     grunt.initConfig({
+        //TODO: will be removed.
         recess: {
             dist: {
                 options: {
@@ -60,6 +61,7 @@ module.exports = function(grunt) {
             },
             all: ['cogenda_app/static/js/cogenda.admin.js', 'cogenda_app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
         },
+        /*
         wiredep: {
             web: {
                 src: [
@@ -101,18 +103,22 @@ module.exports = function(grunt) {
                 overrides: {}
             }
         }
+        */
     });
 
     // Load tasks
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-recess');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-bower-concat');
     grunt.loadNpmTasks('grunt-wiredep');
 
     // Register tasks
     grunt.registerTask('jslint', ['jshint']);
+    grunt.registerTask('concat', ['bower_concat']);
     grunt.registerTask('build', ['clean', 'recess', 'uglify', 'imagemin']);
     grunt.registerTask('inject', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
 };

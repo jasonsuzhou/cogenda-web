@@ -39,11 +39,6 @@ script:
 after_success:
 - echo 'Ready to deploy cogenda web distro to Lindo server.'
 - make deploy_dist
-#- echo 'Ready to deploy to Linode production server.'
-#- cd /home/travis/build/cogenda/cogenda-web
-#- ./setenv.sh
-#- source venv/bin/activate
-#- make deploy
 branches:
   only:
   - master
