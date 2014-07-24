@@ -70,10 +70,7 @@ web:
 #  				     Production Server Deployment                  #
 ####################################################################
 deploy_dist:
-	@fab prepare tarball upload clean
-
-deploy:
-	@fab prepare install_app migrate_db restart_app restart_nginx
+	@fab prepare tarball upload_dist install_app restart_app restart_nginx clean
 
 encrypt-key:
 	@./bin/travis_encrypt_key.sh 

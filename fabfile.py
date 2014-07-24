@@ -29,22 +29,6 @@ ENV_ACTIVATE = "source venv/bin/activate"
 NGINX_CLOUD_CONF = "nginx.cloud.conf"
 NGINX_LOCAL_CONF = "nginx.local.conf"
 
-def tarball():
-    """Create tarball for cogenda web."""
-    local('python setup.py sdist --formats=gztar', capture=False)
-
-def upload():
-    """Upload tarball to the server."""
-    dist = local('python setup.py --fullname', capture=True).strip()
-    run('mkdir -p ~/tmp')
-    put('dist/%s.tar.gz' % dist, '~/tmp/cogenda-web.tar.gz')
-    with cd('~/tmp'):
-        run('tar xzf ~/tmp/cogenda-web.tar.gz')
-
-def clean():
-    """Clean packages on server."""
-    run('rm -f ~/tmp/cogenda-web.tar.gz')
-
 @_contextmanager
 def virtualenv():
     with cd(COGENDA_HOME):
@@ -59,41 +43,35 @@ def prepare():
     env.port = 22
     print(red("Login Cogenda production server succeed!"))
 
+def tarball():
+    """Create tarball for cogenda web."""
+    local('python setup.py sdist --formats=gztar', capture=False)
+
+def upload_dist():
+    """Upload tarball to the server."""
+    dist = local('python setup.py --fullname', capture=True).strip()
+    run('mkdir -p ~/tmp')
+    put('dist/%s.tar.gz' % dist, '~/tmp/cogenda-web.tar.gz')
+    with cd('~/tmp'):
+        run('tar xzf ~/tmp/cogenda-web.tar.gz')
+        run('mv %s cogenda-web' % dist)
+
 def install_app():
     """
     Prepare server for installation:
-    - make app location
-    - install alembic-init or alembic-upgrade
+    - stop cogenda app
     - install dependency libs
-    - install dependency js libs
     """
-    if not exists(APP_PATH):
-        run("mkdir -p %s" % (APP_PATH))
-
+    run("ps -ef | grep 'cogenda_app' | grep -v 'grep' | awk '{print $2}' | xargs kill -9")
     if exists(COGENDA_HOME):
-        with cd(COGENDA_HOME):
-            run("git checkout .")
-            run("git pull -f origin master")
-    else:
-        with cd(APP_PATH):
-            run("git clone %s" % (COGENDA_REPO))
+        run('rm -rf %s' % COGENDA_HOME)
+    run('cp -rf ~/tmp/cogenda-web %s', APP_PATH)
     with cd(COGENDA_HOME):
-        run("make web")
         run("./setenv.sh")
     print(red("Auto install cogenda app succeed!"))
 
-def migrate_db():
-    with virtualenv():
-        with cd(COGENDA_HOME):
-            if exists(COGENDA_DB):
-                run("make alembic-upgrade")
-            else:
-                run("make alembic-init")
-    print(red("Auto db migration succeed!"))
-
 def restart_app():
     with virtualenv():
-        run("ps -ef | grep 'cogenda_app' | grep -v 'grep' | awk '{print $2}' | xargs kill -9")
         with cd(COGENDA_HOME):
             run("make run-prod")
     print(red("Restart Cogenda App succeed!"))
@@ -110,3 +88,7 @@ def restart_nginx():
     run("sudo service nginx status")
     print(red("Auto configure & restart Nginx server succeed!"))
     print(green("Auto deploy to production server successfully!"))
+
+def clean():
+    """Clean packages on server."""
+    run('rm -rf ~/tmp')
