@@ -33,7 +33,7 @@ run:
 	@python -m cogenda_app.cogenda_app ${settings_dev}
 
 run-prod:
-	@python cogenda_app.cogenda_app ${settings_prod}
+	@python -m cogenda_app.cogenda_app ${settings_prod}
 
 ####################################################################
 #  				     Babel I18n Management                         #
@@ -102,7 +102,6 @@ benchmark:
 	@siege -c100 -d1 -r100 ${BENCHMARK_TARGET}
 
 test:
-	#@python tests/unittest/cogenda_app_test.py
 	@python -m tests.unittest.cogenda_app_test
 
 ####################################################################
