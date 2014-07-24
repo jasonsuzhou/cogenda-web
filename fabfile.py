@@ -65,7 +65,7 @@ def install_app():
     run("ps -ef | grep 'cogenda_app' | grep -v 'grep' | awk '{print $2}' | xargs kill -9")
     if exists(COGENDA_HOME):
         run('rm -rf %s' % COGENDA_HOME)
-    run('cp -rf ~/tmp/cogenda-web %s', APP_PATH)
+    run('cp -rf ~/tmp/cogenda-web %s' % APP_PATH)
     with cd(COGENDA_HOME):
         run("./setenv.sh")
     print(red("Auto install cogenda app succeed!"))
