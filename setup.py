@@ -38,12 +38,13 @@ install_requires = [
     'cherrypy',
     'Jinja2',
     'SQLalchemy',
-    'sqlalchemy-migrate',
     'Babel',
     'routes',
     'mailer',
     'markdown2',
-    'fuzzywuzzy'
+    'fuzzywuzzy',
+    'python-geoip-geolite2',
+    'alembic'
 ]
 
 setup(

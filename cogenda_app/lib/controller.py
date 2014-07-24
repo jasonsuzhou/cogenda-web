@@ -2,7 +2,7 @@
 
 import os
 import cherrypy
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, PackageLoader, FileSystemLoader
 from babel.support import Translations
 from i18ntool import I18nTool
 import hmac
@@ -24,6 +24,12 @@ cherrypy.tools.I18nTool = I18nTool(os.path.abspath(__file__))
 __CONTROLLERS__ = []
 __CONTROLLERSDICT__ = {}
 
+# ninja_templates (nt)'s globals
+nt_dir = os.path.join(os.getcwd(), os.path.dirname(__file__), 'cogenda_app')
+nt_root = os.path.dirname(os.path.dirname(nt_dir)) # ../..
+nt_loader = FileSystemLoader(os.path.join(nt_root, 'templates'))
+env = Environment(loader=nt_loader, extensions=[Markdown2Extension, 'jinja2.ext.i18n'])
+cherrypy.tools.jinja2env = env
 
 def route(route, name=None, priority=50):
     def dec(func):
@@ -152,9 +158,7 @@ class BaseController(object):
         if cherrypy.tools.I18nTool.default:
             locale = cherrypy.tools.I18nTool.default
         translations = Translations.load(mo_dir, locale, app_name)
-        env = Environment(loader=PackageLoader(app_name, 'templates'), extensions=[Markdown2Extension, 'jinja2.ext.i18n'])
         env.install_gettext_translations(translations)
-        cherrypy.tools.jinja2env = env
         template = cherrypy.tools.jinja2env.get_template(template_file)
         return template.render(locale=locale, user=self.user, settings=self.settings, **kw)
 
