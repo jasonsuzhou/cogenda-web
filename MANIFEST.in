@@ -14,9 +14,6 @@ include setenv.sh
 global-exclude *.pyo
 global-exclude *.pyc
 
-# exclude all db files
-global-exclude *.db
-
 # exclude all git metadata
 global-exclude .gitignore*
 global-exclude .git/*
