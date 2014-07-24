@@ -10,6 +10,7 @@ sys.path.append('cogenda_app')
 from cogenda_app import CogendaApp
 import json
 import unicodedata
+import os, json, hmac, base64, hashlib, sys
 
 # Not strictly speaking mandatory but just makes sense
 cherrypy.config.update({'environment': "test_suite"})
@@ -116,3 +117,9 @@ class BaseCherryPyTestCase(unittest.TestCase):
         result = unicodedata.normalize('NFKD',json_body).encode('ascii','ignore')
         result = json.loads(result)
         return result;
+
+    def _make_hamc_key(self, message):
+        """ Generate HMAC key """
+        shared_secret = os.environ.get('COGENDA_SHARED_SECRET', 'cogenda-ws-secret')
+        auth_token = base64.b64encode(hmac.new(shared_secret, message, digestmod=hashlib.sha256).digest())
+        return auth_token
