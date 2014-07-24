@@ -2,7 +2,7 @@
 
 import os
 import cherrypy
-from jinja2 import Environment, PackageLoader, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader
 from babel.support import Translations
 from i18ntool import I18nTool
 import hmac
@@ -26,7 +26,7 @@ __CONTROLLERSDICT__ = {}
 
 # ninja_templates (nt)'s globals
 nt_dir = os.path.join(os.getcwd(), os.path.dirname(__file__), 'cogenda_app')
-nt_root = os.path.dirname(os.path.dirname(nt_dir)) # ../..
+nt_root = os.path.dirname(os.path.dirname(nt_dir))
 nt_loader = FileSystemLoader(os.path.join(nt_root, 'templates'))
 env = Environment(loader=nt_loader, extensions=[Markdown2Extension, 'jinja2.ext.i18n'])
 cherrypy.tools.jinja2env = env
