@@ -29,6 +29,22 @@ ENV_ACTIVATE = "source venv/bin/activate"
 NGINX_CLOUD_CONF = "nginx.cloud.conf"
 NGINX_LOCAL_CONF = "nginx.local.conf"
 
+def tarball():
+    """Create tarball for cogenda web."""
+    local('python setup.py sdist --formats=gztar', capture=False)
+
+def upload():
+    """Upload tarball to the server."""
+    dist = local('python setup.py --fullname', capture=True).strip()
+    run('mkdir -p ~/tmp')
+    put('dist/%s.tar.gz' % dist, '~/tmp/cogenda-web.tar.gz')
+    with cd('~/tmp'):
+        run('tar xzf ~/tmp/cogenda-web.tar.gz')
+
+def clean():
+    """Clean packages on server."""
+    run('rm -f ~/tmp/cogenda-web.tar.gz')
+
 @_contextmanager
 def virtualenv():
     with cd(COGENDA_HOME):

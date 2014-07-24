@@ -69,6 +69,9 @@ web:
 ####################################################################
 #  				     Production Server Deployment                  #
 ####################################################################
+deploy_dist:
+	@fab tarball upload clean
+
 deploy:
 	@fab prepare install_app migrate_db restart_app restart_nginx
 
@@ -94,12 +97,18 @@ clean-pyc:
 	@find cogenda_app -name '*.DS_Store'|xargs rm -f 
 	@find cogenda_app -name '~'|xargs rm -f
 
+tarball:
+	@
 ####################################################################
 #  				    Run Tests                                      #
 ####################################################################
 BENCHMARK_TARGET= http://localhost:8088
 benchmark:
 	@siege -c100 -d1 -r100 ${BENCHMARK_TARGET}
+
+test-reset: alembic-init
+	@python -m tests.unittest.cogenda_app_test
+	@rm -f ${cogenda_db}
 
 test:
 	@python -m tests.unittest.cogenda_app_test
