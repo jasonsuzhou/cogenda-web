@@ -59,8 +59,11 @@ babel-compile:
 #  				     Web Assets Management                         #
 ####################################################################
 web:
-	@sudo npm install
-	@sudo npm install -g grunt-cli
+	@npm install
+	@npm install -g grunt-cli
+	@grunt build
+
+web_build:
 	@grunt build
 
 ####################################################################
