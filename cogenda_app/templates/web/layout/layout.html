@@ -6,10 +6,10 @@
         
         {% if not settings.cogenda_app.env %}
             <link rel="stylesheet" type="text/css" href="/static/vendor/font-awesome-4/css/font-awesome.min.css" />
-            <link rel="stylesheet" type="text/css" href="/static/vendor/bxslider/jquery.bxslider.css" />
-            <link rel="stylesheet" type="text/css" href="/static/css/cogenda-web.css" />
-            <link rel="stylesheet" type="text/css" href="/static/vendor/nprogress/nprogress.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/bxslider/css/jquery.bxslider.css" />
             <link rel="stylesheet" type="text/css" href="/static/vendor/mediaelement/mediaelementplayer.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/nprogress/nprogress.css" />
+            <link rel="stylesheet" type="text/css" href="/static/css/cogenda-web.css" />
         {% elif settings.cogenda_app.env == 'production' %}
             <link rel="stylesheet" type="text/css"  href="/static/css/vendor-web.min.css" />
             <link rel="stylesheet" type="text/css"  href="/static/css/cogenda-web.min.css" />
@@ -64,9 +64,9 @@
             <script type="text/javascript" src="/static/vendor/nprogress/nprogress.js"></script>
             <script type="text/javascript" src="/static/vendor/mediaelement/mediaelement-and-player.min.js"></script>
             <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
-        {% elif settings.cogenda_app.env == 'prod' %}
-            <script type="text/javascript" src="/static/js/vendor.web.min.js"></script>
-            <script type="text/javascript" src="/static/js/cogenda.web.min.js"></script>
+        {% elif settings.cogenda_app.env == 'production' %}
+            <script type="text/javascript" src="/static/js/vendor.web.js"></script>
+            <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
         {% endif %}
         <input type="hidden" name="language" id="locale" value="{{ locale }}" />
     </body>
