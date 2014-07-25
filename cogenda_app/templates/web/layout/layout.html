@@ -4,18 +4,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title> | EDA/TCAD/DFM | Cogenda.com</title>
         
-        <!--
         {% if not settings.cogenda_app.env %}
-            <link rel="stylesheet" type="text/css"  href="/static/css/cogenda.web.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/font-awesome-4/css/font-awesome.min.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/bxslider/jquery.bxslider.css" />
+            <link rel="stylesheet" type="text/css" href="/static/css/cogenda.web.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/nprogress/nprogress.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/mediaelement/mediaelementplayer.css" />
         {% elif settings.cogenda_app.env == 'production' %}
+            <link rel="stylesheet" type="text/css"  href="/static/css/vendor.web.min.css" />
             <link rel="stylesheet" type="text/css"  href="/static/css/cogenda.web.min.css" />
         {% endif %}
-         -->
-        <link rel="stylesheet" type="text/css" href="/static/vendor/font-awesome-4/css/font-awesome.min.css" />
-        <link rel="stylesheet" type="text/css" href="/static/vendor/bxslider/jquery.bxslider.css" />
-        <link rel="stylesheet" type="text/css" href="/static/css/cogenda.web.css" />
-        <link rel="stylesheet" type="text/css" href="/static/vendor/nprogress/nprogress.css" />
-        <link rel="stylesheet" type="text/css" href="/static/vendor/mediaelement/mediaelementplayer.css" />
     </head>
     <body id="main-body">
         <div id="background">
@@ -57,21 +55,19 @@
             <!-- Close background-->
         </div>
 
-        <!--
-        {% if settings.cogenda_app.env == 'dev' %}
+        {% if not settings.cogenda_app.env %}
+            <script type="text/javascript" src="/static/vendor/jquery.js"></script>
+            <script type="text/javascript" src="/static/vendor/bxslider/jquery.bxslider.js"></script>
+            <script type="text/javascript" src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="/static/vendor/jquery.parsley/2.0.0/parsley.js"></script>
+            <script type="text/javascript" src="/static/vendor/i18n/zh_cn.js"></script>
+            <script type="text/javascript" src="/static/vendor/nprogress/nprogress.js"></script>
+            <script type="text/javascript" src="/static/vendor/mediaelement/mediaelement-and-player.min.js"></script>
             <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
         {% elif settings.cogenda_app.env == 'prod' %}
+            <script type="text/javascript" src="/static/js/vendor.web.min.js"></script>
             <script type="text/javascript" src="/static/js/cogenda.web.min.js"></script>
         {% endif %}
-        -->
-        <script type="text/javascript" src="/static/vendor/jquery.js"></script>
-        <script type="text/javascript" src="/static/vendor/bxslider/jquery.bxslider.js"></script>
-        <script type="text/javascript" src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/vendor/jquery.parsley/2.0.0/parsley.js"></script>
-        <script type="text/javascript" src="/static/vendor/i18n/zh_cn.js"></script>
-        <script type="text/javascript" src="/static/vendor/nprogress/nprogress.js"></script>
-        <script type="text/javascript" src="/static/vendor/mediaelement/mediaelement-and-player.min.js"></script>
-        <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
         <input type="hidden" name="language" id="locale" value="{{ locale }}" />
     </body>
 <html>

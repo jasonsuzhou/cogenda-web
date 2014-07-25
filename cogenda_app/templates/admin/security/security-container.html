@@ -12,19 +12,17 @@
     <body class="texture" id="security-body">
         {% block main %}{% endblock %}
 
-        <!--
         {% if not settings.cogenda_app.env %}
+            <script type="text/javascript" src="/static/vendor/jquery.js"></script>
+            <script type="text/javascript" src="/static/vendor/jquery.parsley/2.0.0/parsley.js"></script>
+            <script type="text/javascript" src="/static/vendor/i18n/zh_cn.js"></script>
+            <script type="text/javascript" src="/static/vendor/nprogress/nprogress.js"></script>
+            <script type="text/javascript" src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
             <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
         {% elif settings.cogenda_app.env == 'production' %}
+            <script type="text/javascript" src="/static/js/vendor.auth.min.js"></script>
             <script type="text/javascript" src="/static/js/cogenda.admin.min.js"></script>
-        {% endif %}-->
-
-        <script type="text/javascript" src="/static/vendor/jquery.js"></script>
-        <script type="text/javascript" src="/static/vendor/jquery.parsley/2.0.0/parsley.js"></script>
-        <script type="text/javascript" src="/static/vendor/i18n/zh_cn.js"></script>
-        <script type="text/javascript" src="/static/vendor/nprogress/nprogress.js"></script>
-        <script type="text/javascript" src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
+        {% endif %}
         <input type="hidden" name="language" id="locale" value="{{ locale }}" />
     </body>
 </html>

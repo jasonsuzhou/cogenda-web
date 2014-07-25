@@ -23,10 +23,20 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/jquery.parsley/2.0.0/parsley.js',
                     'cogenda_app/static/vendor/nprogress/nprogress.js',
                     'cogenda_app/static/vendor/i18n/zh_cn.js',
-                    'cogenda_app/static/vendor/i18n/select2_locale_zh-CN.js',
+                    'cogenda_app/static/vendor/i18n/select2_locale_zh-CN.js'
                 ],
                 dest: 'cogenda_app/static/js/vendor.admin.js'
             },
+            vendor_js_auth: {
+                src: [
+                    'cogenda_app/static/vendor/jquery.js',
+                    'cogenda_app/static/vendor/jquery.parsley/2.0.0/parsley.js',
+                    'cogenda_app/static/vendor/i18n/zh_cn.js',
+                    'cogenda_app/static/vendor/nprogress/nprogress.js',
+                    'cogenda_app/static/vendor/bootstrap/dist/js/bootstrap.min.js'
+                ],
+                dest: 'cogenda_app/static/js/vendor.auth.js'
+            }
             vendor_js_web: {
                 src: [
                     'cogenda_app/static/vendor/jquery.js',
@@ -35,7 +45,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/jquery.parsley/2.0.0/parsley.js',
                     'cogenda_app/static/vendor/i18n/zh_cn.js',
                     'cogenda_app/static/vendor/nprogress/nprogress.js',
-                    'cogenda_app/static/vendor/mediaelement/mediaelement-and-player.min.js',
+                    'cogenda_app/static/vendor/mediaelement/mediaelement-and-player.min.js'
                 ],
                 dest: 'cogenda_app/static/js/vendor.web.js'
             },
@@ -66,8 +76,9 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     'cogenda_app/static/js/cogenda.admin.min.js': ['cogenda_app/static/js/cogenda.admin.js'],
-                    'cogenda_app/static/js/cogenda.web.min.js': ['cogenda_app/static/js/cogenda.web.js']
+                    'cogenda_app/static/js/cogenda.web.min.js': ['cogenda_app/static/js/cogenda.web.js'],
                     'cogenda_app/static/js/vendor.admin.min.js': ['cogenda_app/static/js/vendor.admin.js'],
+                    'cogenda_app/static/js/vendor.auth.min.js': ['cogenda_app/static/js/vendor.auth.js'],
                     'cogenda_app/static/js/vendor.web.min.js': ['cogenda_app/static/js/vendor.web.js']
                 }
             }
@@ -129,7 +140,15 @@ module.exports = function(grunt) {
             all: ['cogenda_app/static/js/cogenda.admin.js', 'cogenda_app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
         },
         clean: {
-            dist: ['cogenda_app/static/css/*.min.css', 'cogenda_app/static/js/*.min.js']
+            dist: [
+                'cogenda_app/static/css/*.min.css',
+                'cogenda_app/static/css/vendor.admin.css',
+                'cogenda_app/static/css/vendor.web.css',
+                'cogenda_app/static/js/*.min.js',
+                'cogenda_app/static/js/vendor.admin.js',
+                'cogenda_app/static/js/vendor.auth.js',
+                'cogenda_app/static/js/vendor.web.js'
+            ]
         }
     });
 
@@ -144,5 +163,5 @@ module.exports = function(grunt) {
 
     // Register tasks
     grunt.registerTask('jslint', ['jshint']);
-    grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin', 'imagemin']);
+    grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin', 'copy', 'imagemin']);
 };
