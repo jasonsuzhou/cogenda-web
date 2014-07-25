@@ -36,7 +36,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/bootstrap/dist/js/bootstrap.min.js'
                 ],
                 dest: 'cogenda_app/static/js/vendor.auth.js'
-            }
+            },
             vendor_js_web: {
                 src: [
                     'cogenda_app/static/vendor/jquery.js',
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/bootstrap.switch/bootstrap-switch.css',
                     'cogenda_app/static/vendor/nprogress/nprogress.css'
                 ],
-                dest: 'cogenda_app/static/css/vendor.admin.css'
+                dest: 'cogenda_app/static/css/vendor-admin.css'
             },
             vendor_css_web: {
                 src: [
@@ -69,7 +69,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/nprogress/nprogress.css',
                     'cogenda_app/static/vendor/mediaelement/mediaelementplayer.css'
                 ],
-                dest: 'cogenda_app/static/css/vendor.web.css'
+                dest: 'cogenda_app/static/css/vendor-web.css'
             }
         },
         uglify: {
@@ -96,11 +96,11 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     // copy vendor lib fonts
-                    {expand: true, cwd:'cogenda_app/static/vendor', src: ['bootstrap/fonts/*', 'font-awesone-4/fonts/*'], dest: 'cogenda_app/static/fonts/', filter: 'isFile'},
+                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['bootstrap/fonts/*', 'font-awesone-4/fonts/*'], dest: 'cogenda_app/static/fonts/', filter: 'isFile'},
                     // copy vendor lib images
-                    {expand: true, cwd:'cogenda_app/static/vendor', src: ['bxslider/images/*', 'jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/img/*', 'jquery.select2/*.{png,gif}','mediaelement/*.{png,gif}' ], dest: 'cogenda_app/static/images/', filter: 'isFile'},
+                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['bxslider/images/*', 'jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/img/*', 'jquery.select2/*.{png,gif}','mediaelement/*.{png,gif}' ], dest: 'cogenda_app/static/images/', filter: 'isFile'},
                     // copy vendor lib misc
-                    {expand: true, src: ['cogenda_app/static/vendor/mediaelement/*.swf'], dest: 'cogenda_app/static/media/', filter: 'isFile'},
+                    {expand: true, flatten: true, src: ['cogenda_app/static/vendor/mediaelement/*.swf'], dest: 'cogenda_app/static/media/', filter: 'isFile'},
                 ]
             }
         },
@@ -140,11 +140,19 @@ module.exports = function(grunt) {
             all: ['cogenda_app/static/js/cogenda.admin.js', 'cogenda_app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
         },
         clean: {
-            dist: [
+            pre_build: [
                 'cogenda_app/static/css/*.min.css',
+                'cogenda_app/static/css/vendor-admin.css',
+                'cogenda_app/static/css/vendor-web.css',
+                'cogenda_app/static/js/*.min.js',
+                'cogenda_app/static/js/vendor.admin.js',
+                'cogenda_app/static/js/vendor.auth.js',
+                'cogenda_app/static/js/vendor.web.js'
+            ],
+
+            post_build: [
                 'cogenda_app/static/css/vendor.admin.css',
                 'cogenda_app/static/css/vendor.web.css',
-                'cogenda_app/static/js/*.min.js',
                 'cogenda_app/static/js/vendor.admin.js',
                 'cogenda_app/static/js/vendor.auth.js',
                 'cogenda_app/static/js/vendor.web.js'
@@ -163,5 +171,5 @@ module.exports = function(grunt) {
 
     // Register tasks
     grunt.registerTask('jslint', ['jshint']);
-    grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin', 'copy', 'imagemin']);
+    grunt.registerTask('build', ['clean:pre_build', 'concat', 'uglify', 'cssmin', 'copy', 'imagemin', 'clean:post_build']);
 };
