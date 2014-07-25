@@ -1,5 +1,6 @@
 {
   "name": "CogendaWeb",
+  "version": "0.0.1",
   "author": "Tim.Tang <tang.jilong@gmail.com>",
   "homepage": "http://cogenda.com",
   "repository": {
@@ -14,7 +15,6 @@
   },
   "dependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "*",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-jshint": "~0.7.1",
     "grunt-contrib-concat": "~0.5.0",
