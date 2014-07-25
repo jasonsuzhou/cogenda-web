@@ -1,4 +1,4 @@
-<ul class="bxslider">
+<ul class="bxslider" style="visibility:hidden;">
   <li>
     <div class="img-caption" style="display: block;">
         <h3>TCAD Catpion-1</h3> 

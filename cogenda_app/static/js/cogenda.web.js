@@ -157,11 +157,13 @@ $(document).ready(function() {
 
     $('.bxslider').bxSlider({
         auto: true,
-        autoControls: true,
+        autoControls: false,
         adaptiveHeight: true,
         mode: 'fade',
-        preloadImages: 'all',
-        captions: false
+        captions: false,
+        onSliderLoad: function(){
+            $(".bxslider").css("visibility", "visible");
+        }
     });
 
     $("#login").on('click', function (event) {
