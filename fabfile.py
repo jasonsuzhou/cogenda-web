@@ -46,7 +46,7 @@ def prepare():
 def tarball():
     """Replace dev assets with compiled assets, create tarball for cogenda web."""
     local('rm -rf cogenda_app/static')
-    local('mv cogenda_app/assets_rel cogenda_app/static')
+    local('mv assets_rel/static cogenda_app/static')
     local('python setup.py sdist --formats=gztar', capture=False)
 
 def upload_dist():

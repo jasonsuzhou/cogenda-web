@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/i18n/zh_cn.js',
                     'cogenda_app/static/vendor/i18n/select2_locale_zh-CN.js'
                 ],
-                dest: 'cogenda_app/assets_rel/js/vendor.admin.js'
+                dest: 'assets_rel/static/js/vendor.admin.js'
             },
             vendor_js_auth: {
                 src: [
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/nprogress/nprogress.js',
                     'cogenda_app/static/vendor/bootstrap/dist/js/bootstrap.min.js'
                 ],
-                dest: 'cogenda_app/assets_rel/js/vendor.auth.js'
+                dest: 'assets_rel/static/js/vendor.auth.js'
             },
             vendor_js_web: {
                 src: [
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/nprogress/nprogress.js',
                     'cogenda_app/static/vendor/mediaelement/mediaelement-and-player.min.js'
                 ],
-                dest: 'cogenda_app/assets_rel/js/vendor.web.js'
+                dest: 'assets_rel/static/js/vendor.web.js'
             },
             vendor_css_admin: {
                 src: [
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/bootstrap.switch/bootstrap-switch.css',
                     'cogenda_app/static/vendor/nprogress/nprogress.css'
                 ],
-                dest: 'cogenda_app/assets_rel/css/vendor-admin.css'
+                dest: 'assets_rel/static/css/vendor-admin.css'
             },
             vendor_css_web: {
                 src: [
@@ -69,17 +69,17 @@ module.exports = function(grunt) {
                     'cogenda_app/static/vendor/nprogress/nprogress.css',
                     'cogenda_app/static/vendor/mediaelement/mediaelementplayer.css'
                 ],
-                dest: 'cogenda_app/assets_rel/css/vendor-web.css'
+                dest: 'assets_rel/static/css/vendor-web.css'
             }
         },
         uglify: {
             dist: {
                 files: {
-                    'cogenda_app/assets_rel/js/cogenda.admin.min.js': ['cogenda_app/static/js/cogenda.admin.js'],
-                    'cogenda_app/assets_rel/js/cogenda.web.min.js': ['cogenda_app/static/js/cogenda.web.js'],
-                    'cogenda_app/assets_rel/js/vendor.admin.min.js': ['cogenda_app/assets_rel/js/vendor.admin.js'],
-                    'cogenda_app/assets_rel/js/vendor.auth.min.js': ['cogenda_app/assets_rel/js/vendor.auth.js'],
-                    'cogenda_app/assets_rel/js/vendor.web.min.js': ['cogenda_app/assets_rel/js/vendor.web.js']
+                    'assets_rel/static/js/cogenda.admin.min.js': ['cogenda_app/static/js/cogenda.admin.js'],
+                    'assets_rel/static/js/cogenda.web.min.js': ['cogenda_app/static/js/cogenda.web.js'],
+                    'assets_rel/static/js/vendor.admin.min.js': ['assets_rel/static/js/vendor.admin.js'],
+                    'assets_rel/static/js/vendor.auth.min.js': ['assets_rel/static/js/vendor.auth.js'],
+                    'assets_rel/static/js/vendor.web.min.js': ['assets_rel/static/js/vendor.web.js']
                 }
             }
         },
@@ -88,14 +88,14 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: 'cogenda_app/static/css/',
                 src: ['*.css', '!*.min.css'],
-                dest: 'cogenda_app/assets_rel/css/',
+                dest: 'assets_rel/static/css/',
                 ext: '.min.css'
             },
             vendor: {
                 expand: true,
-                cwd: 'cogenda_app/assets_rel/css/',
+                cwd: 'assets_rel/static/css/',
                 src: ['*.css', '!*.min.css'],
-                dest: 'cogenda_app/assets_rel/css/',
+                dest: 'assets_rel/static/css/',
                 ext: '.min.css'
             }
         },
@@ -106,12 +106,12 @@ module.exports = function(grunt) {
                 },
                 files: [
                     // copy vendor lib fonts
-                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['bootstrap/dist/fonts/*', 'font-awesome-4/fonts/*', '../fonts/*'], dest: 'cogenda_app/assets_rel/fonts/', filter: 'isFile'},
+                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['bootstrap/dist/fonts/*', 'font-awesome-4/fonts/*', '../fonts/*'], dest: 'assets_rel/static/fonts/', filter: 'isFile'},
                     // copy vendor lib images
-                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/images/*', 'jquery.select2/images/*','mediaelement/*.{png,gif}' ], dest: 'cogenda_app/assets_rel/images/', filter: 'isFile'},
+                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/images/*', 'jquery.select2/images/*','mediaelement/*.{png,gif}' ], dest: 'assets_rel/static/images/', filter: 'isFile'},
                     // copy vendor lib misc
-                    {expand: true, flatten: true, src: ['cogenda_app/static/vendor/mediaelement/*.swf'], dest: 'cogenda_app/assets_rel/media/', filter: 'isFile'},
-                    {expand: true, cwd:'cogenda_app/static/media', src: ['**'], dest: 'cogenda_app/assets_rel/media/', filter: 'isFile'}
+                    {expand: true, flatten: true, src: ['cogenda_app/static/vendor/mediaelement/*.swf'], dest: 'assets_rel/static/media/', filter: 'isFile'},
+                    {expand: true, cwd:'cogenda_app/static/media', src: ['**'], dest: 'assets_rel/static/media/', filter: 'isFile'}
                 ]
             }
         },
@@ -125,7 +125,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'cogenda_app/static/images/',
                     src: ['{,*/}*.{png,jpg,jpeg,gif}'],
-                    dest: 'cogenda_app/assets_rel/images/'
+                    dest: 'assets_rel/static/images/'
                 }]
             }
         },
@@ -152,21 +152,21 @@ module.exports = function(grunt) {
         },
         clean: {
             pre_build: [
-                'cogenda_app/assets_rel/css/*.min.css',
-                'cogenda_app/assets_rel/css/vendor-admin.css',
-                'cogenda_app/assets_rel/css/vendor-web.css',
-                'cogenda_app/assets_rel/js/*.min.js',
-                'cogenda_app/assets_rel/js/vendor.admin.js',
-                'cogenda_app/assets_rel/js/vendor.auth.js',
-                'cogenda_app/assets_rel/js/vendor.web.js'
+                'assets_rel/static/css/*.min.css',
+                'assets_rel/static/css/vendor-admin.css',
+                'assets_rel/static/css/vendor-web.css',
+                'assets_rel/static/js/*.min.js',
+                'assets_rel/static/js/vendor.admin.js',
+                'assets_rel/static/js/vendor.auth.js',
+                'assets_rel/static/js/vendor.web.js'
             ],
 
             post_build: [
-                'cogenda_app/assets_rel/css/vendor-admin.css',
-                'cogenda_app/assets_rel/css/vendor-web.css',
-                'cogenda_app/assets_rel/js/vendor.admin.js',
-                'cogenda_app/assets_rel/js/vendor.auth.js',
-                'cogenda_app/assets_rel/js/vendor.web.js'
+                'assets_rel/static/css/vendor-admin.css',
+                'assets_rel/static/css/vendor-web.css',
+                'assets_rel/static/js/vendor.admin.js',
+                'assets_rel/static/js/vendor.auth.js',
+                'assets_rel/static/js/vendor.web.js'
             ]
         }
     });
