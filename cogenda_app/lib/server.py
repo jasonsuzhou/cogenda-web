@@ -65,15 +65,17 @@ class Server(object):
                 'tools.gzip.on': True,
                 'tools.staticdir.on': True,
                 'tools.staticdir.dir': 'media'},
+            '/vendor': {
+                'tools.gzip.on': True,
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': 'vendor'},
             '/static': {
                 'tools.gzip.on': True,
                 'tools.gzip.mime_types': ['text/*'],
                 'tools.staticdir.on': True,
                 'tools.staticdir.dir': ''},
-            '/static/css': {
-                'tools.staticdir.dir': 'css'},
-            '/static/js': {
-                'tools.staticdir.dir': 'js'},
+            '/static/css': {'tools.staticdir.dir': 'css'},
+            '/static/js': {'tools.staticdir.dir': 'js'},
             '/static/img': {'tools.staticdir.dir': 'images'},
             '/static/fonts': {'tools.staticdir.dir': 'fonts'}
         }
