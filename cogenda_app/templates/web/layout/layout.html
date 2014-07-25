@@ -65,8 +65,8 @@
             <script type="text/javascript" src="/static/vendor/mediaelement/mediaelement-and-player.min.js"></script>
             <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
         {% elif settings.cogenda_app.env == 'production' %}
-            <script type="text/javascript" src="/static/js/vendor.web.js"></script>
-            <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
+            <script type="text/javascript" src="/static/js/vendor.web.min.js"></script>
+            <script type="text/javascript" src="/static/js/cogenda.web.min.js"></script>
         {% endif %}
         <input type="hidden" name="language" id="locale" value="{{ locale }}" />
     </body>

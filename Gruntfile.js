@@ -113,7 +113,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'cogenda_app/static/images/',
-                    src: '{,*/}*.{png,jpg,jpeg,gif}',
+                    src: ['{,*/}*.{png,jpg,jpeg,gif}', '!controls.png'],
                     dest: 'cogenda_app/static/images/'
                 }]
             }
