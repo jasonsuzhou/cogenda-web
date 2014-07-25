@@ -94,11 +94,14 @@ module.exports = function(grunt) {
         },
         copy: {
             main: {
+                options : {
+                    noProcess: ['**/*.{png,gif,jpg,ico,svg,ttf,eot,woff}']
+                },
                 files: [
                     // copy vendor lib fonts
                     {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['bootstrap/dist/fonts/*', 'font-awesome-4/fonts/*'], dest: 'cogenda_app/static/fonts/', filter: 'isFile'},
                     // copy vendor lib images
-                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['bxslider/images/*', 'jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/images/*', 'jquery.select2/images/*','mediaelement/*.{png,gif}' ], dest: 'cogenda_app/static/images/', filter: 'isFile'},
+                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/images/*', 'jquery.select2/images/*','mediaelement/*.{png,gif}' ], dest: 'cogenda_app/static/images/', filter: 'isFile'},
                     // copy vendor lib misc
                     {expand: true, flatten: true, src: ['cogenda_app/static/vendor/mediaelement/*.swf'], dest: 'cogenda_app/static/media/', filter: 'isFile'},
                 ]
@@ -113,7 +116,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'cogenda_app/static/images/',
-                    src: ['{,*/}*.{jpg,jpeg,gif}'],
+                    src: ['{,*/}*.{png,jpg,jpeg,gif}'],
                     dest: 'cogenda_app/static/images/'
                 }]
             }
