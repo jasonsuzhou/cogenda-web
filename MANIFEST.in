@@ -8,6 +8,7 @@ include alembic.ini
 include Makefile
 include requirements.txt
 include setenv.sh
+exclude cogenda_app/static/vendor/*
 
 
 # exclude all bytecode

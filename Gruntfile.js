@@ -151,8 +151,8 @@ module.exports = function(grunt) {
             ],
 
             post_build: [
-                'cogenda_app/static/css/vendor.admin.css',
-                'cogenda_app/static/css/vendor.web.css',
+                'cogenda_app/static/css/vendor-admin.css',
+                'cogenda_app/static/css/vendor-web.css',
                 'cogenda_app/static/js/vendor.admin.js',
                 'cogenda_app/static/js/vendor.auth.js',
                 'cogenda_app/static/js/vendor.web.js'
