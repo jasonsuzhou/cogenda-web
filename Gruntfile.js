@@ -81,6 +81,18 @@ module.exports = function(grunt) {
                 ext: '.min.css'
             }
         },
+        copy: {
+            main: {
+                files: [
+                    // copy vendor lib fonts
+                    {expand: true, cwd:'cogenda_app/static/vendor', src: ['bootstrap/fonts/*', 'font-awesone-4/fonts/*'], dest: 'cogenda_app/static/fonts/', filter: 'isFile'},
+                    // copy vendor lib images
+                    {expand: true, cwd:'cogenda_app/static/vendor', src: ['bxslider/images/*', 'jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/img/*', 'jquery.select2/*.{png,gif}','mediaelement/*.{png,gif}' ], dest: 'cogenda_app/static/images/', filter: 'isFile'},
+                    // copy vendor lib misc
+                    {expand: true, src: ['cogenda_app/static/vendor/mediaelement/*.swf'], dest: 'cogenda_app/static/media/', filter: 'isFile'},
+                ]
+            }
+        },
         imagemin: {
             dist: {
                 options: {
@@ -90,8 +102,8 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'cogenda_app/static/images/',
-                    src: '{,*/}*.{png,jpg,jpeg}',
-                dest: 'cogenda_app/static/images/'
+                    src: '{,*/}*.{png,jpg,jpeg,gif}',
+                    dest: 'cogenda_app/static/images/'
                 }]
             }
         },
@@ -126,6 +138,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-concat');
 
