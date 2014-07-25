@@ -35,7 +35,7 @@ build/
 .externalToolBuilders
 .settings
 
-
+assets_rel/
 cogenda_app/static/bower_components/
 /cogenda_app/static/js/*.min.js
 /cogenda_app/static/css/*.min.css

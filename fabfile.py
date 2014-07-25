@@ -44,7 +44,9 @@ def prepare():
     print(red("Login Cogenda production server succeed!"))
 
 def tarball():
-    """Create tarball for cogenda web."""
+    """Replace dev assets with compiled assets, create tarball for cogenda web."""
+    local('rm -rf cogenda_app/static')
+    local('mv cogenda_app/assets_rel cogenda_app/static')
     local('python setup.py sdist --formats=gztar', capture=False)
 
 def upload_dist():
