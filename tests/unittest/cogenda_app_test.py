@@ -44,7 +44,7 @@ class WSControllerTest(BaseCherryPyTestCase):
         self.assertTrue(result['success'], True)
 
     def _prepare_modify_resource(self):
-        self.payload_modify = json.dumps({'json': {
+        self. payload_modify = json.dumps({'json': {
             'filename': 'test_file',
             'url': 'http://localhost/test_url',
             'server': 'oss',
@@ -86,6 +86,21 @@ class AdminControllerTest(BaseCherryPyTestCase):
         self.assertEqual(response.output_status, '200 OK')
     """
 
+    def test_user_mgmt_data(self):
+        self._login_success()
+        response = self.request('/security/authenticate', method='POST', data=self.credentials, headers=self.authed_headers)
+        self.assertEqual(response.output_status, '200 OK')
+        result = self.jsonify_response_body(response)
+        self.assertEqual(result['auth_success'], True)
+
+
+    def _login_success(self):
+        self.credentials = json.dumps({'json': {
+            'username': 'cogenda',
+            'password': 'cogenda',
+            'client': 'admin'}})
+        self.authed_headers = {'content-type': 'application/json'}
+
     def _login(self):
         self.credentials = json.dumps({'json': {
             'username': 'admin',
@@ -106,15 +121,61 @@ class WebControllerTest(BaseCherryPyTestCase):
         pass
 
 
+
+
 class AuthControllerTest(BaseCherryPyTestCase):
 
-    """
-    AUTH CONTROLLER TEST CASES
-    TODO:
-    """
     def test_admin_login(self):
         response = self.request('/admin/login')
         self.assertEqual(response.output_status, '200 OK')
+
+    """
+    Test auth_controller.authenticate
+    Case[test_authenticate_failed]: user doest not exist in db.
+    Case[test_authenticate_success]: username password both correct.
+    """
+    def test_authenticate_failed(self):
+        self._prepare_failed_login_info()
+        response = self.request('/security/authenticate', method='POST', data=self.credentials, headers=self.authed_headers)
+        self.assertEqual(response.output_status, '200 OK')
+        result = self.jsonify_response_body(response)
+        self.assertEqual(result['auth_success'], False)
+
+    def test_authenticate_success(self):
+        self._prepare_success_login_info()
+        response = self.request('/security/authenticate', method='POST', data=self.credentials, headers=self.authed_headers)
+        self.assertEqual(response.output_status, '200 OK')
+        result = self.jsonify_response_body(response)
+        self.assertEqual(result['auth_success'], True)
+
+    """
+    303 means the server side try to redirect to another page.
+    """
+    def test_logout(self):
+        response = self.request('/security/logout')
+        self.assertEqual(response.output_status,'303 See Other')
+
+    def test_web_logout(self):
+        response = self.request('/web/logout')
+        self.assertEqual(response.output_status,'303 See Other')
+
+
+    def _prepare_failed_login_info(self):
+        self.credentials = json.dumps({'json': {
+            'username': 'notExistUser',
+            'password': 'notExistUser',
+            'client': 'admin'}})
+        auth_token = self._make_hamc_key(self.credentials)
+        self.authed_headers = {'content-type': 'application/json', 'Authorization': auth_token}
+
+    def _prepare_success_login_info(self):
+        self.credentials = json.dumps({'json': {
+            'username': 'cogenda',
+            'password': 'cogenda',
+            'client': 'admin'}})
+        auth_token = self._make_hamc_key(self.credentials)
+        self.authed_headers = {'content-type': 'application/json', 'Authorization': auth_token}
+
 
 
 def suite():
