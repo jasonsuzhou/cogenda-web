@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title> | EDA/TCAD/DFM | Cogenda.com</title>
+        
+        {% if not settings.cogenda_app.env %}
+            <link rel="stylesheet" type="text/css" href="/static/vendor/font-awesome-4/css/font-awesome.min.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/bxslider/css/jquery.bxslider.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/mediaelement/mediaelementplayer.css" />
+            <link rel="stylesheet" type="text/css" href="/static/vendor/nprogress/nprogress.css" />
+            <link rel="stylesheet" type="text/css" href="/static/css/cogenda-web.css" />
+        {% elif settings.cogenda_app.env == 'production' %}
+            <link rel="stylesheet" type="text/css"  href="/static/css/vendor-web.min.css" />
+            <link rel="stylesheet" type="text/css"  href="/static/css/cogenda-web.min.css" />
+        {% endif %}
+    </head>
+    <body id="main-body">
+        <div id="background">
+            {% include "web/layout/layout-header.html"%}
+            {% include "web/layout/layout-nav.html"%}
+            <!-- Start of index.php, page.php, single.php and archive.php page code -->
+            <div id="outerWrapper">
+                <!-- Sets page width to 960px and centers -->
+                <div id="contentWrapper">
+                    <!-- Wraps content and sidebars -->
+                    <div id="Content">
+                        {% block content %}{% endblock %}
+                    </div>
+                    <div id="sidebar">
+                        <ul>
+                            <li>
+                            {% block news %}{% endblock %}
+                            </li>
+                            <li>
+                            {% block sidebar %}{% endblock%} 
+                            </li>
+                            <li>
+                            <h5> {{_('Contact Us')}}</h5>
+                            <ul> 
+                                <li><a href="mailto:sales@cogenda.com">{{_('Sales Team')}}</a></li>
+                                <li><a href="mailto:support@cogenda.com">{{_('Technical Support')}}</a></li>
+                                <li><a href="mailto:contact@cogenda.com">{{_('General Enquiries')}}</a></li>
+                            </ul> 
+                            </li>
+                        </ul>
+                        <div class="clearer">
+                            <!-- Clear floats-->
+                        </div>
+                    </div>
+                </div>
+                <!-- Close outerWrapper -->
+            </div>
+            {% include "web/layout/layout-footer.html"%}
+            <!-- Close background-->
+        </div>
+
+        {% if not settings.cogenda_app.env %}
+            <script type="text/javascript" src="/static/vendor/jquery.js"></script>
+            <script type="text/javascript" src="/static/vendor/bxslider/jquery.bxslider.js"></script>
+            <script type="text/javascript" src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="/static/vendor/jquery.parsley/2.0.0/parsley.js"></script>
+            <script type="text/javascript" src="/static/vendor/i18n/zh_cn.js"></script>
+            <script type="text/javascript" src="/static/vendor/nprogress/nprogress.js"></script>
+            <script type="text/javascript" src="/static/vendor/mediaelement/mediaelement-and-player.min.js"></script>
+            <script type="text/javascript" src="/static/js/cogenda.web.js"></script>
+        {% elif settings.cogenda_app.env == 'production' %}
+            <script type="text/javascript" src="/static/js/vendor.web.min.js"></script>
+            <script type="text/javascript" src="/static/js/cogenda.web.min.js"></script>
+        {% endif %}
+        <input type="hidden" name="language" id="locale" value="{{ locale }}" />
+    </body>
+<html>

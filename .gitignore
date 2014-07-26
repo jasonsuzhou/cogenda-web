@@ -29,14 +29,14 @@ data/
 venv/
 cover/
 logs/
+/dist/
+build/
 
 .externalToolBuilders
 .settings
 
-cogenda-app/static/bower_components/
-
-cogenda.web.min.css
-cogenda.admin.min.css
-cogenda.web.min.js
-cogenda.admin.min.js
+assets_rel/
+cogenda_app/static/bower_components/
+/cogenda_app/static/js/*.min.js
+/cogenda_app/static/css/*.min.css
 

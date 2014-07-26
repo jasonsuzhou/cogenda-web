@@ -1,0 +1,23 @@
+{% if not settings.cogenda_app.env %}
+    <script type="text/javascript" src="/static/vendor/jquery.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.datatables/jquery.datatables.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.datatables/bootstrap-adapter/js/datatables.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.quicksearch/jquery.quicksearch.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.multiselect/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.select2/select2.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.niftymodals/js/jquery.modalEffects.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.quicksearch/jquery.quicksearch.js"></script>
+    <script type="text/javascript" src="/static/vendor/bootstrap.switch/bootstrap-switch.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.parsley/2.0.0/parsley.js"></script>
+    <script type="text/javascript" src="/static/vendor/nprogress/nprogress.js"></script>
+    <script type="text/javascript" src="/static/vendor/i18n/zh_cn.js"></script>
+    <script type="text/javascript" src="/static/vendor/i18n/select2_locale_zh-CN.js"></script>
+    <script type="text/javascript" src="/static/js/cogenda.admin.js"></script>
+{% elif settings.cogenda_app.env == 'production' %}
+    <script type="text/javascript" src="/static/js/vendor.admin.min.js"></script>
+    <script type="text/javascript" src="/static/js/cogenda.admin.min.js"></script>
+{% endif %}
+
+<input type="hidden" name="language" id="locale" value="{{ locale }}" />

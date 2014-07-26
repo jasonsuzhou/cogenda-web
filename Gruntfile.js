@@ -2,42 +2,132 @@
 module.exports = function(grunt) {
 
     grunt.initConfig({
-        recess: {
-            dist: {
-                options: {
-                    compile: true,
-                    compress: true
-                },
-                files: {
-                    'cogenda-app/static/css/cogenda.admin.min.css': ['cogenda-app/static/css/cogenda.admin.css'],
-                    'cogenda-app/static/css/cogenda.web.min.css': ['cogenda-app/static/css/cogenda.web.css']
-                }
+        pkg: grunt.file.readJSON('package.json'),
+        concat: {
+            options: {
+                stripBanners: true,
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */',
+            },
+            vendor_js_admin: {
+                src: [
+                    'cogenda_app/static/vendor/jquery.js',
+                    'cogenda_app/static/vendor/jquery-ui.js',
+                    'cogenda_app/static/vendor/bootstrap/dist/js/bootstrap.min.js',
+                    'cogenda_app/static/vendor/jquery.datatables/jquery.datatables.min.js',
+                    'cogenda_app/static/vendor/jquery.quicksearch/jquery.quicksearch.js',
+                    'cogenda_app/static/vendor/jquery.multiselect/js/jquery.multi-select.js',
+                    'cogenda_app/static/vendor/jquery.select2/select2.min.js',
+                    'cogenda_app/static/vendor/jquery.niftymodals/js/jquery.modalEffects.js',
+                    'cogenda_app/static/vendor/jquery.quicksearch/jquery.quicksearch.js',
+                    'cogenda_app/static/vendor/bootstrap.switch/bootstrap-switch.min.js',
+                    'cogenda_app/static/vendor/jquery.parsley/2.0.0/parsley.js',
+                    'cogenda_app/static/vendor/nprogress/nprogress.js',
+                    'cogenda_app/static/vendor/i18n/zh_cn.js',
+                    'cogenda_app/static/vendor/i18n/select2_locale_zh-CN.js'
+                ],
+                dest: 'assets_rel/static/js/vendor.admin.js'
+            },
+            vendor_js_auth: {
+                src: [
+                    'cogenda_app/static/vendor/jquery.js',
+                    'cogenda_app/static/vendor/jquery.parsley/2.0.0/parsley.js',
+                    'cogenda_app/static/vendor/i18n/zh_cn.js',
+                    'cogenda_app/static/vendor/nprogress/nprogress.js',
+                    'cogenda_app/static/vendor/bootstrap/dist/js/bootstrap.min.js'
+                ],
+                dest: 'assets_rel/static/js/vendor.auth.js'
+            },
+            vendor_js_web: {
+                src: [
+                    'cogenda_app/static/vendor/jquery.js',
+                    'cogenda_app/static/vendor/bxslider/jquery.bxslider.js',
+                    'cogenda_app/static/vendor/bootstrap/dist/js/bootstrap.min.js',
+                    'cogenda_app/static/vendor/jquery.parsley/2.0.0/parsley.js',
+                    'cogenda_app/static/vendor/i18n/zh_cn.js',
+                    'cogenda_app/static/vendor/nprogress/nprogress.js',
+                    'cogenda_app/static/vendor/mediaelement/mediaelement-and-player.min.js'
+                ],
+                dest: 'assets_rel/static/js/vendor.web.js'
+            },
+            vendor_css_admin: {
+                src: [
+                    'cogenda_app/static/vendor/bootstrap/dist/css/bootstrap.css',
+                    'cogenda_app/static/vendor/font-awesome-4/css/font-awesome.min.css',
+                    'cogenda_app/static/vendor/jquery.multiselect/css/multi-select.css',
+                    'cogenda_app/static/vendor/jquery.select2/css/select2.css',
+                    'cogenda_app/static/vendor/jquery.datatables/bootstrap-adapter/css/datatables.css',
+                    'cogenda_app/static/vendor/jquery.niftymodals/css/component.css',
+                    'cogenda_app/static/vendor/bootstrap.switch/bootstrap-switch.css',
+                    'cogenda_app/static/vendor/nprogress/nprogress.css'
+                ],
+                dest: 'assets_rel/static/css/vendor-admin.css'
+            },
+            vendor_css_web: {
+                src: [
+                    'cogenda_app/static/vendor/font-awesome-4/css/font-awesome.min.css',
+                    'cogenda_app/static/vendor/bxslider/css/jquery.bxslider.css',
+                    'cogenda_app/static/vendor/nprogress/nprogress.css',
+                    'cogenda_app/static/vendor/mediaelement/mediaelementplayer.css'
+                ],
+                dest: 'assets_rel/static/css/vendor-web.css'
             }
         },
         uglify: {
             dist: {
                 files: {
-                    'cogenda-app/static/js/cogenda.admin.min.js': ['cogenda-app/static/js/cogenda.admin.js'],
-                    'cogenda-app/static/js/cogenda.web.min.js': ['cogenda-app/static/js/cogenda.web.js']
+                    'assets_rel/static/js/cogenda.admin.min.js': ['cogenda_app/static/js/cogenda.admin.js'],
+                    'assets_rel/static/js/cogenda.web.min.js': ['cogenda_app/static/js/cogenda.web.js'],
+                    'assets_rel/static/js/vendor.admin.min.js': ['assets_rel/static/js/vendor.admin.js'],
+                    'assets_rel/static/js/vendor.auth.min.js': ['assets_rel/static/js/vendor.auth.js'],
+                    'assets_rel/static/js/vendor.web.min.js': ['assets_rel/static/js/vendor.web.js']
                 }
             }
         },
+        cssmin: {
+            app: {
+                expand: true,
+                cwd: 'cogenda_app/static/css/',
+                src: ['*.css', '!*.min.css'],
+                dest: 'assets_rel/static/css/',
+                ext: '.min.css'
+            },
+            vendor: {
+                expand: true,
+                cwd: 'assets_rel/static/css/',
+                src: ['*.css', '!*.min.css'],
+                dest: 'assets_rel/static/css/',
+                ext: '.min.css'
+            }
+        },
+        copy: {
+            main: {
+                options : {
+                    noProcess: ['**/*.{png,gif,jpg,ico,svg,ttf,eot,woff}']
+                },
+                files: [
+                    // copy vendor lib fonts
+                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['bootstrap/dist/fonts/*', 'font-awesome-4/fonts/*', '../fonts/*'], dest: 'assets_rel/static/fonts/', filter: 'isFile'},
+                    // copy vendor lib images
+                    {expand: true, flatten: true, cwd:'cogenda_app/static/vendor', src: ['jquery.datatables/bootstrap-adapter/images/*', 'jquery.multiselect/images/*', 'jquery.select2/images/*','mediaelement/*.{png,gif}' ], dest: 'assets_rel/static/images/', filter: 'isFile'},
+                    // copy vendor lib misc
+                    {expand: true, flatten: true, src: ['cogenda_app/static/vendor/mediaelement/*.swf'], dest: 'assets_rel/static/media/', filter: 'isFile'},
+                    {expand: true, cwd:'cogenda_app/static/media', src: ['**'], dest: 'assets_rel/static/media/', filter: 'isFile'}
+                ]
+            }
+        },
         imagemin: {
-            dist: {
+            app: {
                 options: {
-                    optimizationLevel: 7,
+                    optimizationLevel: 6,
                     progressive: true
                 },
                 files: [{
                     expand: true,
-                    cwd: 'cogenda-app/static/images/',
-                    src: '{,*/}*.{png,jpg,jpeg}',
-                    dest: 'cogenda-app/static/images/'
+                    cwd: 'cogenda_app/static/images/',
+                    src: ['{,*/}*.{png,jpg,jpeg,gif}'],
+                    dest: 'assets_rel/static/images/'
                 }]
             }
-        },
-        clean: {
-            dist: ['cogenda-app/static/css/cogenda.min.css', 'cogenda-app/static/js/cogenda.min.js']
         },
         jshint: {
             options: {
@@ -58,48 +148,26 @@ module.exports = function(grunt) {
                 es5: false,
                 globals: { $: true}
             },
-            all: ['cogenda-app/static/js/cogenda.admin.js', 'cogenda-app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
+            all: ['cogenda_app/static/js/cogenda.admin.js', 'cogenda_app/static/js/cogenda.web.js','!node_modules/**/*.js', '!test/**/*.js']
         },
-        wiredep: {
-            web: {
-                src: [
-                    'cogenda-app/templates/web/layout/layout.html',
-                ],
-                cwd: '',
-                includeSelf: false,
-                dependencies: true,
-                devDependencies: false,
-                exclude: ['bootstrap.css', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect', 'quicksearch'],
-                fileTypes: {},
-                ignorePath: '../../..',
-                overrides: {}
-            },
-            admin: {
-                src: [
-                    'cogenda-app/templates/admin/layout/layout-include-js.html',
-                    'cogenda-app/templates/admin/layout/layout-include-css.html',
-                ],
-                cwd: '',
-                dependencies: true,
-                devDependencies: false,
-                //exclude: ['mediaelement', 'bxslider-4', 'dataTables.css', 'multi-select.js'],
-                exclude: ['mediaelement', 'bxslider-4', 'dataTables.css'],
-                fileTypes: {},
-                ignorePath: '../../..',
-                overrides: {}
-            },
-            auth: {
-                src: [
-                    'cogenda-app/templates/admin/security/security-container.html',
-                ],
-                cwd: '',
-                dependencies: true,
-                devDependencies: false,
-                exclude: ['mediaelement', 'bxslider-4', 'bootstrap-switch', 'jquery-ui', 'datatables', 'select2', 'multiselect', 'quicksearch'],
-                fileTypes: {},
-                ignorePath: '../../..',
-                overrides: {}
-            }
+        clean: {
+            pre_build: [
+                'assets_rel/static/css/*.min.css',
+                'assets_rel/static/css/vendor-admin.css',
+                'assets_rel/static/css/vendor-web.css',
+                'assets_rel/static/js/*.min.js',
+                'assets_rel/static/js/vendor.admin.js',
+                'assets_rel/static/js/vendor.auth.js',
+                'assets_rel/static/js/vendor.web.js'
+            ],
+
+            post_build: [
+                'assets_rel/static/css/vendor-admin.css',
+                'assets_rel/static/css/vendor-web.css',
+                'assets_rel/static/js/vendor.admin.js',
+                'assets_rel/static/js/vendor.auth.js',
+                'assets_rel/static/js/vendor.web.js'
+            ]
         }
     });
 
@@ -107,12 +175,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-recess');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-wiredep');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     // Register tasks
     grunt.registerTask('jslint', ['jshint']);
-    grunt.registerTask('build', ['clean', 'recess', 'uglify', 'imagemin']);
-    grunt.registerTask('inject', ['wiredep:web', 'wiredep:admin', 'wiredep:auth']);
+    grunt.registerTask('build', ['clean:pre_build', 'concat', 'uglify', 'cssmin', 'copy', 'imagemin', 'clean:post_build']);
 };

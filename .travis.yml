@@ -15,22 +15,20 @@ before_script:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
-#- echo 'Install GeoIP API C'
-#- wget -N https://github.com/maxmind/geoip-api-c/releases/download/v1.6.1/GeoIP-1.6.1.tar.gz 
-#- tar -xvf GeoIP-1.6.1.tar.gz
-#- cd GeoIP-1.6.1 && ./configure
-#- make 
-#- sudo make install
-- echo 'Ready to static code verification.'
+- echo 'Setup test environment.'
 - cd /home/travis/build/cogenda/cogenda-web
 - ./setenv.sh
 - source venv/bin/activate
 - npm install
 - npm install -g grunt-cli
-- make pylint 
-#- make jslint
-#- make web-setup
-#- make web
+- echo 'Ready to static code verification.'
+- make pylint
+- echo 'Ready to run tests.'
+- make test-reset
+- echo 'Ready to build web resources.'
+- make web_build
+- echo 'Ready to init SQLite db.'
+- make alembic-init
 #- echo 'Ready to sync with AWS S3 and AliYun OSS.'
 #- pwd && echo $COGENDA_STATIC_HOME
 #- git clone --depth=50 --branch=master https://github.com/cogenda/cloud-sync.git /home/travis/build/cogenda/cloud-sync
@@ -39,11 +37,8 @@ script:
 #- source venv/bin/activate
 #- make travis
 after_success:
-- echo 'Ready to deploy to Linode production server.'
-- cd /home/travis/build/cogenda/cogenda-web
-- ./setenv.sh
-- source venv/bin/activate
-- make deploy
+- echo 'Ready to deploy cogenda web distro to Lindo server.'
+- make deploy_dist
 branches:
   only:
   - master

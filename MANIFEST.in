@@ -1,0 +1,19 @@
+recursive-include cogenda_app/templates *.*
+recursive-include cogenda_app/i18n *.*
+recursive-include cogenda_app/static *.*
+prune cogenda_app/static/vendor
+recursive-include etc *.*
+recursive-include alembic *.*
+include cogenda_app/*.ini
+include alembic.ini
+include Makefile
+include requirements.txt
+include setenv.sh
+
+# exclude all bytecode
+global-exclude *.pyo
+global-exclude *.pyc
+
+# exclude all git metadata
+global-exclude .gitignore*
+global-exclude .git/*

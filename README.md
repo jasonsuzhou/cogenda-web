@@ -23,7 +23,7 @@
 - Start Web Server
 
     ```
-    $ make db-init (optional: If migration/cogenda-app.db not create yet)
+    $ make alembic-init (optional: If alembic/cogenda_app.db not create yet)
     $ make run
     ```
     > Open url http://localhost:8088
@@ -31,22 +31,22 @@
 - SQLite Migration
 
     ```
-    $ make db-init
+    $ make alembic-init
     ```
     > Initial SQLite database file under migration/ folder.
 
     ```
-    $ make db-script 'eg. add new table/column'
+    $ make alembic-revision 'eg. add new table/column'
     ```
     >  When create or update model, we need to run this command to generate schema version file. Under migration/version folder, then we need to edit generated file for db changes.
 
     ```
-    $ make db-migrate
+    $ make alembic-upgrade
     ```
     > Once we finished edit the db version file, use this command to sync with SQLite.
 
     ```
-    $ make db-version
+    $ make alembic-version
     ```
     > Run this command to verify current database schema version.
 
@@ -85,3 +85,9 @@
     $ make jslint
     ```
     > Check js code
+
+- Testing Your Code
+
+    ```
+    $ make test
+    ```

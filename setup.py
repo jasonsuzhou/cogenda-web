@@ -11,7 +11,7 @@ try:
         'init_catalog': babel.init_catalog,
     }
     kwargs['message_extractors'] = {
-        'cogenda-app': [
+        'cogenda_app': [
             ('**.py', 'python', None),
             ('**/templates/**.html', 'jinja2', {
                 'extensions': (
@@ -25,7 +25,7 @@ try:
                     'jinja2.ext.autoescape,'
                     'jinja2.ext.with_,'
                     'jinja2.ext.do,'
-                    'cogenda-app.lib.md2_extension.md2ext,'
+                    'cogenda_app.lib.md2_extension.md2ext,'
                 )
             })
         ]
@@ -35,15 +35,16 @@ except ImportError:
 
 
 install_requires = [
-    'cherrypy'
+    'cherrypy',
     'Jinja2',
     'SQLalchemy',
-    'sqlalchemy-migrate',
     'Babel',
     'routes',
     'mailer',
     'markdown2',
-    'fuzzywuzzy'
+    'fuzzywuzzy',
+    'python-geoip-geolite2',
+    'alembic'
 ]
 
 setup(
